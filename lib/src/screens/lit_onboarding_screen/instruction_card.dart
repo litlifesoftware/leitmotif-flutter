@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class InstructionCard extends StatelessWidget {
-  final Widget title;
+  final String title;
   final String description;
+  final TextStyle titleTextStyle;
   final TextStyle descriptionTextStyle;
+  final Color titleBackgroundColor;
+  final int maxLines;
   const InstructionCard({
     Key key,
     @required this.title,
     @required this.description,
+    this.titleTextStyle = LitTextStyles.sansSerifTitle,
     this.descriptionTextStyle = LitTextStyles.sansSerif,
+    this.titleBackgroundColor = LitColors.lightGrey,
+    this.maxLines = 9,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -23,7 +29,7 @@ class InstructionCard extends StatelessWidget {
         child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25.0),
-              color: LitColors.mediumGrey.withOpacity(0.15),
+              color: LitColors.mediumGrey.withOpacity(0.40),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -33,14 +39,17 @@ class InstructionCard extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24.0),
-                      color: LitColors.lightGrey.withOpacity(0.75),
+                      color: titleBackgroundColor,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                        vertical: 4.0,
-                        horizontal: 16.0,
+                        vertical: 8.0,
+                        horizontal: 24.0,
                       ),
-                      child: title,
+                      child: ClippedText(
+                        title,
+                        style: titleTextStyle,
+                      ),
                     ),
                   ),
                 ),
@@ -53,8 +62,8 @@ class InstructionCard extends StatelessWidget {
                   ),
                   child: ClippedText(
                     description,
-                    maxLines: 8,
                     style: descriptionTextStyle,
+                    maxLines: 9,
                   ),
                 ),
               ],

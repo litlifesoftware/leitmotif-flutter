@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 /// The [PageView] will have indicators to state the current page
 /// position.
 class IndexedPageView extends StatefulWidget {
+  /// The height of the page content is fixed to ensure the content has a
+  /// size.
   final double height;
   final List<Widget> children;
   final ScrollPhysics physics;
@@ -18,7 +20,7 @@ class IndexedPageView extends StatefulWidget {
   /// Creates an [IndexedPageView] widget.
   const IndexedPageView({
     Key key,
-    this.height = 250.0,
+    this.height = 256.0,
     @required this.children,
     this.physics = const BouncingScrollPhysics(),
     this.pageScrollListener,

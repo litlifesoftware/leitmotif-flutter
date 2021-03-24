@@ -1,35 +1,51 @@
-import 'package:flutter/animation.dart';
 import 'package:flutter/widgets.dart';
 
-/// A controller class which will enable the provided [AnimationController]
-/// to be played if the [ScrollController] has registered an [Offset] change.
+/// A controller playing animations triggered by scrolling.
+///
+/// If the [ScrollController] has registered an [Offset] change, the animation
+/// will be played forward or in reverse. The required [AnimationController]
+/// will be declared as a property and is initialized by calling the
+/// [AnimationOnScrollController] constructor. The listener will then be attached
+/// on the animation controller.
 class AnimationOnScrollController {
-  /// The [ScrollController] must be accesible in the widget on which the
-  /// animation should be display in order to reference it create a reference
-  /// on the scrollable widget.
+  /// The [ScrollController] of the widgets on which the animation on scroll
+  /// should be played.
   final ScrollController scrollController;
+
+  /// The direction in which the animation should be played.
   final AnimationDirection direction;
-  final double maxScrollOffset;
+
+  /// The required offset to trigger the animation.
+  final double requiredScrollOffset;
+
+  /// The Ticker required for the [AnimationController].
+  final TickerProvider vsync;
+
+  /// The duration the animation should last.
+  final Duration animationDuration;
 
   /// Creates an [AnimationOnScrollController].
   ///
-  /// Ensure the listener is attached to the provided [ScrollController] and
-  /// that the [AnimationController] is initialized in order for the [Animation] to
-  /// be played. This requires the [TickerProviderStateMixin] to be implemented in the
-  /// [StatefulWidget].
+  /// * [scrollController] obtains the current scroll offset.
+  ///
+  /// * [direction] is the direction in which the animation is played.
+  ///
+  /// * [requiredScrollOffset] is the offset required to trigger the animation.
+  ///
+  /// * [vsync] provides access to the current [TickerProvider] to initialize
+  ///   the [AnimationController].
+  ///
+  /// * [animationDuration] will determine the length the animation should have.
   ///
   /// {@tool snippet}
-  /// The [AnimationOnScrollController] can not be initialized in the [LitScaffold]
-  /// because the [scrollController] property must remain accessible the the child
-  /// widget. Therefore this controller should be initialized in the child widget.
-  /// This can be achieved by calling [attach] in the overriden [State.initState]
+  /// The [AnimationOnScrollController] needs to be initialized on a [StatefulWidget].
+  /// This can be achieved by initializing the declared object in the [State.initState]
   /// method as stated below:
   /// ```dart
-  ///  _animationOnScrollController = AnimationOnScrollController(
-  ///    scrollController: _scrollController,
-  ///    maxScrollOffset: 16.0,
-  ///    direction: AnimationDirection.forward,
-  ///  )..attach(this);
+  /// _animationOnScrollController = AnimationOnScrollController(
+  ///   scrollController: _scrollController,
+  ///   vsync: this,
+  /// );
   /// ```
   /// {@end-tool}
   ///
@@ -43,9 +59,15 @@ class AnimationOnScrollController {
   AnimationOnScrollController({
     @required this.scrollController,
     this.direction = AnimationDirection.forward,
-    @required this.maxScrollOffset,
-  });
+    this.requiredScrollOffset = 32.0,
+    @required this.vsync,
+    this.animationDuration = const Duration(milliseconds: 130),
+  }) {
+    _initAnimation();
+    _attach();
+  }
 
+  /// The animation controller required to play the animation.
   AnimationController animationController;
 
   /// Plays the [Animation] forward.
@@ -71,18 +93,16 @@ class AnimationOnScrollController {
     }
   }
 
-  /// Plays the [Animation] forward or in reverse depending on the current scroll offset
-  /// provided by the [ScrollController].
-  ///
-  /// The [Animation] will only be played if the user is scrolling in the same direction
-  /// and only if the previous [Animation] has been finished playing using the
-  /// [ScrollController.keepScrollOffset] property.
+  /// Plays the animation forward or in reverse depending on the current scroll offset
+  /// provided by the [ScrollController]. The animation will only be played if the user
+  /// is scrolling in the same direction and only if the previous animation has been
+  /// finished playing using the [ScrollController.keepScrollOffset] property.
   void _animateOnScroll() {
     if (scrollController.keepScrollOffset) {
-      if (scrollController.offset > maxScrollOffset) {
+      if (scrollController.offset > requiredScrollOffset) {
         _show();
       } else if (scrollController.offset > 0 &&
-          scrollController.offset <= maxScrollOffset) {
+          scrollController.offset <= requiredScrollOffset) {
         _hide();
       } else if (scrollController.offset <= 0) {
         _hide();
@@ -90,10 +110,14 @@ class AnimationOnScrollController {
     }
   }
 
-  /// Attaches the [_animateOnScroll] listener to the provided [ScrollController].
-  void attach(TickerProvider vsync) {
+  /// Initializes the local [AnimationController] instance.
+  void _initAnimation() {
     animationController = AnimationController(
-        vsync: vsync, duration: Duration(milliseconds: 130));
+        vsync: this.vsync, duration: this.animationDuration);
+  }
+
+  /// Attaches the [_animateOnScroll] listener to the provided [ScrollController].
+  void _attach() {
     scrollController.addListener(_animateOnScroll);
   }
 
@@ -103,7 +127,7 @@ class AnimationOnScrollController {
   }
 }
 
-/// A List of possible [Animation] directions.
+/// A List of available animation directions.
 enum AnimationDirection {
   forward,
   reverse,

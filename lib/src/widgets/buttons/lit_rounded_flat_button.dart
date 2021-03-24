@@ -27,6 +27,7 @@ class LitRoundedFlatButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: BorderRadius.circular(radius),
       onTap: onPressed,
       child: Container(
         decoration: BoxDecoration(

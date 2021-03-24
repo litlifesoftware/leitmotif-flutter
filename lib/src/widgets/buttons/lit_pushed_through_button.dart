@@ -11,16 +11,30 @@ class LitPushedThroughButton extends StatefulWidget {
   final Color accentColor;
   final void Function() onPressed;
   final double borderRadius;
+  final EdgeInsets margin;
+  final List<BoxShadow> boxShadow;
 
   /// Create a [PushedThroughButton] [Widget].
-  const LitPushedThroughButton({
-    Key key,
-    @required this.child,
-    @required this.backgroundColor,
-    @required this.accentColor,
-    @required this.onPressed,
-    this.borderRadius = 15,
-  }) : super(key: key);
+  const LitPushedThroughButton(
+      {Key key,
+      @required this.child,
+      this.backgroundColor = Colors.white,
+      this.accentColor = Colors.grey,
+      @required this.onPressed,
+      this.borderRadius = 15.0,
+      this.margin = const EdgeInsets.symmetric(
+        vertical: 8.0,
+        horizontal: 14.0,
+      ),
+      this.boxShadow = const [
+        const BoxShadow(
+          blurRadius: 8.0,
+          offset: Offset(-2, 2),
+          color: Colors.black26,
+          spreadRadius: 1.0,
+        ),
+      ]})
+      : super(key: key);
 
   @override
   _LitPushedThroughButtonState createState() => _LitPushedThroughButtonState();
@@ -78,64 +92,53 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
   @override
   Widget build(BuildContext context) {
     return Listener(
-        onPointerDown: _onTapDown,
-        onPointerUp: _onTapUp,
-        child: AnimatedBuilder(
-            animation: _animationController,
-            builder: (context, child) {
-              return Transform.scale(
-                scale: (1 - (_animationController.value * 0.125)),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 150),
-                  padding: const EdgeInsets.all(14.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(widget.borderRadius),
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          _isPressed
-                              ? widget.backgroundColor
-                              : Color.lerp(widget.backgroundColor,
-                                  widget.accentColor, 0.1),
-                          _isPressed
-                              ? Color.lerp(widget.backgroundColor,
-                                  widget.accentColor, 0.05)
-                              : widget.backgroundColor,
-                          _isPressed
-                              ? Color.lerp(widget.backgroundColor,
-                                  widget.accentColor, 0.05)
-                              : widget.backgroundColor,
-                          Color.lerp(widget.backgroundColor,
-                              widget.backgroundColor, _isPressed ? .2 : .5),
-                        ],
-                        stops: [
-                          0.0,
-                          .3,
-                          .6,
-                          1.0,
-                        ]),
-                    boxShadow: _isPressed
-                        ? null
-                        : [
-                            BoxShadow(
-                              blurRadius: 15.0,
-                              offset: Offset(-2, -2),
-                              color: Color.lerp(widget.backgroundColor,
-                                  widget.backgroundColor, 0.6),
-                              spreadRadius: 2.0,
-                            ),
-                            BoxShadow(
-                                blurRadius: 15.0,
-                                offset: Offset(2, 2),
-                                color: Color.lerp(widget.backgroundColor,
-                                    widget.accentColor, 0.3),
-                                spreadRadius: 2.0)
-                          ],
-                  ),
-                  child: widget.child,
-                ),
-              );
-            }));
+      onPointerDown: _onTapDown,
+      onPointerUp: _onTapUp,
+      child: AnimatedBuilder(
+        animation: _animationController,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: (1 - (_animationController.value * 0.125)),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 150),
+              padding: widget.margin,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(widget.borderRadius),
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      _isPressed
+                          ? widget.backgroundColor
+                          : Color.lerp(
+                              widget.backgroundColor, widget.accentColor, 0.35),
+                      _isPressed
+                          ? Color.lerp(
+                              widget.backgroundColor, widget.accentColor, 0.45)
+                          : widget.backgroundColor,
+                      _isPressed
+                          ? Color.lerp(
+                              widget.backgroundColor, widget.accentColor, 0.55)
+                          : widget.backgroundColor,
+                      Color.lerp(
+                        widget.backgroundColor,
+                        widget.backgroundColor,
+                        _isPressed ? 0.20 : 0.50,
+                      ),
+                    ],
+                    stops: [
+                      0.0,
+                      0.3,
+                      0.6,
+                      1.0,
+                    ]),
+                boxShadow: _isPressed ? [] : widget.boxShadow,
+              ),
+              child: widget.child,
+            ),
+          );
+        },
+      ),
+    );
   }
 }

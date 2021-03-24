@@ -25,8 +25,6 @@ class AgeConfirmationCalendarNavigator extends StatelessWidget {
           child: LitPushedThroughButton(
             child: Icon(LitIcons.chevron_left_solid,
                 size: 22.0, color: LitColors.mediumGrey),
-            backgroundColor: Colors.white,
-            accentColor: Colors.black,
             onPressed: decreaseUnitCallback,
           ),
         ),
@@ -50,8 +48,6 @@ class AgeConfirmationCalendarNavigator extends StatelessWidget {
           child: LitPushedThroughButton(
             child: Icon(LitIcons.chevron_right_solid,
                 size: 22.0, color: LitColors.mediumGrey),
-            backgroundColor: Colors.white,
-            accentColor: Colors.black,
             onPressed: increaseUnitCallback,
           ),
         )

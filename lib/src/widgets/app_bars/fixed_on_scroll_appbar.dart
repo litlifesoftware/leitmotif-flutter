@@ -23,6 +23,10 @@ class FixedOnScrollAppbar extends StatefulWidget implements CustomAppBar {
   final Widget child;
   final EdgeInsets padding;
 
+  //
+  final bool shouldNavigateBack;
+  final void Function() onInvalidNavigation;
+
   /// Creates a [FixedOnScrollAppbar] widget.
   /// The [ScrollController] is required in order to register a scroll change.
   const FixedOnScrollAppbar({
@@ -41,6 +45,8 @@ class FixedOnScrollAppbar extends StatefulWidget implements CustomAppBar {
     this.height = CustomAppBar.height,
     @required this.child,
     this.padding = const EdgeInsets.symmetric(horizontal: 8.0),
+    this.shouldNavigateBack = true,
+    this.onInvalidNavigation,
   }) : super(key: key);
 
   @override
@@ -56,9 +62,10 @@ class _FixedOnScrollAppbarState extends State<FixedOnScrollAppbar>
     super.initState();
     _animationOnScrollController = AnimationOnScrollController(
       scrollController: widget.scrollController,
-      maxScrollOffset: 16.0,
+      requiredScrollOffset: 16.0,
       direction: AnimationDirection.forward,
-    )..attach(this);
+      vsync: this,
+    );
   }
 
   @override
@@ -97,6 +104,8 @@ class _FixedOnScrollAppbarState extends State<FixedOnScrollAppbar>
                         LitBackButton(
                           iconColor: LitColors.mediumGrey,
                           backgroundColor: Colors.grey[200],
+                          shouldNavigateBack: widget.shouldNavigateBack,
+                          onInvalidNavigation: widget.onInvalidNavigation,
                         ),
                         widget.child,
                       ],

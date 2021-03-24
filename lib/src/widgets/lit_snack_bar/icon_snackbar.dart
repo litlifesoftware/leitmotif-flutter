@@ -29,7 +29,8 @@ class IconSnackbar extends StatelessWidget implements LitSnackbar {
     this.iconColor = Colors.white,
     this.alignment = Alignment.topRight,
     this.padding = const EdgeInsets.symmetric(
-      vertical: 32.0,
+      vertical: 16.0,
+      horizontal: 16.0,
     ),
     this.width = 250,
   }) : super(key: key);

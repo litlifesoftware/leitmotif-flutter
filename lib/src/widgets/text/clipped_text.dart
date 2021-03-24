@@ -19,19 +19,20 @@ class ClippedText extends StatelessWidget {
     this.value, {
     Key key,
     this.style = LitTextStyles.sansSerif,
-    this.textAlign,
-    this.overflow,
+    this.textAlign = TextAlign.left,
+    this.overflow = TextOverflow.ellipsis,
     this.maxLines,
     this.softWrap,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final DefaultTextStyle defaultTextStyle = DefaultTextStyle.of(context);
     return Text(
       value,
       style: style,
-      textAlign: textAlign ?? TextAlign.left,
-      overflow: overflow ?? TextOverflow.ellipsis,
-      maxLines: maxLines ?? 1,
+      textAlign: textAlign,
+      overflow: overflow,
+      maxLines: maxLines ?? defaultTextStyle.maxLines,
 
       /// The soft wrap will determine whether or not
       /// the text should continue on the next break.
