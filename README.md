@@ -1,13 +1,12 @@
 # ![alt text](assets/images/Lit_UI_Kit_Logo_512px-01.png "Lit UI Kit")
 
-LitUIKit enables you to create unique user interfaces in less time. Built with Flutter this UI Kit complements the default Material Widgets shipped with
-the framework. Whose Widgets include custom implementation of Snackbars,
-AppBars and Utility Screens (e.g. to verify the user's age and to show the
-application's licenses).
+LitUIKit is a collection of Flutter widgets to create unique user interfaces. It complements the default Material Widgets shipped with Flutter. Whose Widgets include custom implementation of Snackbars,
+AppBars and a settings panel. Utility Screens (e.g. require to verify the user's age and to show the
+application's licenses) are also included.
 
 Visit our [website](https://litlifesoftware.github.io) for more details.
 
-Created and maintained by [LitLifeSoftware](https://www.instagram.com/litlifesw/) (Michael Grigorenko).
+Created and maintained by [LitLifeSoftware](https://www.github.com/litlifesoftware/).
 
 ## Getting Started
 
@@ -19,21 +18,15 @@ For help getting started with Flutter, view Flutter's
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-## Documentation
+## Screenshots
 
-View our [documentation](doc/api/index.html) for LitUIKit including all classes for further details.
+| Example App                          | Settings Panel                       | Snackbar                             | Remaining Lifetime          |
+| ------------------------------------ | ------------------------------------ | ------------------------------------ | --------------------------- |
+| ![](assets\images\Example_App_1.jpg) | ![](assets\images\Example_App_2.jpg) | ![](assets\images\Example_App_3.jpg) | ![](assets\images\RL_1.jpg) |
 
-## Apps built with LitUIKit
+## Icons
 
-- [Remaining Lifetime](https://litlifesoftware.github.io/) by LitLifeSoftware - [Google Play](https://play.google.com/store/apps/details?id=com.litlifesoftware.remaining_lifetime)
-
-> Visualize your entire life. Memorize your achievements and make every month count.
-
-> ![alt text](assets/images/Remaining_Lifetime_Screenshot.png "Remaining Lifetime")
-
-- [History Of Me](https://litlifesoftware.github.io/) by LitLifeSoftware - in production
-
-> Your own personal digital diary.
+LitUIKit does utilize its own icons ('LitIcons'). They are stored as `ttf` file and are implemented as Dart `IconData` objects.
 
 ## Example app
 
