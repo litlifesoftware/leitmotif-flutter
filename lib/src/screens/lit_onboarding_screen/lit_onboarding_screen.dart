@@ -33,7 +33,7 @@ class LitOnboardingScreen extends StatefulWidget {
     this.artwork = const SizedBox(),
     this.minCardHeight = 256.0,
     this.buttonTextStyle = LitTextStyles.sansSerifTitle,
-    this.buttonAccentColor = Colors.black,
+    this.buttonAccentColor = Colors.grey,
     this.buttonBackgroundColor = Colors.white,
     this.cardMargin = const EdgeInsets.only(
       top: 85.0,
@@ -80,7 +80,8 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
   /// Animates the displayed [Widget]s in reverse and calls the [widget.onStartCallback]
   /// method.
   void handleOnSkipPress() {
-    _fadeInAnimation.reverse().then((value) => widget.onStartCallback());
+    _fadeInAnimation.reverse();
+    widget.onStartCallback();
   }
 
   void handleIndexedPageViewScroll(double offset) {
