@@ -20,13 +20,13 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Screenshots
 
-| Example App                          | Settings Panel                       | Snackbar                             | Remaining Lifetime          |
-| ------------------------------------ | ------------------------------------ | ------------------------------------ | --------------------------- |
-| ![](assets\images\Example_App_1.jpg) | ![](assets\images\Example_App_2.jpg) | ![](assets\images\Example_App_3.jpg) | ![](assets\images\RL_1.jpg) |
+| Example App                           | Settings Panel                        | Snackbar                              | Remaining Lifetime           |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- | ---------------------------- |
+| ![1](assets\images\Example_App_1.jpg) | ![2](assets\images\Example_App_2.jpg) | ![3](assets\images\Example_App_3.jpg) | ![4](assets\images\RL_1.jpg) |
 
 ## Icons
 
-LitUIKit does utilize its own icons ('LitIcons'). They are stored as `ttf` file and are implemented as Dart `IconData` objects.
+LitUIKit does utilize its own icons ('LitIcons'). They are stored inside a `ttf` file and are implemented as Dart `IconData` objects.
 
 ## Example app
 
