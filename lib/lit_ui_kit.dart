@@ -88,3 +88,6 @@ export 'src/widgets/lit_scaffold/lit_scaffold.dart';
 export 'src/widgets/loading_indicators/juggling_loading_indicator.dart';
 export 'src/widgets/page_views/indexed_page_view.dart';
 export 'src/widgets/decorations/lit_lock_icon.dart';
+export 'src/model/lit_notification_data.dart';
+export 'src/controller/lit_notification_controller.dart';
+export 'src/widgets/containers/lit_notification_container.dart';

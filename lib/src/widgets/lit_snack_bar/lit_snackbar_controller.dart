@@ -20,16 +20,25 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 /// {@end-tool}
 ///
 class LitSnackbarController {
+  final Duration animationDuration;
+  final Duration displayDuration;
+
   /// The [AnimationController] necessary to animate the [LitSnackbar].
   AnimationController animationController;
+
+  LitSnackbarController({
+    this.animationDuration = const Duration(
+      milliseconds: 350,
+    ),
+    this.displayDuration = const Duration(milliseconds: 3500),
+  });
 
   /// Initalizes the [AnimationController] by passing the provided [TickerProvider].
   void init(TickerProvider vsync) {
     animationController = AnimationController(
-        vsync: vsync,
-        duration: Duration(
-          milliseconds: 350,
-        ));
+      vsync: vsync,
+      duration: animationDuration,
+    );
   }
 
   /// Dispose this [LitSnackbarController].
@@ -41,23 +50,30 @@ class LitSnackbarController {
     animationController.dispose();
   }
 
-  /// Slides in the [LitSnackbar] by playing the [AnimationController]'s animation methods
-  /// after each other. First play the animation forward from the beginning, pause it for
-  /// a specific [Duration] and try to play the animation in reverse, if the previous one
-  /// has been completed. In case of a disposal of the [AnimationController] during the
-  /// method execution, an exception will be caught.
-  void showSnackBar() {
-    animationController.forward(from: 0).then(
-          (value) => Future.delayed(Duration(milliseconds: 3500), () {
-            try {
+  /// Slides in the [LitSnackbar] by playing the [AnimationController]'s animation. It will
+  /// then either play the reverse animation after the forward animation completed, or it
+  /// will just stay at the 'animation complete' state to be disposed otherwise.
+  ///
+  /// First play the animation forward from the beginning, pause it for a specific [Duration]
+  /// and try to play the animation in reverse, if the previous one has been completed. In
+  /// case of a disposal of the [AnimationController] during the method execution, an exception
+  /// will be caught.
+  Future<void> showSnackBar({bool reverseAnimation = true}) {
+    return animationController.forward(from: 0).then(
+      (value) {
+        return Future.delayed(displayDuration, () {
+          try {
+            if (reverseAnimation) {
               if (animationController.status == AnimationStatus.completed) {
                 animationController.reverse();
               }
-            } catch (e) {
-              _catchError();
             }
-          }),
-        );
+          } catch (e) {
+            _throwError();
+          }
+        });
+      },
+    );
   }
 
   /// Dismisses the [LitSnackbar].
@@ -68,14 +84,14 @@ class LitSnackbarController {
       try {
         animationController.reverse(from: 1.0);
       } catch (e) {
-        _catchError();
+        _throwError();
       }
     }
   }
 
   /// Print the error text if there has been an error while playing the
   /// animation.
-  void _catchError() {
+  void _throwError() {
     throw Exception(
         ["Error while playing the animation on the CustomSnackBar"]);
   }

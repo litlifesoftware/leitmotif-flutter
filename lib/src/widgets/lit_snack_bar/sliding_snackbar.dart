@@ -72,6 +72,7 @@ class SlidingSnackbar extends StatelessWidget implements LitSnackbar {
                   0,
                   0),
               child: InkWell(
+                borderRadius: borderRadius,
                 onTap: () {
                   customSnackBarController.dismissSnackBar();
                 },
