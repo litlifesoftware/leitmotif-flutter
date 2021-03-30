@@ -10,10 +10,10 @@ class AgeConfirmationCalendarNavigator extends StatelessWidget {
 
   /// Creates a [AgeConfirmationCalendarNavigator].
   const AgeConfirmationCalendarNavigator({
-    Key key,
-    @required this.unitLabel,
-    @required this.decreaseUnitCallback,
-    @required this.increaseUnitCallback,
+    Key? key,
+    required this.unitLabel,
+    required this.decreaseUnitCallback,
+    required this.increaseUnitCallback,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

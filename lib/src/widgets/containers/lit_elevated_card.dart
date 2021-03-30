@@ -19,8 +19,8 @@ class LitElevatedCard extends StatelessWidget {
   /// The child widget wrapped by the card.
   final Widget child;
   const LitElevatedCard({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.padding = const EdgeInsets.symmetric(
       vertical: 8.0,
       horizontal: 14.0,

@@ -32,7 +32,7 @@ class LitGradientCard extends StatelessWidget {
   final List<Color> colors;
 
   /// The child widget wrapped by the card.
-  final Widget child;
+  final Widget? child;
 
   /// Creates a [LitGradientCard].
   ///
@@ -40,7 +40,7 @@ class LitGradientCard extends StatelessWidget {
   /// card. The [landscapeWidthFactor] should be set to `1.0` if there should be no
   /// difference between landscape and portrait mode layouting.
   const LitGradientCard({
-    Key key,
+    Key? key,
     this.padding = const EdgeInsets.all(0.0),
     this.margin = const EdgeInsets.all(0.0),
     this.landscapeWidthFactor = 0.60,

@@ -24,7 +24,7 @@ class LitSnackbarController {
   final Duration displayDuration;
 
   /// The [AnimationController] necessary to animate the [LitSnackbar].
-  AnimationController animationController;
+  late AnimationController animationController;
 
   LitSnackbarController({
     this.animationDuration = const Duration(

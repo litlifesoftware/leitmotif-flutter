@@ -1,11 +1,6 @@
-import 'dart:ui';
-
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
-
 class CalendarController {
   //DateTime selectedDate;
-  DateTime templateDate;
+  DateTime? templateDate;
   final List<DateTime> derivateDates = [];
 
   CalendarController() {
@@ -14,7 +9,7 @@ class CalendarController {
 
   void init() {
     templateDate = DateTime.now();
-    _setDerivateDates(templateDate);
+    _setDerivateDates(templateDate!);
   }
 
   final List<String> weekdays = [
@@ -48,37 +43,37 @@ class CalendarController {
   }
 
   void selectMonth(int month) {
-    templateDate = DateTime(templateDate.year, month + 1, 0);
-    _setDerivateDates(templateDate);
+    templateDate = DateTime(templateDate!.year, month + 1, 0);
+    _setDerivateDates(templateDate!);
   }
 
   void selectYear(int year) {
-    templateDate = DateTime(year, templateDate.month + 1, 0);
-    _setDerivateDates(templateDate);
+    templateDate = DateTime(year, templateDate!.month + 1, 0);
+    _setDerivateDates(templateDate!);
   }
 
   /// Decrease the [templateDate] [DateTime] by one month.
   void decreaseByMonth() {
-    templateDate = DateTime(templateDate.year, templateDate.month, 0);
-    _setDerivateDates(templateDate);
+    templateDate = DateTime(templateDate!.year, templateDate!.month, 0);
+    _setDerivateDates(templateDate!);
   }
 
   /// Increase the [templateDate] [DateTime] by one month.
   void increaseByMonth() {
-    templateDate = DateTime(templateDate.year, templateDate.month + 2, 0);
-    _setDerivateDates(templateDate);
+    templateDate = DateTime(templateDate!.year, templateDate!.month + 2, 0);
+    _setDerivateDates(templateDate!);
   }
 
   /// Decrease the [templateDate] [DateTime] by one year.
   void decreaseByYear() {
-    templateDate = DateTime(templateDate.year - 1, templateDate.month + 1, 0);
-    _setDerivateDates(templateDate);
+    templateDate = DateTime(templateDate!.year - 1, templateDate!.month + 1, 0);
+    _setDerivateDates(templateDate!);
   }
 
   /// Increase the [templateDate] [DateTime] by one year.
   void increaseByYear() {
-    templateDate = DateTime(templateDate.year + 1, templateDate.month + 1, 0);
-    _setDerivateDates(templateDate);
+    templateDate = DateTime(templateDate!.year + 1, templateDate!.month + 1, 0);
+    _setDerivateDates(templateDate!);
   }
 
   void _setDerivateDates(DateTime referencedDate) {

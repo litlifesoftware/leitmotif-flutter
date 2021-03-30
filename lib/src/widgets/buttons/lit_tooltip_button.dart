@@ -6,7 +6,7 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 ///
 /// As tooltip the provided [text] is shown.
 class LitTooltipContainer extends StatefulWidget {
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final Widget child;
   final String text;
   final double borderRadius;
@@ -14,10 +14,10 @@ class LitTooltipContainer extends StatefulWidget {
 
   /// Creates a [LitTooltipContainer].
   const LitTooltipContainer({
-    Key key,
-    @required this.backgroundColor,
-    @required this.child,
-    @required this.text,
+    Key? key,
+    required this.backgroundColor,
+    required this.child,
+    required this.text,
     this.borderRadius = 22.0,
     this.padding = const EdgeInsets.symmetric(
       vertical: 8.0,
@@ -30,7 +30,7 @@ class LitTooltipContainer extends StatefulWidget {
 
 class _LitTooltipContainerState extends State<LitTooltipContainer>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   void handleLongPressStart(LongPressStartDetails details) {
     _animationController.forward(from: 0.0);
@@ -59,7 +59,7 @@ class _LitTooltipContainerState extends State<LitTooltipContainer>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
         animation: _animationController,
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return Stack(
             children: [
               Align(
@@ -92,7 +92,7 @@ class _LitTooltipContainerState extends State<LitTooltipContainer>
               Align(
                 alignment: Alignment.topLeft,
                 child: AnimatedOpacity(
-                  duration: _animationController.duration,
+                  duration: _animationController.duration!,
                   opacity: _animationController.value,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -134,6 +134,5 @@ class _LitTooltipContainerState extends State<LitTooltipContainer>
             ],
           );
         });
-    ;
   }
 }

@@ -8,7 +8,7 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 /// Use this [LitSnackbar] to customize the styling of your snackbar and
 /// to display the provided child [Widget] inside the [LitSnackbar].
 class SlidingSnackbar extends StatelessWidget implements LitSnackbar {
-  final LitSnackbarController customSnackBarController;
+  final LitSnackbarController? customSnackBarController;
 
   /// The total width of the [SlidingSnackbar].
   final double width;
@@ -33,11 +33,11 @@ class SlidingSnackbar extends StatelessWidget implements LitSnackbar {
   /// Displaying the provided [child] widget.
 
   const SlidingSnackbar({
-    Key key,
-    @required this.customSnackBarController,
+    Key? key,
+    required this.customSnackBarController,
     this.width = 200.0,
     this.height = 80.0,
-    @required this.child,
+    required this.child,
     this.alignment = Alignment.topRight,
     this.padding = const EdgeInsets.symmetric(
       vertical: 32.0,
@@ -52,8 +52,8 @@ class SlidingSnackbar extends StatelessWidget implements LitSnackbar {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: customSnackBarController.animationController,
-      builder: (BuildContext context, Widget widget) {
+      animation: customSnackBarController!.animationController,
+      builder: (BuildContext context, Widget? widget) {
         return Align(
           alignment: alignment,
           child: Padding(
@@ -68,13 +68,13 @@ class SlidingSnackbar extends StatelessWidget implements LitSnackbar {
                   /// padding.
 
                   ((width + (padding.right + padding.left)) *
-                      (1 - customSnackBarController.animationController.value)),
+                      (1 - customSnackBarController!.animationController.value)),
                   0,
                   0),
               child: InkWell(
                 borderRadius: borderRadius,
                 onTap: () {
-                  customSnackBarController.dismissSnackBar();
+                  customSnackBarController!.dismissSnackBar();
                 },
                 child: SizedBox(
                   /// Specify the height of the snack bar.
@@ -99,8 +99,8 @@ class SlidingSnackbar extends StatelessWidget implements LitSnackbar {
                             borderRadius: borderRadius,
                             gradient: LinearGradient(
                                 colors: [
-                                  Colors.grey[300].withOpacity(0.4),
-                                  Colors.grey[100].withOpacity(0.3),
+                                  Colors.grey[300]!.withOpacity(0.4),
+                                  Colors.grey[100]!.withOpacity(0.3),
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -119,5 +119,5 @@ class SlidingSnackbar extends StatelessWidget implements LitSnackbar {
   }
 
   @override
-  LitSnackbarController get controller => this.customSnackBarController;
+  LitSnackbarController? get controller => this.customSnackBarController;
 }

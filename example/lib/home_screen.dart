@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class LitUIKitHomescreen extends StatefulWidget {
-  LitUIKitHomescreen({Key key}) : super(key: key);
+  LitUIKitHomescreen({Key? key}) : super(key: key);
 
   @override
   _LitUIKitHomescreenState createState() => _LitUIKitHomescreenState();
 }
 
 class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
-  SettingsPanelController settingsPanelController;
-  LitSnackbarController customSnackBarController;
-  LitNotificationController _notificationController;
-  bool darkMode;
-  DateTime dayOfBirth;
+  SettingsPanelController? settingsPanelController;
+  LitSnackbarController? customSnackBarController;
+  LitNotificationController? _notificationController;
+  bool? darkMode;
+  DateTime? dayOfBirth;
 
-  void onSubmitDayOfBirth(DateTime date) {
+  void onSubmitDayOfBirth(DateTime? date) {
     Navigator.pop(context);
     setState(() {
       dayOfBirth = date;
@@ -24,20 +24,20 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
   }
 
   void showSnackbar() {
-    customSnackBarController.showSnackBar();
+    customSnackBarController!.showSnackBar();
   }
 
   Color get buttonTextColor {
-    return darkMode ? Colors.white : LitColors.lightGrey;
+    return darkMode! ? Colors.white : LitColors.lightGrey;
   }
 
   Color get buttonBorderColor {
-    return darkMode ? Colors.white : LitColors.lightGrey;
+    return darkMode! ? Colors.white : LitColors.lightGrey;
   }
 
   void _addNotification() {
     setState(() {
-      _notificationController.add(
+      _notificationController!.add(
         LitNotificationData(
           description: "${DateTime.now().toIso8601String()}",
           icon: LitIcons.bolt,
@@ -59,23 +59,23 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
   @override
   Widget build(BuildContext context) {
     return LitNotificationContainer(
-      controller: _notificationController,
+      controller: _notificationController!,
       child: LitScaffold(
-        backgroundColor: darkMode ? LitColors.darkBlue : Colors.white,
+        backgroundColor: darkMode! ? LitColors.darkBlue : Colors.white,
         appBar: LitAppBar(
           title: "LitUIKit Example",
-          backgroundColor: darkMode ? LitColors.darkBlue : LitColors.lightGrey,
+          backgroundColor: darkMode! ? LitColors.darkBlue : LitColors.lightGrey,
           textStyle: LitTextStyles.sansSerif
-              .copyWith(color: darkMode ? Colors.white : LitColors.mediumGrey),
+              .copyWith(color: darkMode! ? Colors.white : LitColors.mediumGrey),
         ),
         snackBar: IconSnackbar(
             litSnackBarController: customSnackBarController,
             text: "Snack Bar!",
             iconData: LitIcons.info),
         settingsPanel: SettingsPanel(
-          controller: settingsPanelController,
+          controller: settingsPanelController!,
           title: "Settings",
-          darkMode: darkMode,
+          darkMode: darkMode!,
           settingsTiles: [
             SettingsTile(
               onValueToggled: (toggledValue) {
@@ -83,8 +83,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   darkMode = toggledValue;
                 });
               },
-              darkMode: darkMode,
-              enabled: darkMode,
+              darkMode: darkMode!,
+              enabled: darkMode!,
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
@@ -94,8 +94,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   darkMode = toggledValue;
                 });
               },
-              darkMode: darkMode,
-              enabled: darkMode,
+              darkMode: darkMode!,
+              enabled: darkMode!,
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
@@ -105,8 +105,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   darkMode = toggledValue;
                 });
               },
-              darkMode: darkMode,
-              enabled: darkMode,
+              darkMode: darkMode!,
+              enabled: darkMode!,
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
@@ -116,8 +116,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   darkMode = toggledValue;
                 });
               },
-              darkMode: darkMode,
-              enabled: darkMode,
+              darkMode: darkMode!,
+              enabled: darkMode!,
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
@@ -127,8 +127,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   darkMode = toggledValue;
                 });
               },
-              darkMode: darkMode,
-              enabled: darkMode,
+              darkMode: darkMode!,
+              enabled: darkMode!,
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
@@ -138,8 +138,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   darkMode = toggledValue;
                 });
               },
-              darkMode: darkMode,
-              enabled: darkMode,
+              darkMode: darkMode!,
+              enabled: darkMode!,
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
@@ -149,8 +149,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   darkMode = toggledValue;
                 });
               },
-              darkMode: darkMode,
-              enabled: darkMode,
+              darkMode: darkMode!,
+              enabled: darkMode!,
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
@@ -164,7 +164,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
             ),
             backgroundColor: LitColors.mediumGrey,
             onPressed: () => {
-                  settingsPanelController.showSettingsPanel(),
+                  settingsPanelController!.showSettingsPanel(),
                 }),
         body: ScrollableColumn(
           mainAxisSize: MainAxisSize.max,
@@ -184,7 +184,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                     ? Padding(
                         padding: const EdgeInsets.only(top: 32.0),
                         child: ClippedText(
-                          "You were born in ${dayOfBirth.year}",
+                          "You were born in ${dayOfBirth!.year}",
                           style: LitTextStyles.sansSerif.copyWith(
                             color: buttonTextColor,
                           ),
@@ -273,6 +273,14 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                         CupertinoPageRoute(
                           builder: (context) {
                             return LitOnboardingScreen(
+                              artwork: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 64.0),
+                                child: Text(
+                                  "Onboarding Screen",
+                                  style: LitTextStyles.sansSerifTitle,
+                                ),
+                              ),
                               onStartCallback: () =>
                                   Navigator.of(context).pop(),
                               instructionCards: [

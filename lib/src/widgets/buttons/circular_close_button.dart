@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 class CircularCloseButton extends StatelessWidget {
   final void Function() onPressed;
   final Color borderColor;
-  final Color color;
+  final Color? color;
 
   /// Create a [CircularCloseButton].
   ///
   /// Pass an [onPressed] method to implement the functionality.
   const CircularCloseButton({
-    Key key,
-    @required this.onPressed,
-    @required this.borderColor,
-    @required this.color,
+    Key? key,
+    required this.onPressed,
+    required this.borderColor,
+    required this.color,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

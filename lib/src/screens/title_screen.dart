@@ -8,7 +8,7 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class TitleScreen extends StatefulWidget {
   final Duration animationDuration;
-  final String titleImageName;
+  final String? titleImageName;
   final String credits;
 
   /// Creates a [TitleScreen] widget.
@@ -16,10 +16,10 @@ class TitleScreen extends StatefulWidget {
   /// If no [titleImageName] is provided, no image will be
   /// displayed.
   const TitleScreen({
-    Key key,
-    @required this.animationDuration,
+    Key? key,
+    required this.animationDuration,
     this.titleImageName,
-    @required this.credits,
+    required this.credits,
   }) : super(key: key);
   @override
   _TitleScreenState createState() => _TitleScreenState();
@@ -27,7 +27,7 @@ class TitleScreen extends StatefulWidget {
 
 class _TitleScreenState extends State<TitleScreen>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   Duration get animationDuration {
     return Duration(milliseconds: widget.animationDuration.inMilliseconds ~/ 2);
@@ -54,7 +54,7 @@ class _TitleScreenState extends State<TitleScreen>
     return Scaffold(
       body: AnimatedBuilder(
           animation: _animationController,
-          builder: (BuildContext context, Widget child) {
+          builder: (BuildContext context, Widget? child) {
             return AnimatedOpacity(
                 duration: animationDuration,
                 opacity: _animationController.value,

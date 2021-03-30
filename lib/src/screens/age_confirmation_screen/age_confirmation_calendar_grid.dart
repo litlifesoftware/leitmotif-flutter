@@ -11,15 +11,15 @@ class AgeConfirmationCalendarGrid extends StatelessWidget {
   final void Function() increaseByMonthCallback;
 
   final void Function(DateTime) onDayCardTapCallback;
-  final AgeConfirmationController ageConfirmationController;
+  final AgeConfirmationController? ageConfirmationController;
   final CalendarController calendarController;
   const AgeConfirmationCalendarGrid({
-    Key key,
-    @required this.decreaseByMonthCallback,
-    @required this.increaseByMonthCallback,
-    @required this.onDayCardTapCallback,
-    @required this.ageConfirmationController,
-    @required this.calendarController,
+    Key? key,
+    required this.decreaseByMonthCallback,
+    required this.increaseByMonthCallback,
+    required this.onDayCardTapCallback,
+    required this.ageConfirmationController,
+    required this.calendarController,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -47,12 +47,12 @@ class AgeConfirmationCalendarGrid extends StatelessWidget {
                 calendarController.derivateDates[count];
             dayList.add(
               AgeConfirmationCalendarDayCard(
-                selectedDate: ageConfirmationController.selectedDate,
+                selectedDate: ageConfirmationController!.selectedDate,
                 templateDate: calendarController.templateDate,
                 iteratedDate: iteratedDate,
                 padding: 60.0,
-                sameMonth: ageConfirmationController.sameMonth,
-                isValid: ageConfirmationController.dayOfBirthIsValid,
+                sameMonth: ageConfirmationController!.sameMonth,
+                isValid: ageConfirmationController!.dayOfBirthIsValid,
                 onPressed: onDayCardTapCallback,
                 calendarController: calendarController,
               ),

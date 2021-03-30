@@ -5,8 +5,8 @@ class LitConstrainedSizedBox extends StatelessWidget {
   final Widget child;
   final double landscapeWidthFactor;
   const LitConstrainedSizedBox({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.landscapeWidthFactor = 0.5,
   }) : super(key: key);
   @override

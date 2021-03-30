@@ -19,14 +19,14 @@ class LitSwitchButton extends StatelessWidget {
   /// the current state as a word using the [enabledText] and [disabledText]
   /// values.
   const LitSwitchButton({
-    Key key,
-    @required this.enabled,
-    @required this.onValueToggle,
-    @required this.enabledBorderColor,
-    @required this.disabledBorderColor,
-    @required this.enabledText,
-    @required this.disabledText,
-    @required this.textStyle,
+    Key? key,
+    required this.enabled,
+    required this.onValueToggle,
+    required this.enabledBorderColor,
+    required this.disabledBorderColor,
+    required this.enabledText,
+    required this.disabledText,
+    required this.textStyle,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

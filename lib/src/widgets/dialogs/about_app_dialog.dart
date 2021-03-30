@@ -5,24 +5,24 @@ import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class AboutAppDialog extends StatefulWidget {
-  final String launcherImageUrl;
+  final String? launcherImageUrl;
   final String title;
-  final String subtitle;
+  final String? subtitle;
   final String appName;
-  final String infoLabel;
-  final String infoDescription;
+  final String? infoLabel;
+  final String? infoDescription;
 
   final Color backgroundColor;
   final TextStyle textStyle;
   final Color accentColor;
-  final WebsiteInfo websiteInfo;
+  final WebsiteInfo? websiteInfo;
   final EdgeInsets padding;
   const AboutAppDialog({
-    Key key,
+    Key? key,
     this.launcherImageUrl,
     this.title = "About",
     this.subtitle,
-    @required this.appName,
+    required this.appName,
     this.infoLabel,
     this.infoDescription,
     this.backgroundColor = LitColors.lightGrey,
@@ -30,17 +30,13 @@ class AboutAppDialog extends StatefulWidget {
     this.accentColor = Colors.white,
     this.websiteInfo,
     this.padding = const EdgeInsets.only(top: 64.0, bottom: 16.0),
-  })  : assert(
-          title != null,
-          appName != null,
-        ),
-        super(key: key);
+  }) : super(key: key);
   @override
   _AboutAppDialogState createState() => _AboutAppDialogState();
 }
 
 class _AboutAppDialogState extends State<AboutAppDialog> {
-  PackageInfo _packageInfo;
+  PackageInfo? _packageInfo;
 
   Future<void> _initPackageInfo() async {
     final PackageInfo info = await PackageInfo.fromPlatform();
@@ -50,7 +46,7 @@ class _AboutAppDialogState extends State<AboutAppDialog> {
   }
 
   Future<void> _launchURL() async {
-    String url = "${widget.websiteInfo.websiteUrl}";
+    String url = "${widget.websiteInfo!.websiteUrl}";
     if (await UrlLauncher.canLaunch(url)) {
       await UrlLauncher.launch(url);
     } else {
@@ -104,7 +100,7 @@ class _AboutAppDialogState extends State<AboutAppDialog> {
                   ),
                 ),
                 Text(
-                  "Version: ${_packageInfo != null ? _packageInfo.version : ''}",
+                  "Version: ${_packageInfo != null ? _packageInfo!.version : ''}",
                   style: widget.textStyle.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -161,7 +157,7 @@ class _AboutAppDialogState extends State<AboutAppDialog> {
                           child: Text(
                             "${widget.subtitle}",
                             style: widget.textStyle.copyWith(
-                              color: widget.textStyle.color.withOpacity(0.9),
+                              color: widget.textStyle.color!.withOpacity(0.9),
                               fontSize: 13.0,
                               fontWeight: FontWeight.w700,
                             ),
@@ -182,7 +178,7 @@ class _AboutAppDialogState extends State<AboutAppDialog> {
                                 "${widget.infoLabel}",
                                 style: widget.textStyle.copyWith(
                                   color:
-                                      widget.textStyle.color.withOpacity(0.7),
+                                      widget.textStyle.color!.withOpacity(0.7),
                                   fontSize: 12.0,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -222,7 +218,7 @@ class _AboutAppDialogState extends State<AboutAppDialog> {
                               padding: const EdgeInsets.symmetric(
                                   vertical: 4.0, horizontal: 16.0),
                               child: Text(
-                                "${widget.websiteInfo.websiteDescription}",
+                                "${widget.websiteInfo!.websiteDescription}",
                                 style: widget.textStyle.copyWith(
                                   color: widget.accentColor,
                                   fontSize: 14.0,
@@ -243,7 +239,7 @@ class _AboutAppDialogState extends State<AboutAppDialog> {
                   child: Text(
                     PlatformInfo.legalNotice,
                     style: widget.textStyle.copyWith(
-                      color: widget.textStyle.color.withOpacity(0.7),
+                      color: widget.textStyle.color!.withOpacity(0.7),
                       fontSize: 11.0,
                       fontWeight: FontWeight.w700,
                     ),

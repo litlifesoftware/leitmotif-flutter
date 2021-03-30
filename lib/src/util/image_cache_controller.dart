@@ -39,8 +39,8 @@ class ImageCacheController {
   /// {@end-tool}
 
   ImageCacheController({
-    @required this.context,
-    @required this.assetImages,
+    required this.context,
+    required this.assetImages,
     this.showDebugOutput = false,
   }) {
     _cacheAssetBundleImages();

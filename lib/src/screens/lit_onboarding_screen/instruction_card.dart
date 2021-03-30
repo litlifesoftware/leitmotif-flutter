@@ -9,9 +9,9 @@ class InstructionCard extends StatelessWidget {
   final Color titleBackgroundColor;
   final int maxLines;
   const InstructionCard({
-    Key key,
-    @required this.title,
-    @required this.description,
+    Key? key,
+    required this.title,
+    required this.description,
     this.titleTextStyle = LitTextStyles.sansSerifTitle,
     this.descriptionTextStyle = LitTextStyles.sansSerif,
     this.titleBackgroundColor = LitColors.lightGrey,

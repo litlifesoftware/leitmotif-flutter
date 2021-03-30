@@ -5,17 +5,17 @@ class SettingsPanelBackgroundOverlay extends StatelessWidget {
   final SettingsPanelController controller;
 
   const SettingsPanelBackgroundOverlay({
-    Key key,
-    @required this.controller,
+    Key? key,
+    required this.controller,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: controller.animationController,
-      builder: (BuildContext context, Widget widget) {
+      builder: (BuildContext context, Widget? widget) {
         return SizedBox(
           child: AnimatedOpacity(
-            duration: controller.animationController.duration,
+            duration: controller.animationController.duration!,
             opacity: controller.animationController.value,
             child: controller.isAnimatingOrShown
                 ? SizedBox(

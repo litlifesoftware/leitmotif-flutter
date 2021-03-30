@@ -20,7 +20,7 @@ class PackageLicenses {
       // Bind this license to the package using the next index value. This
       // creates a contract that this license must be inserted at this same
       // index value.
-      packageLicenseJunctions[package].add(licenses.length);
+      packageLicenseJunctions[package]!.add(licenses.length);
     }
     licenses.add(entry); // Completion of the contract above.
   }
@@ -32,13 +32,13 @@ class PackageLicenses {
   /// the package index values.
   void _addPackage(String package) {
     if (!packageLicenseJunctions.containsKey(package)) {
-      packageLicenseJunctions[package] = List<int>();
+      packageLicenseJunctions[package] = [];
       packages.add(package);
     }
   }
 
   /// Sort the packages inside the list by comparing two provided [String]s to each other.
-  void sortPackages([int compare(String a, String b)]) {
+  void sortPackages([int compare(String a, String b)?]) {
     packages.sort(compare ??
         (String a, String b) {
           return a.toLowerCase().compareTo(b.toLowerCase());

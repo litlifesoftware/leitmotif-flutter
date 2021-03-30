@@ -12,16 +12,16 @@ class TitledCollapsibleCard extends StatefulWidget implements CollapsibleCard {
   final void Function() onCloseCallback;
   final Widget title;
   const TitledCollapsibleCard({
-    Key key,
-    @required this.collapsibleCardController,
+    Key? key,
+    required this.collapsibleCardController,
     this.height = 250.0,
-    @required this.closeButtonBorderColor,
-    @required this.closeButtonColor,
-    @required this.child,
-    @required this.backgroundColor,
-    @required this.topBarColor,
-    @required this.onCloseCallback,
-    @required this.title,
+    required this.closeButtonBorderColor,
+    required this.closeButtonColor,
+    required this.child,
+    required this.backgroundColor,
+    required this.topBarColor,
+    required this.onCloseCallback,
+    required this.title,
   }) : super(key: key);
 
   @override

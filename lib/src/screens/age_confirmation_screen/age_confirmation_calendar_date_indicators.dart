@@ -3,16 +3,15 @@ import 'package:intl/intl.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'package:lit_ui_kit/src/util/calendar_controller.dart';
 import 'package:lit_ui_kit/src/widgets/containers/on_value_changed_animated_container.dart';
-import 'age_confirmation_controller.dart';
 
 /// A [Widget] to display the current calendar date on the [AgeConfirmationScreen].
 
 class AgeConfirmationCalendarDateIndicators extends StatefulWidget {
-  final AnimationController parentAnimation;
+  final AnimationController? parentAnimation;
 
   final CalendarController calendarController;
-  final bool shouldAnimateMonthTransition;
-  final bool shouldAnimateYearTransition;
+  final bool? shouldAnimateMonthTransition;
+  final bool? shouldAnimateYearTransition;
 
   final void Function(bool) toggleShouldAnimateMonthTransitionCallback;
   final void Function(bool) setShouldAnimateYearTransitionCallback;
@@ -20,13 +19,13 @@ class AgeConfirmationCalendarDateIndicators extends StatefulWidget {
   /// Creates a [AgeConfirmationCalendarDateIndicators].
 
   const AgeConfirmationCalendarDateIndicators({
-    Key key,
-    @required this.parentAnimation,
-    @required this.calendarController,
-    @required this.shouldAnimateMonthTransition,
-    @required this.shouldAnimateYearTransition,
-    @required this.toggleShouldAnimateMonthTransitionCallback,
-    @required this.setShouldAnimateYearTransitionCallback,
+    Key? key,
+    required this.parentAnimation,
+    required this.calendarController,
+    required this.shouldAnimateMonthTransition,
+    required this.shouldAnimateYearTransition,
+    required this.toggleShouldAnimateMonthTransitionCallback,
+    required this.setShouldAnimateYearTransitionCallback,
   }) : super(key: key);
 
   @override
@@ -65,7 +64,7 @@ class _AgeConfirmationCalendarDateIndicatorsState
                             horizontal: 16.0,
                           ),
                           child: ClippedText(
-                            "${DateFormat.MMMM('${Localizations.localeOf(context).languageCode}').format(widget.calendarController.templateDate)}",
+                            "${DateFormat.MMMM('${Localizations.localeOf(context).languageCode}').format(widget.calendarController.templateDate!)}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
@@ -87,7 +86,7 @@ class _AgeConfirmationCalendarDateIndicatorsState
                           ),
                           borderRadius: BorderRadius.circular(20.0),
                         ),
-                        duration: widget.parentAnimation.duration,
+                        duration: widget.parentAnimation!.duration,
                         toggleShouldAnimate:
                             widget.toggleShouldAnimateMonthTransitionCallback)
                     // AnimatedBuilder(
@@ -149,7 +148,7 @@ class _AgeConfirmationCalendarDateIndicatorsState
                           horizontal: 16.0,
                         ),
                         child: ClippedText(
-                          "${DateFormat('yyyy').format(widget.calendarController.templateDate)}",
+                          "${DateFormat('yyyy').format(widget.calendarController.templateDate!)}",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
@@ -171,7 +170,7 @@ class _AgeConfirmationCalendarDateIndicatorsState
                         ),
                         borderRadius: BorderRadius.circular(20.0),
                       ),
-                      duration: widget.parentAnimation.duration,
+                      duration: widget.parentAnimation!.duration,
                       toggleShouldAnimate:
                           widget.setShouldAnimateYearTransitionCallback),
 

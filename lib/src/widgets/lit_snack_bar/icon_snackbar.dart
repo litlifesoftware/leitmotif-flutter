@@ -6,7 +6,7 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 /// It will return a [SlidingSnackbar] whose [SlidingSnackbar.child] will
 /// be set to a [Row] containing the provided [Icon] and an information text.
 class IconSnackbar extends StatelessWidget implements LitSnackbar {
-  final LitSnackbarController litSnackBarController;
+  final LitSnackbarController? litSnackBarController;
   final String text;
   final TextStyle textStyle;
   final IconData iconData;
@@ -20,11 +20,11 @@ class IconSnackbar extends StatelessWidget implements LitSnackbar {
   ///
   /// Specify the displayed [IconData] and the description text.
   const IconSnackbar({
-    Key key,
-    @required this.litSnackBarController,
-    @required this.text,
+    Key? key,
+    required this.litSnackBarController,
+    required this.text,
     this.textStyle = LitTextStyles.sansSerif,
-    @required this.iconData,
+    required this.iconData,
     this.iconBackgroundColor = LitColors.mediumGrey,
     this.iconColor = Colors.white,
     this.alignment = Alignment.topRight,
@@ -86,5 +86,5 @@ class IconSnackbar extends StatelessWidget implements LitSnackbar {
   }
 
   @override
-  LitSnackbarController get controller => this.litSnackBarController;
+  LitSnackbarController? get controller => this.litSnackBarController;
 }

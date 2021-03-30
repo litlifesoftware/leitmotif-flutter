@@ -13,7 +13,7 @@ class LitLockIcon extends StatelessWidget {
   ///
   /// Specify the [size] and [color] property to customize its appearance.
   const LitLockIcon({
-    Key key,
+    Key? key,
 
     /// The total size of the [LitLockIcon] painted on the screen.
     this.size = 48.0,
@@ -36,8 +36,8 @@ class _LockPainter extends CustomPainter {
   final double lockSize;
   final Color color;
   const _LockPainter({
-    @required this.lockSize,
-    @required this.color,
+    required this.lockSize,
+    required this.color,
   });
   @override
   void paint(Canvas canvas, Size size) {
@@ -51,7 +51,7 @@ class _LockPainter extends CustomPainter {
 
     final Color white = const Color(0xFFFFFFFF);
     final Color dark = color;
-    final Color light = Color.lerp(
+    final Color? light = Color.lerp(
       dark,
       white,
       0.65,
@@ -74,7 +74,7 @@ class _LockPainter extends CustomPainter {
           enclosureHeight,
         ),
         [
-          light,
+          light!,
           dark,
         ],
       )

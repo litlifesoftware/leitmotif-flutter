@@ -8,12 +8,12 @@ class LitOfflineAppDisclaimerScreen extends StatelessWidget {
   final void Function() onConfirm;
 
   const LitOfflineAppDisclaimerScreen({
-    Key key,
+    Key? key,
     this.titleText = "Your data is safe",
     this.descriptionText =
         "This app only stores your data on your device.\n\nWe nor any other third party are able to access your private data.",
     this.confirmButtonLabel = "Okay",
-    @required this.onConfirm,
+    required this.onConfirm,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -86,9 +86,9 @@ class _DescriptionCard extends StatelessWidget {
   final String text;
 
   const _DescriptionCard({
-    Key key,
-    @required this.title,
-    @required this.text,
+    Key? key,
+    required this.title,
+    required this.text,
   }) : super(key: key);
 
   @override
@@ -154,9 +154,9 @@ class _ConfirmButton extends StatelessWidget {
   final void Function() onConfirm;
 
   const _ConfirmButton({
-    Key key,
-    @required this.label,
-    @required this.onConfirm,
+    Key? key,
+    required this.label,
+    required this.onConfirm,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

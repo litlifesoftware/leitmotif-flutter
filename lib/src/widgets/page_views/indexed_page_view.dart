@@ -15,13 +15,13 @@ class IndexedPageView extends StatefulWidget {
 
   /// An additional listener to return the current page scroll offset
   /// to the parent widget.
-  final void Function(double offset) pageScrollListener;
+  final void Function(double? offset)? pageScrollListener;
 
   /// Creates an [IndexedPageView] widget.
   const IndexedPageView({
-    Key key,
+    Key? key,
     this.height = 256.0,
-    @required this.children,
+    required this.children,
     this.physics = const BouncingScrollPhysics(),
     this.pageScrollListener,
     this.indicatorColor = Colors.white,
@@ -32,9 +32,9 @@ class IndexedPageView extends StatefulWidget {
 }
 
 class _IndexedPageViewState extends State<IndexedPageView> {
-  PageController _pageController;
-  int _currentPage;
-  double _selectedIndicatorOpacity;
+  PageController? _pageController;
+  int? _currentPage;
+  double? _selectedIndicatorOpacity;
 
   @override
   void initState() {
@@ -43,14 +43,15 @@ class _IndexedPageViewState extends State<IndexedPageView> {
     _selectedIndicatorOpacity = 1.0;
     _pageController = PageController();
 
-    _pageController.addListener(() {
-      if (_pageController.hasClients) {
+    _pageController!.addListener(() {
+      if (_pageController!.hasClients) {
         setState(() {
-          _currentPage = _pageController.page.ceil();
-          _selectedIndicatorOpacity = (_pageController.page - _currentPage) + 1;
+          _currentPage = _pageController!.page!.ceil();
+          _selectedIndicatorOpacity =
+              (_pageController!.page! - _currentPage!) + 1;
         });
         if (widget.pageScrollListener != null) {
-          widget.pageScrollListener(_pageController.page);
+          widget.pageScrollListener!(_pageController!.page);
         }
       }
     });
@@ -58,7 +59,7 @@ class _IndexedPageViewState extends State<IndexedPageView> {
 
   @override
   void dispose() {
-    _pageController.dispose();
+    _pageController!.dispose();
     super.dispose();
   }
 
@@ -82,7 +83,7 @@ class _IndexedPageViewState extends State<IndexedPageView> {
               top: widget.height + widget.indicatorSpacingTop,
             ),
             child: Builder(builder: (BuildContext context) {
-              final List<Widget> dots = List<Widget>();
+              final List<Widget> dots = [];
               for (int i = 0; i < widget.children.length; i++) {
                 dots.add(_ScrolledCardIndicator(
                   isSelected: _currentPage == i,
@@ -107,13 +108,13 @@ class _IndexedPageViewState extends State<IndexedPageView> {
 
 class _ScrolledCardIndicator extends StatelessWidget {
   final bool isSelected;
-  final double selectedIndicatorOpacity;
+  final double? selectedIndicatorOpacity;
   final Color indicatorColor;
   const _ScrolledCardIndicator({
-    Key key,
-    @required this.isSelected,
-    @required this.selectedIndicatorOpacity,
-    @required this.indicatorColor,
+    Key? key,
+    required this.isSelected,
+    required this.selectedIndicatorOpacity,
+    required this.indicatorColor,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -126,8 +127,8 @@ class _ScrolledCardIndicator extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
             color: indicatorColor.withOpacity(isSelected
-                ? (selectedIndicatorOpacity >= 0.5
-                    ? (selectedIndicatorOpacity)
+                ? (selectedIndicatorOpacity! >= 0.5
+                    ? selectedIndicatorOpacity!
                     : 0.5)
                 : 0.5),
           ),

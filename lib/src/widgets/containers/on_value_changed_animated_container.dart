@@ -4,16 +4,16 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 class OnValueChangedAnimatedContainer extends StatefulWidget {
   final Widget child;
   final BoxDecoration decoration;
-  final Duration duration;
-  final bool shouldAnimate;
+  final Duration? duration;
+  final bool? shouldAnimate;
   final void Function(bool) toggleShouldAnimate;
   const OnValueChangedAnimatedContainer({
-    Key key,
-    @required this.shouldAnimate,
-    @required this.child,
-    @required this.decoration,
-    @required this.duration,
-    @required this.toggleShouldAnimate,
+    Key? key,
+    required this.shouldAnimate,
+    required this.child,
+    required this.decoration,
+    required this.duration,
+    required this.toggleShouldAnimate,
   }) : super(key: key);
   @override
   _OnValueChangedAnimatedContainerState createState() =>
@@ -23,15 +23,15 @@ class OnValueChangedAnimatedContainer extends StatefulWidget {
 class _OnValueChangedAnimatedContainerState
     extends State<OnValueChangedAnimatedContainer>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  AnimationController? _animationController;
 
   /// Animates the label [Widget] displaying the currently selected month.
   void _animateOnChange() {
-    if (widget.shouldAnimate) {
-      _animationController
+    if (widget.shouldAnimate!) {
+      _animationController!
           .reverse()
-          .then((value) => widget.toggleShouldAnimate(!widget.shouldAnimate))
-          .then((value) => {_animationController.forward(from: 0.0)});
+          .then((value) => widget.toggleShouldAnimate(!widget.shouldAnimate!))
+          .then((value) => {_animationController!.forward(from: 0.0)});
     }
   }
 
@@ -45,11 +45,11 @@ class _OnValueChangedAnimatedContainerState
       duration: (widget.duration),
       vsync: this,
     );
-    _animationController.forward();
+    _animationController!.forward();
   }
 
   void _disposeAnimations() {
-    _animationController.dispose();
+    _animationController!.dispose();
   }
 
   @override
@@ -67,14 +67,14 @@ class _OnValueChangedAnimatedContainerState
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-        animation: _animationController,
-        builder: (BuildContext context, Widget _) {
+        animation: _animationController!,
+        builder: (BuildContext context, Widget? _) {
           _animateOnChange();
           return FadeInTransformScaleContainer(
             animationController: _animationController,
-            scale: ((1 - (_animationController.value * 0.06125))),
+            scale: 1 - (_animationController!.value * 0.06125),
             transform: Matrix4.translationValues(
-                0, -5 + (5 * _animationController.value), 0),
+                0, -5 + (5 * _animationController!.value), 0),
             child: Container(
               decoration: widget.decoration,
               child: widget.child,

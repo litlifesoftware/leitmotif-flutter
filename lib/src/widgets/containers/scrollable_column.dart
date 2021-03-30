@@ -10,7 +10,7 @@ import 'package:flutter/widgets.dart';
 /// provided value.
 class ScrollableColumn extends StatelessWidget {
   /// The [ScrollController] to controll the scroll interaction.
-  final ScrollController controller;
+  final ScrollController? controller;
 
   /// The scrolling behavior.
   final ScrollPhysics physics;
@@ -75,10 +75,10 @@ class ScrollableColumn extends StatelessWidget {
   ///   lower than the screen's height, the [verticalCut] should be set to the amount of
   ///   pixels, that should be subtracted from the overall box constraints (height).
   const ScrollableColumn({
-    Key key,
+    Key? key,
     this.controller,
     this.physics = const BouncingScrollPhysics(),
-    @required this.children,
+    required this.children,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.mainAxisSize = MainAxisSize.max,

@@ -7,9 +7,9 @@ class LitPushedButton extends StatefulWidget {
   final Duration animationDuration;
   final double minScale;
   const LitPushedButton({
-    Key key,
-    @required this.onPressed,
-    @required this.child,
+    Key? key,
+    required this.onPressed,
+    required this.child,
     this.animateOnStart = true,
     this.animationDuration = const Duration(milliseconds: 35),
     this.minScale = 0.8,
@@ -20,7 +20,7 @@ class LitPushedButton extends StatefulWidget {
 
 class _LitPushedButtonState extends State<LitPushedButton>
     with TickerProviderStateMixin {
-  AnimationController _pushAnimation;
+  late AnimationController _pushAnimation;
 
   void _onPressed() {
     _pushAnimation

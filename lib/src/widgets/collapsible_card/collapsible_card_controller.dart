@@ -2,7 +2,7 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/widgets.dart';
 
 class CollapsibleCardController {
-  AnimationController animationController;
+  late AnimationController animationController;
 
   /// Initializes the [AnimationController] of this [CollapsibleCardController].
   /// This method will be called on the [LitScaffold] [StatefulWidget] by

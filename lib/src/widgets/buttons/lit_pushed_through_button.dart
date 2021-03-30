@@ -16,11 +16,11 @@ class LitPushedThroughButton extends StatefulWidget {
 
   /// Create a [PushedThroughButton] [Widget].
   const LitPushedThroughButton(
-      {Key key,
-      @required this.child,
+      {Key? key,
+      required this.child,
       this.backgroundColor = Colors.white,
       this.accentColor = Colors.grey,
-      @required this.onPressed,
+      required this.onPressed,
       this.borderRadius = 15.0,
       this.margin = const EdgeInsets.symmetric(
         vertical: 8.0,
@@ -44,10 +44,10 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
     with TickerProviderStateMixin {
   /// States whether or not the button is currently pressed.
   /// It will not be pressed by default.
-  bool _isPressed;
+  late bool _isPressed;
 
   /// The [AnimationController] responsible for the button animation.
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   /// Handles the actions once the button is pressed down by the user.
   ///
@@ -111,20 +111,20 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
                       _isPressed
                           ? widget.backgroundColor
                           : Color.lerp(
-                              widget.backgroundColor, widget.accentColor, 0.35),
+                              widget.backgroundColor, widget.accentColor, 0.35)!,
                       _isPressed
                           ? Color.lerp(
-                              widget.backgroundColor, widget.accentColor, 0.45)
+                              widget.backgroundColor, widget.accentColor, 0.45)!
                           : widget.backgroundColor,
                       _isPressed
                           ? Color.lerp(
-                              widget.backgroundColor, widget.accentColor, 0.55)
+                              widget.backgroundColor, widget.accentColor, 0.55)!
                           : widget.backgroundColor,
                       Color.lerp(
                         widget.backgroundColor,
                         widget.backgroundColor,
                         _isPressed ? 0.20 : 0.50,
-                      ),
+                      )!,
                     ],
                     stops: [
                       0.0,

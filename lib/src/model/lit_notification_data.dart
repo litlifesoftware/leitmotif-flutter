@@ -14,7 +14,7 @@ class LitNotificationData {
   ///
   /// * [icon] is the [IconData] used to assemble the icon next to the text.
   const LitNotificationData({
-    @required this.description,
-    @required this.icon,
+    required this.description,
+    required this.icon,
   });
 }

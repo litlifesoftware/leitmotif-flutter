@@ -17,10 +17,10 @@ class JugglingLoadingIndicator extends StatefulWidget {
 
   /// Creates a [JungglingLoadingIndicator].
   const JugglingLoadingIndicator({
-    Key key,
-    @required this.indicatorColor,
-    @required this.backgroundColor,
-    @required this.shadowOpacity,
+    Key? key,
+    required this.indicatorColor,
+    required this.backgroundColor,
+    required this.shadowOpacity,
   }) : super(key: key);
   @override
   _JugglingLoadingIndicatorState createState() =>
@@ -30,10 +30,10 @@ class JugglingLoadingIndicator extends StatefulWidget {
 class _JugglingLoadingIndicatorState extends State<JugglingLoadingIndicator>
     with TickerProviderStateMixin {
   /// Animates the rotation [Transform].
-  AnimationController rotateAnimationController;
+  AnimationController? rotateAnimationController;
 
   /// Animates the scale [Transform].
-  AnimationController scaleAnimationController;
+  late AnimationController scaleAnimationController;
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _JugglingLoadingIndicatorState extends State<JugglingLoadingIndicator>
         duration: Duration(
           milliseconds: 2000,
         ));
-    rotateAnimationController.repeat(reverse: false);
+    rotateAnimationController!.repeat(reverse: false);
     scaleAnimationController = AnimationController(
         vsync: this,
         duration: Duration(
@@ -54,7 +54,7 @@ class _JugglingLoadingIndicatorState extends State<JugglingLoadingIndicator>
 
   @override
   void dispose() {
-    rotateAnimationController.dispose();
+    rotateAnimationController!.dispose();
     scaleAnimationController.dispose();
     super.dispose();
   }
@@ -89,13 +89,13 @@ class _JugglingLoadingIndicatorState extends State<JugglingLoadingIndicator>
                       scale: 1.0,
                       child: Center(
                           child: AnimatedBuilder(
-                              animation: rotateAnimationController,
+                              animation: rotateAnimationController!,
                               builder: (context, child) {
                                 return Transform.scale(
                                   scale: -0.7 -
                                       (scaleAnimationController.value * -0.4),
                                   child: Transform.rotate(
-                                    angle: (rotateAnimationController.value) *
+                                    angle: (rotateAnimationController!.value) *
                                         2 *
                                         Math.pi,
                                     child: CustomPaint(
@@ -119,13 +119,13 @@ class _JugglingLoadingIndicatorState extends State<JugglingLoadingIndicator>
 }
 
 class JugglingLoadingIndicatorPaint extends CustomPainter {
-  final Animation animation;
+  final Animation? animation;
   final double size;
   final Color color;
   JugglingLoadingIndicatorPaint({
-    @required this.animation,
-    @required this.size,
-    @required this.color,
+    required this.animation,
+    required this.size,
+    required this.color,
   });
   @override
   void paint(Canvas canvas, Size size) {
@@ -157,6 +157,6 @@ class JugglingLoadingIndicatorPaint extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return this.animation.status == AnimationStatus.forward;
+    return this.animation!.status == AnimationStatus.forward;
   }
 }

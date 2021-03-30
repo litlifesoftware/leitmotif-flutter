@@ -14,10 +14,10 @@ class LitRoundedFlatButton extends StatelessWidget {
   /// Its [BorderRadius] is set by default to have a radius of
   /// 25.0 pixels.
   const LitRoundedFlatButton({
-    Key key,
-    @required this.color,
-    @required this.child,
-    @required this.onPressed,
+    Key? key,
+    required this.color,
+    required this.child,
+    required this.onPressed,
     this.radius = 25.0,
     this.padding = const EdgeInsets.symmetric(
       vertical: 4.0,

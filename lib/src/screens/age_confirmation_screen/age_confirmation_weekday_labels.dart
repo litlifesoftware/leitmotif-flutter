@@ -3,8 +3,6 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'package:lit_ui_kit/src/util/calendar_controller.dart';
 import 'package:lit_ui_kit/src/util/calendar_localization_service.dart';
 
-import 'age_confirmation_controller.dart';
-
 /// A [Widget] to display all weekdays on the calendar view.
 ///
 /// The labels will be used as a legend on the calendar view.
@@ -13,8 +11,8 @@ class AgeConfirmationWeekdayLabels extends StatelessWidget {
 
   /// Creates a [WeekdayLabels] [Widget].
   const AgeConfirmationWeekdayLabels({
-    Key key,
-    @required this.calendarController,
+    Key? key,
+    required this.calendarController,
   }) : super(key: key);
 
   @override
@@ -24,7 +22,7 @@ class AgeConfirmationWeekdayLabels extends StatelessWidget {
         horizontal: 30.0,
       ),
       child: Builder(builder: (context) {
-        List<Widget> labels = List<Widget>();
+        List<Widget> labels = [];
         List<String> localizedWeekdays =
             CalendarLocalizationService.getLocalizedCalendarWeekdays(
                 Localizations.localeOf(context));

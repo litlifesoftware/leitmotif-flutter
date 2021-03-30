@@ -14,12 +14,12 @@ class LitTransformAnimatedButton extends StatefulWidget {
   /// styled and transformed button. Its [Animation] will be
   /// handled using its own [State] and [AnimationController].
   const LitTransformAnimatedButton({
-    Key key,
-    @required this.child,
-    @required this.onTap,
-    @required this.backgroundColor,
-    @required this.verticalTransform,
-    @required this.horizontalTransform,
+    Key? key,
+    required this.child,
+    required this.onTap,
+    required this.backgroundColor,
+    required this.verticalTransform,
+    required this.horizontalTransform,
   }) : super(key: key);
   @override
   _LitTransformAnimatedButtonState createState() =>
@@ -28,7 +28,7 @@ class LitTransformAnimatedButton extends StatefulWidget {
 
 class _LitTransformAnimatedButtonState extends State<LitTransformAnimatedButton>
     with TickerProviderStateMixin {
-  AnimationController _buttonAnimationController;
+  late AnimationController _buttonAnimationController;
 
   @override
   void initState() {

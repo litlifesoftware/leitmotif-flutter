@@ -10,7 +10,7 @@ import 'package:flutter/widgets.dart';
 class AnimationOnScrollController {
   /// The [ScrollController] of the widgets on which the animation on scroll
   /// should be played.
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
 
   /// The direction in which the animation should be played.
   final AnimationDirection direction;
@@ -57,10 +57,10 @@ class AnimationOnScrollController {
   /// ```
   /// {@end-tool}
   AnimationOnScrollController({
-    @required this.scrollController,
+    required this.scrollController,
     this.direction = AnimationDirection.forward,
     this.requiredScrollOffset = 32.0,
-    @required this.vsync,
+    required this.vsync,
     this.animationDuration = const Duration(milliseconds: 130),
   }) {
     _initAnimation();
@@ -68,7 +68,7 @@ class AnimationOnScrollController {
   }
 
   /// The animation controller required to play the animation.
-  AnimationController animationController;
+  late AnimationController animationController;
 
   /// Plays the [Animation] forward.
   void _show() {
@@ -98,13 +98,13 @@ class AnimationOnScrollController {
   /// is scrolling in the same direction and only if the previous animation has been
   /// finished playing using the [ScrollController.keepScrollOffset] property.
   void _animateOnScroll() {
-    if (scrollController.keepScrollOffset) {
-      if (scrollController.offset > requiredScrollOffset) {
+    if (scrollController!.keepScrollOffset) {
+      if (scrollController!.offset > requiredScrollOffset) {
         _show();
-      } else if (scrollController.offset > 0 &&
-          scrollController.offset <= requiredScrollOffset) {
+      } else if (scrollController!.offset > 0 &&
+          scrollController!.offset <= requiredScrollOffset) {
         _hide();
-      } else if (scrollController.offset <= 0) {
+      } else if (scrollController!.offset <= 0) {
         _hide();
       }
     }
@@ -118,7 +118,7 @@ class AnimationOnScrollController {
 
   /// Attaches the [_animateOnScroll] listener to the provided [ScrollController].
   void _attach() {
-    scrollController.addListener(_animateOnScroll);
+    scrollController!.addListener(_animateOnScroll);
   }
 
   /// Disposes the [AnimationController].

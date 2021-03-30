@@ -13,7 +13,7 @@ class LitOnboardingScreen extends StatefulWidget {
   final Color buttonAccentColor;
   final EdgeInsets cardMargin;
   const LitOnboardingScreen({
-    Key key,
+    Key? key,
     this.backgroundDecoration = const BoxDecoration(
       gradient: const LinearGradient(
           begin: Alignment.topRight,
@@ -27,9 +27,9 @@ class LitOnboardingScreen extends StatefulWidget {
             0.86,
           ]),
     ),
-    @required this.onStartCallback,
-    @required this.instructionCards,
-    @required this.onStartButtonText,
+    required this.onStartCallback,
+    required this.instructionCards,
+    required this.onStartButtonText,
     this.artwork = const SizedBox(),
     this.minCardHeight = 256.0,
     this.buttonTextStyle = LitTextStyles.sansSerifTitle,
@@ -47,8 +47,8 @@ class LitOnboardingScreen extends StatefulWidget {
 
 class _LitOnboardingScreenState extends State<LitOnboardingScreen>
     with TickerProviderStateMixin {
-  AnimationController _fadeInAnimation;
-  AnimationController _artworkAnimation;
+  AnimationController? _fadeInAnimation;
+  late AnimationController _artworkAnimation;
   bool showAppTitle = true;
 
   /// Initializes the [AnimationController]s and plays the [Animation]s.
@@ -67,12 +67,12 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
         ));
     _artworkAnimation.forward();
 
-    _fadeInAnimation.forward();
+    _fadeInAnimation!.forward();
   }
 
   /// Disposes the [AnimationController]s.
   void disposeAnimation() {
-    _fadeInAnimation.dispose();
+    _fadeInAnimation!.dispose();
 
     _artworkAnimation.dispose();
   }
@@ -80,12 +80,12 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
   /// Animates the displayed [Widget]s in reverse and calls the [widget.onStartCallback]
   /// method.
   void handleOnSkipPress() {
-    _fadeInAnimation.reverse();
+    _fadeInAnimation!.reverse();
     widget.onStartCallback();
   }
 
-  void handleIndexedPageViewScroll(double offset) {
-    if (offset > 0.0) {
+  void handleIndexedPageViewScroll(double? offset) {
+    if (offset! > 0.0) {
       if (offset < 1.0) {
         if (!_artworkAnimation.isAnimating) {
           _artworkAnimation.forward();
@@ -106,8 +106,8 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
           child: FadeInTransformContainer(
             animationController: _fadeInAnimation,
             child: AnimatedOpacity(
-              duration: _fadeInAnimation.duration,
-              opacity: _fadeInAnimation.value,
+              duration: _fadeInAnimation!.duration!,
+              opacity: _fadeInAnimation!.value,
               child: IndexedPageView(
                 children: widget.instructionCards,
                 pageScrollListener: handleIndexedPageViewScroll,
@@ -116,7 +116,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
             transform: Matrix4.translationValues(
                 (-MediaQuery.of(context).size.width +
                     (MediaQuery.of(context).size.width *
-                        _fadeInAnimation.value)),
+                        _fadeInAnimation!.value)),
                 0,
                 0),
           ),
@@ -171,8 +171,8 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
         height: MediaQuery.of(context).size.height,
         decoration: widget.backgroundDecoration,
         child: AnimatedBuilder(
-          animation: _fadeInAnimation,
-          builder: (BuildContext context, Widget _) {
+          animation: _fadeInAnimation!,
+          builder: (BuildContext context, Widget? _) {
             return Stack(
               children: [
                 AnimatedBuilder(
@@ -182,7 +182,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
                       alignment: Alignment.topCenter,
                       child: AnimatedOpacity(
                         opacity: _artworkAnimation.value,
-                        duration: _artworkAnimation.duration,
+                        duration: _artworkAnimation.duration!,
                         child: widget.artwork,
                       ),
                     );

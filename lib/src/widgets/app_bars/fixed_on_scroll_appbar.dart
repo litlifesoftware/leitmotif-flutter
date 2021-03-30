@@ -9,7 +9,7 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 /// removing it from the visible area.
 class FixedOnScrollAppbar extends StatefulWidget implements CustomAppBar {
   /// The [ScrollController]'s scroll offset will state whether to animate the app bar.
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
 
   /// The offset required to trigger the app bar to appear. It defaults to 50.0.
   final double maxScrollOffset;
@@ -25,13 +25,13 @@ class FixedOnScrollAppbar extends StatefulWidget implements CustomAppBar {
 
   //
   final bool shouldNavigateBack;
-  final void Function() onInvalidNavigation;
+  final void Function()? onInvalidNavigation;
 
   /// Creates a [FixedOnScrollAppbar] widget.
   /// The [ScrollController] is required in order to register a scroll change.
   const FixedOnScrollAppbar({
-    Key key,
-    @required this.scrollController,
+    Key? key,
+    required this.scrollController,
     this.maxScrollOffset = 50.0,
     this.backgroundColor = Colors.white,
     this.boxShadow = const [
@@ -43,7 +43,7 @@ class FixedOnScrollAppbar extends StatefulWidget implements CustomAppBar {
       )
     ],
     this.height = CustomAppBar.height,
-    @required this.child,
+    required this.child,
     this.padding = const EdgeInsets.symmetric(horizontal: 8.0),
     this.shouldNavigateBack = true,
     this.onInvalidNavigation,
@@ -55,7 +55,7 @@ class FixedOnScrollAppbar extends StatefulWidget implements CustomAppBar {
 
 class _FixedOnScrollAppbarState extends State<FixedOnScrollAppbar>
     with TickerProviderStateMixin {
-  AnimationOnScrollController _animationOnScrollController;
+  late AnimationOnScrollController _animationOnScrollController;
 
   @override
   void initState() {
@@ -80,7 +80,7 @@ class _FixedOnScrollAppbarState extends State<FixedOnScrollAppbar>
       animation: _animationOnScrollController.animationController,
       builder: (context, _) {
         return AnimatedOpacity(
-          duration: _animationOnScrollController.animationController.duration,
+          duration: _animationOnScrollController.animationController.duration!,
           opacity: _animationOnScrollController.animationController.value,
           child: Transform(
             transform: Matrix4.translationValues(

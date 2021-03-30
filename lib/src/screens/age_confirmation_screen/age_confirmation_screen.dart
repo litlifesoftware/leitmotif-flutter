@@ -21,7 +21,7 @@ class AgeConfirmationScreen extends StatefulWidget {
   /// by the user.
   ///
   /// The method could then in turn trigger an database transaction.
-  final void Function(DateTime) onSubmitCallback;
+  final void Function(DateTime?) onSubmitCallback;
 
   /// The age the user is required to be in order to use the application.
   ///
@@ -58,8 +58,8 @@ class AgeConfirmationScreen extends StatefulWidget {
   /// For localization purposes each label can display different [String]s.
   /// Pass different argument values to override the default English localization.
   const AgeConfirmationScreen({
-    Key key,
-    @required this.onSubmitCallback,
+    Key? key,
+    required this.onSubmitCallback,
     this.requiredAge = 13,
     this.titleLabel = "Set your day of birth",
     this.submitButtonLabel = "Continue with this date",
@@ -74,62 +74,62 @@ class AgeConfirmationScreen extends StatefulWidget {
 
 class _AgeConfirmationScreenState extends State<AgeConfirmationScreen>
     with TickerProviderStateMixin {
-  AnimationController _calendarTransition;
-  LitSnackbarController _customSnackBarController;
+  AnimationController? _calendarTransition;
+  LitSnackbarController? _customSnackBarController;
 
-  AgeConfirmationController _ageConfirmationController;
+  AgeConfirmationController? _ageConfirmationController;
   CalendarController _calendarController = CalendarController();
-  bool _shouldAnimateMonthTransition;
-  bool _shouldAnimateYearTransition;
+  bool? _shouldAnimateMonthTransition;
+  bool? _shouldAnimateYearTransition;
 
-  Locale _locale;
+  Locale? _locale;
 
   void _decreaseByMonth() {
     setState(() => _calendarController.decreaseByMonth());
-    _calendarTransition.forward(from: 0);
-    _shouldAnimateMonthTransition = !_shouldAnimateMonthTransition;
+    _calendarTransition!.forward(from: 0);
+    _shouldAnimateMonthTransition = !_shouldAnimateMonthTransition!;
   }
 
   void _increaseByMonth() {
     setState(() => _calendarController.increaseByMonth());
-    _calendarTransition.forward(from: 0);
-    _shouldAnimateMonthTransition = !_shouldAnimateMonthTransition;
+    _calendarTransition!.forward(from: 0);
+    _shouldAnimateMonthTransition = !_shouldAnimateMonthTransition!;
   }
 
   void _decreaseByYear() {
     setState(() => _calendarController.decreaseByYear());
-    _calendarTransition.forward(from: 0);
-    _shouldAnimateYearTransition = !_shouldAnimateYearTransition;
+    _calendarTransition!.forward(from: 0);
+    _shouldAnimateYearTransition = !_shouldAnimateYearTransition!;
   }
 
   void _increaseByYear() {
     setState(() => _calendarController.increaseByYear());
-    _calendarTransition.forward(from: 0);
-    _shouldAnimateYearTransition = !_shouldAnimateYearTransition;
+    _calendarTransition!.forward(from: 0);
+    _shouldAnimateYearTransition = !_shouldAnimateYearTransition!;
   }
 
   void onDayCardTap(DateTime iteratedDate) {
-    if (iteratedDate.month == _calendarController.templateDate.month) {
-      if (_ageConfirmationController.selectedDate == null) {
-        if (_ageConfirmationController.sameMonth(
-            iteratedDate, _calendarController.templateDate)) {
+    if (iteratedDate.month == _calendarController.templateDate!.month) {
+      if (_ageConfirmationController!.selectedDate == null) {
+        if (_ageConfirmationController!
+            .sameMonth(iteratedDate, _calendarController.templateDate!)) {
           setState(() {
-            _ageConfirmationController.setSelectedDate(iteratedDate);
+            _ageConfirmationController!.setSelectedDate(iteratedDate);
           });
         }
       } else {
-        if (iteratedDate == _ageConfirmationController.selectedDate) {
+        if (iteratedDate == _ageConfirmationController!.selectedDate) {
           setState(() {
-            _ageConfirmationController.selectedDate = null;
+            _ageConfirmationController!.selectedDate = null;
           });
         } else {
           setState(() {
-            _ageConfirmationController.setSelectedDate(iteratedDate);
+            _ageConfirmationController!.setSelectedDate(iteratedDate);
           });
         }
       }
     } else {
-      _customSnackBarController.showSnackBar();
+      _customSnackBarController!.showSnackBar();
     }
   }
 
@@ -146,7 +146,7 @@ class _AgeConfirmationScreenState extends State<AgeConfirmationScreen>
     _calendarTransition =
         AnimationController(vsync: this, duration: Duration(milliseconds: 200));
 
-    _calendarTransition.forward();
+    _calendarTransition!.forward();
     _shouldAnimateMonthTransition = false;
     _shouldAnimateYearTransition = false;
     super.initState();
@@ -156,12 +156,12 @@ class _AgeConfirmationScreenState extends State<AgeConfirmationScreen>
   void didChangeDependencies() {
     super.didChangeDependencies();
     _ageConfirmationController =
-        AgeConfirmationController(requiredAge: widget.requiredAge ?? 13);
+        AgeConfirmationController(requiredAge: widget.requiredAge);
   }
 
   @override
   void dispose() {
-    _calendarTransition.dispose();
+    _calendarTransition!.dispose();
     super.dispose();
   }
 
@@ -169,9 +169,9 @@ class _AgeConfirmationScreenState extends State<AgeConfirmationScreen>
   Widget build(BuildContext context) {
     return LitScaffold(
       backgroundColor: Colors.white,
-      infoBar: _ageConfirmationController.selectedDate != null &&
-              !_ageConfirmationController
-                  .dayOfBirthIsValid(_ageConfirmationController.selectedDate)
+      infoBar: _ageConfirmationController!.selectedDate != null &&
+              !_ageConfirmationController!
+                  .dayOfBirthIsValid(_ageConfirmationController!.selectedDate!)
           ? TransparentInfoBar(
               text: "${widget.notOldEnoughLabel}",
               textStyle: LitTextStyles.sansSerif.copyWith(
@@ -210,18 +210,18 @@ class _AgeConfirmationScreenState extends State<AgeConfirmationScreen>
         alignment: Alignment.topRight,
         padding: const EdgeInsets.symmetric(vertical: 32.0),
       ),
-      actionButton: _ageConfirmationController.selectedDate != null &&
-              _ageConfirmationController
-                  .dayOfBirthIsValid(_ageConfirmationController.selectedDate)
+      actionButton: _ageConfirmationController!.selectedDate != null &&
+              _ageConfirmationController!
+                  .dayOfBirthIsValid(_ageConfirmationController!.selectedDate!)
           ? AnimatedActionButton(
               alignment: Alignment.bottomCenter,
               backgroundColor: LitColors.mediumGrey.withOpacity(0.5),
               onPressed: () {
-                DateTime age = _ageConfirmationController.selectedDate;
+                DateTime? age = _ageConfirmationController!.selectedDate;
                 widget.onSubmitCallback(age);
               },
               child: Text(
-                "${widget.submitButtonLabel} (${DateFormat.yMMMd('$_locale').format(_ageConfirmationController.selectedDate)})",
+                "${widget.submitButtonLabel} (${DateFormat.yMMMd('$_locale').format(_ageConfirmationController!.selectedDate!)})",
                 textAlign: TextAlign.center,
                 style: LitTextStyles.sansSerif.copyWith(
                   fontSize: 16.0,
@@ -277,12 +277,12 @@ class _AgeConfirmationScreenState extends State<AgeConfirmationScreen>
                       },
                     ),
                     AnimatedBuilder(
-                        animation: _calendarTransition,
+                        animation: _calendarTransition!,
                         builder: (context, child) {
                           return FadeInTransformContainer(
                               animationController: _calendarTransition,
                               transform: Matrix4.translationValues(
-                                  -100 + (100 * _calendarTransition.value),
+                                  -100 + (100 * _calendarTransition!.value),
                                   0,
                                   0),
                               child: Column(

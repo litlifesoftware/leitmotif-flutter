@@ -11,10 +11,10 @@ class TransparentInfoBar extends StatefulWidget implements CustomInfoBar {
   final Color iconColor;
 
   const TransparentInfoBar({
-    Key key,
-    @required this.text,
-    @required this.textStyle,
-    @required this.iconColor,
+    Key? key,
+    required this.text,
+    required this.textStyle,
+    required this.iconColor,
   }) : super(key: key);
   @override
   _TransparentInfoBarState createState() => _TransparentInfoBarState();
@@ -22,7 +22,7 @@ class TransparentInfoBar extends StatefulWidget implements CustomInfoBar {
 
 class _TransparentInfoBarState extends State<TransparentInfoBar>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _TransparentInfoBarState extends State<TransparentInfoBar>
             animation: _animationController,
             builder: (context, child) {
               return AnimatedOpacity(
-                duration: _animationController.duration,
+                duration: _animationController.duration!,
                 opacity: _animationController.value,
                 child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),

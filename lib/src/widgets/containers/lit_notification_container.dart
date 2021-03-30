@@ -29,9 +29,9 @@ class LitNotificationContainer extends StatefulWidget {
   /// {@end-tool}
   ///
   const LitNotificationContainer({
-    Key key,
+    Key? key,
     this.child = const SizedBox(),
-    @required this.controller,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -117,10 +117,10 @@ class _NotificationItem extends StatefulWidget {
 
   /// Creates a [_NotificationItem].
   const _NotificationItem({
-    Key key,
-    @required this.notificationController,
-    @required this.notificationData,
-    @required this.onRemove,
+    Key? key,
+    required this.notificationController,
+    required this.notificationData,
+    required this.onRemove,
   }) : super(key: key);
   @override
   __NotificationItemState createState() => __NotificationItemState();
@@ -128,7 +128,7 @@ class _NotificationItem extends StatefulWidget {
 
 class __NotificationItemState extends State<_NotificationItem>
     with TickerProviderStateMixin {
-  LitSnackbarController _snackbarController;
+  LitSnackbarController? _snackbarController;
 
   /// Removes the notification data object from the list.
   void _remove(void value) {
@@ -143,7 +143,7 @@ class __NotificationItemState extends State<_NotificationItem>
     // Try to play the snackbar animation without reverse animating at the end.
     try {
       // And remove the data notification data object from the list.
-      _snackbarController.showSnackBar(reverseAnimation: false).then(_remove);
+      _snackbarController!.showSnackBar(reverseAnimation: false).then(_remove);
     } catch (e) {
       print(e);
     }
@@ -151,7 +151,7 @@ class __NotificationItemState extends State<_NotificationItem>
 
   @override
   void dispose() {
-    _snackbarController.dispose();
+    _snackbarController!.dispose();
     super.dispose();
   }
 

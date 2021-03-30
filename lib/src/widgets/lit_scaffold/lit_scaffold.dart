@@ -22,8 +22,8 @@ class LitScaffold extends StatefulWidget {
   final Widget body;
 
   /// The [CustomAppBar] displays additional information.
-  final CustomAppBar appBar;
-  final CustomInfoBar infoBar;
+  final CustomAppBar? appBar;
+  final CustomInfoBar? infoBar;
 
   /// The [LitSnackbar] displaying changes triggered by the user.
   ///
@@ -32,19 +32,19 @@ class LitScaffold extends StatefulWidget {
   ///  * [IconSnackbar], which displays an [Icon] alongside the provided
   ///    messages.
   ///  * [SlidingSnackbar], which displays the provided child [Widget].
-  final LitSnackbar snackBar;
-  final CustomActionButton actionButton;
-  final CollapsibleCard collapsibleCard;
-  final SettingsPanel settingsPanel;
+  final LitSnackbar? snackBar;
+  final CustomActionButton? actionButton;
+  final CollapsibleCard? collapsibleCard;
+  final SettingsPanel? settingsPanel;
   final bool wrapInSafeArea;
 
   /// Creates a [LitScaffold] [Widget].
 
   const LitScaffold({
-    Key key,
+    Key? key,
     this.backgroundColor = Colors.white,
     //this.darkMode = false,
-    @required this.body,
+    required this.body,
     this.snackBar,
     this.infoBar,
     this.appBar,
@@ -64,29 +64,29 @@ class _LitScaffoldState extends State<LitScaffold>
   void initState() {
     super.initState();
     if (widget.snackBar != null) {
-      widget.snackBar.controller.init(this);
+      widget.snackBar!.controller!.init(this);
     }
     if (widget.collapsibleCard != null) {
-      widget.collapsibleCard.controller.init(this);
+      widget.collapsibleCard!.controller.init(this);
     }
 
     if (widget.settingsPanel != null) {
-      widget.settingsPanel.controller.init(this);
+      widget.settingsPanel!.controller.init(this);
     }
   }
 
   @override
   void dispose() {
     if (widget.snackBar != null) {
-      widget.snackBar.controller.dispose();
+      widget.snackBar!.controller!.dispose();
     }
 
     if (widget.collapsibleCard != null) {
-      widget.collapsibleCard.controller.dispose();
+      widget.collapsibleCard!.controller.dispose();
     }
 
     if (widget.settingsPanel != null) {
-      widget.settingsPanel.controller.dispose();
+      widget.settingsPanel!.controller.dispose();
     }
     super.dispose();
   }
@@ -103,8 +103,8 @@ class _LitScaffoldState extends State<LitScaffold>
                 focusColor: Colors.transparent,
                 hoverColor: Colors.transparent,
                 onTap: () {
-                  if (widget.settingsPanel.controller.isShown) {
-                    widget.settingsPanel.controller.dismissSettingsPanel();
+                  if (widget.settingsPanel!.controller.isShown) {
+                    widget.settingsPanel!.controller.dismissSettingsPanel();
                   }
                 },
                 child: SizedBox(
@@ -114,7 +114,7 @@ class _LitScaffoldState extends State<LitScaffold>
                       children: [
                         _body,
                         SettingsPanelBackgroundOverlay(
-                            controller: widget.settingsPanel.controller)
+                            controller: widget.settingsPanel!.controller)
                       ],
                     )),
               )
@@ -139,12 +139,12 @@ class _LitScaffoldState extends State<LitScaffold>
 /// Depending on the provided [CustomAppBar] the [Padding] should be adjusted.
 class _LitScaffoldBody extends StatelessWidget {
   final Widget body;
-  final CustomAppBar appBar;
+  final CustomAppBar? appBar;
 
   const _LitScaffoldBody({
-    Key key,
-    @required this.body,
-    @required this.appBar,
+    Key? key,
+    required this.body,
+    required this.appBar,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

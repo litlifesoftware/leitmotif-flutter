@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 /// A controller class to handle functionality required on the [AgeConfirmationScreen].
@@ -16,7 +14,7 @@ class AgeConfirmationController {
   ///
   /// Pass a [requiredAge] value.
   AgeConfirmationController({
-    @required this.requiredAge,
+    required this.requiredAge,
   }) {
     // init();
   }
@@ -38,7 +36,7 @@ class AgeConfirmationController {
   ///
   /// Ensure the [selectedDate] [DateTime] will remain
   /// null until the user will make the first input.
-  DateTime selectedDate;
+  DateTime? selectedDate;
 
   // /// The [DateTime] used to create the displayed derivate
   // /// dates.

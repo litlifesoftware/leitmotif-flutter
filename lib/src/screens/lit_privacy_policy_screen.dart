@@ -11,7 +11,7 @@ class LitPrivacyPolicyScreen extends StatefulWidget {
   final String privacyText;
 
   /// The app launcher icon display on the top.
-  final String launcherIconImageUrl;
+  final String? launcherIconImageUrl;
 
   /// The 'agree' label.
   final String agreeLabel;
@@ -41,12 +41,12 @@ class LitPrivacyPolicyScreen extends StatefulWidget {
   ///
   /// * [backgroundDecoration] sets the decoration of the background layer.
   const LitPrivacyPolicyScreen({
-    Key key,
+    Key? key,
     this.title = "Privacy",
-    @required this.privacyText,
+    required this.privacyText,
     this.launcherIconImageUrl,
     this.agreeLabel = "Agree",
-    @required this.onAgreeCallback,
+    required this.onAgreeCallback,
     this.privacyTags = const [],
     this.backgroundDecoration = const BoxDecoration(
       gradient: LinearGradient(
@@ -67,7 +67,7 @@ class LitPrivacyPolicyScreen extends StatefulWidget {
 class _LitPrivacyPolicyScreenState extends State<LitPrivacyPolicyScreen>
     with TickerProviderStateMixin {
   /// [ScrollController] to animate link an animation to the user's scroll input.
-  ScrollController _scrollController;
+  ScrollController? _scrollController;
 
   @override
   void initState() {
@@ -157,8 +157,7 @@ class _LitPrivacyPolicyScreenState extends State<LitPrivacyPolicyScreen>
                                               vertical: 16.0),
                                           child: Builder(
                                             builder: (BuildContext context) {
-                                              final List<Widget> children =
-                                                  List<Widget>();
+                                              final List<Widget> children = [];
                                               for (final tag
                                                   in widget.privacyTags) {
                                                 children.add(
@@ -205,9 +204,9 @@ class _AgreeButton extends StatelessWidget {
   final void Function() onPressed;
 
   const _AgreeButton({
-    Key key,
-    @required this.label,
-    @required this.onPressed,
+    Key? key,
+    required this.label,
+    required this.onPressed,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -242,9 +241,9 @@ class _PrivacyTextCard extends StatelessWidget {
 
   /// Creates a [_PrivacyTextCard] widget.
   const _PrivacyTextCard({
-    Key key,
-    @required this.title,
-    @required this.privacyText,
+    Key? key,
+    required this.title,
+    required this.privacyText,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -309,9 +308,9 @@ class _PrivacyTagLabel extends StatelessWidget {
   /// States whether or not the attribute favours the user's privacy.
   final bool favorable;
   const _PrivacyTagLabel({
-    Key key,
-    @required this.labelText,
-    @required this.favorable,
+    Key? key,
+    required this.labelText,
+    required this.favorable,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -355,7 +354,7 @@ class PrivacyTag {
   ///
   /// The attribute values are displayed on the [LitPrivacyPolicyScreen].
   const PrivacyTag({
-    @required this.text,
-    @required this.isConform,
+    required this.text,
+    required this.isConform,
   });
 }

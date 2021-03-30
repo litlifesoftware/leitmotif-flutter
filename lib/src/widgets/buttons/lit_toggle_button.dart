@@ -6,11 +6,11 @@ class LitToggleButton extends StatefulWidget {
   final Color activeColor;
   final Color inactiveColor;
   const LitToggleButton({
-    Key key,
-    @required this.toggleCallback,
-    @required this.toggledValue,
-    @required this.activeColor,
-    @required this.inactiveColor,
+    Key? key,
+    required this.toggleCallback,
+    required this.toggledValue,
+    required this.activeColor,
+    required this.inactiveColor,
   }) : super(key: key);
 
   @override
@@ -19,7 +19,7 @@ class LitToggleButton extends StatefulWidget {
 
 class _LitToggleButtonState extends State<LitToggleButton>
     with TickerProviderStateMixin {
-  AnimationController animationController;
+  late AnimationController animationController;
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class _LitToggleButtonState extends State<LitToggleButton>
       },
       child: AnimatedBuilder(
           animation: animationController,
-          builder: (BuildContext context, Widget child) {
+          builder: (BuildContext context, Widget? child) {
             return Container(
               width: 60,
               height: 30,

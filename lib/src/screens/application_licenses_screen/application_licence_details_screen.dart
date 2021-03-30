@@ -10,17 +10,17 @@ class ApplicationLicenseDetailsScreen extends StatefulWidget {
   final bool darkMode;
   final String packageName;
   final List<LicenseEntry> licenseEntries;
-  final TextStyle licenseTextStyle;
+  final TextStyle? licenseTextStyle;
 
   /// Creates an [ApplicationLicenseDetailsScreen].
   ///
   /// Define the [darkMode] value for an alternative color scheme.
   /// Define the [licenseTextStyle] value to alter the default [TextStyle].
   const ApplicationLicenseDetailsScreen({
-    Key key,
+    Key? key,
     this.darkMode = false,
-    @required this.packageName,
-    @required this.licenseEntries,
+    required this.packageName,
+    required this.licenseEntries,
     this.licenseTextStyle,
   }) : super(key: key);
 
@@ -34,7 +34,7 @@ class _ApplicationLicenseDetailsScreenState
   /// Returns a [List] of [Text] [Widgets]s containing the license
   /// paragraphs.
   List<Text> _buildLicenseText(LicenseEntry entry) {
-    List<Text> textList = List<Text>();
+    List<Text> textList = [];
     for (LicenseParagraph paragraph in entry.paragraphs) {
       textList.add(Text(
         paragraph.text,

@@ -1,3 +1,7 @@
+## 1.0.2
+
+* Migrate to null safety
+
 ## 1.0.1
 
 * Added several new widgets and screens

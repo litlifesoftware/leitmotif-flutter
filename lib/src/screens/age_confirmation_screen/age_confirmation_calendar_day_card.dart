@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'package:lit_ui_kit/src/util/calendar_controller.dart';
 
-import 'age_confirmation_controller.dart';
-
 /// A [Widget] to display a day of in the [CalendarGrid].
 class AgeConfirmationCalendarDayCard extends StatelessWidget {
-  final DateTime selectedDate;
-  final DateTime templateDate;
+  final DateTime? selectedDate;
+  final DateTime? templateDate;
   final DateTime iteratedDate;
   final double padding;
   final bool Function(DateTime, DateTime) sameMonth;
@@ -17,15 +15,15 @@ class AgeConfirmationCalendarDayCard extends StatelessWidget {
 
   /// Creates a [AgeConfirmationCalendarDayCard].
   const AgeConfirmationCalendarDayCard({
-    Key key,
-    @required this.selectedDate,
-    @required this.templateDate,
-    @required this.iteratedDate,
-    @required this.padding,
-    @required this.sameMonth,
-    @required this.isValid,
-    @required this.onPressed,
-    @required this.calendarController,
+    Key? key,
+    required this.selectedDate,
+    required this.templateDate,
+    required this.iteratedDate,
+    required this.padding,
+    required this.sameMonth,
+    required this.isValid,
+    required this.onPressed,
+    required this.calendarController,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -47,12 +45,12 @@ class AgeConfirmationCalendarDayCard extends StatelessWidget {
                         10.0,
                       ),
                       color: selectedDate == iteratedDate
-                          ? isValid(selectedDate)
+                          ? isValid(selectedDate!)
                               ? LitColors.mediumGrey.withOpacity(0.4)
                               : LitColors.lightRed
                           : Colors.white,
                       boxShadow: [
-                        sameMonth(iteratedDate, templateDate)
+                        sameMonth(iteratedDate, templateDate!)
                             ? BoxShadow(
                                 color: Colors.black38,
                                 blurRadius: 24,
@@ -70,7 +68,7 @@ class AgeConfirmationCalendarDayCard extends StatelessWidget {
                     child: Center(
                       child: Text(
                         selectedDate == iteratedDate
-                            ? isValid(selectedDate)
+                            ? isValid(selectedDate!)
                                 ? "${iteratedDate.day}"
                                 : "!"
                             : "${iteratedDate.day}",
@@ -81,13 +79,13 @@ class AgeConfirmationCalendarDayCard extends StatelessWidget {
                           color:
 
                               /// If its the month displayed on the view
-                              sameMonth(iteratedDate, templateDate)
+                              sameMonth(iteratedDate, templateDate!)
 
                                   /// If the selectedDate is equal to the iteratedDate
                                   ? selectedDate == iteratedDate
 
                                       /// And the age is valid
-                                      ? isValid(selectedDate)
+                                      ? isValid(selectedDate!)
                                           ? Colors.white
                                           : LitColors.darkRed
                                       : LitColors.mediumGrey

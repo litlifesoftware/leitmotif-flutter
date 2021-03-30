@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class LitBackButton extends StatefulWidget {
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final Color iconColor;
   final IconData icon;
   final EdgeInsets padding;
   final bool shouldNavigateBack;
-  final void Function() onInvalidNavigation;
+  final void Function()? onInvalidNavigation;
   const LitBackButton({
-    Key key,
-    @required this.backgroundColor,
-    @required this.iconColor,
+    Key? key,
+    required this.backgroundColor,
+    required this.iconColor,
     this.icon = LitIcons.arrow_left_solid,
     this.padding = const EdgeInsets.symmetric(
       horizontal: 16.0,
@@ -32,7 +32,7 @@ class _LitBackButtonState extends State<LitBackButton> {
         Navigator.of(context).pop();
       } else {
         if (widget.onInvalidNavigation != null) {
-          widget.onInvalidNavigation();
+          widget.onInvalidNavigation!();
         }
       }
     }

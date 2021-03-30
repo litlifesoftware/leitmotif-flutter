@@ -13,11 +13,11 @@ class LitGradientButton extends StatefulWidget {
   final List<BoxShadow> boxShadow;
   final BorderRadius borderRadius;
   const LitGradientButton({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.color = Colors.white,
     this.accentColor = const Color(0xFFE7E7E7),
-    @required this.onPressed,
+    required this.onPressed,
     this.padding = const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
     this.animated = false,
     this.begin = Alignment.topRight,
@@ -45,7 +45,7 @@ class LitGradientButton extends StatefulWidget {
 
 class _LitGradientButtonState extends State<LitGradientButton>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   @override
   void initState() {
@@ -82,9 +82,9 @@ class _LitGradientButtonState extends State<LitGradientButton>
                     gradient: LinearGradient(
                       colors: [
                         Color.lerp(widget.color, widget.accentColor,
-                            _animationController.value),
+                            _animationController.value)!,
                         Color.lerp(widget.accentColor, widget.color,
-                            _animationController.value)
+                            _animationController.value)!
                       ],
                       stops: [
                         widget.animated
@@ -99,14 +99,14 @@ class _LitGradientButtonState extends State<LitGradientButton>
                               widget.begin,
                               widget.end,
                               _animationController.value,
-                            )
+                            )!
                           : widget.begin,
                       end: widget.animated
                           ? Alignment.lerp(
                               Alignment.bottomRight,
                               widget.begin,
                               _animationController.value,
-                            )
+                            )!
                           : widget.end,
                     ),
                     borderRadius: widget.borderRadius,

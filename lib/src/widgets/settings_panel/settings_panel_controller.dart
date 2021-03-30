@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 class SettingsPanelController {
-  AnimationController animationController;
+  late AnimationController animationController;
 
   void init(TickerProvider vsync) {
     animationController = AnimationController(

@@ -15,10 +15,10 @@ class LitRoundedElevatedButton extends StatefulWidget {
   /// Its [BorderRadius] is set by default to have a radius of
   /// 25.0 pixels.
   const LitRoundedElevatedButton({
-    Key key,
-    @required this.color,
-    @required this.child,
-    @required this.onPressed,
+    Key? key,
+    required this.color,
+    required this.child,
+    required this.onPressed,
     this.radius = 25.0,
     this.padding = const EdgeInsets.symmetric(
       vertical: 4.0,
@@ -41,7 +41,7 @@ class LitRoundedElevatedButton extends StatefulWidget {
 
 class _LitRoundedElevatedButtonState extends State<LitRoundedElevatedButton>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   Future<void> _animate() {
     return _animationController

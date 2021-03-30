@@ -23,9 +23,9 @@ class SettingsPanel extends StatefulWidget {
   /// It will be used to allow the user to enable and disable
   /// various options.
   const SettingsPanel({
-    Key key,
-    @required this.controller,
-    @required this.title,
+    Key? key,
+    required this.controller,
+    required this.title,
     this.darkMode = false,
     this.settingsTiles = const <SettingsTile>[],
     this.children = const <Widget>[],
@@ -39,8 +39,8 @@ class SettingsPanel extends StatefulWidget {
 
 class _SettingsPanelState extends State<SettingsPanel>
     with TickerProviderStateMixin {
-  ScrollController _scrollController;
-  SyncAnimationOnScrollController _syncAnimationOnScrollController;
+  ScrollController? _scrollController;
+  late SyncAnimationOnScrollController _syncAnimationOnScrollController;
   @override
   void initState() {
     super.initState();
@@ -58,7 +58,7 @@ class _SettingsPanelState extends State<SettingsPanel>
     super.dispose();
   }
 
-  AnimationController get _syncedAnimation {
+  AnimationController? get _syncedAnimation {
     return _syncAnimationOnScrollController.animationController;
   }
 
@@ -70,7 +70,7 @@ class _SettingsPanelState extends State<SettingsPanel>
         return Align(
           alignment: Alignment.bottomRight,
           child: AnimatedOpacity(
-            duration: widget.controller.animationController.duration,
+            duration: widget.controller.animationController.duration!,
             opacity: widget.controller.animationController.value,
             child: Transform(
               transform: Matrix4.translationValues(
@@ -121,7 +121,7 @@ class _SettingsPanelState extends State<SettingsPanel>
                                     child: Builder(
                                       builder: (BuildContext context) {
                                         final List<Widget> settingTilechildren =
-                                            List<Widget>();
+                                            [];
                                         widget.settingsTiles
                                             .forEach((settingTile) {
                                           settingTilechildren.add(Padding(
@@ -166,15 +166,15 @@ class _SettingsPanelState extends State<SettingsPanel>
                             ),
                           ),
                           AnimatedBuilder(
-                              animation: _syncedAnimation,
-                              builder: (BuildContext context, Widget child) {
+                              animation: _syncedAnimation!,
+                              builder: (BuildContext context, Widget? child) {
                                 return Container(
                                   decoration: BoxDecoration(
                                     color: widget.darkMode
-                                        ? LitColors.darkBlue
-                                            .withOpacity(_syncedAnimation.value)
+                                        ? LitColors.darkBlue.withOpacity(
+                                            _syncedAnimation!.value)
                                         : Colors.white.withOpacity(
-                                            _syncedAnimation.value),
+                                            _syncedAnimation!.value),
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(25.0),
                                       bottomLeft: Radius.circular(25.0),

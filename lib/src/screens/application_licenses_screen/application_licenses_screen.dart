@@ -20,7 +20,7 @@ class ApplicationLicensesScreen extends StatefulWidget {
   ///
   /// Define the [darkMode] value for a different color scheme.
   const ApplicationLicensesScreen({
-    Key key,
+    Key? key,
     this.darkMode = false,
   }) : super(key: key);
 
@@ -31,8 +31,8 @@ class ApplicationLicensesScreen extends StatefulWidget {
 
 class _ApplicationLicensesScreenState extends State<ApplicationLicensesScreen>
     with TickerProviderStateMixin {
-  AnimationController animationController;
-  ApplicationLicensesController licensesController;
+  late AnimationController animationController;
+  late ApplicationLicensesController licensesController;
 
   @override
   void initState() {
@@ -76,21 +76,21 @@ class _ApplicationLicensesScreenState extends State<ApplicationLicensesScreen>
                         top: LitBlurredAppBar.height + 16.0,
                         bottom: 16.0,
                       ),
-                      itemCount: packageLicencesSnapshot.data.packages.length,
+                      itemCount: packageLicencesSnapshot.data!.packages.length,
                       itemBuilder: (context, index) {
                         Animation tween = Tween<double>(
                                 begin: 1 -
                                     (index /
                                         packageLicencesSnapshot
-                                            .data.packages.length),
+                                            .data!.packages.length),
                                 end: 1.0)
                             .animate(animationController);
                         return Transform(
                           transform: Matrix4.translationValues(
-                              -300 + (300 * tween.value), 0, 0),
+                              -300 + (300 * tween.value as double), 0, 0),
                           child: AnimatedOpacity(
                             opacity: (tween.value),
-                            duration: animationController.duration,
+                            duration: animationController.duration!,
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                 vertical: 8.0,
@@ -101,29 +101,33 @@ class _ApplicationLicensesScreenState extends State<ApplicationLicensesScreen>
                                   12.0,
                                 ),
                                 onTap: () {
-                                  return Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context) {
-                                    final List<int> bindings =
-                                        licensesController
-                                            .getPackageLicenseContracts(
-                                                packageLicencesSnapshot.data
-                                                    .packageLicenseJunctions,
-                                                packageLicencesSnapshot
-                                                    .data.packages
-                                                    .elementAt(index));
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        final List<int> bindings =
+                                            licensesController
+                                                .getPackageLicenseContracts(
+                                                    packageLicencesSnapshot
+                                                        .data!
+                                                        .packageLicenseJunctions,
+                                                    packageLicencesSnapshot
+                                                        .data!.packages
+                                                        .elementAt(index))!;
 
-                                    return ApplicationLicenseDetailsScreen(
-                                      darkMode: widget.darkMode,
-                                      packageName: packageLicencesSnapshot
-                                          .data.packages
-                                          .elementAt(index),
-                                      licenseEntries:
-                                          licensesController.getLicenseEntries(
-                                              bindings,
-                                              packageLicencesSnapshot
-                                                  .data.licenses),
-                                    );
-                                  }));
+                                        return ApplicationLicenseDetailsScreen(
+                                          darkMode: widget.darkMode,
+                                          packageName: packageLicencesSnapshot
+                                              .data!.packages
+                                              .elementAt(index),
+                                          licenseEntries: licensesController
+                                              .getLicenseEntries(
+                                                  bindings,
+                                                  packageLicencesSnapshot
+                                                      .data!.licenses),
+                                        );
+                                      },
+                                    ),
+                                  );
                                 },
                                 child: Container(
                                   height: 52.0,
@@ -151,7 +155,7 @@ class _ApplicationLicensesScreenState extends State<ApplicationLicensesScreen>
                                     padding: const EdgeInsets.all(16.0),
                                     child: Center(
                                         child: Text(
-                                      "${packageLicencesSnapshot.data.packages.elementAt(index)}",
+                                      "${packageLicencesSnapshot.data!.packages.elementAt(index)}",
                                       style: LitTextStyles.sansSerif.copyWith(
                                         color: widget.darkMode
                                             ? Colors.white

@@ -13,11 +13,11 @@ class ClippedText extends StatelessWidget {
   final TextStyle style;
   final TextAlign textAlign;
   final TextOverflow overflow;
-  final int maxLines;
-  final bool softWrap;
+  final int? maxLines;
+  final bool? softWrap;
   const ClippedText(
     this.value, {
-    Key key,
+    Key? key,
     this.style = LitTextStyles.sansSerif,
     this.textAlign = TextAlign.left,
     this.overflow = TextOverflow.ellipsis,

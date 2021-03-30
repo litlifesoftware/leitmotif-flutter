@@ -11,7 +11,7 @@ import 'package:flutter/widgets.dart';
 class SyncAnimationOnScrollController {
   /// The [ScrollController] of the widget on which the animation should be
   /// syned with.
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
 
   /// The Ticker required for the [AnimationController].
   final TickerProvider vsync;
@@ -51,8 +51,8 @@ class SyncAnimationOnScrollController {
   /// ```
   /// {@end-tool}
   SyncAnimationOnScrollController({
-    @required this.scrollController,
-    @required this.vsync,
+    required this.scrollController,
+    required this.vsync,
     this.animationDuration = const Duration(milliseconds: 130),
     this.totalScrollOffset = 100.0,
   }) {
@@ -61,11 +61,11 @@ class SyncAnimationOnScrollController {
   }
 
   /// The animation controller required to play the animation.
-  AnimationController animationController;
+  AnimationController? animationController;
 
   /// Returns the currently scrolled offset.
   double get _scrollOffset {
-    return scrollController.offset;
+    return scrollController!.offset;
   }
 
   /// Returns the total scrollable area.
@@ -81,7 +81,7 @@ class SyncAnimationOnScrollController {
 
   /// Attaches the [_animateOnScroll] listener to the provided [ScrollController].
   void _attach() {
-    scrollController.addListener(_syncOnScroll);
+    scrollController!.addListener(_syncOnScroll);
   }
 
   /// Syncs the [animationController.value] to the current scroll state. As long
@@ -89,14 +89,14 @@ class SyncAnimationOnScrollController {
   /// be carried on. If the scrollable area has been exceeded or reached, the
   /// animation is completed.
   void _syncOnScroll() {
-    scrollController.addListener(
+    scrollController!.addListener(
       () {
         if (_scrollOffset <= _totalOffset) {
-          animationController.value = (_scrollOffset / _totalOffset);
+          animationController!.value = (_scrollOffset / _totalOffset);
         } else if (_scrollOffset < 0) {
-          animationController.value = 0.0;
+          animationController!.value = 0.0;
         } else if (_scrollOffset > 0 && _scrollOffset < _totalOffset) {
-          animationController.value = (_scrollOffset / _totalOffset);
+          animationController!.value = (_scrollOffset / _totalOffset);
         }
       },
     );
@@ -104,6 +104,6 @@ class SyncAnimationOnScrollController {
 
   /// Disposes the [AnimationController].
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
   }
 }

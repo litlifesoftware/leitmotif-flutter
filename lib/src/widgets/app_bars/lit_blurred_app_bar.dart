@@ -24,8 +24,8 @@ class LitBlurredAppBar extends StatelessWidget implements CustomAppBar {
   ///
   /// Define the [darkMode] value for a different color scheme.
   const LitBlurredAppBar({
-    Key key,
-    @required this.title,
+    Key? key,
+    required this.title,
     this.textStyle = LitTextStyles.sansSerif,
     this.darkMode = false,
   }) : super(key: key);

@@ -7,9 +7,9 @@ class ApplicationLicensesController {
   /// Get the contract of the package and its licenses by setting the bindings [Map]
   /// key to the provided package name. This will extract the corresponsing index
   /// values of the independend [List] objects.
-  List<int> getPackageLicenseContracts(
+  List<int>? getPackageLicenseContracts(
       Map<String, List<int>> packageLicenseBindings, String packageName) {
-    final List<int> bindings = packageLicenseBindings[packageName];
+    final List<int>? bindings = packageLicenseBindings[packageName];
     return bindings;
   }
 

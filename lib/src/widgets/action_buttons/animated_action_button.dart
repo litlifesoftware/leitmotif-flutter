@@ -16,11 +16,11 @@ class AnimatedActionButton extends StatefulWidget
   /// Creates an [AnimatedActionButton] [Widget].
 
   const AnimatedActionButton({
-    Key key,
-    @required this.alignment,
-    @required this.child,
-    @required this.backgroundColor,
-    @required this.onPressed,
+    Key? key,
+    required this.alignment,
+    required this.child,
+    required this.backgroundColor,
+    required this.onPressed,
     this.padding = const EdgeInsets.symmetric(
       vertical: 16.0,
       horizontal: 30.0,
@@ -32,7 +32,7 @@ class AnimatedActionButton extends StatefulWidget
 
 class _AnimatedActionButtonState extends State<AnimatedActionButton>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  AnimationController? _animationController;
 
   @override
   void initState() {
@@ -41,27 +41,27 @@ class _AnimatedActionButtonState extends State<AnimatedActionButton>
       duration: Duration(milliseconds: 250),
       vsync: this,
     );
-    _animationController.forward();
+    _animationController!.forward();
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    _animationController!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: _animationController,
-      builder: (BuildContext context, Widget child) {
+      animation: _animationController!,
+      builder: (BuildContext context, Widget? child) {
         return Align(
           alignment: widget.alignment,
           child: FadeInTransformScaleContainer(
             animationController: _animationController,
             transform: Matrix4.translationValues(
-                0, 50 * (1 - _animationController.value), 0),
-            scale: 0.25 + (_animationController.value * 0.75),
+                0, 50 * (1 - _animationController!.value), 0),
+            scale: 0.25 + (_animationController!.value * 0.75),
             child: Padding(
                 padding: widget.padding,
                 child: LitTransformAnimatedButton(

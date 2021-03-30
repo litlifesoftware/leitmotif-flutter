@@ -15,12 +15,12 @@ class SettingsTile extends StatelessWidget {
   /// It will be used to display the various settings which
   /// can be toggled on the [SettingsPanel].
   const SettingsTile({
-    Key key,
-    @required this.onValueToggled,
-    @required this.darkMode,
-    @required this.enabled,
-    @required this.optionName,
-    @required this.iconData,
+    Key? key,
+    required this.onValueToggled,
+    required this.darkMode,
+    required this.enabled,
+    required this.optionName,
+    required this.iconData,
     this.disabledLabel = "off",
     this.enabledLabel = "on",
   }) : super(key: key);

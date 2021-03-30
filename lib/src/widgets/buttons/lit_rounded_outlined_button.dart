@@ -15,10 +15,10 @@ class LitRoundedOutlinedButton extends StatelessWidget {
   /// Its [BorderRadius] is set by default to have a radius of
   /// 25.0 pixels.
   const LitRoundedOutlinedButton({
-    Key key,
-    @required this.borderColor,
-    @required this.child,
-    @required this.onPressed,
+    Key? key,
+    required this.borderColor,
+    required this.child,
+    required this.onPressed,
     this.radius = 25.0,
     this.strokeWidth = 4.0,
   }) : super(key: key);

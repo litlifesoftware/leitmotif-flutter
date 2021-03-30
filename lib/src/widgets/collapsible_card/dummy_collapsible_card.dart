@@ -7,7 +7,7 @@ class DummyCollapsibleCard extends StatelessWidget implements CollapsibleCard {
   final CollapsibleCardController collapsibleCardController;
 
   const DummyCollapsibleCard(
-      {Key key, @required this.collapsibleCardController})
+      {Key? key, required this.collapsibleCardController})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
