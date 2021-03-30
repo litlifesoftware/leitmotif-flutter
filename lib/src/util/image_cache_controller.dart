@@ -13,7 +13,7 @@ class ImageCacheController {
   final BuildContext context;
 
   /// The image locations.
-  final List<String> assetImages;
+  final List<String?> assetImages;
 
   /// States whether to show debug output.
   final bool showDebugOutput;
@@ -47,10 +47,10 @@ class ImageCacheController {
   }
 
   /// Precaches a single image asset.
-  void _cacheImage(String asset) {
+  void _cacheImage(String? asset) {
     try {
       precacheImage(
-        AssetImage(asset),
+        AssetImage(asset!),
         context,
       ).then((_) {
         if (showDebugOutput) {
@@ -64,7 +64,7 @@ class ImageCacheController {
 
   /// Precaches all images.
   void _cacheAssetBundleImages() {
-    for (String asset in assetImages) {
+    for (String? asset in assetImages) {
       _cacheImage(asset);
     }
   }
