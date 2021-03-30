@@ -26,7 +26,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Icons
 
-LitUIKit does utilize its own icons ('LitIcons'). They are stored inside a `ttf` file and are implemented as Dart `IconData` objects.
+LitUIKit does utilize its own icons (`LitIcons`). They are stored inside a `ttf` file and are implemented as Dart `IconData` objects.
 
 ## Example app
 
