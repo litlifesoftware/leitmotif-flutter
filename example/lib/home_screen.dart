@@ -273,34 +273,27 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                         CupertinoPageRoute(
                           builder: (context) {
                             return LitOnboardingScreen(
-                              artwork: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 64.0),
-                                child: Text(
-                                  "Onboarding Screen",
-                                  style: LitTextStyles.sansSerifTitle,
+                              artwork: SizedBox(
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: Container(
+                                  child: Image.asset(
+                                    "assets/images/launcher_placeholder.png",
+                                  ),
                                 ),
                               ),
-                              onStartCallback: () =>
-                                  Navigator.of(context).pop(),
-                              instructionCards: [
-                                InstructionCard(
-                                  description:
-                                      "This text could describe how to use your app. List all key features.",
-                                  title: "This is a title",
-                                ),
-                                InstructionCard(
-                                  description:
-                                      "This is an introduction card...",
-                                  title: "This is a title",
-                                ),
-                                InstructionCard(
-                                  description:
-                                      "This is an introduction card...",
-                                  title: "This is a title",
-                                ),
+                              title: "Onboading",
+                              textItems: const [
+                                OnboardingText(
+                                    subtitle: "Subtitle",
+                                    title: "Title",
+                                    text:
+                                        "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren"),
+                                OnboardingText(
+                                    subtitle: "Subtitle",
+                                    title: "Title",
+                                    text: "Second Text Item"),
                               ],
-                              onStartButtonText: "start",
+                              onExit: () => Navigator.of(context).pop(),
                             );
                           },
                         ),

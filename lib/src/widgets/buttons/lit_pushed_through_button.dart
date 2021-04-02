@@ -13,28 +13,32 @@ class LitPushedThroughButton extends StatefulWidget {
   final double borderRadius;
   final EdgeInsets margin;
   final List<BoxShadow> boxShadow;
+  final Duration animationDuration;
 
   /// Create a [PushedThroughButton] [Widget].
-  const LitPushedThroughButton(
-      {Key? key,
-      required this.child,
-      this.backgroundColor = Colors.white,
-      this.accentColor = Colors.grey,
-      required this.onPressed,
-      this.borderRadius = 15.0,
-      this.margin = const EdgeInsets.symmetric(
-        vertical: 8.0,
-        horizontal: 14.0,
+  const LitPushedThroughButton({
+    Key? key,
+    required this.child,
+    this.backgroundColor = Colors.white,
+    this.accentColor = Colors.grey,
+    required this.onPressed,
+    this.borderRadius = 15.0,
+    this.margin = const EdgeInsets.symmetric(
+      vertical: 8.0,
+      horizontal: 14.0,
+    ),
+    this.boxShadow = const [
+      const BoxShadow(
+        blurRadius: 8.0,
+        offset: Offset(-2, 2),
+        color: Colors.black26,
+        spreadRadius: 1.0,
       ),
-      this.boxShadow = const [
-        const BoxShadow(
-          blurRadius: 8.0,
-          offset: Offset(-2, 2),
-          color: Colors.black26,
-          spreadRadius: 1.0,
-        ),
-      ]})
-      : super(key: key);
+    ],
+    this.animationDuration = const Duration(
+      milliseconds: 400,
+    ),
+  }) : super(key: key);
 
   @override
   _LitPushedThroughButtonState createState() => _LitPushedThroughButtonState();
@@ -76,11 +80,8 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
   void initState() {
     super.initState();
     _isPressed = false;
-    _animationController = AnimationController(
-        duration: Duration(
-          milliseconds: 400,
-        ),
-        vsync: this);
+    _animationController =
+        AnimationController(duration: widget.animationDuration, vsync: this);
   }
 
   @override
@@ -110,8 +111,8 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
                     colors: [
                       _isPressed
                           ? widget.backgroundColor
-                          : Color.lerp(
-                              widget.backgroundColor, widget.accentColor, 0.35)!,
+                          : Color.lerp(widget.backgroundColor,
+                              widget.accentColor, 0.35)!,
                       _isPressed
                           ? Color.lerp(
                               widget.backgroundColor, widget.accentColor, 0.45)!
