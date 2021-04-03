@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:lit_ui_kit/src/widgets/containers/lit_elevated_glass_card.dart';
 
 class LitOnboardingScreen extends StatefulWidget {
   final String title;
-  final Widget artwork;
+  final Widget art;
   final List<OnboardingText> textItems;
   final BorderRadius cardBorderRadius;
+  final BoxDecoration backgroundDecoration;
   final Duration animationDuration;
   final void Function() onExit;
   const LitOnboardingScreen({
     Key? key,
     this.title = "Onboading",
-    this.artwork = const SizedBox(),
+    this.art = const SizedBox(),
     required this.textItems,
     this.cardBorderRadius = const BorderRadius.all(Radius.circular(42.0)),
+    this.backgroundDecoration = const BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: [
+          const Color(0xFFc6c6c6),
+          const Color(0xFFC18F8F),
+        ],
+      ),
+    ),
     this.animationDuration = const Duration(milliseconds: 120),
     required this.onExit,
   }) : super(key: key);
@@ -72,16 +84,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    Color(0xFFc6c6c6),
-                    Color(0xFFC18F8F),
-                  ],
-                ),
-              ),
+              decoration: widget.backgroundDecoration,
             ),
           ),
           SingleChildScrollView(
@@ -98,7 +101,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
               child: _Card(
                 animationController: _animationController,
                 text: widget.textItems[selectedTextItem],
-                artwork: widget.artwork,
+                artwork: widget.art,
                 buttonAnimationDuration: widget.animationDuration,
                 borderRadius: widget.cardBorderRadius,
                 onPressed: _onPressed,
@@ -110,12 +113,14 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: LitPushedThroughButton(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 backgroundColor: Colors.white,
                 accentColor: Colors.white,
                 child: Icon(
                   LitIcons.times,
                   color: LitColors.mediumGrey,
-                  size: 18.0,
+                  size: 16.0,
                 ),
                 onPressed: widget.onExit,
               ),
@@ -127,7 +132,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
   }
 }
 
-class _Card extends StatelessWidget {
+class _Card extends StatefulWidget {
   final AnimationController animationController;
   final OnboardingText text;
   final BorderRadius borderRadius;
@@ -136,6 +141,8 @@ class _Card extends StatelessWidget {
   final void Function() onPressed;
   final double horizontalTransform;
   final Duration buttonAnimationDuration;
+  final double initialScale;
+  final double animatedScale;
   const _Card({
     Key? key,
     required this.animationController,
@@ -148,102 +155,51 @@ class _Card extends StatelessWidget {
     required this.onPressed,
     this.horizontalTransform = 60.0,
     required this.buttonAnimationDuration,
+    this.initialScale = 1.00,
+    this.animatedScale = 1.05,
   }) : super(key: key);
+
+  @override
+  __CardState createState() => __CardState();
+}
+
+class __CardState extends State<_Card> {
+  Matrix4 get _transform {
+    final double _x = widget.initialScale;
+    final double _y = widget.animatedScale -
+        ((widget.animatedScale - widget.initialScale) *
+            widget.animationController.value);
+    return Matrix4.identity()..scale(_x, _y);
+  }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-        animation: animationController,
-        builder: (context, _) {
-          return Stack(
-            children: [
-              Transform.scale(
-                scale: 1.05 - (0.05 * animationController.value),
-                child: Transform(
-                  transform: Matrix4.translationValues(0, 0, 0),
-                  child: Padding(
-                    padding: padding,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: LitElevatedCard(
-                        margin: const EdgeInsets.all(0.0),
-                        padding: const EdgeInsets.all(0.0),
-                        backgroundColor: Colors.white,
-                        borderRadius: borderRadius,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 10.0,
-                            color: Colors.black38,
-                            offset: Offset(
-                              -4,
-                              2,
-                            ),
-                            spreadRadius: -2.0,
-                          )
-                        ],
-                        child: _CardContent(
-                          show: false,
-                          text: text,
-                          buttonAnimationDuration: buttonAnimationDuration,
-                          onPressed: onPressed,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: artwork,
-              ),
-              Transform.scale(
-                scale: 1.05 - (0.05 * animationController.value),
-                child: Transform(
-                  transform: Matrix4.translationValues(0, 0, 0),
-                  child: Padding(
-                    padding: padding,
-                    child: Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: borderRadius,
-                          color: Colors.white54,
-                        ),
-                        child: BluredBackgroundContainer(
-                          blurRadius: 8.0,
-                          borderRadius: borderRadius,
-                          child: LitElevatedCard(
-                            margin: const EdgeInsets.all(0.0),
-                            padding: const EdgeInsets.all(0.0),
-                            backgroundColor: Colors.transparent,
-                            boxShadow: [],
-                            borderRadius: borderRadius,
-                            child: _CardContent(
-                              show: true,
-                              text: text,
-                              buttonAnimationDuration: buttonAnimationDuration,
-                              onPressed: onPressed,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
-        });
+      animation: widget.animationController,
+      builder: (context, _) {
+        return LitElevatedGlassCard(
+          padding: widget.padding,
+          borderRadius: widget.borderRadius,
+          child: _CardContent(
+            text: widget.text,
+            buttonAnimationDuration: widget.buttonAnimationDuration,
+            onPressed: widget.onPressed,
+          ),
+          backgroundArt:
+              Align(alignment: Alignment.topCenter, child: widget.artwork),
+          transform: _transform,
+        );
+      },
+    );
   }
 }
 
 class _CardContent extends StatelessWidget {
-  final bool show;
   final OnboardingText text;
   final Duration buttonAnimationDuration;
   final void Function() onPressed;
   const _CardContent({
     Key? key,
-    required this.show,
     required this.text,
     required this.buttonAnimationDuration,
     required this.onPressed,
@@ -270,7 +226,7 @@ class _CardContent extends StatelessWidget {
               textAlign: TextAlign.start,
               style: LitTextStyles.sansSerif.copyWith(
                 fontSize: 16.0,
-                color: show ? HexColor('#6c6c6c') : Colors.transparent,
+                color: HexColor('#6c6c6c'),
                 letterSpacing: 1.5,
                 fontWeight: FontWeight.w500,
               ),
@@ -280,7 +236,7 @@ class _CardContent extends StatelessWidget {
             text.title,
             style: LitTextStyles.sansSerif.copyWith(
               fontSize: 32.0,
-              color: show ? HexColor('#525252') : Colors.transparent,
+              color: HexColor('#6E6E6E'),
               letterSpacing: 2.0,
               fontWeight: FontWeight.w800,
             ),
@@ -291,7 +247,7 @@ class _CardContent extends StatelessWidget {
               text.text,
               style: LitTextStyles.sansSerif.copyWith(
                 fontSize: 14.0,
-                color: show ? HexColor('#525252') : Colors.transparent,
+                color: HexColor('#525252'),
               ),
             ),
           ),
@@ -318,7 +274,7 @@ class _CardContent extends StatelessWidget {
                     "Next",
                     style: LitTextStyles.sansSerif.copyWith(
                       fontSize: 14.0,
-                      color: show ? HexColor('#525252') : Colors.transparent,
+                      color: HexColor('#525252'),
                       fontWeight: FontWeight.w700,
                       letterSpacing: 0.8,
                     ),
@@ -332,11 +288,14 @@ class _CardContent extends StatelessWidget {
   }
 }
 
+/// A model class to describe the onboarding's card content. The card will display a
+/// subtitle, a title and the actual text.
 class OnboardingText {
   final String subtitle;
   final String title;
   final String text;
 
+  /// Creates a [OnboardingText] data object.
   const OnboardingText({
     required this.subtitle,
     required this.title,

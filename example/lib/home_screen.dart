@@ -10,7 +10,7 @@ class LitUIKitHomescreen extends StatefulWidget {
 }
 
 class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
-  SettingsPanelController? settingsPanelController;
+  late SettingsPanelController settingsPanelController;
   LitSnackbarController? customSnackBarController;
   LitNotificationController? _notificationController;
   bool? darkMode;
@@ -33,6 +33,33 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
 
   Color get buttonBorderColor {
     return darkMode! ? Colors.white : LitColors.lightGrey;
+  }
+
+  Widget get _art {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: SizedBox(
+          width: 100.0,
+          height: 100.0,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(
+                const Radius.circular(25.0),
+              ),
+              color: const Color(0xFFC4C4C4),
+            ),
+            child: Center(
+              child: Text(
+                "Provide art",
+                textAlign: TextAlign.center,
+                style: LitTextStyles.sansSerifBodyTighterSmaller,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   void _addNotification() {
@@ -73,7 +100,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
             text: "Snack Bar!",
             iconData: LitIcons.info),
         settingsPanel: SettingsPanel(
-          controller: settingsPanelController!,
+          controller: settingsPanelController,
           title: "Settings",
           darkMode: darkMode!,
           settingsTiles: [
@@ -164,7 +191,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
             ),
             backgroundColor: LitColors.mediumGrey,
             onPressed: () => {
-                  settingsPanelController!.showSettingsPanel(),
+                  settingsPanelController.showSettingsPanel(),
                 }),
         body: ScrollableColumn(
           mainAxisSize: MainAxisSize.max,
@@ -262,7 +289,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   child: LitRoundedOutlinedButton(
                     borderColor: buttonBorderColor,
                     child: ClippedText(
-                      "Show Introduction Screen",
+                      "Show Onboarding Screen",
                       style: LitTextStyles.sansSerif.copyWith(
                         color: buttonTextColor,
                       ),
@@ -273,14 +300,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                         CupertinoPageRoute(
                           builder: (context) {
                             return LitOnboardingScreen(
-                              artwork: SizedBox(
-                                width: MediaQuery.of(context).size.width / 2,
-                                child: Container(
-                                  child: Image.asset(
-                                    "assets/images/launcher_placeholder.png",
-                                  ),
-                                ),
-                              ),
+                              art: _art,
                               title: "Onboading",
                               textItems: const [
                                 OnboardingText(
@@ -382,6 +402,59 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                               onConfirm: () => {
                                 Navigator.pop(context),
                               },
+                            );
+                          },
+                        ),
+                      )
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 32.0),
+                  child: LitRoundedOutlinedButton(
+                    borderColor: buttonBorderColor,
+                    child: ClippedText(
+                      "Show Credits Screen",
+                      style: LitTextStyles.sansSerif.copyWith(
+                        color: buttonTextColor,
+                      ),
+                    ),
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) {
+                            return LitCreditsScreen(
+                              art: _art,
+                              credits: [
+                                CreditContent(
+                                  role: "Made by",
+                                  names: [
+                                    "LitLifeSoftware",
+                                  ],
+                                ),
+                                CreditContent(
+                                  role: "Design",
+                                  names: [
+                                    "Michael Grigorenko",
+                                  ],
+                                ),
+                                CreditContent(
+                                  role: "Development",
+                                  names: [
+                                    "Michael Grigorenko",
+                                  ],
+                                ),
+                                CreditContent(
+                                  role: "Flutter Framework",
+                                  names: [
+                                    "Google LLC.",
+                                    "Flutter Contributors",
+                                    "Skia Contributors",
+                                    "Dart Contributors",
+                                  ],
+                                ),
+                              ],
                             );
                           },
                         ),
