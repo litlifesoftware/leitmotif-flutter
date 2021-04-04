@@ -56,6 +56,7 @@ export 'src/widgets/buttons/lit_switch_button.dart';
 export 'src/widgets/buttons/lit_pushed_button.dart';
 export 'src/widgets/buttons/lit_pushed_through_button.dart';
 export 'src/widgets/buttons/lit_gradient_button.dart';
+export 'src/widgets/buttons/dialog_back_button.dart';
 // Animated Buttons
 export 'src/widgets/action_buttons/animated_action_button.dart';
 export 'src/widgets/action_buttons/custom_action_button.dart';
@@ -64,6 +65,7 @@ export 'src/widgets/action_buttons/animated_action_button.dart';
 // Dialogs
 export 'src/widgets/dialogs/website_info.dart';
 export 'src/widgets/dialogs/about_app_dialog.dart';
+export 'src/widgets/dialogs/lit_titled_dialog.dart';
 // Containers
 export 'src/widgets/containers/fade_in_transform_container.dart';
 export 'src/widgets/containers/fade_in_transform_scale_container.dart';

@@ -21,6 +21,10 @@ class LitTextStyles {
   /// The default text color for all [TextStyle]s.
   static const Color defaultColor = LitColors.mediumGrey;
 
+  static const double smallBodySize = 11.0;
+
+  static const double smallerBodySize = 13.0;
+
   static const double defaultBodySize = 14.0;
 
   static const double defaultSubHeaderSize = 16.0;
@@ -33,7 +37,13 @@ class LitTextStyles {
 
   static const double looseSpacing = 0.35;
 
+  static const FontWeight lightWeight = FontWeight.w500;
+
+  static const FontWeight bodyWeight = FontWeight.w600;
+
   static const FontWeight subHeaderWeight = FontWeight.w600;
+
+  static const FontWeight headerWeight = FontWeight.w700;
 
   /// The default sans serif [TextStyle].
   static const TextStyle sansSerif = TextStyle(
@@ -41,7 +51,7 @@ class LitTextStyles {
     fontSize: defaultBodySize,
     fontFamily: sansSerifFontFamily,
     package: package,
-    fontWeight: FontWeight.w600,
+    fontWeight: bodyWeight,
   );
 
   /// The default serif [TextStyle].
@@ -66,7 +76,16 @@ class LitTextStyles {
     fontSize: defaultBodySize,
     fontFamily: sansSerifFontFamily,
     package: package,
-    fontWeight: FontWeight.w500,
+    fontWeight: lightWeight,
+  );
+
+  static const TextStyle sansSerifBodyLargeSpacing = TextStyle(
+    color: defaultColor,
+    fontSize: defaultBodySize,
+    fontFamily: sansSerifFontFamily,
+    package: package,
+    fontWeight: lightWeight,
+    height: 1.30,
   );
 
   static const TextStyle sansSerifBodyTighter = TextStyle(
@@ -74,17 +93,34 @@ class LitTextStyles {
     fontSize: defaultBodySize,
     fontFamily: sansSerifFontFamily,
     package: package,
-    fontWeight: FontWeight.w600,
+    fontWeight: bodyWeight,
     letterSpacing: tighterSpacing,
+  );
+
+  static const TextStyle sanSerifBodySmall = TextStyle(
+    color: defaultColor,
+    fontSize: smallBodySize,
+    fontFamily: sansSerifFontFamily,
+    package: package,
+    fontWeight: lightWeight,
   );
 
   static const TextStyle sansSerifBodyTighterSmaller = TextStyle(
     color: defaultColor,
-    fontSize: defaultBodySize - 1.0,
+    fontSize: smallerBodySize,
     fontFamily: sansSerifFontFamily,
     package: package,
-    fontWeight: FontWeight.w600,
+    fontWeight: bodyWeight,
     letterSpacing: tighterSpacing,
+  );
+
+  static const TextStyle sansSerifSmallHeader = TextStyle(
+    color: defaultColor,
+    fontSize: defaultBodySize,
+    fontFamily: sansSerifFontFamily,
+    package: package,
+    fontWeight: headerWeight,
+    letterSpacing: looseSpacing,
   );
 
   static const TextStyle sansSerifSubHeader = TextStyle(
@@ -110,7 +146,7 @@ class LitTextStyles {
     fontSize: defaultHeaderSize,
     fontFamily: sansSerifFontFamily,
     package: package,
-    fontWeight: FontWeight.w700,
+    fontWeight: headerWeight,
     letterSpacing: looseSpacing,
   );
 
@@ -119,7 +155,7 @@ class LitTextStyles {
     fontSize: defaultHeaderSize,
     fontFamily: sansSerifFontFamily,
     package: package,
-    fontWeight: FontWeight.w700,
+    fontWeight: headerWeight,
     letterSpacing: tighterSpacing,
   );
 }

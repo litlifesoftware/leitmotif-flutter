@@ -35,13 +35,13 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
     return darkMode! ? Colors.white : LitColors.lightGrey;
   }
 
-  Widget get _art {
+  Widget _getArt(bool large) {
     return Container(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: SizedBox(
-          width: 100.0,
-          height: 100.0,
+          width: large ? 200.0 : 100.0,
+          height: large ? 200.0 : 100.0,
           child: Container(
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(
@@ -300,7 +300,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                         CupertinoPageRoute(
                           builder: (context) {
                             return LitOnboardingScreen(
-                              art: _art,
+                              art: _getArt(true),
                               title: "Onboading",
                               textItems: const [
                                 OnboardingText(
@@ -338,8 +338,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                             return AboutAppDialog(
                               title: "About",
                               appName: "LitUIKit Example",
-                              launcherImageUrl:
-                                  "assets/images/launcher_placeholder.png",
+                              art: _getArt(false),
                               infoDescription:
                                   "LitUIKit enables you to create unique user interfaces in less time. Built with the framework. Whose Widgets include custom implementation of Snackbars, AppBars and Utility Screens (e.g. to verify the user's age and to show the application's licenses).",
                             );
@@ -370,8 +369,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                                     isConform: true,
                                   ),
                                 ],
-                                launcherIconImageUrl:
-                                    "assets/images/launcher_placeholder.png",
+                                art: _getArt(false),
                                 privacyText:
                                     "LitUIKit enables you to create unique user interfaces in less time. Built with the framework. Whose Widgets include custom implementation of Snackbars, AppBars and Utility Screens (e.g. to verify the user's age and to show the application's licenses)LitUIKit enables you to create unique user interfaces in less time. Built with the framework. Whose Widgets include custom implementation of Snackbars, AppBars and Utility Screens (e.g. to verify the user's age and to show the application's licenses)LitUIKit enables you to create unique user interfaces in less time. Built with the framework. Whose Widgets include custom implementation of Snackbars, AppBars and Utility Screens (e.g. to verify the user's age and to show the application's licenses)LitUIKit enables you to create unique user interfaces in less time. Built with the framework. Whose Widgets include custom implementation of Snackbars, AppBars and Utility Screens (e.g. to verify the user's age and to show the application's licenses)",
                                 onAgreeCallback: () {
@@ -425,7 +423,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                         CupertinoPageRoute(
                           builder: (context) {
                             return LitCreditsScreen(
-                              art: _art,
+                              art: _getArt(false),
                               credits: [
                                 CreditContent(
                                   role: "Made by",
