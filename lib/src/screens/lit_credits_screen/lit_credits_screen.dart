@@ -3,15 +3,26 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class LitCreditsScreen extends StatefulWidget {
   final String title;
+  final BoxDecoration backgroundDecoration;
   final Widget art;
   final List<CreditContent> credits;
-  final Duration animationDuration;
+  final Duration? animationDuration;
   const LitCreditsScreen({
     Key? key,
     this.title = "Credits",
+    this.backgroundDecoration = const BoxDecoration(
+      gradient: const LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: const [
+          const Color(0xFFDCDCDC),
+          const Color(0xFFD7D7D7),
+        ],
+      ),
+    ),
     this.art = const SizedBox(),
     required this.credits,
-    this.animationDuration = const Duration(milliseconds: 5000),
+    this.animationDuration,
   }) : super(key: key);
   @override
   _LitCreditsScreenState createState() => _LitCreditsScreenState();
@@ -19,11 +30,18 @@ class LitCreditsScreen extends StatefulWidget {
 
 class _LitCreditsScreenState extends State<LitCreditsScreen>
     with TickerProviderStateMixin {
+  final int millisecPerCredit = 1000;
   late AnimationController _animationController;
   late ScrollController _scrollController;
   bool _animationStopped = false;
   double _currentScrollOffset = 0.0;
   double _maxScrollExtent = 0.0;
+
+  Duration get _animationDuration {
+    return widget.animationDuration ??
+        Duration(milliseconds: millisecPerCredit * widget.credits.length);
+  }
+
   void stopAnimation() {
     setState(() {
       _animationStopped = true;
@@ -42,7 +60,7 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
         _scrollController.animateTo(
           (_scrollController.position.maxScrollExtent *
               _animationController.value),
-          duration: widget.animationDuration,
+          duration: _animationDuration,
           curve: Curves.ease,
         );
       }
@@ -62,7 +80,7 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: widget.animationDuration,
+      duration: _animationDuration,
     );
     _scrollController = ScrollController();
     _animationController.addListener(_syncScrollToAnimation);
@@ -86,16 +104,7 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
           alignment: Alignment.center,
           children: [
             Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: const [
-                    const Color(0xFFDCDCDC),
-                    const Color(0xFFD7D7D7),
-                  ],
-                ),
-              ),
+              decoration: widget.backgroundDecoration,
             ),
             Container(
               child: ConstrainedBox(

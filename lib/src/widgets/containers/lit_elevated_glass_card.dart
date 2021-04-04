@@ -1,19 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
+/// A widget to display an blurred and elevated background.
+///
+/// For being blurred, the background should be semi-transparent. But for being elevated, the
+/// background should be solid. To achieve both, a semi transparent, blurred background is stacked
+/// on top of a solid, elevated background. This will require to provide a middle layer in order
+/// to apply the blur effect ([middleLayer]).
 class LitElevatedGlassCard extends StatelessWidget {
+  /// The card's padding.
   final EdgeInsets padding;
+
+  /// The card's border radius.
   final BorderRadius borderRadius;
+
+  /// The card's child.
   final Widget child;
-  final Widget backgroundArt;
+
+  /// The widget to apply the blur effect on.
+  final Widget middleLayer;
+
+  /// The card's transformation. This may also be set using an animation.
   final Matrix4 transform;
   final List<BoxShadow> boxShadow;
+
+  /// Creates a [LitElevatedGlassCard].
+  ///
+  /// * [padding] is the padding applied to the card.
+  ///
+  /// * [borderRadius] is the card's border radius.
+  ///
+  /// * [child] is the child widget displayed in the card.
+  ///
+  /// * [middleLayer] is the layer on which the blur effect is applied.
+  ///
+  /// * [transform] is the matrix transformation applied to the cards. The transformation will
+  ///   not be applied on the [middleLayer].
+  ///
+  /// * [boxShadow] is shadow on the card's background.
   const LitElevatedGlassCard({
     Key? key,
     required this.padding,
     required this.borderRadius,
     required this.child,
-    this.backgroundArt = const SizedBox(),
+    this.middleLayer = const SizedBox(),
     required this.transform,
     this.boxShadow = const [
       BoxShadow(
@@ -48,7 +78,10 @@ class LitElevatedGlassCard extends StatelessWidget {
             ),
           ),
         ),
-        backgroundArt,
+        Align(
+          alignment: Alignment.center,
+          child: middleLayer,
+        ),
         Transform(
           transform: transform,
           child: Padding(

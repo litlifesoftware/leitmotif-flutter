@@ -101,7 +101,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
               child: _Card(
                 animationController: _animationController,
                 text: widget.textItems[selectedTextItem],
-                artwork: widget.art,
+                art: widget.art,
                 buttonAnimationDuration: widget.animationDuration,
                 borderRadius: widget.cardBorderRadius,
                 onPressed: _onPressed,
@@ -136,7 +136,7 @@ class _Card extends StatefulWidget {
   final AnimationController animationController;
   final OnboardingText text;
   final BorderRadius borderRadius;
-  final Widget artwork;
+  final Widget art;
   final EdgeInsets padding;
   final void Function() onPressed;
   final double horizontalTransform;
@@ -148,7 +148,7 @@ class _Card extends StatefulWidget {
     required this.animationController,
     required this.text,
     required this.borderRadius,
-    required this.artwork,
+    required this.art,
     this.padding = const EdgeInsets.only(
       top: 128.0,
     ),
@@ -185,8 +185,7 @@ class __CardState extends State<_Card> {
             buttonAnimationDuration: widget.buttonAnimationDuration,
             onPressed: widget.onPressed,
           ),
-          backgroundArt:
-              Align(alignment: Alignment.topCenter, child: widget.artwork),
+          middleLayer: Align(alignment: Alignment.topCenter, child: widget.art),
           transform: _transform,
         );
       },
