@@ -118,6 +118,9 @@ export 'src/widgets/collapsible_card/collapsible_card.dart';
 export 'src/widgets/collapsible_card/dummy_collapsible_card.dart';
 export 'src/widgets/collapsible_card/titled_collapsible_card.dart';
 
+/// Bottom navigation
+export 'src/widgets/bottom_navigation/lit_bottom_navigation.dart';
+
 /// Settings panels
 export 'src/widgets/settings_panel/settings_tile.dart';
 export 'src/widgets/settings_panel/settings_panel.dart';
