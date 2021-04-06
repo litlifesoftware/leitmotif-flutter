@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class LitCreditsScreen extends StatefulWidget {
-  final String title;
+  final String screenTitle;
+  final String appTitle;
+  final String? subTitle;
   final BoxDecoration backgroundDecoration;
   final Widget art;
-  final List<CreditContent> credits;
+  final List<CreditData> credits;
   final Duration? animationDuration;
   const LitCreditsScreen({
     Key? key,
-    this.title = "Credits",
+    this.screenTitle = "Credits",
+    required this.appTitle,
+    this.subTitle,
     this.backgroundDecoration = const BoxDecoration(
       gradient: const LinearGradient(
         begin: Alignment.topRight,
@@ -97,7 +101,7 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
   @override
   Widget build(BuildContext context) {
     return LitScaffold(
-      appBar: LitAppBar(title: widget.title),
+      appBar: LitAppBar(title: widget.screenTitle),
       body: GestureDetector(
         onVerticalDragCancel: stopAnimation,
         child: Stack(
@@ -128,6 +132,36 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
                           ),
                         );
                         list.add(widget.art);
+                        list.add(Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            widget.appTitle,
+                            style: LitTextStyles.sansSerifSubHeader.copyWith(
+                              color: Color(
+                                0xFF7e7e7e,
+                              ),
+                            ),
+                          ),
+                        ));
+                        if (widget.subTitle != "" && widget.subTitle != null) {
+                          list.add(Column(
+                            children: [
+                              Container(
+                                color: Color(0xFFB0B0B0),
+                                height: 2.0,
+                                width: 32.0,
+                              ),
+                              Text(
+                                "${widget.subTitle}",
+                                textAlign: TextAlign.center,
+                                style: LitTextStyles.sansSerifBodyTighterSmaller
+                                    .copyWith(
+                                  color: Color(0xFFB0B0B0),
+                                ),
+                              )
+                            ],
+                          ));
+                        }
                         for (int i = 0; i < widget.credits.length; i++) {
                           list.add(_CreditItem(
                             credit: widget.credits[i],
@@ -155,7 +189,7 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
 }
 
 class _CreditItem extends StatefulWidget {
-  final CreditContent credit;
+  final CreditData credit;
   const _CreditItem({
     Key? key,
     required this.credit,
@@ -212,10 +246,10 @@ class __CreditItemState extends State<_CreditItem> {
   }
 }
 
-class CreditContent {
+class CreditData {
   final String role;
   final List<String> names;
-  const CreditContent({
+  const CreditData({
     required this.role,
     required this.names,
   });

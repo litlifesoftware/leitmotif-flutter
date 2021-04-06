@@ -423,27 +423,28 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                         CupertinoPageRoute(
                           builder: (context) {
                             return LitCreditsScreen(
+                              appTitle: "LitUIKit",
                               art: _getArt(false),
                               credits: [
-                                CreditContent(
+                                CreditData(
                                   role: "Made by",
                                   names: [
                                     "LitLifeSoftware",
                                   ],
                                 ),
-                                CreditContent(
+                                CreditData(
                                   role: "Design",
                                   names: [
                                     "Michael Grigorenko",
                                   ],
                                 ),
-                                CreditContent(
+                                CreditData(
                                   role: "Development",
                                   names: [
                                     "Michael Grigorenko",
                                   ],
                                 ),
-                                CreditContent(
+                                CreditData(
                                   role: "Flutter Framework",
                                   names: [
                                     "Google LLC.",
