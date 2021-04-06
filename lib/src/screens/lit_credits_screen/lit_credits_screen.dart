@@ -46,6 +46,11 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
         Duration(milliseconds: millisecPerCredit * widget.credits.length);
   }
 
+  bool get _shouldAutoScroll {
+    return _scrollController.position.maxScrollExtent >
+        (MediaQuery.of(context).size.height / 2);
+  }
+
   void stopAnimation() {
     setState(() {
       _animationStopped = true;
@@ -59,22 +64,24 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
   }
 
   void _syncScrollToAnimation() {
-    if (_animationController.value < 1.0) {
-      if (!_animationStopped) {
-        _scrollController.animateTo(
-          (_scrollController.position.maxScrollExtent *
-              _animationController.value),
-          duration: _animationDuration,
-          curve: Curves.ease,
-        );
-      }
-    } else {
-      if (!_animationStopped) {
-        _scrollController.animateTo(
-          (0.0),
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.ease,
-        );
+    if (_shouldAutoScroll) {
+      if (_animationController.value < 1.0) {
+        if (!_animationStopped) {
+          _scrollController.animateTo(
+            (_scrollController.position.maxScrollExtent *
+                _animationController.value),
+            duration: _animationDuration,
+            curve: Curves.ease,
+          );
+        }
+      } else {
+        if (!_animationStopped) {
+          _scrollController.animateTo(
+            (0.0),
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.ease,
+          );
+        }
       }
     }
   }
