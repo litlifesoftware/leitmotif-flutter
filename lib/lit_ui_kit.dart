@@ -73,6 +73,7 @@ export 'src/widgets/action_buttons/animated_action_button.dart';
 export 'src/widgets/action_buttons/custom_action_button.dart';
 export 'src/widgets/action_buttons/dummy_action_button.dart';
 export 'src/widgets/action_buttons/animated_action_button.dart';
+export 'src/widgets/action_buttons/collapse_on_scroll_action_button.dart';
 
 /// Dialogs
 export 'src/widgets/dialogs/website_info.dart';

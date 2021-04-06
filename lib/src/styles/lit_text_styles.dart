@@ -29,7 +29,7 @@ class LitTextStyles {
 
   static const double defaultSubHeaderSize = 16.0;
 
-  static const double defaultHeaderSize = 22.0;
+  static const double defaultHeaderSize = 20.0;
 
   static const double veryTightSpacing = -0.70;
 

@@ -73,7 +73,6 @@ class AnimationOnScrollController {
   /// Plays the [Animation] forward.
   void _show() {
     if (!animationController.isAnimating) {
-      print("show");
       if (direction == AnimationDirection.forward) {
         animationController.forward();
       } else {
@@ -123,7 +122,12 @@ class AnimationOnScrollController {
 
   /// Disposes the [AnimationController].
   void dispose() {
-    animationController.dispose();
+    try {
+      animationController.dispose();
+    } catch (e) {
+      print(
+          "LitUIKit: AnimationOnScrollController's animation already disposed");
+    }
   }
 }
 
