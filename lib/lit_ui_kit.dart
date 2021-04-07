@@ -113,10 +113,10 @@ export 'src/screens/title_screen.dart';
 export 'src/screens/age_confirmation_screen/age_confirmation_screen.dart';
 export 'src/screens/application_licenses_screen/application_licenses_screen.dart';
 export 'src/screens/lit_privacy_policy_screen.dart';
-export 'src/screens/lit_onboarding_screen/instruction_card.dart';
-export 'src/screens/lit_onboarding_screen/lit_onboarding_screen.dart';
+export 'src/screens/lit_onboarding_screen.dart';
 export 'src/screens/lit_offline_app_disclaimer_screen.dart';
-export 'src/screens/lit_credits_screen/lit_credits_screen.dart';
+export 'src/screens/lit_credits_screen.dart';
+export 'src/screens/photosensitive_disclaimer_screen.dart';
 
 /// Settings panels
 export 'src/widgets/settings_panel/settings_tile.dart';
