@@ -92,6 +92,7 @@ export 'src/widgets/containers/lit_gradient_card.dart';
 export 'src/widgets/containers/lit_notification_container.dart';
 export 'src/widgets/containers/lit_elevated_glass_card.dart';
 export 'src/widgets/backgrounds/lit_animated_gradient_background.dart';
+export 'src/widgets/containers/lit_slider_card.dart';
 
 /// Screens
 export 'src/screens/title_screen.dart';
@@ -103,6 +104,12 @@ export 'src/screens/lit_onboarding_screen/lit_onboarding_screen.dart';
 export 'src/screens/lit_offline_app_disclaimer_screen.dart';
 export 'src/screens/lit_credits_screen/lit_credits_screen.dart';
 
+/// Slider
+export 'src/widgets/slider/lit_slider.dart';
+export 'src/widgets/slider/lit_slider_overlay.dart';
+export 'src/widgets/slider/lit_slider_thumb.dart';
+export 'src/widgets/slider/lit_slider_toggle_button.dart';
+
 /// App bars
 export 'src/widgets/app_bars/custom_app_bar.dart';
 export 'src/widgets/app_bars/lit_app_bar.dart';
@@ -111,6 +118,10 @@ export 'src/widgets/app_bars/fixed_on_scroll_appbar.dart';
 export 'src/widgets/custom_info_bar/dummy_info_bar.dart';
 export 'src/widgets/custom_info_bar/custom_info_bar.dart';
 export 'src/widgets/custom_info_bar/transparent_info_bar.dart';
+
+/// Badges
+export 'src/widgets/badges/lit_badge.dart';
+export 'src/widgets/badges/lit_slider_badge.dart';
 
 /// Collapsibles
 export 'src/widgets/collapsible_card/collapsible_card_controller.dart';
