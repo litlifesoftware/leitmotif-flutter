@@ -19,38 +19,29 @@
 library lit_ui_kit;
 
 /// Files
-///
-/// Icon data
-export 'src/icons/lit_icons.dart';
 
-/// Painted Icons
-export 'src/widgets/painted_icons/lit_lock_icon.dart';
+/// Animated Buttons
+export 'src/widgets/action_buttons/animated_action_button.dart';
+export 'src/widgets/action_buttons/custom_action_button.dart';
+export 'src/widgets/action_buttons/dummy_action_button.dart';
+export 'src/widgets/action_buttons/animated_action_button.dart';
+export 'src/widgets/action_buttons/collapse_on_scroll_action_button.dart';
 
-/// Text
-export 'src/widgets/text/clipped_text.dart';
-export 'src/widgets/text/scaled_down_text.dart';
-export 'src/styles/lit_text_styles.dart';
+/// App bars
+export 'src/widgets/app_bars/custom_app_bar.dart';
+export 'src/widgets/app_bars/lit_app_bar.dart';
+export 'src/widgets/app_bars/lit_blurred_app_bar.dart';
+export 'src/widgets/app_bars/fixed_on_scroll_appbar.dart';
+export 'src/widgets/custom_info_bar/dummy_info_bar.dart';
+export 'src/widgets/custom_info_bar/custom_info_bar.dart';
+export 'src/widgets/custom_info_bar/transparent_info_bar.dart';
 
-/// Snackbars
-export 'src/widgets/lit_snack_bar/lit_snackbar.dart';
-export 'src/widgets/lit_snack_bar/lit_snackbar_controller.dart';
-export 'src/widgets/lit_snack_bar/icon_snackbar.dart';
-export 'src/widgets/lit_snack_bar/sliding_snackbar.dart';
+/// Badges
+export 'src/widgets/badges/lit_badge.dart';
+export 'src/widgets/badges/lit_slider_badge.dart';
 
-/// Colors
-export 'src/styles/lit_colors.dart';
-
-/// Controllers
-export 'src/controller/lit_notification_controller.dart';
-
-/// Utility
-export 'src/util/image_cache_controller.dart';
-export 'src/util/hex_color_converter.dart';
-export 'src/util/platform_info.dart';
-export 'src/util/animation_on_scroll_controller.dart';
-export 'src/util/calendar_controller.dart';
-export 'src/util/calendar_localization_service.dart';
-export 'src/util/lit_alternative_layout.dart';
+/// Bottom navigation
+export 'src/widgets/bottom_navigation/lit_bottom_navigation.dart';
 
 /// Buttons
 export 'src/widgets/buttons/lit_tooltip_button.dart';
@@ -67,18 +58,17 @@ export 'src/widgets/buttons/lit_pushed_through_button.dart';
 export 'src/widgets/buttons/lit_gradient_button.dart';
 export 'src/widgets/buttons/dialog_back_button.dart';
 export 'src/widgets/buttons/lit_bubble_button.dart';
+export 'src/widgets/buttons/lit_glowing_button.dart';
+export 'src/widgets/buttons/lit_plain_label_button.dart';
 
-/// Animated Buttons
-export 'src/widgets/action_buttons/animated_action_button.dart';
-export 'src/widgets/action_buttons/custom_action_button.dart';
-export 'src/widgets/action_buttons/dummy_action_button.dart';
-export 'src/widgets/action_buttons/animated_action_button.dart';
-export 'src/widgets/action_buttons/collapse_on_scroll_action_button.dart';
+/// Collapsibles
+export 'src/widgets/collapsible_card/collapsible_card_controller.dart';
+export 'src/widgets/collapsible_card/collapsible_card.dart';
+export 'src/widgets/collapsible_card/dummy_collapsible_card.dart';
+export 'src/widgets/collapsible_card/titled_collapsible_card.dart';
 
-/// Dialogs
-export 'src/widgets/dialogs/website_info.dart';
-export 'src/widgets/dialogs/about_app_dialog.dart';
-export 'src/widgets/dialogs/lit_titled_dialog.dart';
+/// Colors
+export 'src/styles/lit_colors.dart';
 
 /// Containers
 export 'src/widgets/containers/fade_in_transform_container.dart';
@@ -94,6 +84,30 @@ export 'src/widgets/containers/lit_elevated_glass_card.dart';
 export 'src/widgets/backgrounds/lit_animated_gradient_background.dart';
 export 'src/widgets/containers/lit_slider_card.dart';
 
+/// Controllers
+export 'src/controller/lit_notification_controller.dart';
+
+/// Dialogs
+export 'src/widgets/dialogs/website_info.dart';
+export 'src/widgets/dialogs/about_app_dialog.dart';
+export 'src/widgets/dialogs/lit_titled_dialog.dart';
+
+/// Icon data
+export 'src/icons/lit_icons.dart';
+
+/// Loading indicators
+export 'src/widgets/loading_indicators/juggling_loading_indicator.dart';
+export 'src/widgets/page_views/indexed_page_view.dart';
+
+/// Models
+export 'src/model/lit_notification_data.dart';
+
+/// Painted Icons
+export 'src/widgets/painted_icons/lit_lock_icon.dart';
+
+/// Scaffolds
+export 'src/widgets/lit_scaffold/lit_scaffold.dart';
+
 /// Screens
 export 'src/screens/title_screen.dart';
 export 'src/screens/age_confirmation_screen/age_confirmation_screen.dart';
@@ -104,45 +118,33 @@ export 'src/screens/lit_onboarding_screen/lit_onboarding_screen.dart';
 export 'src/screens/lit_offline_app_disclaimer_screen.dart';
 export 'src/screens/lit_credits_screen/lit_credits_screen.dart';
 
+/// Settings panels
+export 'src/widgets/settings_panel/settings_tile.dart';
+export 'src/widgets/settings_panel/settings_panel.dart';
+export 'src/widgets/settings_panel/settings_panel_controller.dart';
+
 /// Slider
 export 'src/widgets/slider/lit_slider.dart';
 export 'src/widgets/slider/lit_slider_overlay.dart';
 export 'src/widgets/slider/lit_slider_thumb.dart';
 export 'src/widgets/slider/lit_slider_toggle_button.dart';
 
-/// App bars
-export 'src/widgets/app_bars/custom_app_bar.dart';
-export 'src/widgets/app_bars/lit_app_bar.dart';
-export 'src/widgets/app_bars/lit_blurred_app_bar.dart';
-export 'src/widgets/app_bars/fixed_on_scroll_appbar.dart';
-export 'src/widgets/custom_info_bar/dummy_info_bar.dart';
-export 'src/widgets/custom_info_bar/custom_info_bar.dart';
-export 'src/widgets/custom_info_bar/transparent_info_bar.dart';
+/// Snackbars
+export 'src/widgets/lit_snack_bar/lit_snackbar.dart';
+export 'src/widgets/lit_snack_bar/lit_snackbar_controller.dart';
+export 'src/widgets/lit_snack_bar/icon_snackbar.dart';
+export 'src/widgets/lit_snack_bar/sliding_snackbar.dart';
 
-/// Badges
-export 'src/widgets/badges/lit_badge.dart';
-export 'src/widgets/badges/lit_slider_badge.dart';
+/// Text
+export 'src/widgets/text/clipped_text.dart';
+export 'src/widgets/text/scaled_down_text.dart';
+export 'src/styles/lit_text_styles.dart';
 
-/// Collapsibles
-export 'src/widgets/collapsible_card/collapsible_card_controller.dart';
-export 'src/widgets/collapsible_card/collapsible_card.dart';
-export 'src/widgets/collapsible_card/dummy_collapsible_card.dart';
-export 'src/widgets/collapsible_card/titled_collapsible_card.dart';
-
-/// Bottom navigation
-export 'src/widgets/bottom_navigation/lit_bottom_navigation.dart';
-
-/// Settings panels
-export 'src/widgets/settings_panel/settings_tile.dart';
-export 'src/widgets/settings_panel/settings_panel.dart';
-export 'src/widgets/settings_panel/settings_panel_controller.dart';
-
-/// Scaffolds
-export 'src/widgets/lit_scaffold/lit_scaffold.dart';
-
-/// Loading indicators
-export 'src/widgets/loading_indicators/juggling_loading_indicator.dart';
-export 'src/widgets/page_views/indexed_page_view.dart';
-
-/// Models
-export 'src/model/lit_notification_data.dart';
+/// Utility
+export 'src/util/image_cache_controller.dart';
+export 'src/util/hex_color_converter.dart';
+export 'src/util/platform_info.dart';
+export 'src/util/animation_on_scroll_controller.dart';
+export 'src/util/calendar_controller.dart';
+export 'src/util/calendar_localization_service.dart';
+export 'src/util/lit_alternative_layout.dart';
