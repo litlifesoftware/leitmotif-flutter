@@ -83,9 +83,13 @@ export 'src/widgets/containers/lit_notification_container.dart';
 export 'src/widgets/containers/lit_elevated_glass_card.dart';
 export 'src/widgets/backgrounds/lit_animated_gradient_background.dart';
 export 'src/widgets/containers/lit_slider_card.dart';
+export 'src/widgets/containers/lit_draggable.dart';
+export 'src/widgets/containers/lit_settings_footer.dart';
 
 /// Controllers
 export 'src/controller/lit_notification_controller.dart';
+export 'src/controller/lit_route_controller.dart';
+export 'src/controller/lit_focus_controller.dart';
 
 /// Dialogs
 export 'src/widgets/dialogs/website_info.dart';
@@ -116,6 +120,7 @@ export 'src/screens/lit_privacy_policy_screen.dart';
 export 'src/screens/lit_onboarding_screen.dart';
 export 'src/screens/lit_offline_app_disclaimer_screen.dart';
 export 'src/screens/lit_credits_screen.dart';
+export 'src/screens/lit_sign_up_screen.dart';
 export 'src/screens/photosensitive_disclaimer_screen.dart';
 
 /// Settings panels
@@ -148,3 +153,4 @@ export 'src/util/animation_on_scroll_controller.dart';
 export 'src/util/calendar_controller.dart';
 export 'src/util/calendar_localization_service.dart';
 export 'src/util/lit_alternative_layout.dart';
+export 'src/util/datetime_validation.dart';
