@@ -137,7 +137,7 @@ class _LitScaffoldState extends State<LitScaffold>
 /// The [LitScaffold]'s body [Widget].
 ///
 /// Depending on the provided [CustomAppBar] the [Padding] should be adjusted.
-class _LitScaffoldBody extends StatelessWidget {
+class _LitScaffoldBody extends StatefulWidget {
   final Widget body;
   final CustomAppBar? appBar;
 
@@ -146,15 +146,32 @@ class _LitScaffoldBody extends StatelessWidget {
     required this.body,
     required this.appBar,
   }) : super(key: key);
+
+  @override
+  __LitScaffoldBodyState createState() => __LitScaffoldBodyState();
+}
+
+class __LitScaffoldBodyState extends State<_LitScaffoldBody> {
+  bool get _safeArea {
+    if (widget.appBar is LitBlurredAppBar) {
+      return false;
+    }
+    if (widget.appBar is FixedOnScrollAppbar) {
+      return false;
+    }
+    if (widget.appBar is MinimalistAppBar) {
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return appBar != null &&
-            !(appBar is LitBlurredAppBar) &&
-            !(appBar is FixedOnScrollAppbar)
+    return widget.appBar != null && _safeArea
         ? Padding(
             padding: const EdgeInsets.only(top: CustomAppBar.height),
-            child: body,
+            child: widget.body,
           )
-        : body;
+        : widget.body;
   }
 }

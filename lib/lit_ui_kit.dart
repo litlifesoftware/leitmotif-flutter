@@ -32,9 +32,7 @@ export 'src/widgets/app_bars/custom_app_bar.dart';
 export 'src/widgets/app_bars/lit_app_bar.dart';
 export 'src/widgets/app_bars/lit_blurred_app_bar.dart';
 export 'src/widgets/app_bars/fixed_on_scroll_appbar.dart';
-export 'src/widgets/custom_info_bar/dummy_info_bar.dart';
-export 'src/widgets/custom_info_bar/custom_info_bar.dart';
-export 'src/widgets/custom_info_bar/transparent_info_bar.dart';
+export 'src/widgets/app_bars/minimalist_app_bar.dart';
 
 /// Badges
 export 'src/widgets/badges/lit_badge.dart';
@@ -140,6 +138,9 @@ export 'src/widgets/lit_snack_bar/lit_snackbar.dart';
 export 'src/widgets/lit_snack_bar/lit_snackbar_controller.dart';
 export 'src/widgets/lit_snack_bar/icon_snackbar.dart';
 export 'src/widgets/lit_snack_bar/sliding_snackbar.dart';
+export 'src/widgets/custom_info_bar/dummy_info_bar.dart';
+export 'src/widgets/custom_info_bar/custom_info_bar.dart';
+export 'src/widgets/custom_info_bar/transparent_info_bar.dart';
 
 /// Text
 export 'src/widgets/text/clipped_text.dart';

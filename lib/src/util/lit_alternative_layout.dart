@@ -43,3 +43,11 @@ Matrix4 alternativeTransform(
 }) {
   return isPortraitMode(deviceSize) ? portraitTransform : landscapeTransform;
 }
+
+BoxFit alternativeBoxFit(
+  Size deviceSize, {
+  required BoxFit portraitBoxFit,
+  required BoxFit landscapeBoxFit,
+}) {
+  return isPortraitMode(deviceSize) ? portraitBoxFit : landscapeBoxFit;
+}
