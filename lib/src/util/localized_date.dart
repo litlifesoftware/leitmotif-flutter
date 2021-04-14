@@ -5,6 +5,18 @@ import 'package:intl/intl.dart';
 extension LocalizedDateTime on DateTime {
   /// Formats the [DateTime] to a localized and human-readible string.
   ///
+  /// The formatted string will output the the day, the month and the
+  /// year included in the [DateTime].
+  ///
+  /// For example the english localization of the corresponding [DateTime] will
+  /// return `April 10, 2021`.
+  String formatAsLocalizedDate() {
+    final DateFormat formatter = DateFormat.yMMMMd(Intl.getCurrentLocale());
+    return formatter.format(this);
+  }
+
+  /// Formats the [DateTime] to a localized and human-readible string.
+  ///
   /// The formatted string will output the weekday, the day, the month and the
   /// year included in the [DateTime].
   ///
