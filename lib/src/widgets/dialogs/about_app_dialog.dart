@@ -23,7 +23,7 @@ class AboutAppDialog extends StatefulWidget {
 }
 
 class _AboutAppDialogState extends State<AboutAppDialog> {
-  late PackageInfo _packageInfo;
+  PackageInfo? _packageInfo;
 
   Future<void> _initPackageInfo() async {
     final PackageInfo info = await PackageInfo.fromPlatform();
@@ -53,95 +53,102 @@ class _AboutAppDialogState extends State<AboutAppDialog> {
       child: SingleChildScrollView(
         padding: widget.padding,
         physics: BouncingScrollPhysics(),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: widget.art,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4.0),
-              child: Text(
-                "${widget.appName}",
-                style: LitTextStyles.sansSerifSmallHeader,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Text(
-              "Version: ${_packageInfo.version}",
-              style: LitTextStyles.sansSerifBody,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 4.0,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                    child: Text("for", style: LitTextStyles.sansSerifBody),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25.0),
-                          color: LitColors.beigeGrey),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 4.0,
-                          horizontal: 8.0,
-                        ),
-                        child: Text(
-                          PlatformInfo.platformLabel,
-                          style: LitTextStyles.sansSerifBodyTighterSmaller
-                              .copyWith(
-                            color: Colors.white,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Column(
+        child: _packageInfo != null
+            ? Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  widget.infoDescription != null
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 4.0,
-                            horizontal: 24.0,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: widget.art,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Text(
+                      "${widget.appName}",
+                      style: LitTextStyles.sansSerifSmallHeader,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Text(
+                    "Version: ${_packageInfo!.version}",
+                    style: LitTextStyles.sansSerifBody,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          child:
+                              Text("for", style: LitTextStyles.sansSerifBody),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25.0),
+                                color: LitColors.beigeGrey),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 4.0,
+                                horizontal: 8.0,
+                              ),
+                              child: Text(
+                                PlatformInfo.platformLabel,
+                                style: LitTextStyles.sansSerifBodyTighterSmaller
+                                    .copyWith(
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
-                          child: Text(
-                            "${widget.infoDescription}",
-                            style: LitTextStyles.sansSerifBodyTighterSmaller,
-                            textAlign: TextAlign.start,
-                          ),
-                        )
-                      : SizedBox()
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        widget.infoDescription != null
+                            ? Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 4.0,
+                                  horizontal: 24.0,
+                                ),
+                                child: Text(
+                                  "${widget.infoDescription}",
+                                  style:
+                                      LitTextStyles.sansSerifBodyTighterSmaller,
+                                  textAlign: TextAlign.start,
+                                ),
+                              )
+                            : SizedBox()
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 4.0,
+                      bottom: 8.0,
+                    ),
+                    child: Text(
+                      PlatformInfo.legalNotice,
+                      style: LitTextStyles.sanSerifBodySmall,
+                      textAlign: TextAlign.center,
+                    ),
+                  )
                 ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 4.0,
-                bottom: 8.0,
-              ),
-              child: Text(
-                PlatformInfo.legalNotice,
-                style: LitTextStyles.sanSerifBodySmall,
-                textAlign: TextAlign.center,
-              ),
-            )
-          ],
-        ),
+              )
+            : JugglingLoadingIndicator(
+                indicatorColor: Colors.grey,
+                backgroundColor: Colors.white,
+                shadowOpacity: 0.3),
       ),
     );
   }
