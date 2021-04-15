@@ -34,6 +34,9 @@ export 'src/widgets/app_bars/lit_blurred_app_bar.dart';
 export 'src/widgets/app_bars/fixed_on_scroll_appbar.dart';
 export 'src/widgets/app_bars/minimalist_app_bar.dart';
 
+// Art
+export 'src/widgets/art/exclamation_rectangle.dart';
+
 /// Badges
 export 'src/widgets/badges/lit_badge.dart';
 export 'src/widgets/badges/lit_slider_badge.dart';
