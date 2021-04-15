@@ -5,28 +5,20 @@ class LitCreditsScreen extends StatefulWidget {
   final String screenTitle;
   final String appTitle;
   final String? subTitle;
-  final BoxDecoration backgroundDecoration;
+
   final Widget art;
   final List<CreditData> credits;
   final Duration? animationDuration;
+  final bool darkMode;
   const LitCreditsScreen({
     Key? key,
     this.screenTitle = "Credits",
     required this.appTitle,
     this.subTitle,
-    this.backgroundDecoration = const BoxDecoration(
-      gradient: const LinearGradient(
-        begin: Alignment.topRight,
-        end: Alignment.bottomLeft,
-        colors: const [
-          const Color(0xFFDCDCDC),
-          const Color(0xFFD7D7D7),
-        ],
-      ),
-    ),
     this.art = const SizedBox(),
     required this.credits,
     this.animationDuration,
+    this.darkMode = false,
   }) : super(key: key);
   @override
   _LitCreditsScreenState createState() => _LitCreditsScreenState();
@@ -38,8 +30,6 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
   late AnimationController _animationController;
   late ScrollController _scrollController;
   bool _animationStopped = false;
-  double _currentScrollOffset = 0.0;
-  double _maxScrollExtent = 0.0;
 
   Duration get _animationDuration {
     return widget.animationDuration ??
@@ -54,12 +44,6 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
   void stopAnimation() {
     setState(() {
       _animationStopped = true;
-    });
-  }
-
-  void setCurrentScrollOffset() {
-    setState(() {
-      _currentScrollOffset = _scrollController.offset;
     });
   }
 
@@ -86,6 +70,34 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
     }
   }
 
+  Color get _backgroundColor {
+    return widget.darkMode ? Color(0xFF333333) : LitColors.lightGrey;
+  }
+
+  BoxDecoration get _backgroundDecoration {
+    return widget.darkMode
+        ? const BoxDecoration(
+            gradient: const LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: const [
+                const Color(0xAF142B33),
+                const Color(0xBF152536),
+              ],
+            ),
+          )
+        : const BoxDecoration(
+            gradient: const LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: const [
+                const Color(0xFFDCDCDC),
+                const Color(0xFFD7D7D7),
+              ],
+            ),
+          );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -108,14 +120,18 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
   @override
   Widget build(BuildContext context) {
     return LitScaffold(
-      appBar: LitAppBar(title: widget.screenTitle),
+      backgroundColor: _backgroundColor,
+      appBar: LitAppBar(
+        title: widget.screenTitle,
+        backgroundColor: _backgroundColor,
+      ),
       body: GestureDetector(
         onVerticalDragCancel: stopAnimation,
         child: Stack(
           alignment: Alignment.center,
           children: [
             Container(
-              decoration: widget.backgroundDecoration,
+              decoration: _backgroundDecoration,
             ),
             Container(
               child: ConstrainedBox(
@@ -172,6 +188,7 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
                         for (int i = 0; i < widget.credits.length; i++) {
                           list.add(_CreditItem(
                             credit: widget.credits[i],
+                            darkMode: widget.darkMode,
                           ));
                         }
                         return ScrollableColumn(
@@ -197,9 +214,11 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
 
 class _CreditItem extends StatefulWidget {
   final CreditData credit;
+  final bool darkMode;
   const _CreditItem({
     Key? key,
     required this.credit,
+    required this.darkMode,
   }) : super(key: key);
 
   @override
@@ -207,6 +226,14 @@ class _CreditItem extends StatefulWidget {
 }
 
 class __CreditItemState extends State<_CreditItem> {
+  Color get _roleTextColor {
+    return widget.darkMode ? Colors.white54 : Color(0xFFB0B0B0);
+  }
+
+  Color get _nameTextColor {
+    return widget.darkMode ? Colors.white : Color(0xFF7e7e7e);
+  }
+
   Widget _buildNameItem(String name) {
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -216,9 +243,7 @@ class __CreditItemState extends State<_CreditItem> {
         name,
         textAlign: TextAlign.center,
         style: LitTextStyles.sansSerifSubHeader.copyWith(
-          color: Color(
-            0xFF7e7e7e,
-          ),
+          color: _nameTextColor,
         ),
       ),
     );
@@ -233,7 +258,7 @@ class __CreditItemState extends State<_CreditItem> {
           widget.credit.role,
           textAlign: TextAlign.center,
           style: LitTextStyles.sansSerifBody.copyWith(
-            color: Color(0xFFB0B0B0),
+            color: _roleTextColor,
           ),
         ),
         SizedBox(

@@ -21,10 +21,10 @@ class LitAppBar extends StatelessWidget implements CustomAppBar {
     this.textStyle = LitTextStyles.sansSerif,
     this.boxShadow = const [
       BoxShadow(
-        blurRadius: 8.0,
+        blurRadius: 12.0,
         color: Colors.black45,
-        offset: Offset(0, 2),
-        spreadRadius: 1.0,
+        offset: Offset(0, 4),
+        spreadRadius: -3.0,
       )
     ],
     this.backgroundColor = LitColors.lightGrey,
