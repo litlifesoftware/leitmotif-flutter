@@ -1,13 +1,14 @@
 import 'package:flutter/widgets.dart';
 
-/// A widgets that wrapps the provided children inside a column, which then is wrapped
-/// inside a scroll view to allow scrolling through children.
+/// A widgets that wrapps the provided children inside a column, which then is
+/// wrapped inside a scroll view to allow scrolling through children.
 ///
-/// The arguments should match the default [Column]'s arguments. The default minimun
-/// height is set using a constrained box. The constrains are set to fill the screen's
-/// height at minimum. If the column's height should be lower than the device's height,
-/// pass a [verticalCut] value to decrease the constraint's minimum height by the
-/// provided value.
+/// The arguments should match the default [Column]'s arguments. The default
+/// minimal height is set using a constrained box. The constrains are set to
+/// fill the screen's height at minimum. If the column's height should be lower
+/// than the device's height,pass a [verticalCut] value to decrease the
+/// constraint's minimum height by the provided value. To avoid any constrains,
+/// use, set `constrained` to false.
 class ScrollableColumn extends StatelessWidget {
   /// The [ScrollController] to controll the scroll interaction.
   final ScrollController? controller;
@@ -24,8 +25,8 @@ class ScrollableColumn extends StatelessWidget {
   /// The horizontal alignment.
   final CrossAxisAlignment crossAxisAlignment;
 
-  /// The vertical size. The vertical size might be larger then intended due to the
-  /// constrained box's minumum height is set to the screen's height.
+  /// The vertical size. The vertical size might be larger then intended due to
+  /// the constrained box's minumum height is set to the screen's height.
   final MainAxisSize mainAxisSize;
 
   /// The text base alignment.
@@ -43,24 +44,30 @@ class ScrollableColumn extends StatelessWidget {
   /// States whether to reverse the scroll input.
   final bool reverse;
 
-  /// The vertical cut which will be subtracted from the constrain's minimum height.
+  /// The vertical cut which will be subtracted from the constrain's minimum
+  /// height.
   final double verticalCut;
+
+  /// States whether to constrain the overall height of the scrollable column.
+  /// To avoid pixel overflows on small areas, the constrained flag should be
+  /// set to false.
+  final bool constrained;
 
   /// Creates a [ScrollableColumn].
   ///
   /// * [controller] is the [ScrollController] passed onto the scroll view.
   ///
-  /// * [physics] is the [ScrollPhysics] which specifies the scroll behavior on the scroll
-  ///   view. This will be set to [BouncingScrollPhysics] by default to implement the
-  ///   Cupertino-styled design.
+  /// * [physics] is the [ScrollPhysics] which specifies the scroll behavior on
+  ///   the scroll view. This will be set to [BouncingScrollPhysics] by default
+  ///   to implement the Cupertino-styled design.
   ///
   /// * [mainAxisAlignment] is the vertical aligment of the children.
   ///
   /// * [crossAxisAlignment] is the horizontal aligment of the children.
   ///
-  /// * [mainAxisSize] defines the height of the column. If a high [verticalCut] value is
-  ///   defined to lower the size of the column, the [mainAxisSize] might then be set to
-  ///   min.
+  /// * [mainAxisSize] defines the height of the column. If a high [verticalCut]
+  ///   value is defined to lower the size of the column, the [mainAxisSize]
+  ///   might then be set to min.
   ///
   /// * [textBaseline] is the text base alignment.
   ///
@@ -70,10 +77,11 @@ class ScrollableColumn extends StatelessWidget {
   ///
   /// * [reverse] states whether to reverse scroll view's scroll direction.
   ///
-  /// * [verticalCut] is the vertical cut which will decrease the overall column height. The
-  ///   column's constrains are set to the screen's height. If the column height should be
-  ///   lower than the screen's height, the [verticalCut] should be set to the amount of
-  ///   pixels, that should be subtracted from the overall box constraints (height).
+  /// * [verticalCut] is the vertical cut which will decrease the overall column
+  ///   height. The column's constrains are set to the screen's height. If the
+  ///   column height should be lower than the screen's height, the [verticalCut]
+  ///   should be set to the amount of pixels, that should be subtracted from the
+  ///   overall box constraints (height).
   const ScrollableColumn({
     Key? key,
     this.controller,
@@ -88,6 +96,7 @@ class ScrollableColumn extends StatelessWidget {
     this.padding = const EdgeInsets.all(0.0),
     this.reverse = false,
     this.verticalCut = 0.0,
+    this.constrained = true,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -99,7 +108,9 @@ class ScrollableColumn extends StatelessWidget {
       padding: padding,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height - verticalCut,
+          minHeight: constrained
+              ? (MediaQuery.of(context).size.height - verticalCut)
+              : 0.0,
         ),
         child: Column(
           children: children,
