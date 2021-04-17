@@ -265,7 +265,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   child: LitRoundedOutlinedButton(
                     borderColor: buttonBorderColor,
                     child: ClippedText(
-                      "Show Age Confirmation Screen",
+                      "Show Confirm Age Screen",
                       style: LitTextStyles.sansSerif.copyWith(
                         color: buttonTextColor,
                       ),
@@ -275,9 +275,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                         context,
                         CupertinoPageRoute(
                           builder: (context) {
-                            return AgeConfirmationScreen(
-                              onSubmitCallback: onSubmitDayOfBirth,
-                            );
+                            return ConfirmAgeScreen();
                           },
                         ),
                       )

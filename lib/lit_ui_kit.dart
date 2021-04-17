@@ -93,10 +93,18 @@ export 'src/controller/lit_notification_controller.dart';
 export 'src/controller/lit_route_controller.dart';
 export 'src/controller/lit_focus_controller.dart';
 
+/// Date picker
+export 'src/widgets/date_picker/lit_calendar_day_item.dart';
+export 'src/widgets/date_picker/lit_calendar_grid.dart';
+export 'src/widgets/date_picker/lit_calendar_navigation.dart';
+export 'src/widgets/date_picker/lit_calendar_weekday_label.dart';
+export 'src/widgets/date_picker/lit_date_picker.dart';
+
 /// Dialogs
 export 'src/widgets/dialogs/website_info.dart';
 export 'src/widgets/dialogs/about_app_dialog.dart';
 export 'src/widgets/dialogs/lit_titled_dialog.dart';
+export 'src/widgets/dialogs/lit_date_picker_dialog.dart';
 
 /// Icon data
 export 'src/icons/lit_icons.dart';
@@ -124,6 +132,7 @@ export 'src/screens/lit_offline_app_disclaimer_screen.dart';
 export 'src/screens/lit_credits_screen.dart';
 export 'src/screens/lit_sign_up_screen.dart';
 export 'src/screens/photosensitive_disclaimer_screen.dart';
+export 'src/screens/confirm_age_screen.dart';
 
 /// Settings panels
 export 'src/widgets/settings_panel/settings_tile.dart';

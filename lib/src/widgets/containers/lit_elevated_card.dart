@@ -38,9 +38,9 @@ class LitElevatedCard extends StatelessWidget {
     this.boxShadow = const [
       const BoxShadow(
         blurRadius: 6.0,
-        color: Colors.black38,
-        offset: Offset(-2, 2.0),
-        spreadRadius: 1.0,
+        color: Colors.black26,
+        offset: Offset(-3.0, 2.0),
+        spreadRadius: 0.0,
       )
     ],
     this.backgroundColor = Colors.white,
