@@ -5,17 +5,17 @@ import 'package:lit_ui_kit/src/widgets/date_picker/lit_date_picker.dart';
 
 class LitDatePickerDialog extends StatefulWidget {
   final void Function() onBackCallback;
-  final DateTime? selectedDate;
-  final void Function(DateTime?) selectDate;
-  final void Function() onSubmit;
+  //final DateTime? selectedDate;
+  //final void Function(DateTime?) selectDate;
+  final void Function(DateTime) onSubmit;
   final bool allowFutureDates;
   final String excludedMonthErrorMessage;
   final String futureDateErrorMessage;
   const LitDatePickerDialog(
       {Key? key,
       required this.onBackCallback,
-      required this.selectedDate,
-      required this.selectDate,
+      //required this.selectedDate,
+      //required this.selectDate,
       required this.onSubmit,
       this.allowFutureDates = true,
       this.excludedMonthErrorMessage = "Date not included in current month.",
@@ -31,17 +31,17 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog>
   CalendarController _calendarController = CalendarController();
   late LitSnackbarController _exclusiveDateSnackBarController;
   late LitSnackbarController _futureDateSnackbarController;
-
+  DateTime? selectedDate;
   String? weekdayLabels;
 
   void _setSelectedDate(DateTime date) {
     print(date);
     setState(() {
-      if (widget.selectedDate == date) {
-        widget.selectDate(null);
+      if (selectedDate == date) {
+        selectedDate = null;
         _selectAnimationController.reverse();
       } else {
-        widget.selectDate(date);
+        selectedDate = date;
         _selectAnimationController.forward(from: 0);
       }
     });
@@ -56,7 +56,7 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog>
   }
 
   void _onSubmitDate() {
-    widget.onSubmit();
+    widget.onSubmit(selectedDate!);
   }
 
   @override
@@ -83,7 +83,7 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog>
       animation: _selectAnimationController,
       builder: (context, _) {
         return Material(
-          color: widget.selectedDate != null
+          color: selectedDate != null
               ? Colors.black
                   .withOpacity((0.38 * _selectAnimationController.value))
               : Colors.transparent,
@@ -104,7 +104,7 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog>
                   ),
                   child: LitDatePicker(
                     calendarController: _calendarController,
-                    selectedDate: widget.selectedDate,
+                    selectedDate: selectedDate,
                     setSelectedDate: _setSelectedDate,
                     onExclusiveMonth: _onExclusiveMonth,
                     onFutureDate: _onFutureDate,
@@ -117,7 +117,7 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog>
                     portraitAlignment: Alignment.bottomCenter,
                     landscapeAlignment: Alignment.topRight),
                 child: Container(
-                  child: widget.selectedDate != null
+                  child: selectedDate != null
                       ? AnimatedOpacity(
                           duration: _selectAnimationController.duration!,
                           opacity:
@@ -146,7 +146,7 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog>
                                   horizontal: 16.0,
                                 ),
                                 child: Text(
-                                  "${DateFormat.yMMMMd((Localizations.localeOf(context).languageCode)).format(widget.selectedDate!)}",
+                                  "${DateFormat.yMMMMd((Localizations.localeOf(context).languageCode)).format(selectedDate!)}",
                                   style: LitTextStyles.sansSerif.copyWith(
                                       fontSize: alternativeFontSize(
                                         MediaQuery.of(context).size,

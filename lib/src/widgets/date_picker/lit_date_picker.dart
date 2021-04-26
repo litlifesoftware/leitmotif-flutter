@@ -228,7 +228,7 @@ class _SelectYearDialog extends StatefulWidget {
     Key? key,
     required this.setDisplayedYearCallback,
     required this.templateDate,
-    this.numberOfYears = 20,
+    this.numberOfYears = 80,
   }) : super(key: key);
 
   @override
@@ -294,6 +294,10 @@ class _SelectYearDialogState extends State<_SelectYearDialog> {
                       horizontal: 30.0,
                     ),
                     child: LitRoundedElevatedButton(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32.0,
+                        vertical: 16.0,
+                      ),
                       color: HexColor('#b6c5c6'),
                       boxShadow: [
                         BoxShadow(
@@ -318,8 +322,8 @@ class _SelectYearDialogState extends State<_SelectYearDialog> {
               );
             }
             return SizedBox(
-              height: 130.0,
-              child: PageView(
+              height: 384.0,
+              child: ListView(
                   physics: BouncingScrollPhysics(),
                   controller: _pageController,
                   scrollDirection: Axis.vertical,
