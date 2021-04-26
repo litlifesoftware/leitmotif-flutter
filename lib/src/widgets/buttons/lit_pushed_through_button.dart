@@ -30,7 +30,7 @@ class LitPushedThroughButton extends StatefulWidget {
     this.boxShadow = const [
       const BoxShadow(
         blurRadius: 8.0,
-        offset: Offset(-2, 2),
+        offset: Offset(-4, 4),
         color: Colors.black26,
         spreadRadius: 1.0,
       ),

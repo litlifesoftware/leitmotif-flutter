@@ -275,7 +275,9 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                         context,
                         CupertinoPageRoute(
                           builder: (context) {
-                            return ConfirmAgeScreen();
+                            return ConfirmAgeScreen(
+                              onSubmit: () {},
+                            );
                           },
                         ),
                       )
