@@ -11,16 +11,18 @@ class LitDatePickerDialog extends StatefulWidget {
   final bool allowFutureDates;
   final String excludedMonthErrorMessage;
   final String futureDateErrorMessage;
-  const LitDatePickerDialog(
-      {Key? key,
-      required this.onBackCallback,
-      //required this.selectedDate,
-      //required this.selectDate,
-      required this.onSubmit,
-      this.allowFutureDates = true,
-      this.excludedMonthErrorMessage = "Date not included in current month.",
-      this.futureDateErrorMessage = "Future dates are not allowed."})
-      : super(key: key);
+  final DateTime? initialDate;
+  const LitDatePickerDialog({
+    Key? key,
+    required this.onBackCallback,
+    //required this.selectedDate,
+    //required this.selectDate,
+    required this.onSubmit,
+    this.allowFutureDates = true,
+    this.excludedMonthErrorMessage = "Date not included in current month.",
+    this.futureDateErrorMessage = "Future dates are not allowed.",
+    this.initialDate,
+  }) : super(key: key);
   @override
   _LitDatePickerDialogState createState() => _LitDatePickerDialogState();
 }
@@ -28,7 +30,7 @@ class LitDatePickerDialog extends StatefulWidget {
 class _LitDatePickerDialogState extends State<LitDatePickerDialog>
     with TickerProviderStateMixin {
   late AnimationController _selectAnimationController;
-  CalendarController _calendarController = CalendarController();
+  late CalendarController _calendarController;
   late LitSnackbarController _exclusiveDateSnackBarController;
   late LitSnackbarController _futureDateSnackbarController;
   DateTime? selectedDate;
@@ -62,7 +64,7 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog>
   @override
   void initState() {
     super.initState();
-
+    _calendarController = CalendarController(templateDate: widget.initialDate);
     _selectAnimationController =
         AnimationController(duration: Duration(milliseconds: 140), vsync: this);
 
@@ -109,6 +111,7 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog>
                     onExclusiveMonth: _onExclusiveMonth,
                     onFutureDate: _onFutureDate,
                     allowFutureDates: widget.allowFutureDates,
+                    initialDate: widget.initialDate,
                   ),
                 ),
               ),

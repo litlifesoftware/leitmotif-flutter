@@ -16,6 +16,7 @@ class LitDatePicker extends StatefulWidget {
   final void Function() onExclusiveMonth;
   final void Function() onFutureDate;
   final bool allowFutureDates;
+  final DateTime? initialDate;
   const LitDatePicker({
     Key? key,
     required this.calendarController,
@@ -24,6 +25,7 @@ class LitDatePicker extends StatefulWidget {
     required this.onExclusiveMonth,
     required this.onFutureDate,
     this.allowFutureDates = true,
+    this.initialDate,
   }) : super(key: key);
 
   @override
@@ -72,6 +74,7 @@ class _LitDatePickerState extends State<LitDatePicker>
       builder: (_) => _SelectYearDialog(
         setDisplayedYearCallback: _setDisplayedYear,
         templateDate: widget.calendarController.templateDate,
+        initialDate: widget.initialDate,
       ),
     );
   }
@@ -219,6 +222,7 @@ class _SelectYearDialog extends StatefulWidget {
   final void Function(int year) setDisplayedYearCallback;
   final DateTime? templateDate;
   final int numberOfYears;
+  final DateTime? initialDate;
 
   /// Creates a [SelectYearDialog].
   ///
@@ -229,6 +233,7 @@ class _SelectYearDialog extends StatefulWidget {
     required this.setDisplayedYearCallback,
     required this.templateDate,
     this.numberOfYears = 80,
+    this.initialDate,
   }) : super(key: key);
 
   @override
@@ -236,7 +241,7 @@ class _SelectYearDialog extends StatefulWidget {
 }
 
 class _SelectYearDialogState extends State<_SelectYearDialog> {
-  PageController? _pageController;
+  //PageController? _pageController;
 
   final int millisecondsPerYear = 31556926000;
 
@@ -245,19 +250,23 @@ class _SelectYearDialogState extends State<_SelectYearDialog> {
     LitRouteController(context).closeDialog();
   }
 
+  DateTime get _initialDate {
+    return DateTime.now();
+  }
+
   /// Gets the inital page that should be selected on the page view.
   int get initialPage {
     return
         // If the provided template date is as recently as the provided number
         // of years allow (e.g. as recently as 20 years ago).
         widget.templateDate!.year >
-                DateTime.now()
+                (_initialDate)
                     .subtract(Duration(
                         milliseconds:
                             millisecondsPerYear * widget.numberOfYears))
                     .year
             // Set the index to display the provided template year
-            ? (DateTime.now().year -
+            ? ((_initialDate).year -
                 (DateTime.fromMillisecondsSinceEpoch(
                         widget.templateDate!.millisecondsSinceEpoch))
                     .year)
@@ -268,12 +277,12 @@ class _SelectYearDialogState extends State<_SelectYearDialog> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: initialPage);
+    //_pageController = PageController(initialPage: initialPage);
   }
 
   @override
   Widget build(BuildContext context) {
-    print(_pageController!.initialPage);
+    //print(_pageController!.initialPage);
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 30.0,
@@ -284,38 +293,41 @@ class _SelectYearDialogState extends State<_SelectYearDialog> {
           builder: (context) {
             final List<Widget> children = [];
             for (int i = 0; i < widget.numberOfYears; i++) {
-              final DateTime iteratedDate = DateTime.now()
+              final DateTime iteratedDate = (_initialDate)
                   .subtract(Duration(milliseconds: millisecondsPerYear * i));
               children.add(
                 Container(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                      vertical: 30.0,
+                      vertical: 16.0,
                       horizontal: 30.0,
                     ),
-                    child: LitRoundedElevatedButton(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 32.0,
-                        vertical: 16.0,
-                      ),
-                      color: HexColor('#b6c5c6'),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 24.0,
-                          color: Colors.black38,
-                          offset: Offset(4, 4),
-                          spreadRadius: 2.0,
-                        )
-                      ],
-                      child: ScaledDownText(
-                        "${iteratedDate.year}",
-                        style: LitTextStyles.sansSerif.copyWith(
-                          fontSize: 24.0,
-                          color: Colors.white,
-                          letterSpacing: 0.45,
+                    child: AspectRatio(
+                      aspectRatio: 3.0,
+                      child: LitRoundedElevatedButton(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32.0,
+                          vertical: 16.0,
                         ),
+                        color: HexColor('#E7E5E4'),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 12.0,
+                            color: Colors.black26,
+                            offset: Offset(-3, 3),
+                            spreadRadius: 1.0,
+                          )
+                        ],
+                        child: ScaledDownText(
+                          "${iteratedDate.year}",
+                          style: LitTextStyles.sansSerif.copyWith(
+                            fontSize: 16.0,
+                            color: LitColors.mediumGrey,
+                            letterSpacing: 1.45,
+                          ),
+                        ),
+                        onPressed: () => _onPressed(iteratedDate.year),
                       ),
-                      onPressed: () => _onPressed(iteratedDate.year),
                     ),
                   ),
                 ),
@@ -324,10 +336,13 @@ class _SelectYearDialogState extends State<_SelectYearDialog> {
             return SizedBox(
               height: 384.0,
               child: ListView(
-                  physics: BouncingScrollPhysics(),
-                  controller: _pageController,
-                  scrollDirection: Axis.vertical,
-                  children: children),
+                physics: BouncingScrollPhysics(),
+                //controller: _pageController,
+                scrollDirection: Axis.vertical,
+                children: children,
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                reverse: false,
+              ),
             );
           },
         ),
