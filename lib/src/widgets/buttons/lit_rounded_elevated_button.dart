@@ -28,7 +28,7 @@ class LitRoundedElevatedButton extends StatefulWidget {
       BoxShadow(
         blurRadius: 16.0,
         color: Colors.black26,
-        offset: Offset(2, 2),
+        offset: Offset(-2, 2),
         spreadRadius: 1.0,
       )
     ],
@@ -70,6 +70,12 @@ class _LitRoundedElevatedButtonState extends State<LitRoundedElevatedButton>
         AnimationController(duration: Duration(milliseconds: 80), vsync: this);
 
     _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override

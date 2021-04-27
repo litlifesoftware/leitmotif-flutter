@@ -3,12 +3,14 @@ class CalendarController {
   DateTime? templateDate;
   final List<DateTime> derivateDates = [];
 
-  CalendarController() {
+  CalendarController({this.templateDate}) {
+    if (templateDate == null) {
+      templateDate = DateTime.now();
+    }
     init();
   }
 
   void init() {
-    templateDate = DateTime.now();
     _setDerivateDates(templateDate!);
   }
 

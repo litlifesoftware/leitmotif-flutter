@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class ConfirmAgeScreen extends StatefulWidget {
+  final int ageRequirement;
   final void Function() onSubmit;
 
   const ConfirmAgeScreen({
     Key? key,
+    this.ageRequirement = 13,
     required this.onSubmit,
   }) : super(key: key);
   @override
@@ -20,22 +22,57 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
   }
 
   void _onPressedSet() {
-    LitRouteController(context)
-        .showDialogWidget(LitDatePickerDialog(onBackCallback: () {
-      LitRouteController(context).closeDialog();
-    }, onSubmit: (date) {
-      setState(() {
-        _dateOfBirth = date;
-      });
+    LitRouteController(context).showDialogWidget(
+      LitDatePickerDialog(
+        onBackCallback: () {
+          LitRouteController(context).closeDialog();
+        },
+        onSubmit: (date) {
+          setState(() {
+            _dateOfBirth = date;
+          });
 
-      LitRouteController(context).closeDialog();
-    }));
+          LitRouteController(context).closeDialog();
+        },
+        initialDate: _dateOfBirth,
+      ),
+    );
   }
 
   int get _ageInYears {
-    return (_dateOfBirth != null)
-        ? ((DateTime.now().difference(_dateOfBirth!).inDays) / 365).round()
-        : 0;
+    // If the date of birth has not been initialized, return an invalid age.
+    if (_dateOfBirth == null) {
+      return 0;
+    }
+    // Store the current time.
+    DateTime now = DateTime.now();
+    // Calculate the raw age.
+    int age = now.year - _dateOfBirth!.year;
+    // Decrease the age depending on the birth's month and day.
+    //
+    // If the birth's month is after the current calendar month, decrease the
+    // age by one.
+    if (_dateOfBirth!.month > now.month) {
+      age--;
+      // Else if the same month is present, check the day value and decrease the
+      // age by one if necessary.
+    } else if ((now.month == _dateOfBirth!.month) &&
+        _dateOfBirth!.day > now.day) {
+      age--;
+    }
+    return age;
+  }
+
+  bool get _isValidAge {
+    return _ageInYears >= widget.ageRequirement;
+  }
+
+  IconData get _displayedIcon {
+    return _isValidAge ? LitIcons.check : LitIcons.times;
+  }
+
+  Color get _validityColor {
+    return Color(_isValidAge ? 0xFFFAFFF5 : 0xFFFFE9E9);
   }
 
   @override
@@ -106,11 +143,16 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
                           selectedAge: _dateOfBirth,
                           onPressedSet: _onPressedSet,
                           ageInYears: _ageInYears,
+                          labelBackgroundColor: _validityColor,
+                          isValid: _isValidAge,
                         ),
                         SizedBox(
                           height: 48.0,
                         ),
-                        _ValidLabel(),
+                        _ValidityLabel(
+                          icon: _displayedIcon,
+                          iconBackgroundColor: _validityColor,
+                        ),
                       ],
                     ),
                   ),
@@ -167,11 +209,15 @@ class _YourAgeInput extends StatefulWidget {
   final void Function() onPressedSet;
   final DateTime? selectedAge;
   final int ageInYears;
+  final Color labelBackgroundColor;
+  final bool isValid;
   const _YourAgeInput({
     Key? key,
     required this.onPressedSet,
     required this.selectedAge,
     required this.ageInYears,
+    required this.labelBackgroundColor,
+    required this.isValid,
   }) : super(key: key);
 
   @override
@@ -201,37 +247,76 @@ class __YourAgeInputState extends State<_YourAgeInput> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       widget.selectedAge != null
-                          ? Padding(
-                              padding: const EdgeInsets.only(bottom: 16.0),
-                              child: CleanInkWell(
-                                onTap: () {},
-                                child: SizedBox(
-                                  child: Container(
-                                    height: 38.0,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(14.0)),
-                                      color: Color(0xFFFAFFF5),
-                                      border: Border.all(
-                                        color: Color(0xFFCBCACA),
-                                        width: 1.5,
-                                      ),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "${widget.ageInYears > 0 ? widget.ageInYears : '?'}",
-                                        style: LitTextStyles.sansSerifHeader
-                                            .copyWith(
-                                          color: widget.ageInYears > 0
-                                              ? Color(0xFF5B5B5B)
-                                              : Color(0xFF000000),
-                                          fontWeight: FontWeight.w700,
+                          ? Row(
+                              children: [
+                                !widget.isValid
+                                    ? SizedBox(
+                                        width: constraints.maxWidth * 0.10,
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                                constraints.maxWidth * 0.015,
+                                          ),
+                                          child: LitBadge(
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 2.0,
+                                              horizontal: 2.0,
+                                            ),
+                                            backgroundColor:
+                                                widget.labelBackgroundColor,
+                                            child: Text(
+                                              "!",
+                                              style: LitTextStyles
+                                                  .sansSerifHeader
+                                                  .copyWith(
+                                                color: LitColors.mediumGrey,
+                                                fontSize: 12.0,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : SizedBox(),
+                                SizedBox(
+                                  width: constraints.maxWidth *
+                                      (widget.isValid ? 0.35 : 0.25),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 16.0),
+                                    child: CleanInkWell(
+                                      onTap: () {},
+                                      child: SizedBox(
+                                        child: Container(
+                                          height: 38.0,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(14.0)),
+                                            color: widget.labelBackgroundColor,
+                                            border: Border.all(
+                                              color: Color(0xFFCBCACA),
+                                              width: 1.5,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "${widget.ageInYears > 0 ? widget.ageInYears : '?'}",
+                                              style: LitTextStyles
+                                                  .sansSerifHeader
+                                                  .copyWith(
+                                                color: widget.ageInYears > 0
+                                                    ? Color(0xFF5B5B5B)
+                                                    : Color(0xFF000000),
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
+                                )
+                              ],
                             )
                           : SizedBox(),
                       LitPushedThroughButton(
@@ -259,7 +344,14 @@ class __YourAgeInputState extends State<_YourAgeInput> {
   }
 }
 
-class _ValidLabel extends StatelessWidget {
+class _ValidityLabel extends StatelessWidget {
+  final IconData icon;
+  final Color iconBackgroundColor;
+  const _ValidityLabel({
+    Key? key,
+    required this.icon,
+    required this.iconBackgroundColor,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -281,7 +373,7 @@ class _ValidLabel extends StatelessWidget {
                       constraints.maxWidth * 0.07,
                     ),
                   ),
-                  color: Color(0xFFFAFFF5),
+                  color: iconBackgroundColor,
                   boxShadow: [
                     BoxShadow(
                       blurRadius: 5.0,
@@ -295,10 +387,8 @@ class _ValidLabel extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
-                      LitIcons.check,
-                      color: Color(
-                        0xFF727272,
-                      ),
+                      icon,
+                      color: Color(0xFF727272),
                       size: constraints.maxWidth * 0.09,
                     ),
                   ),
