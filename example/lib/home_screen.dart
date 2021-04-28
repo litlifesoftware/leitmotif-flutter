@@ -91,9 +91,11 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
         backgroundColor: darkMode! ? LitColors.darkBlue : Colors.white,
         appBar: LitAppBar(
           title: "LitUIKit Example",
-          backgroundColor: darkMode! ? LitColors.darkBlue : LitColors.lightGrey,
-          textStyle: LitTextStyles.sansSerif
-              .copyWith(color: darkMode! ? Colors.white : LitColors.mediumGrey),
+          backgroundColor: darkMode! ? Colors.black : Colors.white,
+          textStyle: LitTextStyles.sansSerif.copyWith(
+            color: darkMode! ? Colors.white : LitColors.mediumGrey,
+          ),
+          elevated: darkMode!,
         ),
         snackBar: IconSnackbar(
             litSnackBarController: customSnackBarController,
@@ -184,10 +186,10 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
           ],
         ),
         actionButton: AnimatedActionButton(
-            alignment: Alignment.bottomRight,
             child: Icon(
               LitIcons.gear,
-              color: Colors.grey,
+              color: Colors.white,
+              size: 18.0,
             ),
             backgroundColor: LitColors.mediumGrey,
             onPressed: () => {

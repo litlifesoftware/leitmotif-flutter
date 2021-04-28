@@ -12,19 +12,21 @@ class AnimatedActionButton extends StatefulWidget
   final Color backgroundColor;
   final void Function() onPressed;
   final EdgeInsets padding;
+  final EdgeInsets margin;
 
   /// Creates an [AnimatedActionButton] [Widget].
 
   const AnimatedActionButton({
     Key? key,
-    required this.alignment,
+    this.alignment = Alignment.bottomRight,
     required this.child,
-    required this.backgroundColor,
+    this.backgroundColor = Colors.white,
     required this.onPressed,
     this.padding = const EdgeInsets.symmetric(
       vertical: 16.0,
       horizontal: 30.0,
     ),
+    this.margin = const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
   }) : super(key: key);
   @override
   _AnimatedActionButtonState createState() => _AnimatedActionButtonState();
@@ -54,7 +56,7 @@ class _AnimatedActionButtonState extends State<AnimatedActionButton>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _animationController!,
-      builder: (BuildContext context, Widget? child) {
+      builder: (BuildContext context, Widget? _) {
         return Align(
           alignment: widget.alignment,
           child: FadeInTransformScaleContainer(
@@ -63,14 +65,18 @@ class _AnimatedActionButtonState extends State<AnimatedActionButton>
                 0, 50 * (1 - _animationController!.value), 0),
             scale: 0.25 + (_animationController!.value * 0.75),
             child: Padding(
-                padding: widget.padding,
-                child: LitTransformAnimatedButton(
-                  verticalTransform: 15.0,
-                  horizontalTransform: 0.0,
+              padding: widget.padding,
+              child: LitTransformAnimatedButton(
+                verticalTransform: 15.0,
+                horizontalTransform: 0.0,
+                child: Padding(
+                  padding: widget.margin,
                   child: widget.child,
-                  backgroundColor: widget.backgroundColor,
-                  onTap: widget.onPressed,
-                )),
+                ),
+                backgroundColor: widget.backgroundColor,
+                onTap: widget.onPressed,
+              ),
+            ),
           ),
         );
       },

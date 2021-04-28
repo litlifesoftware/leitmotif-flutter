@@ -108,22 +108,13 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
               ),
             ),
           ),
-          Align(
+          AnimatedActionButton(
+            onPressed: widget.onExit,
             alignment: Alignment.bottomLeft,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: LitPushedThroughButton(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                backgroundColor: Colors.white,
-                accentColor: Colors.white,
-                child: Icon(
-                  LitIcons.times,
-                  color: LitColors.mediumGrey,
-                  size: 16.0,
-                ),
-                onPressed: widget.onExit,
-              ),
+            child: Icon(
+              LitIcons.times,
+              color: LitColors.mediumGrey,
+              size: 16.0,
             ),
           )
         ],

@@ -9,6 +9,7 @@ class LitAppBar extends StatelessWidget implements CustomAppBar {
   final TextStyle textStyle;
   final List<BoxShadow> boxShadow;
   final Color backgroundColor;
+  final bool elevated;
 
   /// The app bar height is depending on the abstract [CustomAppBar] height.
   static final height = CustomAppBar.height;
@@ -19,6 +20,7 @@ class LitAppBar extends StatelessWidget implements CustomAppBar {
     Key? key,
     required this.title,
     this.textStyle = LitTextStyles.sansSerif,
+    this.elevated = false,
     this.boxShadow = const [
       BoxShadow(
         blurRadius: 12.0,
@@ -27,7 +29,7 @@ class LitAppBar extends StatelessWidget implements CustomAppBar {
         spreadRadius: 1.0,
       )
     ],
-    this.backgroundColor = LitColors.lightGrey,
+    this.backgroundColor = Colors.white,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -38,8 +40,8 @@ class LitAppBar extends StatelessWidget implements CustomAppBar {
           Container(
             height: height,
             width: MediaQuery.of(context).size.width,
-            decoration:
-                BoxDecoration(color: backgroundColor, boxShadow: boxShadow),
+            decoration: BoxDecoration(
+                color: backgroundColor, boxShadow: elevated ? [] : boxShadow),
             child: SafeArea(
               child: Center(
                 child: Padding(
