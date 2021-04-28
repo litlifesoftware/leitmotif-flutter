@@ -1,26 +1,97 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
+/// A screen widget allowing the user to submit his age.
+///
+/// Age requirements vary depending on the user's location. In most cases, using
+/// apps downloaded on app stores require the user to be at least 13 years old.
+///
+/// The [ConfirmAgeScreen] implements a very basic child protection on the first
+/// startup.
 class ConfirmAgeScreen extends StatefulWidget {
+  /// The age requirement (in years).
   final int ageRequirement;
+
+  /// The message displayed if the user's age don't comply with the age
+  /// requirement.
+  final String invalidAgeMessage;
+
+  /// The message displayed if the user's age complies with the provided age
+  /// requirement.
+  final String validAgeMessage;
+
+  /// The screen's title.
+  final String title;
+
+  /// The screen's subtitle.
+  final String subtitle;
+
+  /// The callback executed once the user submits a valid age.
   final void Function() onSubmit;
 
+  /// The 'set' text label.
+  final String setLabel;
+
+  /// The 'submit' text label.
+  final String submitLabel;
+
+  /// The 'your age' text label.
+  final String yourAgeLabel;
+
+  /// The 'valid' text label.
+  final String validLabel;
+
+  /// Creates a [ConfirmAgeScreen].
+  ///
+  /// * [ageRequirement] is the required age in years.
+  ///
+  /// * [invalidAgeMessage] is the text displayed if the user's age is too
+  ///   young. Provide a localized string if preferred.
+  ///
+  /// * [validAgeMessage] is the text displayed if the user's age is valid.
+  ///   Provide a localized string if preferred.
+  ///
+  /// * [title] is the screen's title.
+  ///
+  /// * [subtitle] is the screen's subtitle.
+  ///
+  /// * [setLabel] is the 'set' text.
+  ///
+  /// * [submitLabel] is the 'submit' text.
+  ///
+  /// * [yourAgeLabel] is the 'your age' text.
+  ///
+  /// * [validLabel] is the 'valid' text.
   const ConfirmAgeScreen({
     Key? key,
     this.ageRequirement = 13,
+    this.invalidAgeMessage =
+        "Seems like you are not old enough to use this app. Please check your age input.",
+    this.validAgeMessage =
+        "Your age has been confirmed. Press on 'Submit' to continue.",
+    this.title = "Confirm your Age",
+    this.subtitle = "Are you 13 years old or older?",
     required this.onSubmit,
+    this.setLabel = "Set",
+    this.submitLabel = "Submit",
+    this.yourAgeLabel = "Your age",
+    this.validLabel = "Valid",
   }) : super(key: key);
   @override
   _ConfirmAgeScreenState createState() => _ConfirmAgeScreenState();
 }
 
 class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
+  /// The user's date of birth stored as a [DateTime].
   DateTime? _dateOfBirth;
+
+  late LitSnackbarController _snackbarController;
 
   Size get _deviceSize {
     return MediaQuery.of(context).size;
   }
 
+  /// Shows the [LitDatePickerDialog] to allow user input.
   void _onPressedSet() {
     LitRouteController(context).showDialogWidget(
       LitDatePickerDialog(
@@ -39,45 +110,61 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
     );
   }
 
+  /// Handles the 'submit' action by either calling the provided callback
+  /// method or showing a snackbar depending on the age's validity.
+  void _onPressedSubmit() {
+    if (_isValidAge) {
+      widget.onSubmit();
+    } else {
+      _snackbarController.showSnackBar();
+    }
+  }
+
+  /// Gets the user's age in years.
   int get _ageInYears {
     // If the date of birth has not been initialized, return an invalid age.
     if (_dateOfBirth == null) {
       return 0;
     }
-    // Store the current time.
-    DateTime now = DateTime.now();
-    // Calculate the raw age.
-    int age = now.year - _dateOfBirth!.year;
-    // Decrease the age depending on the birth's month and day.
-    //
-    // If the birth's month is after the current calendar month, decrease the
-    // age by one.
-    if (_dateOfBirth!.month > now.month) {
-      age--;
-      // Else if the same month is present, check the day value and decrease the
-      // age by one if necessary.
-    } else if ((now.month == _dateOfBirth!.month) &&
-        _dateOfBirth!.day > now.day) {
-      age--;
-    }
-    return age;
+
+    return _dateOfBirth!.convertToAgeInYears;
   }
 
+  /// Checks if the age is valid.
   bool get _isValidAge {
     return _ageInYears >= widget.ageRequirement;
   }
 
+  /// Conditionally returns the validity's icon.
   IconData get _displayedIcon {
     return _isValidAge ? LitIcons.check : LitIcons.times;
   }
 
+  /// Conditionally returns the validity's color.
   Color get _validityColor {
     return Color(_isValidAge ? 0xFFFAFFF5 : 0xFFFFE9E9);
   }
 
   @override
+  void initState() {
+    super.initState();
+    _snackbarController = LitSnackbarController();
+  }
+
+  @override
+  void dispose() {
+    _snackbarController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return LitScaffold(
+      snackBar: IconSnackbar(
+        iconData: LitIcons.info,
+        litSnackBarController: _snackbarController,
+        text: widget.invalidAgeMessage,
+      ),
       body: Container(
         height: _deviceSize.height,
         width: _deviceSize.width,
@@ -111,7 +198,7 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Confirm your Age",
+                          widget.title,
                           style: LitTextStyles.sansSerifHeader.copyWith(
                             color: Color(0xFF848484),
                           ),
@@ -119,7 +206,7 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Text(
-                            "Are you 13 years old or older?",
+                            widget.subtitle,
                             style: LitTextStyles.sansSerifBody.copyWith(
                               color: Color(0xFF848484),
                             ),
@@ -145,6 +232,8 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
                           ageInYears: _ageInYears,
                           labelBackgroundColor: _validityColor,
                           isValid: _isValidAge,
+                          setLabel: widget.setLabel,
+                          yourAgeLabel: widget.yourAgeLabel,
                         ),
                         SizedBox(
                           height: 48.0,
@@ -152,6 +241,7 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
                         _ValidityLabel(
                           icon: _displayedIcon,
                           iconBackgroundColor: _validityColor,
+                          validLabel: widget.validLabel,
                         ),
                       ],
                     ),
@@ -162,7 +252,9 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24.0),
                     child: Text(
-                      "Your age has been confirmed. Press on 'Submit' to continue.",
+                      _isValidAge
+                          ? widget.validAgeMessage
+                          : widget.invalidAgeMessage,
                       style: LitTextStyles.sansSerifBody.copyWith(
                         color: Color(0xFF848484),
                         letterSpacing: 1.0,
@@ -179,15 +271,17 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 32.0),
-                child: LitPushedThroughButton(
-                    backgroundColor: Color(0xFFFAFFF5),
+                child: Opacity(
+                  opacity: _isValidAge ? 1.0 : 0.5,
+                  child: LitPushedThroughButton(
+                    backgroundColor: _validityColor,
                     borderRadius: 16.0,
                     margin: const EdgeInsets.symmetric(
                       horizontal: 32.0,
                       vertical: 10.0,
                     ),
                     child: Text(
-                      "SUBMIT",
+                      widget.submitLabel.toUpperCase(),
                       style: LitTextStyles.sansSerifSmallHeader.copyWith(
                         color: Color(0xFF8D8D8D),
                         fontSize: 15.0,
@@ -195,7 +289,9 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
                         letterSpacing: 1.1,
                       ),
                     ),
-                    onPressed: widget.onSubmit),
+                    onPressed: _onPressedSubmit,
+                  ),
+                ),
               ),
             ),
           ],
@@ -205,12 +301,15 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
   }
 }
 
+/// Label and button combination to allow age input.
 class _YourAgeInput extends StatefulWidget {
   final void Function() onPressedSet;
   final DateTime? selectedAge;
   final int ageInYears;
   final Color labelBackgroundColor;
   final bool isValid;
+  final String setLabel;
+  final String yourAgeLabel;
   const _YourAgeInput({
     Key? key,
     required this.onPressedSet,
@@ -218,6 +317,8 @@ class _YourAgeInput extends StatefulWidget {
     required this.ageInYears,
     required this.labelBackgroundColor,
     required this.isValid,
+    required this.setLabel,
+    required this.yourAgeLabel,
   }) : super(key: key);
 
   @override
@@ -239,8 +340,9 @@ class __YourAgeInputState extends State<_YourAgeInput> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                    width: constraints.maxWidth * 0.65,
-                    child: _LabelText("Your age")),
+                  width: constraints.maxWidth * 0.65,
+                  child: _LabelText(widget.yourAgeLabel),
+                ),
                 SizedBox(
                   width: constraints.maxWidth * 0.35,
                   child: Column(
@@ -285,7 +387,7 @@ class __YourAgeInputState extends State<_YourAgeInput> {
                                     padding:
                                         const EdgeInsets.only(bottom: 16.0),
                                     child: CleanInkWell(
-                                      onTap: () {},
+                                      onTap: widget.onPressedSet,
                                       child: SizedBox(
                                         child: Container(
                                           height: 38.0,
@@ -324,7 +426,7 @@ class __YourAgeInputState extends State<_YourAgeInput> {
                         onPressed: _onPressed,
                         child: Center(
                           child: Text(
-                            "SET",
+                            widget.setLabel,
                             style: LitTextStyles.sansSerifSubHeader.copyWith(
                               color: Color(0xFF5B5B5B),
                               fontWeight: FontWeight.w700,
@@ -344,13 +446,16 @@ class __YourAgeInputState extends State<_YourAgeInput> {
   }
 }
 
+/// Label to display the current 'your age is (in)valid' state.
 class _ValidityLabel extends StatelessWidget {
   final IconData icon;
   final Color iconBackgroundColor;
+  final String validLabel;
   const _ValidityLabel({
     Key? key,
     required this.icon,
     required this.iconBackgroundColor,
+    required this.validLabel,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -361,7 +466,7 @@ class _ValidityLabel extends StatelessWidget {
           children: [
             SizedBox(
               width: constraints.maxWidth * 0.78,
-              child: _LabelText("Valid"),
+              child: _LabelText(validLabel),
             ),
             SizedBox(
               width: constraints.maxWidth * 0.22,
@@ -402,6 +507,7 @@ class _ValidityLabel extends StatelessWidget {
   }
 }
 
+/// Styled [Text] using uppercase letters.
 class _LabelText extends StatelessWidget {
   final String text;
 
