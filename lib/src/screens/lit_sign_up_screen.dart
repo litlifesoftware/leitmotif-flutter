@@ -263,29 +263,25 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 32.0),
-                  child: LitGradientButton(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 18.0,
-                      vertical: 8.0,
+                padding: const EdgeInsets.symmetric(vertical: 32.0),
+                child: LitPushedThroughButton(
+                  borderRadius: 16.0,
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 8.0,
+                    horizontal: 30.0,
+                  ),
+                  child: Text(
+                    widget.onSubmitButtonText.toUpperCase(),
+                    style: LitTextStyles.sansSerif.copyWith(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w800,
+                      color: HexColor('#8A8A8A'),
+                      letterSpacing: 0.8,
                     ),
-                    boxShadow: const [
-                      const BoxShadow(
-                        blurRadius: 8.0,
-                        offset: Offset(-1.5, 2.0),
-                        color: Colors.black26,
-                        spreadRadius: 1.0,
-                      )
-                    ],
-                    child: Text(widget.onSubmitButtonText,
-                        style: LitTextStyles.sansSerif.copyWith(
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.w700,
-                          color: HexColor('#8A8A8A'),
-                          letterSpacing: 0.65,
-                        )),
-                    onPressed: widget.onSubmit,
-                  )),
+                  ),
+                  onPressed: widget.onSubmit,
+                ),
+              ),
             )
           ],
         ),

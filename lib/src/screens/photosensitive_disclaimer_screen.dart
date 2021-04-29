@@ -75,22 +75,18 @@ class PhotosensitiveDisclaimerScreen extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 32.0),
-                  child: LitRoundedElevatedButton(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 22.0,
-                        vertical: 10.0,
+                  child: LitPushedThroughButton(
+                    child: Text(
+                      buttonText.toUpperCase(),
+                      textAlign: TextAlign.left,
+                      style: LitTextStyles.sansSerif.copyWith(
+                        color: HexColor('#444444'),
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w700,
                       ),
-                      color: Colors.white,
-                      child: Text(
-                        buttonText,
-                        textAlign: TextAlign.left,
-                        style: LitTextStyles.sansSerif.copyWith(
-                          color: HexColor('#444444'),
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      onPressed: onAccept),
+                    ),
+                    onPressed: onAccept,
+                  ),
                 ),
               ),
             ],

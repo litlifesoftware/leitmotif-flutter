@@ -152,12 +152,6 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
   }
 
   @override
-  void dispose() {
-    _snackbarController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return LitScaffold(
       snackBar: IconSnackbar(
@@ -423,6 +417,10 @@ class __YourAgeInputState extends State<_YourAgeInput> {
                           : SizedBox(),
                       LitPushedThroughButton(
                         borderRadius: 16.0,
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                          horizontal: 30.0,
+                        ),
                         onPressed: _onPressed,
                         child: Center(
                           child: Text(

@@ -167,26 +167,21 @@ class _ConfirmButton extends StatelessWidget {
           top: 32.0,
           bottom: 32.0,
         ),
-        child: LitGradientButton(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 18.0,
+        child: LitPushedThroughButton(
+          borderRadius: 16.0,
+          margin: const EdgeInsets.symmetric(
             vertical: 8.0,
+            horizontal: 30.0,
           ),
-          boxShadow: const [
-            const BoxShadow(
-              blurRadius: 8.0,
-              offset: Offset(-1.5, 2.0),
-              color: Colors.black26,
-              spreadRadius: 1.0,
-            )
-          ],
-          child: Text(label,
-              style: LitTextStyles.sansSerif.copyWith(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w800,
-                color: HexColor('#8A8A8A'),
-                letterSpacing: 0.8,
-              )),
+          child: Text(
+            label.toUpperCase(),
+            style: LitTextStyles.sansSerif.copyWith(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w800,
+              color: HexColor('#8A8A8A'),
+              letterSpacing: 0.8,
+            ),
+          ),
           onPressed: onConfirm,
         ),
       ),

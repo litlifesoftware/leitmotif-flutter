@@ -83,7 +83,7 @@ class LitRouteController {
   /// Navigate to another screen and remove the latest (current) [Widget] from the stack.
   /// This can be done to avoid multiple screens stacking up and to avoid the need of
   /// tapping the back button multiple times to e.g. go back to the home screen.
-  void replaceCurrentWidget({
+  void replaceCurrentCupertinoWidget({
     required Widget newWidget,
   }) {
     resetFocus();
@@ -92,13 +92,40 @@ class LitRouteController {
     if (Navigator.of(context).canPop()) {
       // Replace the widget.
       Navigator.of(context).pushReplacement(
-          CupertinoPageRoute(builder: (BuildContext context) => newWidget));
+        CupertinoPageRoute(builder: (BuildContext context) => newWidget),
+      );
     } else {
       // If there is no room for replacing the
       // widget, push it.
       Navigator.push(
         context,
         CupertinoPageRoute(
+          builder: (context) => newWidget,
+        ),
+      );
+    }
+  }
+
+  /// Navigate to another screen and remove the latest (current) [Widget] from the stack.
+  /// This can be done to avoid multiple screens stacking up and to avoid the need of
+  /// tapping the back button multiple times to e.g. go back to the home screen.
+  void replaceCurrentMaterialWidget({
+    required Widget newWidget,
+  }) {
+    resetFocus();
+    // Check if replacing the current [Widget] is even possible by checking if the widget
+    // can be popped. If not the HomeScreen widget would be replaced with the pushed widget.
+    if (Navigator.of(context).canPop()) {
+      // Replace the widget.
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (BuildContext context) => newWidget),
+      );
+    } else {
+      // If there is no room for replacing the
+      // widget, push it.
+      Navigator.push(
+        context,
+        MaterialPageRoute(
           builder: (context) => newWidget,
         ),
       );
