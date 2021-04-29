@@ -99,11 +99,12 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
           LitRouteController(context).closeDialog();
         },
         onSubmit: (date) {
-          setState(() {
-            _dateOfBirth = date;
-          });
-
-          LitRouteController(context).closeDialog();
+          if (this.mounted) {
+            setState(() {
+              _dateOfBirth = date;
+            });
+            LitRouteController(context).closeDialog();
+          }
         },
         initialDate: _dateOfBirth,
       ),

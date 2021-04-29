@@ -23,14 +23,16 @@ class _LitPushedButtonState extends State<LitPushedButton>
   late AnimationController _pushAnimation;
 
   void _onPressed() {
-    _pushAnimation
-        .reverse()
-        .then(
-          (value) => _pushAnimation.forward(),
-        )
-        .then(
-          (value) => widget.onPressed(),
-        );
+    if (this.mounted) {
+      _pushAnimation
+          .reverse()
+          .then(
+            (value) => _pushAnimation.forward(),
+          )
+          .then(
+            (value) => widget.onPressed(),
+          );
+    }
   }
 
   @override

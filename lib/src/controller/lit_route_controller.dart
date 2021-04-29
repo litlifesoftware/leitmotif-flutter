@@ -131,4 +131,12 @@ class LitRouteController {
       );
     }
   }
+
+  void clearNavigationStack() {
+    bool canPop = Navigator.of(context).canPop();
+    if (canPop) {
+      Navigator.of(context).pop();
+      clearNavigationStack();
+    }
+  }
 }
