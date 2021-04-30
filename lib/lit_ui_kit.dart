@@ -133,6 +133,7 @@ export 'src/screens/lit_credits_screen.dart';
 export 'src/screens/lit_sign_up_screen.dart';
 export 'src/screens/photosensitive_disclaimer_screen.dart';
 export 'src/screens/confirm_age_screen.dart';
+export 'src/screens/lit_startup_screen.dart';
 
 /// Settings panels
 export 'src/widgets/settings_panel/settings_tile.dart';

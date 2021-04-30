@@ -414,6 +414,28 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   child: LitRoundedOutlinedButton(
                     borderColor: buttonBorderColor,
                     child: ClippedText(
+                      "Show Startup Screen",
+                      style: LitTextStyles.sansSerif.copyWith(
+                        color: buttonTextColor,
+                      ),
+                    ),
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) {
+                            return LitStartupScreen();
+                          },
+                        ),
+                      )
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 32.0),
+                  child: LitRoundedOutlinedButton(
+                    borderColor: buttonBorderColor,
+                    child: ClippedText(
                       "Show Credits Screen",
                       style: LitTextStyles.sansSerif.copyWith(
                         color: buttonTextColor,
