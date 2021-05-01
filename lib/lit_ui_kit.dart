@@ -36,6 +36,9 @@ export 'src/widgets/app_bars/minimalist_app_bar.dart';
 
 // Art
 export 'src/widgets/art/exclamation_rectangle.dart';
+export 'src/widgets/art/lit_life_smiley_image.dart';
+export 'src/widgets/art/lit_life_blurred_background_logo.dart';
+export 'src/widgets/art/background_bubbles_painter.dart';
 
 /// Badges
 export 'src/widgets/badges/lit_badge.dart';

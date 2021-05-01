@@ -1,9 +1,20 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class LitStartupScreen extends StatefulWidget {
+  final Duration animationDuration;
+  final Widget art;
+  final String title;
+  final String subtitle;
+  const LitStartupScreen({
+    Key? key,
+    this.animationDuration = const Duration(
+      milliseconds: 6000,
+    ),
+    this.art = const LitLifeBlurredBackgroundLogo(),
+    this.title = "LitLifeSoftware",
+    this.subtitle = "\u00a9 2019-2021",
+  }) : super(key: key);
   @override
   _LitStartupScreenState createState() => _LitStartupScreenState();
 }
@@ -13,6 +24,8 @@ class _LitStartupScreenState extends State<LitStartupScreen>
   late AnimationController _fadeAnimationController;
   late AnimationController _bubbleAnimation;
 
+  final Duration _fadeDuration = Duration(milliseconds: 500);
+
   Size get _deviceSize {
     return MediaQuery.of(context).size;
   }
@@ -21,16 +34,18 @@ class _LitStartupScreenState extends State<LitStartupScreen>
   void initState() {
     _bubbleAnimation = AnimationController(
       vsync: this,
-      duration: Duration(
-        milliseconds: 6000,
-      ),
+      duration: widget.animationDuration,
     );
+
     _fadeAnimationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 210),
+      duration: _fadeDuration,
     );
+
     _bubbleAnimation.repeat(reverse: false);
+
     _fadeAnimationController.forward();
+
     super.initState();
   }
 
@@ -79,7 +94,7 @@ class _LitStartupScreenState extends State<LitStartupScreen>
                                 height: 256.0,
                                 width: 256.0,
                                 child: CustomPaint(
-                                  painter: BackgroundBubbles(
+                                  painter: BackgroundBubblesPainter(
                                     animationController: _bubbleAnimation,
                                   ),
                                 ),
@@ -89,131 +104,59 @@ class _LitStartupScreenState extends State<LitStartupScreen>
                         )
                       ],
                     ),
-                    BluredBackgroundContainer(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(42.0)),
-                      blurRadius: 12.0,
-                      child: Container(
-                        height: 128.0,
-                        width: 128.0,
-                        decoration: const BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(42.0)),
-                          color: const Color(0x66FFFFFF),
-                        ),
-                      ),
+                    AnimatedOpacity(
+                      duration: _fadeAnimationController.duration!,
+                      opacity: _fadeAnimationController.value,
+                      child: widget.art,
                     ),
                   ],
                 ),
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: _deviceSize.height,
-                    minWidth: _deviceSize.width,
+                AnimatedOpacity(
+                  duration: _fadeAnimationController.duration!,
+                  opacity: _fadeAnimationController.value,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: _deviceSize.height,
+                      minWidth: _deviceSize.width,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SizedBox(),
+                        SizedBox(),
+                        SizedBox(),
+                        SizedBox(),
+                        Text(
+                          widget.title,
+                          style: LitTextStyles.sansSerifHeader.copyWith(
+                            color: Colors.white,
+                            shadows: [
+                              BoxShadow(
+                                blurRadius: 4.0,
+                                color: Colors.black12,
+                                offset: Offset(-2, 2),
+                                spreadRadius: -1,
+                              )
+                            ],
+                          ),
+                        ),
+                        Text(
+                          widget.subtitle,
+                          style: LitTextStyles.sansSerifHeader.copyWith(
+                            fontSize: 16.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(),
-                      SizedBox(),
-                      Column(
-                        children: [
-                          Text("sdf"),
-                        ],
-                      )
-                    ],
-                  ),
-                )
+                ),
               ],
             );
           },
         ),
       ),
     );
-  }
-}
-
-class BackgroundBubbles extends CustomPainter {
-  final AnimationController animationController;
-
-  const BackgroundBubbles({required this.animationController});
-
-  Offset calcBubbleOffset(double radius, double rad, Offset center,
-      {double? transformDx, double? transformDy}) {
-    return Offset(
-      (radius * cos(rad) + (center.dx) - (transformDx ?? 0.0)),
-      (radius * sin(rad) + (center.dy) - (transformDy ?? 0.0)),
-    );
-  }
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint yellowPaint = Paint()..color = Color(0xFFFBFAF0).withOpacity(0.84);
-    Paint cyanPaint = Paint()..color = Color(0xFFE0EFEB).withOpacity(0.93);
-    Paint pinkPaint = Paint()..color = Color(0xFFF9E7F4).withOpacity(0.60);
-    Paint greenPaint = Paint()..color = Color(0xFFDCE7DC).withOpacity(0.69);
-    Paint whitePaint = Paint()..color = Color(0xFFFFFFFF).withOpacity(0.62);
-
-    double yellowRadius = 59.0;
-    double cyanRadius = 51.0;
-    double pinkRadius = 59.0;
-    double greenRadius = 63.0;
-    double whiteRadius = 45.0;
-
-    Offset center = Offset(size.width / 2, size.height / 2);
-
-    double yellowRad = (3 * (pi / 180) * 360) * animationController.value;
-    double cyanRad = (-2 * (pi / 180) * 360) * animationController.value;
-    double pinkRad = ((pi / 180) * 360) * animationController.value;
-    double greenRad = (-(pi / 180) * 360) * animationController.value;
-    double whiteRad = (-3 * (pi / 180) * 360) * animationController.value;
-
-    double yellowTransformDx = 20.0;
-    double yellowTransformDy = 20.0;
-
-    double cyanTransformDx = 15.0;
-    double cyanTransformDy = 15.0;
-
-    double whiteTransformDx = 30.0;
-    double whiteTransformDy = 30.0;
-
-    Offset yellowTransform = calcBubbleOffset(
-      yellowRadius,
-      yellowRad,
-      center,
-      transformDx: yellowTransformDx,
-      transformDy: yellowTransformDy,
-    );
-
-    Offset cyanTransform = calcBubbleOffset(
-      cyanRadius,
-      cyanRad,
-      center,
-      transformDx: cyanTransformDx,
-      transformDy: cyanTransformDy,
-    );
-
-    Offset pinkTransform = calcBubbleOffset(pinkRadius, pinkRad, center);
-
-    Offset greenTransform = calcBubbleOffset(greenRadius, greenRad, center);
-
-    Offset whiteTransform = calcBubbleOffset(
-      whiteRadius,
-      whiteRad,
-      center,
-      transformDx: whiteTransformDx,
-      transformDy: whiteTransformDy,
-    );
-
-    canvas.drawCircle(greenTransform, greenRadius, greenPaint);
-    canvas.drawCircle(yellowTransform, yellowRadius, yellowPaint);
-    canvas.drawCircle(cyanTransform, cyanRadius, cyanPaint);
-    canvas.drawCircle(pinkTransform, pinkRadius, pinkPaint);
-    canvas.drawCircle(whiteTransform, whiteRadius, whitePaint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
   }
 }
