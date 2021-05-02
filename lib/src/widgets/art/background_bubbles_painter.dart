@@ -1,21 +1,33 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
+/// A painter used to draw an animated bubble backgroud.
 class BackgroundBubblesPainter extends CustomPainter {
   final AnimationController animationController;
   final double baseBubbleSize;
+
+  /// Creates a [BackgroundBubblesPainter].
+  ///
+  /// [animationController] is the parent widget's [AnimationController] used
+  /// as ticker in order to access the current animation value. The parent will
+  /// need to perform the animation's initialization and execution.
+  ///
+  /// [baseBubbleSize] is the default bubbles' size. Increase or decrease the
+  /// overall bubbles' size by passing a custom value.
   const BackgroundBubblesPainter({
     required this.animationController,
     this.baseBubbleSize = 59.0,
   });
 
+  /// Returns a transformed [Offset] required to draw the bubbles using a
+  /// clockwise rotation.
   Offset calcBubbleOffset(double radius, double rad, Offset center,
       {double? transformDx, double? transformDy}) {
-    return Offset(
-      (radius * cos(rad) + (center.dx) - (transformDx ?? 0.0)),
-      (radius * sin(rad) + (center.dy) - (transformDy ?? 0.0)),
-    );
+    // The horizontal tranformation will use the cosine of the provided radiand.
+    double dx = (radius * cos(rad) + (center.dx) - (transformDx ?? 0.0));
+    // The vertical tranformation will use the sine of the provided radiand.
+    double dy = (radius * sin(rad) + (center.dy) - (transformDy ?? 0.0));
+    return Offset(dx, dy);
   }
 
   @override
@@ -26,6 +38,7 @@ class BackgroundBubblesPainter extends CustomPainter {
     Paint greenPaint = Paint()..color = Color(0xFFDCE7DC).withOpacity(0.69);
     Paint whitePaint = Paint()..color = Color(0xFFFFFFFF).withOpacity(0.62);
 
+    // The radius values are derived from the base size.
     double yellowRadius = baseBubbleSize;
     double cyanRadius = baseBubbleSize * (51 / 59);
     double pinkRadius = baseBubbleSize;
@@ -34,6 +47,7 @@ class BackgroundBubblesPainter extends CustomPainter {
 
     Offset center = Offset(size.width / 2, size.height / 2);
 
+    // Create the radiands required for the rotation using animation value.
     double yellowRad = (3 * (pi / 180) * 360) * animationController.value;
     double cyanRad = (-2 * (pi / 180) * 360) * animationController.value;
     double pinkRad = ((pi / 180) * 360) * animationController.value;

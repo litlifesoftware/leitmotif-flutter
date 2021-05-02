@@ -1,11 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
+/// A screen widget displaying a specified artwork in front of a bubble-styled
+/// animated background.
+///
+/// The screen could potentially be shown on an app's initial startup as part
+/// of the developer's (corporate) identity.
 class LitStartupScreen extends StatefulWidget {
+  /// The animation duration.
   final Duration animationDuration;
+
+  /// The screen's artwork.
   final Widget art;
+
+  /// The screen's title.
   final String title;
+
+  /// The screen's subtitle.
   final String subtitle;
+
+  /// Creates a [LitStartupScreen].
+  ///
+  /// * [animationDuration] is the duration of the background's animation cycle.
+  ///   The animation will be repeated.
+  ///
+  /// * [art] is the artwork widget shown in front of the bubble animation. This
+  ///   will default to the [LitLifeBlurredBackgroundLogo]. Use your own art if
+  ///   desired by passing a custom value.
+  ///
+  /// * [title] is the title of the screen shown on the top. This could either
+  ///   be the app's title or the developer's name.
+  ///
+  /// * [subtitle] is the subtitle of the screen shown on the bottom. This
+  ///   could either be a copyright tag or something similar.
   const LitStartupScreen({
     Key? key,
     this.animationDuration = const Duration(
