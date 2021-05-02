@@ -88,7 +88,7 @@ export 'src/widgets/containers/lit_elevated_glass_card.dart';
 export 'src/widgets/backgrounds/lit_animated_gradient_background.dart';
 export 'src/widgets/containers/lit_slider_card.dart';
 export 'src/widgets/containers/lit_draggable.dart';
-export 'src/widgets/containers/lit_settings_footer.dart';
+export 'src/widgets/containers/lit_footer.dart';
 export 'src/widgets/containers/clean_ink_well.dart';
 
 /// Controllers

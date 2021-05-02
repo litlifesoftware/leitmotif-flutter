@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-class LitSettingsFooter extends StatelessWidget {
+class LitFooter extends StatelessWidget {
   final String title;
   final Widget child;
 
-  const LitSettingsFooter({
+  const LitFooter({
     Key? key,
-    this.title = "Settings",
+    this.title = "Footer",
     required this.child,
   }) : super(key: key);
   @override
