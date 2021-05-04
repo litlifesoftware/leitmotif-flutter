@@ -51,50 +51,53 @@ class LitTitledDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(borderRadius),
       ),
       elevation: 0.0,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: minHeight,
-              maxWidth: constraints.maxWidth > maxWidth
-                  ? maxWidth
-                  : constraints.maxWidth,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _DialogTopBar(
-                  titleBarHeight: titleBarHeight,
-                  borderRadius: borderRadius,
-                  titleGradient: titleGradient,
-                  elevated: elevated,
-                  titleText: titleText,
-                  titleTextColor: titleTextColor,
-                  leading: leading,
-                ),
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: (minHeight - (2 * titleBarHeight)),
-                    maxWidth: constraints.maxWidth > maxWidth
-                        ? maxWidth
-                        : constraints.maxWidth,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(borderRadius),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: minHeight,
+                maxWidth: constraints.maxWidth > maxWidth
+                    ? maxWidth
+                    : constraints.maxWidth,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _DialogTopBar(
+                    titleBarHeight: titleBarHeight,
+                    borderRadius: borderRadius,
+                    titleGradient: titleGradient,
+                    elevated: elevated,
+                    titleText: titleText,
+                    titleTextColor: titleTextColor,
+                    leading: leading,
                   ),
-                  child: Padding(
-                    padding: margin,
-                    child: child,
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: (minHeight - (2 * titleBarHeight)),
+                      maxWidth: constraints.maxWidth > maxWidth
+                          ? maxWidth
+                          : constraints.maxWidth,
+                    ),
+                    child: Padding(
+                      padding: margin,
+                      child: child,
+                    ),
                   ),
-                ),
-                actionButtons.isNotEmpty
-                    ? _DialogBottomBar(
-                        titleBarHeight: titleBarHeight,
-                        borderRadius: borderRadius,
-                        actionButtons: actionButtons,
-                      )
-                    : SizedBox(),
-              ],
-            ),
-          );
-        },
+                  actionButtons.isNotEmpty
+                      ? _DialogBottomBar(
+                          titleBarHeight: titleBarHeight,
+                          borderRadius: borderRadius,
+                          actionButtons: actionButtons,
+                        )
+                      : SizedBox(),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
