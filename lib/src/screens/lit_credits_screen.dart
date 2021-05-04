@@ -191,13 +191,15 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
                             darkMode: widget.darkMode,
                           ));
                         }
-                        return ScrollableColumn(
-                          controller: _scrollController,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 48.0,
+                        return LitScrollbar(
+                          child: ScrollableColumn(
+                            controller: _scrollController,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 48.0,
+                            ),
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: list,
                           ),
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: list,
                         );
                       },
                     );

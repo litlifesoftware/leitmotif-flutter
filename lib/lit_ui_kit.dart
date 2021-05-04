@@ -138,6 +138,9 @@ export 'src/screens/photosensitive_disclaimer_screen.dart';
 export 'src/screens/confirm_age_screen.dart';
 export 'src/screens/lit_startup_screen.dart';
 
+/// Scrollbars
+export 'src/widgets/scrollbars/lit_scrollbar.dart';
+
 /// Settings panels
 export 'src/widgets/settings_panel/settings_tile.dart';
 export 'src/widgets/settings_panel/settings_panel.dart';

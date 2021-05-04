@@ -97,11 +97,7 @@ class _LitScaffoldState extends State<LitScaffold>
     Widget _stack = Stack(
       children: [
         widget.settingsPanel != null
-            ? InkWell(
-                highlightColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
+            ? CleanInkWell(
                 onTap: () {
                   if (widget.settingsPanel!.controller.isShown) {
                     widget.settingsPanel!.controller.dismissSettingsPanel();

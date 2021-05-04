@@ -96,89 +96,92 @@ class _LitPrivacyPolicyScreenState extends State<LitPrivacyPolicyScreen>
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: widget.backgroundDecoration,
-          child: SingleChildScrollView(
-            controller: _scrollController,
-            physics: BouncingScrollPhysics(),
-            padding: EdgeInsets.only(
-              top: 16.0,
-              bottom: 32.0,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                LitConstrainedSizedBox(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: widget.art != const SizedBox()
-                            ? MainAxisAlignment.spaceBetween
-                            : MainAxisAlignment.center,
-                        children: [
-                          widget.art != const SizedBox()
-                              ? Container(
-                                  child: SizedBox(
-                                    width: constraints.maxWidth * 0.35,
-                                    height: constraints.maxWidth * 0.35,
-                                    child: FittedBox(
-                                      fit: BoxFit.scaleDown,
-                                      child: widget.art,
+          child: LitScrollbar(
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              physics: BouncingScrollPhysics(),
+              padding: EdgeInsets.only(
+                top: 16.0,
+                bottom: 32.0,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LitConstrainedSizedBox(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: widget.art != const SizedBox()
+                              ? MainAxisAlignment.spaceBetween
+                              : MainAxisAlignment.center,
+                          children: [
+                            widget.art != const SizedBox()
+                                ? Container(
+                                    child: SizedBox(
+                                      width: constraints.maxWidth * 0.35,
+                                      height: constraints.maxWidth * 0.35,
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: widget.art,
+                                      ),
                                     ),
-                                  ),
-                                )
-                              : SizedBox(),
-                          widget.privacyTags.length > 0
-                              ? SizedBox(
-                                  width: constraints.maxWidth * 0.65,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 8.0,
-                                      right: 16.0,
-                                      top: 16.0,
-                                      bottom: 16.0,
-                                    ),
-                                    child: Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 16.0),
-                                          child: Builder(
-                                            builder: (BuildContext context) {
-                                              final List<Widget> children = [];
-                                              for (final tag
-                                                  in widget.privacyTags) {
-                                                children.add(
-                                                  _PrivacyTagLabel(
-                                                    favorable: tag.isConform,
-                                                    labelText: "${tag.text}",
-                                                  ),
+                                  )
+                                : SizedBox(),
+                            widget.privacyTags.length > 0
+                                ? SizedBox(
+                                    width: constraints.maxWidth * 0.65,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 8.0,
+                                        right: 16.0,
+                                        top: 16.0,
+                                        bottom: 16.0,
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 16.0),
+                                            child: Builder(
+                                              builder: (BuildContext context) {
+                                                final List<Widget> children =
+                                                    [];
+                                                for (final tag
+                                                    in widget.privacyTags) {
+                                                  children.add(
+                                                    _PrivacyTagLabel(
+                                                      favorable: tag.isConform,
+                                                      labelText: "${tag.text}",
+                                                    ),
+                                                  );
+                                                }
+                                                return Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: children,
                                                 );
-                                              }
-                                              return Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: children,
-                                              );
-                                            },
-                                          )),
-                                    ),
-                                  ))
-                              : SizedBox(),
-                        ],
-                      );
-                    },
+                                              },
+                                            )),
+                                      ),
+                                    ))
+                                : SizedBox(),
+                          ],
+                        );
+                      },
+                    ),
                   ),
-                ),
-                _PrivacyTextCard(
-                  title: widget.title,
-                  privacyText: widget.privacyText,
-                ),
-                _AgreeButton(
-                  label: widget.agreeLabel,
-                  onPressed: widget.onAgreeCallback,
-                ),
-              ],
+                  _PrivacyTextCard(
+                    title: widget.title,
+                    privacyText: widget.privacyText,
+                  ),
+                  _AgreeButton(
+                    label: widget.agreeLabel,
+                    onPressed: widget.onAgreeCallback,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
