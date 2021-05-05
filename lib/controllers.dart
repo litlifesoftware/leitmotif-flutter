@@ -7,3 +7,5 @@ library controllers;
 export 'src/controller/lit_notification_controller.dart';
 export 'src/controller/lit_route_controller.dart';
 export 'src/controller/lit_focus_controller.dart';
+export 'src/controller/animation_on_scroll_controller.dart';
+export 'src/controller/calendar_controller.dart';

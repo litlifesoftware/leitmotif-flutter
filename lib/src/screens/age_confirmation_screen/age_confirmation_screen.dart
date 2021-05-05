@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
-import 'package:lit_ui_kit/src/util/calendar_controller.dart';
+import 'package:lit_ui_kit/src/controller/calendar_controller.dart';
 
 import 'age_confirmation_controller.dart';
 import 'age_confirmation_calendar_date_indicators.dart';

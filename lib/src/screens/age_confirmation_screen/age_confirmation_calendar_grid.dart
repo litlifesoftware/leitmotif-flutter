@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
-import 'package:lit_ui_kit/src/util/calendar_controller.dart';
+import 'package:lit_ui_kit/src/controller/calendar_controller.dart';
 
 import 'age_confirmation_controller.dart';
 import 'age_confirmation_calendar_day_card.dart';

@@ -1,4 +1,4 @@
-// Copyright 2021 LitLifeSoftware. All rights reserved.
+// Copyright 2020 LitLifeSoftware. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -19,11 +19,7 @@
 library lit_ui_kit;
 
 /// App bars
-export 'src/widgets/app_bars/custom_app_bar.dart';
-export 'src/widgets/app_bars/lit_app_bar.dart';
-export 'src/widgets/app_bars/lit_blurred_app_bar.dart';
-export 'src/widgets/app_bars/fixed_on_scroll_appbar.dart';
-export 'src/widgets/app_bars/minimalist_app_bar.dart';
+export 'app_bars.dart';
 
 // Art
 export 'art.dart';
@@ -37,28 +33,11 @@ export 'bottom_navigation.dart';
 /// Buttons
 export 'buttons.dart';
 
-/// Collapsibles
+/// Collapsible card
 export 'collapsible_card.dart';
 
-/// Colors
-export 'src/styles/lit_colors.dart';
-
 /// Containers
-export 'src/widgets/containers/fade_in_transform_container.dart';
-export 'src/widgets/containers/fade_in_transform_scale_container.dart';
-export 'src/widgets/containers/blured_background_container.dart';
-export 'src/widgets/containers/scrollable_column.dart';
-export 'src/widgets/containers/on_value_changed_animated_container.dart';
-export 'src/widgets/containers/lit_constrained_size_box.dart';
-export 'src/widgets/containers/lit_elevated_card.dart';
-export 'src/widgets/containers/lit_gradient_card.dart';
-export 'src/widgets/containers/lit_notification_container.dart';
-export 'src/widgets/containers/lit_elevated_glass_card.dart';
-export 'src/widgets/backgrounds/lit_animated_gradient_background.dart';
-export 'src/widgets/containers/lit_slider_card.dart';
-export 'src/widgets/containers/lit_draggable.dart';
-export 'src/widgets/containers/lit_footer.dart';
-export 'src/widgets/containers/clean_ink_well.dart';
+export 'containers.dart';
 
 /// Controllers
 export 'controllers.dart';
@@ -67,9 +46,7 @@ export 'controllers.dart';
 export 'date_picker.dart';
 
 /// Dialogs
-export 'src/widgets/dialogs/about_app_dialog.dart';
-export 'src/widgets/dialogs/lit_titled_dialog.dart';
-export 'src/widgets/dialogs/lit_date_picker_dialog.dart';
+export 'dialogs.dart';
 
 /// Icons
 export 'icons.dart';
@@ -116,13 +93,4 @@ export 'styles.dart';
 export 'text.dart';
 
 /// Utility
-export 'src/util/image_cache_controller.dart';
-export 'src/util/hex_color_converter.dart';
-export 'src/util/platform_info.dart';
-export 'src/util/animation_on_scroll_controller.dart';
-export 'src/util/calendar_controller.dart';
-export 'src/util/calendar_localization_service.dart';
-export 'src/util/lit_alternative_layout.dart';
-export 'src/util/datetime_validation.dart';
-export 'src/util/datetime_age_conversion.dart';
-export 'src/util/localized_date.dart';
+export 'utility.dart';

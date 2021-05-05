@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
-import 'package:lit_ui_kit/src/util/calendar_controller.dart';
+import 'package:lit_ui_kit/src/controller/calendar_controller.dart';
 import 'package:lit_ui_kit/src/widgets/containers/on_value_changed_animated_container.dart';
 
 /// A [Widget] to display the current calendar date on the [AgeConfirmationScreen].
