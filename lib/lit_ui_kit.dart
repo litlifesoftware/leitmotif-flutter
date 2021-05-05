@@ -18,13 +18,6 @@
 /// exported to avoid any namespace issues.
 library lit_ui_kit;
 
-/// Animated Buttons
-export 'src/widgets/action_buttons/animated_action_button.dart';
-export 'src/widgets/action_buttons/custom_action_button.dart';
-export 'src/widgets/action_buttons/dummy_action_button.dart';
-export 'src/widgets/action_buttons/animated_action_button.dart';
-export 'src/widgets/action_buttons/collapse_on_scroll_action_button.dart';
-
 /// App bars
 export 'src/widgets/app_bars/custom_app_bar.dart';
 export 'src/widgets/app_bars/lit_app_bar.dart';
@@ -86,7 +79,7 @@ export 'loading_indicators.dart';
 export 'src/widgets/page_views/indexed_page_view.dart';
 
 /// Models
-export 'src/model/lit_notification_data.dart';
+export 'models.dart';
 
 /// Scaffold
 export 'scaffold.dart';

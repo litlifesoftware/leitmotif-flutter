@@ -19,3 +19,8 @@ export 'src/widgets/buttons/dialog_back_button.dart';
 export 'src/widgets/buttons/lit_bubble_button.dart';
 export 'src/widgets/buttons/lit_glowing_button.dart';
 export 'src/widgets/buttons/lit_plain_label_button.dart';
+export 'src/widgets/buttons/animated_action_button.dart';
+export 'src/widgets/buttons/custom_action_button.dart';
+export 'src/widgets/buttons/dummy_action_button.dart';
+export 'src/widgets/buttons/animated_action_button.dart';
+export 'src/widgets/buttons/collapse_on_scroll_action_button.dart';
