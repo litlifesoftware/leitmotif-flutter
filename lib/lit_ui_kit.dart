@@ -53,7 +53,6 @@ export 'icons.dart';
 
 /// Loading indicators
 export 'loading_indicators.dart';
-export 'src/widgets/page_views/indexed_page_view.dart';
 
 /// Models
 export 'models.dart';
@@ -62,20 +61,10 @@ export 'models.dart';
 export 'scaffold.dart';
 
 /// Screens
-export 'src/screens/title_screen.dart';
-export 'src/screens/age_confirmation_screen/age_confirmation_screen.dart';
-export 'src/screens/application_licenses_screen/application_licenses_screen.dart';
-export 'src/screens/lit_privacy_policy_screen.dart';
-export 'src/screens/lit_onboarding_screen.dart';
-export 'src/screens/lit_offline_app_disclaimer_screen.dart';
-export 'src/screens/lit_credits_screen.dart';
-export 'src/screens/lit_sign_up_screen.dart';
-export 'src/screens/photosensitive_disclaimer_screen.dart';
-export 'src/screens/confirm_age_screen.dart';
-export 'src/screens/lit_startup_screen.dart';
+export 'screens.dart';
 
 /// Scrollbars
-export 'src/widgets/scrollbars/lit_scrollbar.dart';
+export 'scrollbars.dart';
 
 /// Settings panel
 export 'settings_panel.dart';

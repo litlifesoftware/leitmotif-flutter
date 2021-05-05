@@ -18,3 +18,4 @@ export 'src/widgets/containers/lit_slider_card.dart';
 export 'src/widgets/containers/lit_draggable.dart';
 export 'src/widgets/containers/lit_footer.dart';
 export 'src/widgets/containers/clean_ink_well.dart';
+export 'src/widgets/containers/indexed_page_view.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package_licenses.dart';
+import '../model/package_licenses.dart';
 
 /// A controller class to retrieve the licenses registered in the application.
 

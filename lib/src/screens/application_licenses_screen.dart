@@ -4,10 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-import 'application_licenses_controller.dart';
-import 'application_licence_details_screen.dart';
-import 'package_licenses.dart';
-
 /// A screen [Widget] to display all packages registered in the application.
 ///
 /// The packages are displayed in a [ListView] and are sorted by their name
