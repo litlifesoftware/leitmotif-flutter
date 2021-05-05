@@ -1,4 +1,4 @@
-/// Flutter widgets implementing data models to combine related values.
+/// Flutter widgets declaring data models to combine related values.
 ///
 /// To use, import `package:lit_ui_kit/buttons.dart`.
 library models;
