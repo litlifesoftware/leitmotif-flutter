@@ -33,14 +33,10 @@ export 'src/widgets/app_bars/fixed_on_scroll_appbar.dart';
 export 'src/widgets/app_bars/minimalist_app_bar.dart';
 
 // Art
-export 'src/widgets/art/exclamation_rectangle.dart';
-export 'src/widgets/art/lit_life_smiley_image.dart';
-export 'src/widgets/art/lit_life_blurred_background_logo.dart';
-export 'src/widgets/art/background_bubbles_painter.dart';
+export 'art.dart';
 
 /// Badges
 export 'src/widgets/badges/lit_badge.dart';
-export 'src/widgets/badges/lit_slider_badge.dart';
 
 /// Bottom navigation
 export 'src/widgets/bottom_navigation/lit_bottom_navigation.dart';
@@ -95,32 +91,25 @@ export 'src/controller/lit_route_controller.dart';
 export 'src/controller/lit_focus_controller.dart';
 
 /// Date picker
-export 'src/widgets/date_picker/lit_calendar_day_item.dart';
-export 'src/widgets/date_picker/lit_calendar_grid.dart';
-export 'src/widgets/date_picker/lit_calendar_navigation.dart';
-export 'src/widgets/date_picker/lit_calendar_weekday_label.dart';
-export 'src/widgets/date_picker/lit_date_picker.dart';
+export 'date_picker.dart';
 
 /// Dialogs
 export 'src/widgets/dialogs/about_app_dialog.dart';
 export 'src/widgets/dialogs/lit_titled_dialog.dart';
 export 'src/widgets/dialogs/lit_date_picker_dialog.dart';
 
-/// Icon data
-export 'src/icons/lit_icons.dart';
+/// Icons
+export 'icons.dart';
 
 /// Loading indicators
-export 'src/widgets/loading_indicators/juggling_loading_indicator.dart';
+export 'loading_indicators.dart';
 export 'src/widgets/page_views/indexed_page_view.dart';
 
 /// Models
 export 'src/model/lit_notification_data.dart';
 
-/// Painted Icons
-export 'src/widgets/painted_icons/lit_lock_icon.dart';
-
-/// Scaffolds
-export 'src/widgets/lit_scaffold/lit_scaffold.dart';
+/// Scaffold
+export 'scaffold.dart';
 
 /// Screens
 export 'src/screens/title_screen.dart';
@@ -142,22 +131,16 @@ export 'src/widgets/scrollbars/lit_scrollbar.dart';
 export 'src/widgets/settings_panel/settings_panel.dart';
 
 /// Sliders
-export 'src/widgets/slider/slider.dart';
+export 'slider.dart';
 
 /// Snackbars
-export 'src/widgets/snackbars/lit_snackbar.dart';
-export 'src/widgets/snackbars/lit_snackbar_controller.dart';
-export 'src/widgets/snackbars/icon_snackbar.dart';
-export 'src/widgets/snackbars/sliding_snackbar.dart';
-export 'src/widgets/snackbars/dummy_info_bar.dart';
-export 'src/widgets/snackbars/custom_info_bar.dart';
-export 'src/widgets/snackbars/transparent_info_bar.dart';
+export 'snackbars.dart';
 
 /// Styles
-export 'src/styles/styles.dart';
+export 'styles.dart';
 
 /// Text
-export 'src/widgets/text/text.dart';
+export 'text.dart';
 
 /// Utility
 export 'src/util/image_cache_controller.dart';
