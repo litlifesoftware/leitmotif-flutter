@@ -36,34 +36,16 @@ export 'src/widgets/app_bars/minimalist_app_bar.dart';
 export 'art.dart';
 
 /// Badges
-export 'src/widgets/badges/lit_badge.dart';
+export 'badges.dart';
 
 /// Bottom navigation
-export 'src/widgets/bottom_navigation/lit_bottom_navigation.dart';
+export 'bottom_navigation.dart';
 
 /// Buttons
-export 'src/widgets/buttons/lit_tooltip_button.dart';
-export 'src/widgets/buttons/lit_back_button.dart';
-export 'src/widgets/buttons/circular_close_button.dart';
-export 'src/widgets/buttons/lit_transform_animated_button.dart';
-export 'src/widgets/buttons/lit_rounded_outlined_button.dart';
-export 'src/widgets/buttons/lit_rounded_flat_button.dart';
-export 'src/widgets/buttons/lit_rounded_elevated_button.dart';
-export 'src/widgets/buttons/lit_toggle_button.dart';
-export 'src/widgets/buttons/lit_switch_button.dart';
-export 'src/widgets/buttons/lit_pushed_button.dart';
-export 'src/widgets/buttons/lit_pushed_through_button.dart';
-export 'src/widgets/buttons/lit_gradient_button.dart';
-export 'src/widgets/buttons/dialog_back_button.dart';
-export 'src/widgets/buttons/lit_bubble_button.dart';
-export 'src/widgets/buttons/lit_glowing_button.dart';
-export 'src/widgets/buttons/lit_plain_label_button.dart';
+export 'buttons.dart';
 
 /// Collapsibles
-export 'src/widgets/collapsible_card/collapsible_card_controller.dart';
-export 'src/widgets/collapsible_card/collapsible_card.dart';
-export 'src/widgets/collapsible_card/dummy_collapsible_card.dart';
-export 'src/widgets/collapsible_card/titled_collapsible_card.dart';
+export 'collapsible_card.dart';
 
 /// Colors
 export 'src/styles/lit_colors.dart';
@@ -86,9 +68,7 @@ export 'src/widgets/containers/lit_footer.dart';
 export 'src/widgets/containers/clean_ink_well.dart';
 
 /// Controllers
-export 'src/controller/lit_notification_controller.dart';
-export 'src/controller/lit_route_controller.dart';
-export 'src/controller/lit_focus_controller.dart';
+export 'controllers.dart';
 
 /// Date picker
 export 'date_picker.dart';
@@ -128,7 +108,7 @@ export 'src/screens/lit_startup_screen.dart';
 export 'src/widgets/scrollbars/lit_scrollbar.dart';
 
 /// Settings panel
-export 'src/widgets/settings_panel/settings_panel.dart';
+export 'settings_panel.dart';
 
 /// Sliders
 export 'slider.dart';
