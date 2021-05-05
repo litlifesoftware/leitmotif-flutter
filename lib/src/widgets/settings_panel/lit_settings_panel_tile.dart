@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-class SettingsTile extends StatelessWidget {
+class LitSettingsPanelTile extends StatelessWidget {
   final void Function(bool) onValueToggled;
   final bool enabled;
   final bool darkMode;
@@ -10,11 +10,11 @@ class SettingsTile extends StatelessWidget {
   final String disabledLabel;
   final String enabledLabel;
 
-  /// Creates a new [SettingsTile].
+  /// Creates a new [LitSettingsPanelTile].
   ///
   /// It will be used to display the various settings which
-  /// can be toggled on the [SettingsPanel].
-  const SettingsTile({
+  /// can be toggled on the [LitSettingsPanel].
+  const LitSettingsPanelTile({
     Key? key,
     required this.onValueToggled,
     required this.darkMode,

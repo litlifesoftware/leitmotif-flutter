@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
-import 'package:lit_ui_kit/src/widgets/settings_panel/settings_panel_background_overlay.dart';
+import 'package:lit_ui_kit/src/widgets/settings_panel/lit_settings_panel_background_overlay.dart';
 
 /// [Widget] used to overlay multiple functinal [Widget]s to ensure no unintended
 /// overlapping will occur.
@@ -35,7 +35,7 @@ class LitScaffold extends StatefulWidget {
   final LitSnackbar? snackBar;
   final CustomActionButton? actionButton;
   final CollapsibleCard? collapsibleCard;
-  final SettingsPanel? settingsPanel;
+  final LitSettingsPanel? settingsPanel;
   final bool wrapInSafeArea;
 
   /// Creates a [LitScaffold] [Widget].
@@ -109,7 +109,7 @@ class _LitScaffoldState extends State<LitScaffold>
                     child: Stack(
                       children: [
                         _body,
-                        SettingsPanelBackgroundOverlay(
+                        LitSettingsPanelBackgroundOverlay(
                             controller: widget.settingsPanel!.controller)
                       ],
                     )),

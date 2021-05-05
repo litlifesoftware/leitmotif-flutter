@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/src/widgets/settings_panel/settings_panel_controller.dart';
+import 'package:lit_ui_kit/src/widgets/settings_panel/lit_settings_panel_controller.dart';
 
-class SettingsPanelBackgroundOverlay extends StatelessWidget {
-  final SettingsPanelController controller;
+class LitSettingsPanelBackgroundOverlay extends StatelessWidget {
+  final LitSettingsPanelController controller;
 
-  const SettingsPanelBackgroundOverlay({
+  const LitSettingsPanelBackgroundOverlay({
     Key? key,
     required this.controller,
   }) : super(key: key);

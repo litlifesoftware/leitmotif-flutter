@@ -18,8 +18,6 @@
 /// exported to avoid any namespace issues.
 library lit_ui_kit;
 
-/// Files
-
 /// Animated Buttons
 export 'src/widgets/action_buttons/animated_action_button.dart';
 export 'src/widgets/action_buttons/custom_action_button.dart';
@@ -104,7 +102,6 @@ export 'src/widgets/date_picker/lit_calendar_weekday_label.dart';
 export 'src/widgets/date_picker/lit_date_picker.dart';
 
 /// Dialogs
-export 'src/widgets/dialogs/website_info.dart';
 export 'src/widgets/dialogs/about_app_dialog.dart';
 export 'src/widgets/dialogs/lit_titled_dialog.dart';
 export 'src/widgets/dialogs/lit_date_picker_dialog.dart';
@@ -141,30 +138,26 @@ export 'src/screens/lit_startup_screen.dart';
 /// Scrollbars
 export 'src/widgets/scrollbars/lit_scrollbar.dart';
 
-/// Settings panels
-export 'src/widgets/settings_panel/settings_tile.dart';
+/// Settings panel
 export 'src/widgets/settings_panel/settings_panel.dart';
-export 'src/widgets/settings_panel/settings_panel_controller.dart';
 
-/// Slider
-export 'src/widgets/slider/lit_slider.dart';
-export 'src/widgets/slider/lit_slider_overlay.dart';
-export 'src/widgets/slider/lit_slider_thumb.dart';
-export 'src/widgets/slider/lit_slider_toggle_button.dart';
+/// Sliders
+export 'src/widgets/slider/slider.dart';
 
 /// Snackbars
-export 'src/widgets/lit_snack_bar/lit_snackbar.dart';
-export 'src/widgets/lit_snack_bar/lit_snackbar_controller.dart';
-export 'src/widgets/lit_snack_bar/icon_snackbar.dart';
-export 'src/widgets/lit_snack_bar/sliding_snackbar.dart';
-export 'src/widgets/custom_info_bar/dummy_info_bar.dart';
-export 'src/widgets/custom_info_bar/custom_info_bar.dart';
-export 'src/widgets/custom_info_bar/transparent_info_bar.dart';
+export 'src/widgets/snackbars/lit_snackbar.dart';
+export 'src/widgets/snackbars/lit_snackbar_controller.dart';
+export 'src/widgets/snackbars/icon_snackbar.dart';
+export 'src/widgets/snackbars/sliding_snackbar.dart';
+export 'src/widgets/snackbars/dummy_info_bar.dart';
+export 'src/widgets/snackbars/custom_info_bar.dart';
+export 'src/widgets/snackbars/transparent_info_bar.dart';
+
+/// Styles
+export 'src/styles/styles.dart';
 
 /// Text
-export 'src/widgets/text/clipped_text.dart';
-export 'src/widgets/text/scaled_down_text.dart';
-export 'src/styles/lit_text_styles.dart';
+export 'src/widgets/text/text.dart';
 
 /// Utility
 export 'src/util/image_cache_controller.dart';

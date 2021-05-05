@@ -10,7 +10,7 @@ class LitUIKitHomescreen extends StatefulWidget {
 }
 
 class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
-  late SettingsPanelController settingsPanelController;
+  late LitSettingsPanelController settingsPanelController;
   LitSnackbarController? customSnackBarController;
   LitNotificationController? _notificationController;
   bool? darkMode;
@@ -76,7 +76,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
   @override
   void initState() {
     super.initState();
-    settingsPanelController = SettingsPanelController();
+    settingsPanelController = LitSettingsPanelController();
     customSnackBarController = LitSnackbarController();
     _notificationController = LitNotificationController();
     darkMode = false;
@@ -101,12 +101,12 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
             litSnackBarController: customSnackBarController,
             text: "Snack Bar!",
             iconData: LitIcons.info),
-        settingsPanel: SettingsPanel(
+        settingsPanel: LitSettingsPanel(
           controller: settingsPanelController,
           title: "Settings",
           darkMode: darkMode!,
           settingsTiles: [
-            SettingsTile(
+            LitSettingsPanelTile(
               onValueToggled: (toggledValue) {
                 setState(() {
                   darkMode = toggledValue;
@@ -117,7 +117,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
-            SettingsTile(
+            LitSettingsPanelTile(
               onValueToggled: (toggledValue) {
                 setState(() {
                   darkMode = toggledValue;
@@ -128,7 +128,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
-            SettingsTile(
+            LitSettingsPanelTile(
               onValueToggled: (toggledValue) {
                 setState(() {
                   darkMode = toggledValue;
@@ -139,7 +139,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
-            SettingsTile(
+            LitSettingsPanelTile(
               onValueToggled: (toggledValue) {
                 setState(() {
                   darkMode = toggledValue;
@@ -150,7 +150,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
-            SettingsTile(
+            LitSettingsPanelTile(
               onValueToggled: (toggledValue) {
                 setState(() {
                   darkMode = toggledValue;
@@ -161,7 +161,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
-            SettingsTile(
+            LitSettingsPanelTile(
               onValueToggled: (toggledValue) {
                 setState(() {
                   darkMode = toggledValue;
@@ -172,7 +172,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
-            SettingsTile(
+            LitSettingsPanelTile(
               onValueToggled: (toggledValue) {
                 setState(() {
                   darkMode = toggledValue;

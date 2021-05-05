@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-class SettingsPanelController {
+class LitSettingsPanelController {
   late AnimationController animationController;
 
   void init(TickerProvider vsync) {
@@ -11,9 +11,9 @@ class SettingsPanelController {
         ));
   }
 
-  /// Dispose this [SettingsPanelController].
+  /// Dispose this [LitSettingsPanelController].
   ///
-  /// The [AnimationController] of this [SettingsPanelController] will be
+  /// The [AnimationController] of this [LitSettingsPanelController] will be
   /// dispose to ensure no [TickerProvider] leak will occur.  Call this method
   /// on the [StatefulWidget] by overriding its dispose method.
   void dispose() {
