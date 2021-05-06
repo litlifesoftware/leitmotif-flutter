@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
@@ -74,6 +73,22 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
     FocusScope.of(context).unfocus();
   }
 
+  Matrix4 get _backgroundArtTransform {
+    final double _x = 1.02 - ((1.02 - 0.95) * _animationController.value);
+    final double _y = 1.02 - ((1.02 - 0.95) * _animationController.value);
+    return Matrix4.identity()
+      ..scale(_x, _y)
+      ..add(
+        Matrix4.translationValues(0.0 + (50.0 * _animationController.value),
+            -230.0 + (-10 * _animationController.value), 0.0),
+      );
+    // return Matrix4.translationValues(
+    //   15.0 + (15.0 * _animationController.value),
+    //   -115.0 + (-10 * _animationController.value),
+    //   0.0,
+    // );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -132,12 +147,9 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
                 builder: (context, _) {
                   return Transform.rotate(
                     angle:
-                        (pi / 180) * (-30 + (-5 * _animationController.value)),
+                        (pi / 180) * (-15 + (-5 * _animationController.value)),
                     child: Transform(
-                      transform: Matrix4.translationValues(
-                          15.0 + (15.0 * _animationController.value),
-                          -115.0 + (-10 * _animationController.value),
-                          0.0),
+                      transform: _backgroundArtTransform,
                       child: SizedBox(
                         height: 300.0,
                         width: 500.0,
@@ -157,16 +169,16 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
                           ],
                           borderRadius: const BorderRadius.only(
                             bottomRight: Radius.circular(
-                              80.0,
+                              120.0,
                             ),
                             bottomLeft: Radius.circular(
-                              128.0,
+                              120.0,
                             ),
                             topLeft: Radius.circular(
-                              80.0,
+                              120.0,
                             ),
                             topRight: Radius.circular(
-                              80.0,
+                              120.0,
                             ),
                           ),
                         ),
@@ -210,6 +222,7 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
                 child: InkWell(
                   onTap: _unfocus,
                   child: LitGradientCard(
+                    borderRadius: BorderRadius.all(Radius.circular(24.0)),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 30.0,
@@ -221,34 +234,39 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
                           Column(
                             children: [
                               widget.showUsernameInput
-                                  ? _InputArea(
+                                  ? LitInputArea(
                                       textEditingController:
                                           _usernameController,
                                       focusNode: _usernameFocus,
                                       label: widget.usernameLabel,
+                                      icon: LitIcons.person_solid,
                                     )
                                   : SizedBox(),
                               widget.showPasswordInput
-                                  ? _InputArea(
+                                  ? LitInputArea(
                                       textEditingController:
                                           _passwordController,
                                       focusNode: _passwordFocus,
                                       label: widget.passwordLabel,
+                                      icon: Icons.lock,
                                     )
                                   : SizedBox(),
                               widget.showPasswordConfirmInput
-                                  ? _InputArea(
+                                  ? LitInputArea(
                                       textEditingController:
                                           _passwordConfirmController,
                                       focusNode: _passwordConfirmFocus,
                                       label: widget.passwordConfirmLabel,
+                                      icon: Icons.lock_outline_sharp,
                                     )
                                   : SizedBox(),
                               widget.showPinInput
-                                  ? _InputArea(
+                                  ? LitInputArea(
                                       textEditingController: _pinController,
                                       focusNode: _pinFocus,
                                       label: widget.pinLabel,
+                                      icon: Icons.phonelink_lock_outlined,
+                                      showDivider: false,
                                     )
                                   : SizedBox(),
                             ],
@@ -290,72 +308,118 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
   }
 }
 
-class _InputArea extends StatelessWidget {
+class LitInputArea extends StatelessWidget {
   final TextEditingController textEditingController;
   final FocusNode focusNode;
   final String label;
   final bool initialObsureTextValue;
   final bool allowObscuredText;
-  const _InputArea({
+  final IconData? icon;
+  final bool showDivider;
+  const LitInputArea({
     Key? key,
     required this.textEditingController,
     required this.focusNode,
     required this.label,
     this.initialObsureTextValue = false,
     this.allowObscuredText = false,
+    this.icon,
+    this.showDivider = true,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: 8.0,
+        horizontal: 16.0,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "$label".toUpperCase(),
-            style: LitTextStyles.sansSerif.copyWith(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w600,
-              color: HexColor('#A9A8A8'),
-              letterSpacing: 0.25,
-            ),
+          Row(
+            children: [
+              icon != null
+                  ? Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  8.0,
+                                ),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(-2, 2),
+                                  color: Colors.black26,
+                                  blurRadius: 4.0,
+                                  spreadRadius: -2,
+                                ),
+                              ]),
+                          child: Padding(
+                            padding: const EdgeInsets.all(6.0),
+                            child: Icon(
+                              icon,
+                              color: LitColors.beigeGrey,
+                              size: 17.0,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 16.0,
+                        ),
+                      ],
+                    )
+                  : SizedBox(),
+              Text(
+                "$label".toUpperCase(),
+                style: LitTextStyles.sansSerif.copyWith(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w600,
+                  color: HexColor('#A9A8A8'),
+                  letterSpacing: 0.25,
+                ),
+              ),
+            ],
           ),
           SizedBox(
             height: 10.0,
           ),
-          EditableText(
-            cursorColor: Colors.grey,
-            backgroundCursorColor: Colors.black,
-            controller: textEditingController,
-            focusNode: focusNode,
-            textAlign: TextAlign.center,
-            cursorRadius: Radius.circular(2.0),
-            style: LitTextStyles.sansSerif.copyWith(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w700,
-                color: HexColor('#444444'),
-                letterSpacing: 1.25),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 6.0,
-              horizontal: 24.0,
-            ),
-            child: Container(
-              height: 4.0,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    HexColor('#ECECEC'),
-                    HexColor('#C9C9C9'),
-                  ],
-                ),
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.06),
+                borderRadius: BorderRadius.circular(8.0)),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 16.0,
+              ),
+              child: EditableText(
+                cursorColor: Colors.grey,
+                backgroundCursorColor: Colors.black,
+                controller: textEditingController,
+                focusNode: focusNode,
+                textAlign: TextAlign.left,
+                cursorRadius: Radius.circular(2.0),
+                style: LitTextStyles.sansSerif.copyWith(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w700,
+                    color: HexColor('#444444'),
+                    letterSpacing: 1.25),
               ),
             ),
           ),
+          showDivider
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: Container(
+                    height: 2.0,
+                    decoration: BoxDecoration(
+                      color: HexColor('#C9C9C9'),
+                    ),
+                  ),
+                )
+              : SizedBox(),
         ],
       ),
     );
