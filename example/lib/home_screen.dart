@@ -451,12 +451,25 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                             CupertinoPageRoute(
                               builder: (context) {
                                 return LitSignUpScreen(
-                                  onUsernameChange: (value) {
-                                    print("Hello, $value");
-                                  },
                                   onSubmit: () {
                                     print("Submitted signup data");
                                   },
+                                  inputFields: [
+                                    LitInputArea(
+                                      label: "Username",
+                                      icon: LitIcons.person_solid,
+                                      onChange: (value) {
+                                        print("Hello, $value");
+                                      },
+                                    ),
+                                    LitInputArea(
+                                      label: "Username",
+                                      icon: LitIcons.person_solid,
+                                      onChange: (value) {
+                                        print("Hello, $value");
+                                      },
+                                    ),
+                                  ],
                                 );
                               },
                             ),

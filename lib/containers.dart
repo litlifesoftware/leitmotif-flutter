@@ -1,4 +1,5 @@
-/// Flutter widgets implementing custom containers used to wrap child widgets.
+/// Flutter widgets implementing custom containers used to wrap child widgets,
+/// or to fill empty space.
 ///
 /// To use, import `package:lit_ui_kit/containers.dart`.
 library containers;
@@ -19,3 +20,4 @@ export 'src/widgets/containers/lit_draggable.dart';
 export 'src/widgets/containers/lit_footer.dart';
 export 'src/widgets/containers/clean_ink_well.dart';
 export 'src/widgets/containers/indexed_page_view.dart';
+export 'src/widgets/containers/lit_divider.dart';
