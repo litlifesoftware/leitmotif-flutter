@@ -6,6 +6,7 @@ class LitRoundedFlatButton extends StatelessWidget {
   final void Function() onPressed;
   final double radius;
   final EdgeInsets padding;
+  final bool disabled;
 
   /// Creates a [LitRoundedFlatButton].
   ///
@@ -23,20 +24,24 @@ class LitRoundedFlatButton extends StatelessWidget {
       vertical: 4.0,
       horizontal: 12.0,
     ),
+    this.disabled = false,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(radius),
-      onTap: onPressed,
-      child: Container(
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(radius),
-        ),
-        child: Padding(
-          padding: padding,
-          child: child,
+      onTap: disabled ? () {} : onPressed,
+      child: Opacity(
+        opacity: disabled ? 0.5 : 1.0,
+        child: Container(
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(radius),
+          ),
+          child: Padding(
+            padding: padding,
+            child: child,
+          ),
         ),
       ),
     );

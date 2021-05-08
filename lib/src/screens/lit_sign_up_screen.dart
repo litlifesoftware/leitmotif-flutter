@@ -2,29 +2,40 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
+/// A screen widget allowing the user to submit his core data.
+///
+/// The mutation of the user edited text on the text fields are handled by
+/// `onChange` methods found on the provided [LitTextField] instances.
 class LitSignUpScreen extends StatefulWidget {
+  /// The displayed title of the screen.
   final String title;
+
+  /// The text displayed on the submit button.
   final String onSubmitButtonText;
+
+  /// A [List] of [LitTextField]s used for handling the user input.
   final List<LitTextField> inputFields;
+
+  /// The duration of the background animation.
   final Duration backgroundAnimationDuration;
+
+  /// The duration of the appear animation.
   final Duration appearAnimationDuration;
-  final void Function(String)? onUsernameChange;
-  final void Function(String)? onPasswordChange;
-  final void Function(String)? onPasswordConfirmChange;
-  final void Function(int?)? onPINChange;
+
+  /// The callback to handle the submit action.
   final void Function() onSubmit;
+
+  /// Creates a [LitSignUpScreen].
+  ///
+  /// Provide localized string values to be displayed on the screen.
   const LitSignUpScreen({
     Key? key,
     this.title = 'Sign up',
-    required this.onSubmit,
     this.onSubmitButtonText = 'Submit',
     this.inputFields = const [],
     this.backgroundAnimationDuration = const Duration(milliseconds: 3000),
     this.appearAnimationDuration = const Duration(milliseconds: 310),
-    this.onUsernameChange,
-    this.onPasswordChange,
-    this.onPasswordConfirmChange,
-    this.onPINChange,
+    required this.onSubmit,
   }) : super(key: key);
   @override
   _LitSignUpScreenState createState() => _LitSignUpScreenState();
@@ -32,12 +43,19 @@ class LitSignUpScreen extends StatefulWidget {
 
 class _LitSignUpScreenState extends State<LitSignUpScreen>
     with TickerProviderStateMixin {
+  /// The background animation.
   late AnimationController _backgroundArtAnimation;
+
+  /// The appear animation.
   late AnimationController _appearAnimation;
+
+  /// Unfocuses the currently focused text field.
   void _unfocus() {
     FocusScope.of(context).unfocus();
   }
 
+  /// Returns the background art's transformation which will be depended on the
+  /// current animation value.
   Matrix4 get _backgroundArtTransform {
     final double x = 1.02 - ((1.02 - 0.95) * _backgroundArtAnimation.value);
     final double y = 1.02 - ((1.02 - 0.95) * _backgroundArtAnimation.value);

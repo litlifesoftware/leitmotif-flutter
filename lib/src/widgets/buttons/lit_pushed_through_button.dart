@@ -15,6 +15,8 @@ class LitPushedThroughButton extends StatefulWidget {
   final List<BoxShadow> boxShadow;
   final Duration animationDuration;
 
+  final bool disabled;
+
   /// Create a [PushedThroughButton] [Widget].
   const LitPushedThroughButton({
     Key? key,
@@ -38,6 +40,7 @@ class LitPushedThroughButton extends StatefulWidget {
     this.animationDuration = const Duration(
       milliseconds: 400,
     ),
+    this.disabled = false,
   }) : super(key: key);
 
   @override
@@ -66,7 +69,9 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
     } catch (e) {
       _isPressed = true;
     }
-    widget.onPressed();
+    if (!widget.disabled) {
+      widget.onPressed();
+    }
   }
 
   /// Handles the actions once the button is pressed up by the user.
@@ -106,42 +111,45 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
         builder: (context, child) {
           return Transform.scale(
             scale: (1 - (_animationController.value * 0.125)),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 150),
-              padding: widget.margin,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(widget.borderRadius),
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      _isPressed
-                          ? widget.backgroundColor
-                          : Color.lerp(widget.backgroundColor,
-                              widget.accentColor, 0.35)!,
-                      _isPressed
-                          ? Color.lerp(
-                              widget.backgroundColor, widget.accentColor, 0.45)!
-                          : widget.backgroundColor,
-                      _isPressed
-                          ? Color.lerp(
-                              widget.backgroundColor, widget.accentColor, 0.55)!
-                          : widget.backgroundColor,
-                      Color.lerp(
-                        widget.backgroundColor,
-                        widget.backgroundColor,
-                        _isPressed ? 0.20 : 0.50,
-                      )!,
-                    ],
-                    stops: [
-                      0.0,
-                      0.3,
-                      0.6,
-                      1.0,
-                    ]),
-                boxShadow: _isPressed ? [] : widget.boxShadow,
+            child: Opacity(
+              opacity: widget.disabled ? 0.2 : 1.0,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 150),
+                padding: widget.margin,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(widget.borderRadius),
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        _isPressed
+                            ? widget.backgroundColor
+                            : Color.lerp(widget.backgroundColor,
+                                widget.accentColor, 0.35)!,
+                        _isPressed
+                            ? Color.lerp(widget.backgroundColor,
+                                widget.accentColor, 0.45)!
+                            : widget.backgroundColor,
+                        _isPressed
+                            ? Color.lerp(widget.backgroundColor,
+                                widget.accentColor, 0.55)!
+                            : widget.backgroundColor,
+                        Color.lerp(
+                          widget.backgroundColor,
+                          widget.backgroundColor,
+                          _isPressed ? 0.20 : 0.50,
+                        )!,
+                      ],
+                      stops: [
+                        0.0,
+                        0.3,
+                        0.6,
+                        1.0,
+                      ]),
+                  boxShadow: _isPressed ? [] : widget.boxShadow,
+                ),
+                child: widget.child,
               ),
-              child: widget.child,
             ),
           );
         },
