@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
-import 'package:lit_ui_kit/src/widgets/date_picker/lit_date_picker.dart';
+import 'package:lit_ui_kit/src/widgets/input/lit_date_picker.dart';
 
 class LitDatePickerDialog extends StatefulWidget {
   final void Function() onBackCallback;
