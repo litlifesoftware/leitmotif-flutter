@@ -16,13 +16,6 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
   bool? darkMode;
   DateTime? dayOfBirth;
 
-  void onSubmitDayOfBirth(DateTime? date) {
-    Navigator.pop(context);
-    setState(() {
-      dayOfBirth = date;
-    });
-  }
-
   void showSnackbar() {
     customSnackBarController!.showSnackBar();
   }
@@ -281,7 +274,9 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                             CupertinoPageRoute(
                               builder: (context) {
                                 return ConfirmAgeScreen(
-                                  onSubmit: () {},
+                                  onSubmit: () {
+                                    LitRouteController(context).pop();
+                                  },
                                 );
                               },
                             ),
@@ -452,17 +447,17 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                               builder: (context) {
                                 return LitSignUpScreen(
                                   onSubmit: () {
-                                    print("Submitted signup data");
+                                    LitRouteController(context).pop();
                                   },
                                   inputFields: [
-                                    LitInputArea(
+                                    LitTextField(
                                       label: "Username",
                                       icon: LitIcons.person_solid,
                                       onChange: (value) {
                                         print("Hello, $value");
                                       },
                                     ),
-                                    LitInputArea(
+                                    LitTextField(
                                       label: "Username",
                                       icon: LitIcons.person_solid,
                                       onChange: (value) {

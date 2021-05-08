@@ -5,7 +5,7 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 class LitSignUpScreen extends StatefulWidget {
   final String title;
   final String onSubmitButtonText;
-  final List<LitInputArea> inputFields;
+  final List<LitTextField> inputFields;
   final Duration backgroundAnimationDuration;
   final Duration appearAnimationDuration;
   final void Function(String)? onUsernameChange;
@@ -20,7 +20,7 @@ class LitSignUpScreen extends StatefulWidget {
     this.onSubmitButtonText = 'Submit',
     this.inputFields = const [],
     this.backgroundAnimationDuration = const Duration(milliseconds: 3000),
-    this.appearAnimationDuration = const Duration(milliseconds: 230),
+    this.appearAnimationDuration = const Duration(milliseconds: 310),
     this.onUsernameChange,
     this.onPasswordChange,
     this.onPasswordConfirmChange,
@@ -164,45 +164,10 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
                           ),
                         ),
                       ),
-                      Center(
-                        child: SingleChildScrollView(
-                          padding: const EdgeInsets.only(
-                            left: 30.0,
-                            right: 30.0,
-                            top: 100.0,
-                            bottom: 80.0,
-                          ),
-                          physics: BouncingScrollPhysics(),
-                          child: InkWell(
-                            onTap: _unfocus,
-                            child: LitGradientCard(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(24.0)),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 30.0,
-                                  //horizontal: 15.0,
-                                ),
-                                child: Builder(
-                                  builder: (context) {
-                                    final List<Widget> children = [];
-                                    for (LitInputArea input
-                                        in widget.inputFields) {
-                                      children.add(input);
-                                      if (children.length <
-                                          widget.inputFields.length) {
-                                        children.add(LitDivider());
-                                      }
-                                    }
-                                    return Column(
-                                      children: children,
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                      _SignUpForm(
+                        animation: _appearAnimation,
+                        inputFields: widget.inputFields,
+                        onUnfocus: _unfocus,
                       ),
                       Align(
                         alignment: Alignment.bottomCenter,
@@ -239,123 +204,69 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
   }
 }
 
-class LitInputArea extends StatefulWidget {
-  final String label;
-  final bool initialObsureTextValue;
-  final bool allowObscuredText;
-  final IconData? icon;
-  final Function(String value) onChange;
-  const LitInputArea({
+class _SignUpForm extends StatefulWidget {
+  final Animation animation;
+  final List<LitTextField> inputFields;
+  final void Function() onUnfocus;
+  const _SignUpForm({
     Key? key,
-    required this.label,
-    this.initialObsureTextValue = false,
-    this.allowObscuredText = false,
-    this.icon,
-    required this.onChange,
+    required this.animation,
+    required this.inputFields,
+    required this.onUnfocus,
   }) : super(key: key);
-
   @override
-  _LitInputAreaState createState() => _LitInputAreaState();
+  __SignUpFormState createState() => __SignUpFormState();
 }
 
-class _LitInputAreaState extends State<LitInputArea> {
-  final FocusNode _focus = FocusNode();
-  final TextEditingController _textEditingController = TextEditingController();
+class __SignUpFormState extends State<_SignUpForm> {
+  Matrix4 get _transform {
+    final double dx = (-30.0 + (30.0 * widget.animation.value));
+    final double dy = 0;
+    final double dz = 0;
 
-  String get _textInput {
-    return _textEditingController.value.text;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _textEditingController.addListener(() {
-      widget.onChange(_textInput);
-    });
+    return Matrix4.translationValues(dx, dy, dz);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              widget.icon != null
-                  ? Row(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(
-                                8.0,
-                              ),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                offset: Offset(-2, 2),
-                                color: Colors.black26,
-                                blurRadius: 4.0,
-                                spreadRadius: -2,
-                              ),
-                            ],
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: Icon(
-                              widget.icon,
-                              color: LitColors.beigeGrey,
-                              size: 17.0,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 16.0),
-                      ],
-                    )
-                  : SizedBox(),
-              Text(
-                "${widget.label}".toUpperCase(),
-                style: LitTextStyles.sansSerif.copyWith(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.w600,
-                  color: HexColor('#A9A8A8'),
-                  letterSpacing: 0.25,
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.only(
+          left: 30.0,
+          right: 30.0,
+          top: 100.0,
+          bottom: 80.0,
+        ),
+        physics: BouncingScrollPhysics(),
+        child: InkWell(
+          onTap: widget.onUnfocus,
+          child: Transform(
+            transform: _transform,
+            child: LitGradientCard(
+              borderRadius: BorderRadius.all(Radius.circular(24.0)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 30.0,
+                  //horizontal: 15.0,
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.06),
-                borderRadius: BorderRadius.circular(8.0)),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 8.0,
-                horizontal: 16.0,
-              ),
-              child: EditableText(
-                cursorColor: Colors.grey,
-                backgroundCursorColor: Colors.black,
-                controller: _textEditingController,
-                focusNode: _focus,
-                textAlign: TextAlign.left,
-                cursorRadius: Radius.circular(2.0),
-                style: LitTextStyles.sansSerif.copyWith(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w700,
-                  color: HexColor('#444444'),
-                  letterSpacing: 1.25,
+                child: Builder(
+                  builder: (context) {
+                    final List<Widget> children = [];
+                    for (LitTextField input in widget.inputFields) {
+                      children.add(input);
+                      if (children.length < widget.inputFields.length) {
+                        children.add(LitDivider());
+                      }
+                    }
+                    return Column(
+                      children: children,
+                    );
+                  },
                 ),
               ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }
