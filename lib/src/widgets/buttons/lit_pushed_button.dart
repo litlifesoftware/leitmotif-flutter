@@ -27,11 +27,17 @@ class _LitPushedButtonState extends State<LitPushedButton>
       _pushAnimation
           .reverse()
           .then(
-            (value) => _pushAnimation.forward(),
+            (_) => _pushAnimation.forward(),
           )
           .then(
-            (value) => widget.onPressed(),
-          );
+        (__) {
+          try {
+            widget.onPressed();
+          } catch (e) {
+            print("State unmounted on LitPushedButton.");
+          }
+        },
+      );
     }
   }
 

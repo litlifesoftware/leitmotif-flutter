@@ -3,13 +3,13 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class LitTitledDialog extends StatelessWidget {
   final double titleBarHeight;
-  final double borderRadius;
+  final BorderRadius borderRadius;
   final Widget child;
   final LinearGradient titleGradient;
   final String titleText;
   final Color titleTextColor;
   final bool elevated;
-  final Widget leading;
+  final Widget? leading;
   final double maxWidth;
   final double minHeight;
   final EdgeInsets margin;
@@ -17,7 +17,7 @@ class LitTitledDialog extends StatelessWidget {
   const LitTitledDialog({
     Key? key,
     this.titleBarHeight = 52.0,
-    this.borderRadius = 30.0,
+    this.borderRadius = const BorderRadius.all(const Radius.circular(24.0)),
     required this.child,
     this.titleGradient = const LinearGradient(
       begin: Alignment.bottomLeft,
@@ -34,7 +34,7 @@ class LitTitledDialog extends StatelessWidget {
     required this.titleText,
     this.titleTextColor = const Color(0xFF444444),
     this.elevated = true,
-    this.leading = const SizedBox(),
+    this.leading,
     this.maxWidth = 400,
     this.minHeight = 152.0,
     this.actionButtons = const [],
@@ -48,11 +48,11 @@ class LitTitledDialog extends StatelessWidget {
     return Dialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: borderRadius,
       ),
       elevation: 0.0,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: borderRadius,
         child: LayoutBuilder(
           builder: (context, constraints) {
             return ConstrainedBox(
@@ -103,14 +103,14 @@ class LitTitledDialog extends StatelessWidget {
   }
 }
 
-class _DialogTopBar extends StatelessWidget {
+class _DialogTopBar extends StatefulWidget {
   final double titleBarHeight;
-  final double borderRadius;
+  final BorderRadius borderRadius;
   final Gradient titleGradient;
   final bool elevated;
   final String titleText;
   final Color titleTextColor;
-  final Widget leading;
+  final Widget? leading;
   const _DialogTopBar({
     Key? key,
     required this.titleBarHeight,
@@ -121,55 +121,86 @@ class _DialogTopBar extends StatelessWidget {
     required this.titleTextColor,
     required this.leading,
   }) : super(key: key);
+
+  @override
+  __DialogTopBarState createState() => __DialogTopBarState();
+}
+
+class __DialogTopBarState extends State<_DialogTopBar> {
+  Widget get _titleText {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: ClippedText(
+        widget.titleText,
+        textAlign: TextAlign.right,
+        style: LitTextStyles.sansSerif.copyWith(
+          fontSize: 16.0,
+          color: widget.titleTextColor,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    );
+  }
+
+  List<BoxShadow> get _elevatedBoxShadow {
+    return [
+      const BoxShadow(
+        color: Colors.black38,
+        blurRadius: 14.0,
+        offset: Offset(0.0, -2.0),
+        spreadRadius: 1.0,
+      )
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: titleBarHeight,
-          alignment: Alignment.topCenter,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(borderRadius),
-                topRight: Radius.circular(borderRadius),
-              ),
-              gradient: titleGradient,
-              boxShadow: elevated
-                  ? [
-                      BoxShadow(
-                          color: Colors.black38,
-                          blurRadius: 15.0,
-                          offset: Offset(-2, -2),
-                          spreadRadius: 1.0)
-                    ]
-                  : []),
-          child: Center(
-            child: Text(
-              titleText,
-              textAlign: TextAlign.center,
-              style: LitTextStyles.sansSerif.copyWith(
-                  fontSize: 16.0,
-                  color: titleTextColor,
-                  fontWeight: FontWeight.w700),
-            ),
-          ),
+    return Container(
+      height: widget.titleBarHeight,
+      alignment: Alignment.topCenter,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: widget.borderRadius.topLeft,
+          topRight: widget.borderRadius.topRight,
         ),
-        Container(
-          height: titleBarHeight,
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: leading,
+        gradient: widget.titleGradient,
+        boxShadow: widget.elevated ? _elevatedBoxShadow : [],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          widget.leading != null
+              ? Expanded(
+                  flex: 2,
+                  child: Container(
+                    height: widget.titleBarHeight,
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: widget.leading,
+                    ),
+                  ),
+                )
+              : SizedBox(),
+          Expanded(
+            flex: widget.leading != null ? 5 : 1,
+            child: widget.leading != null
+                ? _titleText
+                : Container(
+                    child: Center(
+                      child: _titleText,
+                    ),
+                  ),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }
 
 class _DialogBottomBar extends StatelessWidget {
   final double titleBarHeight;
-  final double borderRadius;
+  final BorderRadius borderRadius;
   final List<Widget> actionButtons;
   const _DialogBottomBar({
     Key? key,
@@ -189,8 +220,8 @@ class _DialogBottomBar extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(borderRadius),
-                bottomRight: Radius.circular(borderRadius),
+                bottomLeft: borderRadius.bottomLeft,
+                bottomRight: borderRadius.bottomRight,
               ),
               color: LitColors.lightGrey,
             ),

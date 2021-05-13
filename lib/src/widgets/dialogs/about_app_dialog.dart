@@ -47,9 +47,8 @@ class _AboutAppDialogState extends State<AboutAppDialog> {
   Widget build(BuildContext context) {
     return LitTitledDialog(
       titleText: widget.title,
-      leading: widget.showBackButton
-          ? DialogBackButton(onPressed: _onPop)
-          : SizedBox(),
+      leading:
+          widget.showBackButton ? DialogBackButton(onPressed: _onPop) : null,
       child: SingleChildScrollView(
         padding: widget.padding,
         physics: BouncingScrollPhysics(),
