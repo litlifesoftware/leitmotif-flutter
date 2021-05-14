@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
+const int caption = 0;
+const int button = 1;
+const int body = 3;
+const int body2 = 4;
+const int header5 = 5;
+const int header6 = 6;
+
 /// A collection of [TextStyle]s used throughout the LitSoftware apps.
 ///
 /// The [TextStyle]s are able to be used as default value on the constructor
@@ -10,7 +17,7 @@ class LitTextStyles {
   static const String package = "lit_ui_kit";
 
   /// The default sans serif font family.
-  static const String sansSerifFontFamily = "Montserrat";
+  static const String montserrat = "Montserrat";
 
   /// The default serif font family.
   static const String serifFontFamily = "Merriweather";
@@ -27,6 +34,10 @@ class LitTextStyles {
 
   static const double defaultBodySize = 14.0;
 
+  static const double captionFontSize = 11.0;
+
+  static const double buttonTextFontSize = 14.0;
+
   static const double defaultSubHeaderSize = 16.0;
 
   static const double defaultHeaderSize = 20.0;
@@ -35,23 +46,23 @@ class LitTextStyles {
 
   static const double tighterSpacing = 0.0;
 
-  static const double looseSpacing = 0.35;
+  static const double looseSpacing = 0.65;
 
   static const FontWeight lightWeight = FontWeight.w500;
 
-  static const FontWeight bodyWeight = FontWeight.w600;
+  static const FontWeight regular = FontWeight.w600;
 
-  static const FontWeight subHeaderWeight = FontWeight.w600;
+  static const FontWeight semiBold = FontWeight.w600;
 
-  static const FontWeight headerWeight = FontWeight.w700;
+  static const FontWeight bold = FontWeight.w700;
 
   /// The default sans serif [TextStyle].
   static const TextStyle sansSerif = TextStyle(
     color: defaultColor,
     fontSize: defaultBodySize,
-    fontFamily: sansSerifFontFamily,
+    fontFamily: montserrat,
     package: package,
-    fontWeight: bodyWeight,
+    fontWeight: regular,
   );
 
   /// The default serif [TextStyle].
@@ -74,7 +85,7 @@ class LitTextStyles {
   static const TextStyle sansSerifBody = TextStyle(
     color: defaultColor,
     fontSize: defaultBodySize,
-    fontFamily: sansSerifFontFamily,
+    fontFamily: montserrat,
     package: package,
     fontWeight: lightWeight,
   );
@@ -82,7 +93,7 @@ class LitTextStyles {
   static const TextStyle sansSerifBodyLargeSpacing = TextStyle(
     color: defaultColor,
     fontSize: defaultBodySize,
-    fontFamily: sansSerifFontFamily,
+    fontFamily: montserrat,
     package: package,
     fontWeight: lightWeight,
     height: 1.30,
@@ -91,16 +102,16 @@ class LitTextStyles {
   static const TextStyle sansSerifBodyTighter = TextStyle(
     color: defaultColor,
     fontSize: defaultBodySize,
-    fontFamily: sansSerifFontFamily,
+    fontFamily: montserrat,
     package: package,
-    fontWeight: bodyWeight,
+    fontWeight: regular,
     letterSpacing: tighterSpacing,
   );
 
   static const TextStyle sanSerifBodySmall = TextStyle(
     color: defaultColor,
     fontSize: smallBodySize,
-    fontFamily: sansSerifFontFamily,
+    fontFamily: montserrat,
     package: package,
     fontWeight: lightWeight,
   );
@@ -108,54 +119,115 @@ class LitTextStyles {
   static const TextStyle sansSerifBodyTighterSmaller = TextStyle(
     color: defaultColor,
     fontSize: smallerBodySize,
-    fontFamily: sansSerifFontFamily,
+    fontFamily: montserrat,
     package: package,
-    fontWeight: bodyWeight,
+    fontWeight: regular,
     letterSpacing: tighterSpacing,
   );
 
   static const TextStyle sansSerifSmallHeader = TextStyle(
     color: defaultColor,
     fontSize: defaultBodySize,
-    fontFamily: sansSerifFontFamily,
+    fontFamily: montserrat,
     package: package,
-    fontWeight: headerWeight,
+    fontWeight: bold,
     letterSpacing: looseSpacing,
   );
 
   static const TextStyle sansSerifSubHeader = TextStyle(
     color: defaultColor,
     fontSize: defaultSubHeaderSize,
-    fontFamily: sansSerifFontFamily,
+    fontFamily: montserrat,
     package: package,
-    fontWeight: subHeaderWeight,
+    fontWeight: semiBold,
     letterSpacing: looseSpacing,
   );
 
   static const TextStyle sansSerifSubHeaderTighter = TextStyle(
     color: defaultColor,
     fontSize: defaultSubHeaderSize,
-    fontFamily: sansSerifFontFamily,
+    fontFamily: montserrat,
     package: package,
-    fontWeight: subHeaderWeight,
+    fontWeight: semiBold,
     letterSpacing: tighterSpacing,
   );
 
   static const TextStyle sansSerifHeader = TextStyle(
     color: defaultColor,
     fontSize: defaultHeaderSize,
-    fontFamily: sansSerifFontFamily,
+    fontFamily: montserrat,
     package: package,
-    fontWeight: headerWeight,
+    fontWeight: bold,
     letterSpacing: looseSpacing,
   );
 
   static const TextStyle sansSerifHeaderTighter = TextStyle(
     color: defaultColor,
     fontSize: defaultHeaderSize,
-    fontFamily: sansSerifFontFamily,
+    fontFamily: montserrat,
     package: package,
-    fontWeight: headerWeight,
+    fontWeight: bold,
     letterSpacing: tighterSpacing,
   );
+
+  static const List<TextStyle> sansSerifStyles = [
+    // Caption [0]
+    TextStyle(
+      color: defaultColor,
+      fontSize: captionFontSize,
+      fontFamily: montserrat,
+      package: package,
+      fontWeight: regular,
+    ),
+
+    // Button [1]
+    TextStyle(
+      color: defaultColor,
+      fontSize: buttonTextFontSize,
+      fontFamily: montserrat,
+      package: package,
+      fontWeight: bold,
+      letterSpacing: looseSpacing,
+    ),
+
+    // Body [2]
+    TextStyle(
+      color: defaultColor,
+      fontSize: defaultBodySize,
+      fontFamily: montserrat,
+      package: package,
+      fontWeight: bold,
+      letterSpacing: looseSpacing,
+    ),
+
+    // Body 2 [3]
+    TextStyle(
+      color: defaultColor,
+      fontSize: defaultSubHeaderSize,
+      fontFamily: montserrat,
+      package: package,
+      fontWeight: semiBold,
+      letterSpacing: looseSpacing,
+    ),
+
+    // Header 5 [4]
+    TextStyle(
+      color: defaultColor,
+      fontSize: defaultSubHeaderSize,
+      fontFamily: montserrat,
+      package: package,
+      fontWeight: semiBold,
+      letterSpacing: looseSpacing,
+    ),
+
+    // Header 6 [5]
+    TextStyle(
+      color: defaultColor,
+      fontSize: defaultHeaderSize,
+      fontFamily: montserrat,
+      package: package,
+      fontWeight: bold,
+      letterSpacing: looseSpacing,
+    ),
+  ];
 }
