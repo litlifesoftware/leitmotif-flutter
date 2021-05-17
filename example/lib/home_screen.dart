@@ -21,11 +21,11 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
   }
 
   Color get buttonTextColor {
-    return darkMode! ? Colors.white : LitColors.lightGrey;
+    return darkMode! ? Colors.white : LitColors.mediumGrey;
   }
 
-  Color get buttonBorderColor {
-    return darkMode! ? Colors.white : LitColors.lightGrey;
+  Color get buttonColor {
+    return darkMode! ? LitColors.mediumGrey : Colors.white;
   }
 
   Widget _getArt(bool large) {
@@ -218,8 +218,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                         : SizedBox(),
                     Padding(
                       padding: const EdgeInsets.only(top: 32.0),
-                      child: LitRoundedOutlinedButton(
-                        borderColor: buttonBorderColor,
+                      child: LitRoundedElevatedButton(
+                        color: buttonColor,
                         child: ClippedText(
                           "Add notification",
                           style: LitTextStyles.sansSerif.copyWith(
@@ -231,8 +231,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 32.0),
-                      child: LitRoundedOutlinedButton(
-                          borderColor: buttonBorderColor,
+                      child: LitRoundedElevatedButton(
+                          color: buttonColor,
                           child: ClippedText(
                             "Show Licenses",
                             style: LitTextStyles.sansSerif.copyWith(
@@ -248,8 +248,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 32.0),
-                      child: LitRoundedOutlinedButton(
-                          borderColor: buttonBorderColor,
+                      child: LitRoundedElevatedButton(
+                          color: buttonColor,
                           child: ClippedText(
                             "Show Custom SnackBar!",
                             style: LitTextStyles.sansSerif.copyWith(
@@ -260,8 +260,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 32.0),
-                      child: LitRoundedOutlinedButton(
-                        borderColor: buttonBorderColor,
+                      child: LitRoundedElevatedButton(
+                        color: buttonColor,
                         child: ClippedText(
                           "Show Confirm Age Screen",
                           style: LitTextStyles.sansSerif.copyWith(
@@ -286,8 +286,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 32.0),
-                      child: LitRoundedOutlinedButton(
-                        borderColor: buttonBorderColor,
+                      child: LitRoundedElevatedButton(
+                        color: buttonColor,
                         child: ClippedText(
                           "Show Onboarding Screen",
                           style: LitTextStyles.sansSerif.copyWith(
@@ -323,8 +323,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 32.0),
-                      child: LitRoundedOutlinedButton(
-                        borderColor: buttonBorderColor,
+                      child: LitRoundedElevatedButton(
+                        color: buttonColor,
                         child: ClippedText(
                           "Show AboutApp dialog",
                           style: LitTextStyles.sansSerif.copyWith(
@@ -348,8 +348,31 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 32.0),
-                      child: LitRoundedOutlinedButton(
-                        borderColor: buttonBorderColor,
+                      child: LitRoundedElevatedButton(
+                        color: buttonColor,
+                        child: ClippedText(
+                          "Show Discard Draft Dialog",
+                          style: LitTextStyles.sansSerif.copyWith(
+                            color: buttonTextColor,
+                          ),
+                        ),
+                        onPressed: () => {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return DiscardDraftDialog(
+                                  onDiscard: () {
+                                    LitRouteController(context).closeDialog();
+                                  },
+                                );
+                              })
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 32.0),
+                      child: LitRoundedElevatedButton(
+                        color: buttonColor,
                         child: ClippedText(
                           "Show Privacy Policy Screen",
                           style: LitTextStyles.sansSerif.copyWith(
@@ -384,8 +407,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 32.0),
-                      child: LitRoundedOutlinedButton(
-                        borderColor: buttonBorderColor,
+                      child: LitRoundedElevatedButton(
+                        color: buttonColor,
                         child: ClippedText(
                           "Show Offline App Disclaimer Screen",
                           style: LitTextStyles.sansSerif.copyWith(
@@ -410,8 +433,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 32.0),
-                      child: LitRoundedOutlinedButton(
-                        borderColor: buttonBorderColor,
+                      child: LitRoundedElevatedButton(
+                        color: buttonColor,
                         child: ClippedText(
                           "Show Startup Screen",
                           style: LitTextStyles.sansSerif.copyWith(
@@ -432,8 +455,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 32.0),
-                      child: LitRoundedOutlinedButton(
-                        borderColor: buttonBorderColor,
+                      child: LitRoundedElevatedButton(
+                        color: buttonColor,
                         child: ClippedText(
                           "Show Signup Screen",
                           style: LitTextStyles.sansSerif.copyWith(
@@ -474,8 +497,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 32.0),
-                      child: LitRoundedOutlinedButton(
-                        borderColor: buttonBorderColor,
+                      child: LitRoundedElevatedButton(
+                        color: buttonColor,
                         child: ClippedText(
                           "Show Credits Screen",
                           style: LitTextStyles.sansSerif.copyWith(
@@ -528,14 +551,6 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 30.0, vertical: 40.0),
-                  child: ClippedText(
-                    "Do you like this UI Kit? Please leave a star. 👻",
-                    maxLines: 3,
-                  ),
-                )
               ],
             ),
           ),

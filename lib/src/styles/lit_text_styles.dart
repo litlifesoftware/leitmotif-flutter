@@ -3,10 +3,39 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 const int caption = 0;
 const int button = 1;
-const int body = 3;
-const int body2 = 4;
-const int header5 = 5;
-const int header6 = 6;
+const int body = 2;
+const int body2 = 3;
+const int header5 = 4;
+const int header6 = 5;
+
+/// The default text color for all [TextStyle]s.
+const Color defaultColor = LitColors.mediumGrey;
+
+const double smallBodySize = 11.0;
+
+const double smallerBodySize = 13.0;
+
+const double defaultBodySize = 14.0;
+
+const double captionFontSize = 11.0;
+
+const double buttonTextFontSize = 14.0;
+
+const double defaultSubHeaderSize = 16.0;
+
+const double defaultHeaderSize = 20.0;
+
+const double veryTightSpacing = -0.70;
+
+const double tighterSpacing = 0.0;
+
+const double looseSpacing = 0.65;
+
+const FontWeight light = FontWeight.w500;
+
+const FontWeight regular = FontWeight.w600;
+
+const FontWeight bold = FontWeight.w700;
 
 /// A collection of [TextStyle]s used throughout the LitSoftware apps.
 ///
@@ -24,37 +53,6 @@ class LitTextStyles {
 
   /// The default monospace font family.
   static const String monospaceFontFamily = "VT323";
-
-  /// The default text color for all [TextStyle]s.
-  static const Color defaultColor = LitColors.mediumGrey;
-
-  static const double smallBodySize = 11.0;
-
-  static const double smallerBodySize = 13.0;
-
-  static const double defaultBodySize = 14.0;
-
-  static const double captionFontSize = 11.0;
-
-  static const double buttonTextFontSize = 14.0;
-
-  static const double defaultSubHeaderSize = 16.0;
-
-  static const double defaultHeaderSize = 20.0;
-
-  static const double veryTightSpacing = -0.70;
-
-  static const double tighterSpacing = 0.0;
-
-  static const double looseSpacing = 0.65;
-
-  static const FontWeight lightWeight = FontWeight.w500;
-
-  static const FontWeight regular = FontWeight.w600;
-
-  static const FontWeight semiBold = FontWeight.w600;
-
-  static const FontWeight bold = FontWeight.w700;
 
   /// The default sans serif [TextStyle].
   static const TextStyle sansSerif = TextStyle(
@@ -87,7 +85,7 @@ class LitTextStyles {
     fontSize: defaultBodySize,
     fontFamily: montserrat,
     package: package,
-    fontWeight: lightWeight,
+    fontWeight: light,
   );
 
   static const TextStyle sansSerifBodyLargeSpacing = TextStyle(
@@ -95,7 +93,7 @@ class LitTextStyles {
     fontSize: defaultBodySize,
     fontFamily: montserrat,
     package: package,
-    fontWeight: lightWeight,
+    fontWeight: light,
     height: 1.30,
   );
 
@@ -113,7 +111,7 @@ class LitTextStyles {
     fontSize: smallBodySize,
     fontFamily: montserrat,
     package: package,
-    fontWeight: lightWeight,
+    fontWeight: light,
   );
 
   static const TextStyle sansSerifBodyTighterSmaller = TextStyle(
@@ -139,7 +137,7 @@ class LitTextStyles {
     fontSize: defaultSubHeaderSize,
     fontFamily: montserrat,
     package: package,
-    fontWeight: semiBold,
+    fontWeight: regular,
     letterSpacing: looseSpacing,
   );
 
@@ -148,7 +146,7 @@ class LitTextStyles {
     fontSize: defaultSubHeaderSize,
     fontFamily: montserrat,
     package: package,
-    fontWeight: semiBold,
+    fontWeight: regular,
     letterSpacing: tighterSpacing,
   );
 
@@ -196,8 +194,7 @@ class LitTextStyles {
       fontSize: defaultBodySize,
       fontFamily: montserrat,
       package: package,
-      fontWeight: bold,
-      letterSpacing: looseSpacing,
+      fontWeight: regular,
     ),
 
     // Body 2 [3]
@@ -206,7 +203,7 @@ class LitTextStyles {
       fontSize: defaultSubHeaderSize,
       fontFamily: montserrat,
       package: package,
-      fontWeight: semiBold,
+      fontWeight: regular,
       letterSpacing: looseSpacing,
     ),
 
@@ -216,7 +213,7 @@ class LitTextStyles {
       fontSize: defaultSubHeaderSize,
       fontFamily: montserrat,
       package: package,
-      fontWeight: semiBold,
+      fontWeight: regular,
       letterSpacing: looseSpacing,
     ),
 

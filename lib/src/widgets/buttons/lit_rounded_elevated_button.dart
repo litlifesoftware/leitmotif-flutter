@@ -16,7 +16,7 @@ class LitRoundedElevatedButton extends StatefulWidget {
   /// 25.0 pixels.
   const LitRoundedElevatedButton({
     Key? key,
-    required this.color,
+    this.color = Colors.white,
     required this.child,
     required this.onPressed,
     this.radius = 25.0,
@@ -26,10 +26,10 @@ class LitRoundedElevatedButton extends StatefulWidget {
     ),
     this.boxShadow = const [
       BoxShadow(
-        blurRadius: 16.0,
+        blurRadius: 8.0,
         color: Colors.black26,
-        offset: Offset(-2, 2),
-        spreadRadius: 1.0,
+        offset: Offset(-2.0, 2.0),
+        spreadRadius: -1.0,
       )
     ],
   }) : super(key: key);

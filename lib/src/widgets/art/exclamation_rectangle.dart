@@ -33,7 +33,7 @@ class ExclamationRectangle extends StatelessWidget {
             fit: BoxFit.scaleDown,
             child: Icon(
               LitIcons.info,
-              size: (min(height, width) / 3),
+              size: (min(height, width) - (margin.top + margin.bottom)) / 3,
               color: HexColor(
                 '#A3A3A3',
               ),
