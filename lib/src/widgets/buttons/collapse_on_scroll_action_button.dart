@@ -44,7 +44,7 @@ class CollapseOnScrollActionButton extends StatefulWidget
     Key? key,
     required this.scrollController,
     this.backgroundColor = LitColors.lightGrey,
-    this.accentColor = LitColors.mediumGrey,
+    this.accentColor = LitColors.lightRed,
     required this.icon,
     required this.label,
     this.collapseDuration = const Duration(milliseconds: 500),

@@ -3,4 +3,4 @@
 /// To use, import `package:lit_ui_kit/scaffold.dart`.
 library scaffold;
 
-export 'src/widgets/lit_scaffold/lit_scaffold.dart';
+export 'src/widgets/scaffold/lit_scaffold.dart';

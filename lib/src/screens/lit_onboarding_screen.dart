@@ -37,6 +37,7 @@ class LitOnboardingScreen extends StatefulWidget {
 class _LitOnboardingScreenState extends State<LitOnboardingScreen>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
+  late ScrollController _scrollController;
   int selectedTextItem = 0;
   void _onPressed() {
     print("pressed");
@@ -57,6 +58,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
     _animationController = AnimationController(
       vsync: this,
       duration: widget.animationDuration,
@@ -72,11 +74,13 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
 
   @override
   Widget build(BuildContext context) {
-    print(_animationController.value);
-
     return LitScaffold(
-      appBar: LitAppBar(
-        title: widget.title,
+      appBar: FixedOnScrollAppbar(
+        scrollController: _scrollController,
+        child: ClippedText(
+          widget.title,
+          style: LitTextStyles.sansSerifStyles[body],
+        ),
       ),
       body: Stack(
         children: [
@@ -88,6 +92,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
             ),
           ),
           SingleChildScrollView(
+            controller: _scrollController,
             physics: BouncingScrollPhysics(),
             padding: const EdgeInsets.symmetric(
               horizontal: 24.0,

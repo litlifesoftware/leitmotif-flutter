@@ -14,7 +14,6 @@ class LitPushedThroughButton extends StatefulWidget {
   final EdgeInsets margin;
   final List<BoxShadow> boxShadow;
   final Duration animationDuration;
-
   final bool disabled;
 
   /// Create a [PushedThroughButton] [Widget].
@@ -61,15 +60,15 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
   /// Set the state to indicate the button is pressed, animate it and
   /// execute the actual callback [Function] provided.
   void _onTapDown(PointerDownEvent details) {
-    try {
-      setState(() {
-        _isPressed = true;
-      });
-      _animationController.forward(from: 0);
-    } catch (e) {
-      _isPressed = true;
-    }
     if (!widget.disabled) {
+      try {
+        setState(() {
+          _isPressed = true;
+        });
+        _animationController.forward(from: 0);
+      } catch (e) {
+        _isPressed = true;
+      }
       widget.onPressed();
     }
   }
@@ -79,12 +78,14 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
   /// Set the state to indicate the button is not pressed and play the
   /// animation in reverse.
   void _onTapUp(PointerUpEvent details) {
-    try {
-      setState(() {
-        _isPressed = false;
-      });
-      _animationController.reverse(from: 1);
-    } catch (e) {}
+    if (!widget.disabled) {
+      try {
+        setState(() {
+          _isPressed = false;
+        });
+        _animationController.reverse(from: 1);
+      } catch (e) {}
+    }
   }
 
   @override
