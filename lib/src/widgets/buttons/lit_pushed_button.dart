@@ -6,6 +6,9 @@ class LitPushedButton extends StatefulWidget {
   final bool animateOnStart;
   final Duration animationDuration;
   final double minScale;
+
+  /// States whether to diabled the button's functionality.
+  final bool disabled;
   const LitPushedButton({
     Key? key,
     required this.onPressed,
@@ -13,6 +16,7 @@ class LitPushedButton extends StatefulWidget {
     this.animateOnStart = true,
     this.animationDuration = const Duration(milliseconds: 35),
     this.minScale = 0.8,
+    this.disabled = false,
   }) : super(key: key);
   @override
   _LitPushedButtonState createState() => _LitPushedButtonState();
@@ -22,8 +26,12 @@ class _LitPushedButtonState extends State<LitPushedButton>
     with TickerProviderStateMixin {
   late AnimationController _pushAnimation;
 
+  double get _diabledOpacity {
+    return 0.35;
+  }
+
   void _onPressed() {
-    if (this.mounted) {
+    if (this.mounted && !widget.disabled) {
       _pushAnimation
           .reverse()
           .then(
@@ -69,7 +77,10 @@ class _LitPushedButtonState extends State<LitPushedButton>
           return Transform.scale(
             scale: widget.minScale +
                 (_pushAnimation.value * (1.0 - widget.minScale)),
-            child: widget.child,
+            child: Opacity(
+              opacity: widget.disabled ? _diabledOpacity : 1.0,
+              child: widget.child,
+            ),
           );
         },
       ),

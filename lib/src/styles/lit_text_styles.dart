@@ -168,6 +168,9 @@ class LitTextStyles {
     letterSpacing: tighterSpacing,
   );
 
+  /// A [List] of available sans serif styles. To select a specific style, use
+  /// the `caption`,`button`, `body`, `body2`, `header5` and `header6`
+  /// indicators as index value.
   static const List<TextStyle> sansSerifStyles = [
     // Caption [0]
     TextStyle(

@@ -8,6 +8,9 @@ class LitBubbleButton extends StatefulWidget {
   final Duration animationDuration;
   final void Function() onPressed;
 
+  /// States whether to diabled the button's functionality.
+  final bool disabled;
+
   /// Creates a [LitBubbleButton].
   ///
   /// [borderRadius] specifies the button's border radius.
@@ -21,6 +24,7 @@ class LitBubbleButton extends StatefulWidget {
     required this.child,
     this.animationDuration = const Duration(milliseconds: 8000),
     required this.onPressed,
+    this.disabled = false,
   }) : super(key: key);
   @override
   _LitBubbleButtonState createState() => _LitBubbleButtonState();
@@ -47,6 +51,7 @@ class _LitBubbleButtonState extends State<LitBubbleButton>
   @override
   Widget build(BuildContext context) {
     return LitPushedButton(
+      disabled: widget.disabled,
       onPressed: widget.onPressed,
       child: AnimatedBuilder(
         animation: _bubbleAnimation,

@@ -8,6 +8,8 @@ class LitPlainLabelButton extends StatefulWidget {
   final Color color;
   final double fontSize;
   final TextAlign textAlign;
+  final bool disabled;
+  final Duration animationDuration;
   const LitPlainLabelButton({
     Key? key,
     required this.label,
@@ -16,6 +18,8 @@ class LitPlainLabelButton extends StatefulWidget {
     this.color = const Color(0xFFb5b5b5),
     this.fontSize = 17.0,
     this.textAlign = TextAlign.center,
+    this.disabled = false,
+    this.animationDuration = const Duration(milliseconds: 400),
   }) : super(key: key);
 
   @override
@@ -35,17 +39,19 @@ class _LitPlainLabelButtonState extends State<LitPlainLabelButton>
   }
 
   void _onPressed() {
-    _animationController
-        .reverse()
-        .then((value) => _animationController.forward());
-    widget.onPressed();
+    if (!widget.disabled) {
+      _animationController
+          .reverse()
+          .then((value) => _animationController.forward());
+      widget.onPressed();
+    }
   }
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: Duration(milliseconds: 400),
+      duration: widget.animationDuration,
       vsync: this,
     );
     _animationController.forward();
@@ -69,18 +75,19 @@ class _LitPlainLabelButtonState extends State<LitPlainLabelButton>
           bottom: 8.0,
         ),
         child: AnimatedBuilder(
-            animation: _animationController,
-            builder: (context, _) {
-              return ClippedText(
-                widget.label,
-                textAlign: widget.textAlign,
-                style: LitTextStyles.sansSerif.copyWith(
-                  fontSize: widget.fontSize,
-                  color: Color.lerp(widget.accentColor, widget.color,
-                      _animationController.value),
-                ),
-              );
-            }),
+          animation: _animationController,
+          builder: (context, _) {
+            return ClippedText(
+              widget.label,
+              textAlign: widget.textAlign,
+              style: LitTextStyles.sansSerif.copyWith(
+                fontSize: widget.fontSize,
+                color: Color.lerp(widget.accentColor, widget.color,
+                    _animationController.value),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
