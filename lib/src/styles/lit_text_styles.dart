@@ -37,6 +37,8 @@ const FontWeight regular = FontWeight.w600;
 
 const FontWeight bold = FontWeight.w700;
 
+const FontWeight black = FontWeight.w800;
+
 /// A collection of [TextStyle]s used throughout the LitSoftware apps.
 ///
 /// The [TextStyle]s are able to be used as default value on the constructor

@@ -18,6 +18,7 @@ class LitColors {
   static const Color cyan = Color(0xFF59E3C3);
   static const Color lightGrey = Color(0xFFC7C7C7);
   static const Color mediumGrey = Color(0xFF686868);
+  static const Color darkGrey = Color(0xFF444444);
   static const Color darkBeige = Color(0xFFB3958C);
   static const Color beigeGrey = Color(0xFFBAB3AF);
   static const Color mediumOliveGreen = Color(0xFF9AA390);
