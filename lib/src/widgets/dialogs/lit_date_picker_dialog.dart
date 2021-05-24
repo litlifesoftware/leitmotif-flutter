@@ -5,23 +5,22 @@ import 'package:lit_ui_kit/src/widgets/input/lit_date_picker.dart';
 
 class LitDatePickerDialog extends StatefulWidget {
   final void Function() onBackCallback;
-  //final DateTime? selectedDate;
-  //final void Function(DateTime?) selectDate;
+
   final void Function(DateTime) onSubmit;
   final bool allowFutureDates;
   final String excludedMonthErrorMessage;
   final String futureDateErrorMessage;
   final DateTime? initialDate;
+  final String title;
   const LitDatePickerDialog({
     Key? key,
     required this.onBackCallback,
-    //required this.selectedDate,
-    //required this.selectDate,
     required this.onSubmit,
     this.allowFutureDates = true,
     this.excludedMonthErrorMessage = "Date not included in current month.",
     this.futureDateErrorMessage = "Future dates are not allowed.",
     this.initialDate,
+    this.title = "Choose date",
   }) : super(key: key);
   @override
   _LitDatePickerDialogState createState() => _LitDatePickerDialogState();
@@ -97,7 +96,7 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog>
               SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: LitTitledDialog(
-                  titleText: "Previous day",
+                  titleText: widget.title,
                   leading: DialogBackButton(
                     onPressed: widget.onBackCallback,
                   ),

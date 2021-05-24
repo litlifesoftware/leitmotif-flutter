@@ -14,11 +14,7 @@ class ConfirmAgeScreen extends StatefulWidget {
 
   /// The message displayed if the user's age don't comply with the age
   /// requirement.
-  final String invalidAgeMessage;
-
-  /// The message displayed if the user's age complies with the provided age
-  /// requirement.
-  final String validAgeMessage;
+  final String invalidAgeText;
 
   /// The screen's title.
   final String title;
@@ -41,11 +37,13 @@ class ConfirmAgeScreen extends StatefulWidget {
   /// The 'valid' text label.
   final String validLabel;
 
+  final String chooseDateLabel;
+
   /// Creates a [ConfirmAgeScreen].
   ///
   /// * [ageRequirement] is the required age in years.
   ///
-  /// * [invalidAgeMessage] is the text displayed if the user's age is too
+  /// * [invalidAgeText] is the text displayed if the user's age is too
   ///   young. Provide a localized string if preferred.
   ///
   /// * [validAgeMessage] is the text displayed if the user's age is valid.
@@ -62,13 +60,14 @@ class ConfirmAgeScreen extends StatefulWidget {
   /// * [yourAgeLabel] is the 'your age' text.
   ///
   /// * [validLabel] is the 'valid' text.
+  ///
+  /// * [chooseDateLabel] is the [LitDatePickerDialog]'s title.
   const ConfirmAgeScreen({
     Key? key,
     this.ageRequirement = 13,
-    this.invalidAgeMessage =
-        "Seems like you are not old enough to use this app. Please check your age input.",
-    this.validAgeMessage =
-        "Your age has been confirmed. Press on 'Submit' to continue.",
+    this.invalidAgeText =
+        "Seems like you are not old enough to use this app. " +
+            "Please check your inputted age",
     this.title = "Confirm your Age",
     this.subtitle = "Are you 13 years old or older?",
     required this.onSubmit,
@@ -76,6 +75,7 @@ class ConfirmAgeScreen extends StatefulWidget {
     this.submitLabel = "Submit",
     this.yourAgeLabel = "Your age",
     this.validLabel = "Valid",
+    this.chooseDateLabel = "Choose date",
   }) : super(key: key);
   @override
   _ConfirmAgeScreenState createState() => _ConfirmAgeScreenState();
@@ -95,6 +95,7 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
   void _onPressedSet() {
     LitRouteController(context).showDialogWidget(
       LitDatePickerDialog(
+        title: widget.chooseDateLabel,
         onBackCallback: () {
           LitRouteController(context).closeDialog();
         },
@@ -158,7 +159,7 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
       snackBar: IconSnackbar(
         iconData: LitIcons.info,
         litSnackBarController: _snackbarController,
-        text: widget.invalidAgeMessage,
+        text: widget.invalidAgeText,
       ),
       body: Container(
         height: _deviceSize.height,
@@ -244,21 +245,18 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
                   SizedBox(
                     height: 32.0,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Text(
-                      _isValidAge
-                          ? widget.validAgeMessage
-                          : widget.invalidAgeMessage,
-                      style: LitTextStyles.sansSerifBody.copyWith(
-                        color: Color(0xFF848484),
-                        letterSpacing: 1.0,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 96.0,
-                  ),
+                  !_isValidAge
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                          child: Text(
+                            widget.invalidAgeText,
+                            style: LitTextStyles.sansSerifBody.copyWith(
+                              color: Color(0xFF848484),
+                              letterSpacing: 1.0,
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
                 ],
               ),
             ),
@@ -266,26 +264,24 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 32.0),
-                child: Opacity(
-                  opacity: _isValidAge ? 1.0 : 0.5,
-                  child: LitPushedThroughButton(
-                    backgroundColor: _validityColor,
-                    borderRadius: 16.0,
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 32.0,
-                      vertical: 10.0,
-                    ),
-                    child: Text(
-                      widget.submitLabel.toUpperCase(),
-                      style: LitTextStyles.sansSerifSmallHeader.copyWith(
-                        color: Color(0xFF8D8D8D),
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 1.1,
-                      ),
-                    ),
-                    onPressed: _onPressedSubmit,
+                child: LitPushedThroughButton(
+                  disabled: !_isValidAge,
+                  backgroundColor: _validityColor,
+                  borderRadius: 16.0,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 32.0,
+                    vertical: 10.0,
                   ),
+                  child: Text(
+                    widget.submitLabel.toUpperCase(),
+                    style: LitTextStyles.sansSerifStyles[button].copyWith(
+                      color: Color(0xFF8D8D8D),
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.1,
+                    ),
+                  ),
+                  onPressed: _onPressedSubmit,
                 ),
               ),
             ),
@@ -342,6 +338,7 @@ class __YourAgeInputState extends State<_YourAgeInput> {
                   width: constraints.maxWidth * 0.35,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       widget.selectedAge != null
                           ? Row(
@@ -396,10 +393,10 @@ class __YourAgeInputState extends State<_YourAgeInput> {
                                             ),
                                           ),
                                           child: Center(
-                                            child: Text(
+                                            child: ClippedText(
                                               "${widget.ageInYears > 0 ? widget.ageInYears : '?'}",
                                               style: LitTextStyles
-                                                  .sansSerifHeader
+                                                  .sansSerifStyles[header5]
                                                   .copyWith(
                                                 color: widget.ageInYears > 0
                                                     ? Color(0xFF5B5B5B)
@@ -424,9 +421,10 @@ class __YourAgeInputState extends State<_YourAgeInput> {
                         ),
                         onPressed: _onPressed,
                         child: Center(
-                          child: Text(
-                            widget.setLabel,
-                            style: LitTextStyles.sansSerifSubHeader.copyWith(
+                          child: ClippedText(
+                            widget.setLabel.toUpperCase(),
+                            style:
+                                LitTextStyles.sansSerifStyles[button].copyWith(
                               color: Color(0xFF5B5B5B),
                               fontWeight: FontWeight.w700,
                             ),
