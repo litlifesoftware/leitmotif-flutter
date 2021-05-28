@@ -175,7 +175,7 @@ class LitTextStyles {
   /// indicators as index value.
   static const List<TextStyle> sansSerifStyles = [
     // Caption [0]
-    TextStyle(
+    const TextStyle(
       color: defaultColor,
       fontSize: captionFontSize,
       fontFamily: montserrat,
@@ -184,7 +184,7 @@ class LitTextStyles {
     ),
 
     // Button [1]
-    TextStyle(
+    const TextStyle(
       color: defaultColor,
       fontSize: buttonTextFontSize,
       fontFamily: montserrat,
@@ -194,7 +194,7 @@ class LitTextStyles {
     ),
 
     // Body [2]
-    TextStyle(
+    const TextStyle(
       color: defaultColor,
       fontSize: defaultBodySize,
       fontFamily: montserrat,
@@ -203,7 +203,7 @@ class LitTextStyles {
     ),
 
     // Body 2 [3]
-    TextStyle(
+    const TextStyle(
       color: defaultColor,
       fontSize: defaultSubHeaderSize,
       fontFamily: montserrat,
@@ -213,7 +213,7 @@ class LitTextStyles {
     ),
 
     // Header 5 [4]
-    TextStyle(
+    const TextStyle(
       color: defaultColor,
       fontSize: defaultSubHeaderSize,
       fontFamily: montserrat,
@@ -223,7 +223,7 @@ class LitTextStyles {
     ),
 
     // Header 6 [5]
-    TextStyle(
+    const TextStyle(
       color: defaultColor,
       fontSize: defaultHeaderSize,
       fontFamily: montserrat,
