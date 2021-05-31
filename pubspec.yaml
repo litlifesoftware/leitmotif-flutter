@@ -1,6 +1,6 @@
 name: lit_ui_kit
 description: A collection of widgets and screens for Flutter.
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/litlifesoftware/lit_ui_kit
 
 environment:
@@ -10,8 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  package_info: ^2.0.0
-  url_launcher: ^6.0.3
+  package_info: ^2.0.2
+  url_launcher: ^6.0.4
   intl: ^0.17.0
 
 dev_dependencies:
