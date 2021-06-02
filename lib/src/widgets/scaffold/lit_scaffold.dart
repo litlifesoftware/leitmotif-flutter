@@ -23,7 +23,6 @@ class LitScaffold extends StatefulWidget {
 
   /// The [CustomAppBar] displays additional information.
   final CustomAppBar? appBar;
-  final CustomInfoBar? infoBar;
 
   /// The [LitSnackbar] displaying changes triggered by the user.
   ///
@@ -43,10 +42,8 @@ class LitScaffold extends StatefulWidget {
   const LitScaffold({
     Key? key,
     this.backgroundColor = Colors.white,
-    //this.darkMode = false,
     required this.body,
     this.snackBar,
-    this.infoBar,
     this.appBar,
     this.actionButton,
     this.collapsibleCard,
@@ -116,7 +113,6 @@ class _LitScaffoldState extends State<LitScaffold>
               )
             : _body,
         widget.appBar ?? SizedBox(),
-        widget.infoBar ?? SizedBox(),
         widget.collapsibleCard ?? SizedBox(),
         widget.snackBar ?? SizedBox(),
         widget.actionButton ?? SizedBox(),
