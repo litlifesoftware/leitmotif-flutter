@@ -3,10 +3,10 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 /// A [LitSnackbar] displaying a leading [Icon].
 ///
-/// It will return a [SlidingSnackbar] whose [SlidingSnackbar.child] will
+/// It will return a [LitBaseSnackbar] whose [LitBaseSnackbar.child] will
 /// be set to a [Row] containing the provided [Icon] and an information text.
-class IconSnackbar extends StatelessWidget implements LitSnackbar {
-  final LitSnackbarController? litSnackBarController;
+class LitIconSnackbar extends StatelessWidget implements LitSnackbar {
+  final LitSnackbarController snackBarController;
   final String text;
   final TextStyle textStyle;
   final IconData iconData;
@@ -16,12 +16,12 @@ class IconSnackbar extends StatelessWidget implements LitSnackbar {
   final EdgeInsets padding;
   final double width;
 
-  /// Creates a [IconSnackbar] widget.
+  /// Creates a [LitIconSnackbar] widget.
   ///
   /// Specify the displayed [IconData] and the description text.
-  const IconSnackbar({
+  const LitIconSnackbar({
     Key? key,
-    required this.litSnackBarController,
+    required this.snackBarController,
     required this.text,
     this.textStyle = LitTextStyles.sansSerif,
     required this.iconData,
@@ -36,8 +36,8 @@ class IconSnackbar extends StatelessWidget implements LitSnackbar {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SlidingSnackbar(
-        customSnackBarController: litSnackBarController,
+    return LitBaseSnackbar(
+        snackBarController: snackBarController,
         width: width,
         height: 80.0,
         alignment: alignment,
@@ -86,5 +86,5 @@ class IconSnackbar extends StatelessWidget implements LitSnackbar {
   }
 
   @override
-  LitSnackbarController? get controller => this.litSnackBarController;
+  LitSnackbarController? get controller => this.snackBarController;
 }

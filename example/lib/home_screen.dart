@@ -11,21 +11,21 @@ class LitUIKitHomescreen extends StatefulWidget {
 
 class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
   late LitSettingsPanelController settingsPanelController;
-  LitSnackbarController? customSnackBarController;
-  LitNotificationController? _notificationController;
-  bool? darkMode;
+  late LitSnackbarController customSnackBarController;
+  late LitNotificationController _notificationController;
+  late bool darkMode;
   DateTime? dayOfBirth;
 
   void showSnackbar() {
-    customSnackBarController!.showSnackBar();
+    customSnackBarController.showSnackBar();
   }
 
   Color get buttonTextColor {
-    return darkMode! ? Colors.white : LitColors.mediumGrey;
+    return darkMode ? Colors.white : LitColors.mediumGrey;
   }
 
   Color get buttonColor {
-    return darkMode! ? LitColors.mediumGrey : Colors.white;
+    return darkMode ? LitColors.mediumGrey : Colors.white;
   }
 
   Widget _getArt(bool large) {
@@ -57,7 +57,7 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
 
   void _addNotification() {
     setState(() {
-      _notificationController!.add(
+      _notificationController.add(
         LitNotificationData(
           description: "${DateTime.now().toIso8601String()}",
           icon: LitIcons.bolt,
@@ -79,25 +79,25 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
   @override
   Widget build(BuildContext context) {
     return LitNotificationContainer(
-      controller: _notificationController!,
+      controller: _notificationController,
       child: LitScaffold(
-        backgroundColor: darkMode! ? LitColors.darkBlue : Colors.white,
+        backgroundColor: darkMode ? LitColors.darkBlue : Colors.white,
         appBar: LitAppBar(
           title: "LitUIKit Example",
-          backgroundColor: darkMode! ? Colors.black : Colors.white,
+          backgroundColor: darkMode ? Colors.black : Colors.white,
           textStyle: LitTextStyles.sansSerif.copyWith(
-            color: darkMode! ? Colors.white : LitColors.mediumGrey,
+            color: darkMode ? Colors.white : LitColors.mediumGrey,
           ),
-          elevated: darkMode!,
+          elevated: darkMode,
         ),
-        snackBar: IconSnackbar(
-            litSnackBarController: customSnackBarController,
+        snackBar: LitIconSnackbar(
+            snackBarController: customSnackBarController,
             text: "Snack Bar!",
             iconData: LitIcons.info),
         settingsPanel: LitSettingsPanel(
           controller: settingsPanelController,
           title: "Settings",
-          darkMode: darkMode!,
+          darkMode: darkMode,
           settingsTiles: [
             LitSettingsPanelTile(
               onValueToggled: (toggledValue) {
@@ -105,8 +105,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   darkMode = toggledValue;
                 });
               },
-              darkMode: darkMode!,
-              enabled: darkMode!,
+              darkMode: darkMode,
+              enabled: darkMode,
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
@@ -116,8 +116,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   darkMode = toggledValue;
                 });
               },
-              darkMode: darkMode!,
-              enabled: darkMode!,
+              darkMode: darkMode,
+              enabled: darkMode,
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
@@ -127,8 +127,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   darkMode = toggledValue;
                 });
               },
-              darkMode: darkMode!,
-              enabled: darkMode!,
+              darkMode: darkMode,
+              enabled: darkMode,
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
@@ -138,8 +138,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   darkMode = toggledValue;
                 });
               },
-              darkMode: darkMode!,
-              enabled: darkMode!,
+              darkMode: darkMode,
+              enabled: darkMode,
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
@@ -149,8 +149,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   darkMode = toggledValue;
                 });
               },
-              darkMode: darkMode!,
-              enabled: darkMode!,
+              darkMode: darkMode,
+              enabled: darkMode,
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
@@ -160,8 +160,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   darkMode = toggledValue;
                 });
               },
-              darkMode: darkMode!,
-              enabled: darkMode!,
+              darkMode: darkMode,
+              enabled: darkMode,
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),
@@ -171,8 +171,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                   darkMode = toggledValue;
                 });
               },
-              darkMode: darkMode!,
-              enabled: darkMode!,
+              darkMode: darkMode,
+              enabled: darkMode,
               optionName: "Dark mode",
               iconData: LitIcons.moon_with_stars_solid,
             ),

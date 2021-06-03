@@ -5,5 +5,5 @@ library snackbars;
 
 export 'src/widgets/snackbars/lit_snackbar.dart';
 export 'src/widgets/snackbars/lit_snackbar_controller.dart';
-export 'src/widgets/snackbars/icon_snackbar.dart';
-export 'src/widgets/snackbars/sliding_snackbar.dart';
+export 'src/widgets/snackbars/lit_icon_snackbar.dart';
+export 'src/widgets/snackbars/lit_base_snackbar.dart';

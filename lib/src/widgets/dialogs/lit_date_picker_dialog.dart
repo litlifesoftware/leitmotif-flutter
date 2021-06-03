@@ -165,22 +165,18 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog>
                       : SizedBox(),
                 ),
               ),
-              IconSnackbar(
+              LitIconSnackbar(
                 iconData: LitIcons.info,
                 text: widget.excludedMonthErrorMessage,
-                textStyle: LitTextStyles.sansSerif
-                    .copyWith(color: Colors.white, fontSize: 13.0),
-                litSnackBarController: _exclusiveDateSnackBarController,
+                snackBarController: _exclusiveDateSnackBarController,
                 alignment: Alignment.topRight,
                 padding:
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
               ),
-              IconSnackbar(
+              LitIconSnackbar(
                 iconData: LitIcons.info,
                 text: widget.futureDateErrorMessage,
-                textStyle: LitTextStyles.sansSerif
-                    .copyWith(color: Colors.white, fontSize: 13.0),
-                litSnackBarController: _futureDateSnackbarController,
+                snackBarController: _futureDateSnackbarController,
                 alignment: Alignment.topRight,
                 padding:
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),

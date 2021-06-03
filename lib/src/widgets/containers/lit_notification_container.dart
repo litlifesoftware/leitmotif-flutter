@@ -4,7 +4,7 @@ import 'package:lit_ui_kit/src/controller/lit_notification_controller.dart';
 
 /// A widget to show multiple notifications on top of the provided [child].
 ///
-/// The [LitNotificationController] will be used to add [IconSnackbar]s to the
+/// The [LitNotificationController] will be used to add [LitIconSnackbar]s to the
 /// current view. Once the snackbar has reached it's maximum display duration,
 /// the snackbar will be disposed resulting in
 class LitNotificationContainer extends StatefulWidget {
@@ -128,7 +128,7 @@ class _NotificationItem extends StatefulWidget {
 
 class __NotificationItemState extends State<_NotificationItem>
     with TickerProviderStateMixin {
-  LitSnackbarController? _snackbarController;
+  late LitSnackbarController _snackbarController;
 
   /// Removes the notification data object from the list.
   void _remove(void value) {
@@ -143,7 +143,7 @@ class __NotificationItemState extends State<_NotificationItem>
     // Try to play the snackbar animation without reverse animating at the end.
     try {
       // And remove the data notification data object from the list.
-      _snackbarController!.showSnackBar(reverseAnimation: false).then(_remove);
+      _snackbarController.showSnackBar(reverseAnimation: false).then(_remove);
     } catch (e) {
       print(e);
     }
@@ -151,14 +151,14 @@ class __NotificationItemState extends State<_NotificationItem>
 
   @override
   void dispose() {
-    _snackbarController!.dispose();
+    _snackbarController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return IconSnackbar(
-      litSnackBarController: _snackbarController,
+    return LitIconSnackbar(
+      snackBarController: _snackbarController,
       text: widget.notificationData.description,
       iconData: widget.notificationData.icon,
     );

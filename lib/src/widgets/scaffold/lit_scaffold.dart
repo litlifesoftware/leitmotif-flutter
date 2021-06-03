@@ -28,9 +28,9 @@ class LitScaffold extends StatefulWidget {
   ///
   /// You can you one of the following [LitSnackbar]s:
   ///
-  ///  * [IconSnackbar], which displays an [Icon] alongside the provided
+  ///  * [LitIconSnackbar], which displays an [Icon] alongside the provided
   ///    messages.
-  ///  * [SlidingSnackbar], which displays the provided child [Widget].
+  ///  * [LitBaseSnackbar], which displays the provided child [Widget].
   final LitSnackbar? snackBar;
   final CustomActionButton? actionButton;
   final CollapsibleCard? collapsibleCard;
