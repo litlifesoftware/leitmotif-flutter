@@ -40,7 +40,7 @@ abstract class LitSnackbar extends Widget {
     const BoxShadow(
       blurRadius: 8.0,
       color: const Color(0x42000000),
-      offset: Offset(-3.0, 3.0),
+      offset: const Offset(-3.0, 3.0),
       spreadRadius: -1.0,
     ),
   ];
