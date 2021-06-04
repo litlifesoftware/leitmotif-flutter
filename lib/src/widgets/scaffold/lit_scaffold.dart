@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'package:lit_ui_kit/src/widgets/settings_panel/lit_settings_panel_background_overlay.dart';
 
-/// [Widget] used to overlay multiple functinal [Widget]s to ensure no unintended
-/// overlapping will occur.
+/// [Widget] used to overlay multiple functinal [Widget]s to ensure no
+/// unintended overlapping will occur.
 ///
 /// The default [Scaffold] will be used as foundation  which will be extended by
 /// the custom widgets. By passing on the arguments, the corresponding [Widget]s
@@ -12,8 +12,8 @@ import 'package:lit_ui_kit/src/widgets/settings_panel/lit_settings_panel_backgro
 /// The layer will be dependend on the [Widget]'s usecase. E.g. a [LitSnackbar]
 /// will always be displayed on top of a [CustomAppBar].
 ///
-/// The [body] is adjusted to fit the [CustomAppBar] using a top padding, if it is
-/// provided and it if is not the [LitBlurredAppBar].
+/// The [body] is adjusted to fit the [CustomAppBar] using a top padding, if it
+/// is provided and it if is not the [LitBlurredAppBar].
 class LitScaffold extends StatefulWidget {
   /// The [Color] of the background.
   final Color backgroundColor;
@@ -24,14 +24,19 @@ class LitScaffold extends StatefulWidget {
   /// The [CustomAppBar] displays additional information.
   final CustomAppBar? appBar;
 
-  /// The [LitSnackbar] displaying changes triggered by the user.
+  /// The [LitSnackbar]s are displaying changes triggered by the user. The
+  /// snackbars are stacked on top of each other. To avoid stacked snackbars,
+  /// you could use the [LitNotificationContainer].
   ///
   /// You can you one of the following [LitSnackbar]s:
   ///
-  ///  * [LitIconSnackbar], which displays an [Icon] alongside the provided
-  ///    messages.
-  ///  * [LitBaseSnackbar], which displays the provided child [Widget].
-  final LitSnackbar? snackBar;
+  ///  * [LitIconSnackbar] to display an icon alongside a text.
+  ///  * [LitBaseSnackbar] to display a custom widget.
+  ///  * [LitTransparentIconSnackbar] to display an icon alongside a text on a
+  ///    transparent background
+  ///  * [LitTransparentSnackbar] to display a custom widget on a transparent
+  ///    background.
+  final List<LitSnackbar> snackbars;
   final CustomActionButton? actionButton;
   final CollapsibleCard? collapsibleCard;
   final LitSettingsPanel? settingsPanel;
@@ -43,7 +48,7 @@ class LitScaffold extends StatefulWidget {
     Key? key,
     this.backgroundColor = Colors.white,
     required this.body,
-    this.snackBar,
+    this.snackbars = const [],
     this.appBar,
     this.actionButton,
     this.collapsibleCard,
@@ -60,9 +65,11 @@ class _LitScaffoldState extends State<LitScaffold>
   @override
   void initState() {
     super.initState();
-    if (widget.snackBar != null) {
-      widget.snackBar!.controller!.init(this);
+
+    for (LitSnackbar bar in widget.snackbars) {
+      bar.controller!.init(this);
     }
+
     if (widget.collapsibleCard != null) {
       widget.collapsibleCard!.controller.init(this);
     }
@@ -74,8 +81,8 @@ class _LitScaffoldState extends State<LitScaffold>
 
   @override
   void dispose() {
-    if (widget.snackBar != null) {
-      widget.snackBar!.controller!.dispose();
+    for (LitSnackbar bar in widget.snackbars) {
+      bar.controller!.dispose();
     }
 
     if (widget.collapsibleCard != null) {
@@ -101,20 +108,22 @@ class _LitScaffoldState extends State<LitScaffold>
                   }
                 },
                 child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: Stack(
-                      children: [
-                        _body,
-                        LitSettingsPanelBackgroundOverlay(
-                            controller: widget.settingsPanel!.controller)
-                      ],
-                    )),
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: [
+                      _body,
+                      LitSettingsPanelBackgroundOverlay(
+                        controller: widget.settingsPanel!.controller,
+                      )
+                    ],
+                  ),
+                ),
               )
             : _body,
         widget.appBar ?? SizedBox(),
         widget.collapsibleCard ?? SizedBox(),
-        widget.snackBar ?? SizedBox(),
+        _SnackbarBuilder(bars: widget.snackbars),
         widget.actionButton ?? SizedBox(),
         widget.settingsPanel ?? SizedBox(),
       ],
@@ -123,6 +132,37 @@ class _LitScaffoldState extends State<LitScaffold>
       backgroundColor: widget.backgroundColor,
       body: widget.wrapInSafeArea ? SafeArea(child: _stack) : _stack,
     );
+  }
+}
+
+/// A builder mapping the provided [LitSnackbar] widgets onto a [Stack].
+class _SnackbarBuilder extends StatefulWidget {
+  final List<LitSnackbar> bars;
+  const _SnackbarBuilder({
+    Key? key,
+    required this.bars,
+  }) : super(key: key);
+
+  @override
+  __SnackbarBuilderState createState() => __SnackbarBuilderState();
+}
+
+class __SnackbarBuilderState extends State<_SnackbarBuilder> {
+  List<Widget> get _snackbars {
+    final List<Widget> children = [];
+    for (LitSnackbar bar in widget.bars) {
+      children.add(bar);
+    }
+    return children;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Builder(builder: (context) {
+      return Stack(
+        children: _snackbars,
+      );
+    });
   }
 }
 

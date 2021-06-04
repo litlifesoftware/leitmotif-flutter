@@ -11,13 +11,18 @@ class LitUIKitHomescreen extends StatefulWidget {
 
 class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
   late LitSettingsPanelController settingsPanelController;
-  late LitSnackbarController customSnackBarController;
+  late LitSnackbarController _solidSnackbarController;
+  late LitSnackbarController _transparentSnackbarController;
   late LitNotificationController _notificationController;
   late bool darkMode;
   DateTime? dayOfBirth;
 
-  void showSnackbar() {
-    customSnackBarController.showSnackBar();
+  void showSolidSnackbar() {
+    _solidSnackbarController.showSnackBar();
+  }
+
+  void showTransparentSnackbar() {
+    _transparentSnackbarController.showSnackBar();
   }
 
   Color get buttonTextColor {
@@ -70,7 +75,8 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
   void initState() {
     super.initState();
     settingsPanelController = LitSettingsPanelController();
-    customSnackBarController = LitSnackbarController();
+    _solidSnackbarController = LitSnackbarController();
+    _transparentSnackbarController = LitSnackbarController();
     _notificationController = LitNotificationController();
     darkMode = false;
     dayOfBirth = null;
@@ -90,10 +96,18 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
           ),
           elevated: darkMode,
         ),
-        snackBar: LitIconSnackbar(
-            snackBarController: customSnackBarController,
-            text: "Snack Bar!",
-            iconData: LitIcons.info),
+        snackbars: [
+          LitIconSnackbar(
+            snackBarController: _solidSnackbarController,
+            text: "Snackbar!",
+            iconData: LitIcons.info,
+          ),
+          LitTransparentIconSnackbar(
+            snackBarController: _transparentSnackbarController,
+            text: "Transparent Snackbar!",
+            iconData: LitIcons.info,
+          ),
+        ],
         settingsPanel: LitSettingsPanel(
           controller: settingsPanelController,
           title: "Settings",
@@ -251,12 +265,24 @@ class _LitUIKitHomescreenState extends State<LitUIKitHomescreen> {
                       child: LitRoundedElevatedButton(
                           color: buttonColor,
                           child: ClippedText(
-                            "Show Custom SnackBar!",
+                            "Show Solid SnackBar!",
                             style: LitTextStyles.sansSerif.copyWith(
                               color: buttonTextColor,
                             ),
                           ),
-                          onPressed: showSnackbar),
+                          onPressed: showSolidSnackbar),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 32.0),
+                      child: LitRoundedElevatedButton(
+                          color: buttonColor,
+                          child: ClippedText(
+                            "Show Transparent SnackBar!",
+                            style: LitTextStyles.sansSerif.copyWith(
+                              color: buttonTextColor,
+                            ),
+                          ),
+                          onPressed: showTransparentSnackbar),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 32.0),

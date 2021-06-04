@@ -156,11 +156,13 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
   @override
   Widget build(BuildContext context) {
     return LitScaffold(
-      snackBar: LitIconSnackbar(
-        iconData: LitIcons.info,
-        snackBarController: _snackbarController,
-        text: widget.invalidAgeText,
-      ),
+      snackbars: [
+        LitIconSnackbar(
+          iconData: LitIcons.info,
+          snackBarController: _snackbarController,
+          text: widget.invalidAgeText,
+        ),
+      ],
       body: Container(
         height: _deviceSize.height,
         width: _deviceSize.width,
