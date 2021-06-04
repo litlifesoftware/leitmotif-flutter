@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
-import 'package:lit_ui_kit/src/widgets/input/lit_date_picker.dart';
 
 class LitDatePickerDialog extends StatefulWidget {
   final void Function() onBackCallback;
@@ -63,12 +61,25 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog>
   @override
   void initState() {
     super.initState();
-    _calendarController = CalendarController(templateDate: widget.initialDate);
-    _selectAnimationController =
-        AnimationController(duration: Duration(milliseconds: 140), vsync: this);
 
-    _exclusiveDateSnackBarController = LitSnackbarController()..init(this);
-    _futureDateSnackbarController = LitSnackbarController()..init(this);
+    _calendarController = CalendarController(
+      templateDate: widget.initialDate,
+    );
+
+    _selectAnimationController = AnimationController(
+      duration: Duration(milliseconds: 140),
+      vsync: this,
+    );
+
+    _exclusiveDateSnackBarController = LitSnackbarController()
+      ..init(
+        this,
+      );
+
+    _futureDateSnackbarController = LitSnackbarController()
+      ..init(
+        this,
+      );
   }
 
   @override
@@ -148,7 +159,7 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog>
                                   horizontal: 16.0,
                                 ),
                                 child: Text(
-                                  "${DateFormat.yMMMMd((Localizations.localeOf(context).languageCode)).format(selectedDate!)}",
+                                  selectedDate!.formatAsLocalizedDate(context),
                                   style: LitTextStyles.sansSerif.copyWith(
                                       fontSize: alternativeFontSize(
                                         MediaQuery.of(context).size,
@@ -170,16 +181,20 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog>
                 text: widget.excludedMonthErrorMessage,
                 snackBarController: _exclusiveDateSnackBarController,
                 alignment: Alignment.topRight,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8.0,
+                  horizontal: 16.0,
+                ),
               ),
               LitIconSnackbar(
                 iconData: LitIcons.info,
                 text: widget.futureDateErrorMessage,
                 snackBarController: _futureDateSnackbarController,
                 alignment: Alignment.topRight,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8.0,
+                  horizontal: 16.0,
+                ),
               ),
             ],
           ),

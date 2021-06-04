@@ -44,8 +44,8 @@ class _ApplicationLicensesScreenState extends State<ApplicationLicensesScreen>
 
   @override
   void dispose() {
-    super.dispose();
     animationController.dispose();
+    super.dispose();
   }
 
   @override

@@ -1,6 +1,8 @@
 ## Unreleased - 1.0.4
 
 - Remove `CustomInfoBar`, `DummyInfoBar` and `TransparentInfoBar`. To display feedback messages, please use the existing `LitSnackbar` widgets.
+- Replace the default `SlidingSnackbar` with the `LitBaseSnackbar`, which implements a solid background decoration.
+- Unify the `LitSnackbarController` member variable naming on all `LitSnackbar` widgets
 
 ## 1.0.3
 
