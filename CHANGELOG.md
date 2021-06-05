@@ -6,6 +6,10 @@
 - Add `LitTransparentIconSnackbar` to resemble the previous `LitIconSnackbar`'s styling.
 - Unify the `LitSnackbarController` member variable naming on all `LitSnackbar` widgets.
 - Add missing documentation on `LitSnackbar` widgets.
+- Extract the sans serif styles on `LitTextStyles` into seperate `LitSansSerifStyles` class.
+- Extract the serif styles on `LitTextStyles` into seperate `LitSerifStyles` class.
+- Add `upperCase` member on text widgets for easier text formatting on button labels.
+- Refactor `Example` app's homescreen to fit on the `main.dart` file.
 
 ## 1.0.3
 
