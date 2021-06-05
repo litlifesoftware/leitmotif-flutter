@@ -9,3 +9,4 @@ export 'src/widgets/snackbars/lit_icon_snackbar.dart';
 export 'src/widgets/snackbars/lit_base_snackbar.dart';
 export 'src/widgets/snackbars/lit_transparent_snackbar.dart';
 export 'src/widgets/snackbars/lit_transparent_icon_snackbar.dart';
+export 'src/widgets/snackbars/lit_icon_snackbar_content.dart';

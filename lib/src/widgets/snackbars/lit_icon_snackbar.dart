@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:lit_ui_kit/src/widgets/snackbars/lit_icon_snackbar_content.dart';
 
-/// A [LitSnackbar] displaying a leading [Icon].
+/// An animated [LitSnackbar] positioned using the provided [Alignment].
 ///
-/// It will return a [LitBaseSnackbar] whose [LitBaseSnackbar.child] will
-/// be set to a [Row] containing the provided [Icon] and an information text.
+/// A [LitSnackbar] implementation displaying a leading [Icon] next to an
+/// text.
 class LitIconSnackbar extends StatelessWidget implements LitSnackbar {
   final LitSnackbarController snackBarController;
   final String text;
@@ -28,61 +29,25 @@ class LitIconSnackbar extends StatelessWidget implements LitSnackbar {
     this.iconBackgroundColor = LitColors.mediumGrey,
     this.iconColor = Colors.white,
     this.alignment = Alignment.topRight,
-    this.padding = const EdgeInsets.symmetric(
-      vertical: 16.0,
-      horizontal: 16.0,
-    ),
-    this.width = 250,
+    this.padding = LitSnackbar.defaultPadding,
+    this.width = LitSnackbar.defaultWidth,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return LitBaseSnackbar(
-        snackBarController: snackBarController,
-        width: width,
-        height: 80.0,
-        alignment: alignment,
-        padding: padding,
-        child: LayoutBuilder(builder: (context, builder) {
-          return Row(
-            children: [
-              SizedBox(
-                width: (width) * 0.3,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: iconBackgroundColor,
-                        ),
-                        child: Icon(
-                          iconData,
-                          size: (width * 0.3) * 0.3,
-                          color: iconColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: (width) * 0.7,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: ClippedText(
-                    text,
-                    maxLines: 2,
-                    textAlign: TextAlign.left,
-                    style: textStyle,
-                  ),
-                ),
-              ),
-            ],
-          );
-        }));
+      snackBarController: snackBarController,
+      width: width,
+      height: LitSnackbar.defaultHeight,
+      alignment: alignment,
+      padding: padding,
+      child: LitIconSnackbarContent(
+        iconBackgroundColor: iconBackgroundColor,
+        iconColor: iconColor,
+        iconData: iconData,
+        textStyle: textStyle,
+        text: text,
+      ),
+    );
   }
 
   @override

@@ -34,52 +34,19 @@ class LitTransparentIconSnackbar extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return LitTransparentSnackbar(
-        snackBarController: snackBarController,
-        width: width,
-        height: height,
-        alignment: alignment,
-        padding: padding,
-        child: LayoutBuilder(builder: (context, builder) {
-          return Row(
-            children: [
-              SizedBox(
-                width: (width) * 0.3,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: iconBackgroundColor,
-                        ),
-                        child: Icon(
-                          iconData,
-                          size: (width * 0.3) * 0.3,
-                          color: iconColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: (width) * 0.7,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: ClippedText(
-                    text,
-                    maxLines: 2,
-                    textAlign: TextAlign.left,
-                    style: textStyle,
-                  ),
-                ),
-              ),
-            ],
-          );
-        }));
+      snackBarController: snackBarController,
+      width: width,
+      height: height,
+      alignment: alignment,
+      padding: padding,
+      child: LitIconSnackbarContent(
+        iconBackgroundColor: iconBackgroundColor,
+        iconColor: iconColor,
+        iconData: iconData,
+        textStyle: textStyle,
+        text: text,
+      ),
+    );
   }
 
   @override

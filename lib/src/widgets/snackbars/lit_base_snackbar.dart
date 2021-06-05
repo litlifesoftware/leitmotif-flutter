@@ -1,12 +1,9 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-/// An animated [LitSnackbar] positioned using the provided [Alignment]
-/// on the [LitScaffold].
+/// An animated [LitSnackbar] positioned using the provided [Alignment].
 ///
-/// Use this [LitSnackbar] to customize the styling of your snackbar and
-/// to display the provided child [Widget] inside the [LitSnackbar].
+/// The default [LitSnackbar] implementation.
 class LitBaseSnackbar extends StatefulWidget implements LitSnackbar {
   final LitSnackbarController snackBarController;
 
@@ -36,41 +33,20 @@ class LitBaseSnackbar extends StatefulWidget implements LitSnackbar {
 
   /// Creates a [LitBaseSnackbar].
   ///
-  /// Displaying the provided [child] widget.
+  /// The default [LitBaseSnackbar] will have a solid background displaying the
+  /// provided [child].
 
   const LitBaseSnackbar({
     Key? key,
     required this.snackBarController,
-    this.width = 200.0,
-    this.height = 80.0,
+    this.width = LitSnackbar.defaultWidth,
+    this.height = LitSnackbar.defaultHeight,
+    this.alignment = LitSnackbar.defaultAlignment,
+    this.padding = LitSnackbar.defaultPadding,
+    this.borderRadius = LitSnackbar.defaultBorderRadius,
+    this.backgroundGradient = LitSnackbar.defaultSolidGradientBackground,
+    this.boxShadow = LitSnackbar.defaultBoxShadow,
     required this.child,
-    this.alignment = Alignment.topRight,
-    this.padding = const EdgeInsets.symmetric(
-      vertical: 32.0,
-    ),
-    this.borderRadius = const BorderRadius.only(
-      topLeft: Radius.circular(15.0),
-      bottomLeft: Radius.circular(15.0),
-      bottomRight: Radius.circular(15.0),
-      topRight: Radius.circular(15.0),
-    ),
-    this.backgroundGradient = const LinearGradient(
-      colors: const [
-        Color(0xFFFFFFFF),
-        Color(0xFFF8F8F8),
-      ],
-      begin: Alignment.topRight,
-      end: Alignment.bottomLeft,
-      stops: const [0.2, 0.7],
-    ),
-    this.boxShadow = const [
-      const BoxShadow(
-        blurRadius: 8.0,
-        color: Colors.black26,
-        offset: Offset(-3.0, 3.0),
-        spreadRadius: -1.0,
-      )
-    ],
   }) : super(key: key);
 
   @override
@@ -101,6 +77,11 @@ class _LitBaseSnackbarState extends State<LitBaseSnackbar> {
     );
   }
 
+  /// Dismisses the snackbar.
+  void _dismiss() {
+    widget.snackBarController.dismissSnackBar();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -114,17 +95,9 @@ class _LitBaseSnackbarState extends State<LitBaseSnackbar> {
               transform: _transformMatrix,
               child: InkWell(
                 borderRadius: widget.borderRadius,
-                onTap: () {
-                  widget.snackBarController.dismissSnackBar();
-                },
+                onTap: _dismiss,
                 child: SizedBox(
-                  /// Specify the height of the snack bar.
                   height: widget.height,
-
-                  /// Set the width of the snackbar to the provided
-                  /// width. It must be equal to the transform
-                  /// value in order to be fully transformed back
-                  /// and forth.
                   width: widget.width,
                   child: Container(
                     alignment: Alignment.centerLeft,
