@@ -13,6 +13,7 @@ class ScaledDownText extends StatelessWidget {
   final String value;
   final TextStyle style;
   final TextAlign textAlign;
+  final bool uppercase;
 
   /// Creates a [ScaledDownText] widget.
   ///
@@ -23,13 +24,14 @@ class ScaledDownText extends StatelessWidget {
     Key? key,
     this.style = LitTextStyles.sansSerif,
     this.textAlign = TextAlign.left,
+    this.uppercase = false,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return FittedBox(
       fit: BoxFit.scaleDown,
       child: Text(
-        value,
+        uppercase ? value.toUpperCase() : value,
         style: style,
         textAlign: textAlign,
 

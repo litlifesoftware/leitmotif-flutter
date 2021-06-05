@@ -15,6 +15,7 @@ class ClippedText extends StatelessWidget {
   final TextOverflow overflow;
   final int? maxLines;
   final bool? softWrap;
+  final bool upperCase;
   const ClippedText(
     this.value, {
     Key? key,
@@ -23,12 +24,13 @@ class ClippedText extends StatelessWidget {
     this.overflow = TextOverflow.ellipsis,
     this.maxLines,
     this.softWrap,
+    this.upperCase = false,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final DefaultTextStyle defaultTextStyle = DefaultTextStyle.of(context);
     return Text(
-      value,
+      upperCase ? value.toUpperCase() : value,
       style: style,
       textAlign: textAlign,
       overflow: overflow,
