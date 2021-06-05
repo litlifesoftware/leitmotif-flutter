@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/text.dart';
 
+/// A widget displaying an icon alongside text.
+///
+/// It's main purpose is to be used on the icon snackbars.
 class LitIconSnackbarContent extends StatelessWidget {
   final Color iconBackgroundColor;
   final Color iconColor;
@@ -10,6 +13,10 @@ class LitIconSnackbarContent extends StatelessWidget {
   final TextStyle textStyle;
   final String text;
   final EdgeInsets iconMargin;
+
+  /// Creates a [LitIconSnackbarContent].
+  ///
+  /// Provide the required icon snackbar's member values.
   const LitIconSnackbarContent({
     Key? key,
     required this.iconBackgroundColor,
@@ -46,6 +53,7 @@ class LitIconSnackbarContent extends StatelessWidget {
   }
 }
 
+/// A widget to display the snackbar's icon using the appropriate spacing.
 class _IconContainer extends StatelessWidget {
   final BoxConstraints constraints;
   final double relativeWidth;
@@ -53,6 +61,8 @@ class _IconContainer extends StatelessWidget {
   final EdgeInsets iconMargin;
   final Color iconBackgroundColor;
   final Color iconColor;
+
+  /// Creates a [_IconContainer].
   const _IconContainer({
     Key? key,
     required this.constraints,
@@ -88,6 +98,7 @@ class _IconContainer extends StatelessWidget {
   }
 }
 
+/// A widget to display the snackbar's text using the appropriate spacing.
 class _TextContainer extends StatelessWidget {
   final BoxConstraints constraints;
   final double relativeWidth;
@@ -95,6 +106,7 @@ class _TextContainer extends StatelessWidget {
   final TextStyle textStyle;
   final EdgeInsets iconMargin;
 
+  /// Creates a [_TextContainer].
   const _TextContainer({
     Key? key,
     required this.constraints,

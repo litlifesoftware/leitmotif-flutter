@@ -18,6 +18,12 @@ class LitTransparentIconSnackbar extends StatelessWidget
   final double height;
   final double width;
 
+  /// Creates a [LitTransparentIconSnackbar].
+  ///
+  /// Provide a [controller] and a [iconData] object.
+  ///
+  /// The snackbar's styling are set to the regular [LitSnackbar]'s default
+  /// values.
   const LitTransparentIconSnackbar({
     Key? key,
     required this.snackBarController,

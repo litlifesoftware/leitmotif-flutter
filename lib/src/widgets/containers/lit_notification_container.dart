@@ -6,7 +6,7 @@ import 'package:lit_ui_kit/src/controller/lit_notification_controller.dart';
 ///
 /// The [LitNotificationController] will be used to add [LitIconSnackbar]s to the
 /// current view. Once the snackbar has reached it's maximum display duration,
-/// the snackbar will be disposed resulting in
+/// the snackbar will be disposed.
 class LitNotificationContainer extends StatefulWidget {
   final Widget child;
   final LitNotificationController controller;
