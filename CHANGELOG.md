@@ -1,16 +1,16 @@
-## Unreleased - 1.0.4
+## 1.0.4
 
-- Remove `CustomInfoBar`, `DummyInfoBar` and `TransparentInfoBar`. To display feedback messages, please use the existing `LitSnackbar` widgets.
+- Remove `CustomInfoBar`, `DummyInfoBar` and `TransparentInfoBar`. Please use the existing `LitSnackbar` widgets to display feedback messages.
 - Replace the default `SlidingSnackbar` with the `LitBaseSnackbar`, which implements a solid background decoration.
-- Add `LitTransparentSnackbar` to resemble the previous `SlidingSnackbar`.
-- Add `LitTransparentIconSnackbar` to resemble the previous `LitIconSnackbar`'s styling.
+- Add `LitTransparentSnackbar` to resemble the previous `SlidingSnackbar`'s decoration.
+- Add `LitTransparentIconSnackbar` to resemble the previous `LitIconSnackbar`'s decoration.
 - Unify the `LitSnackbarController` member variable naming on all `LitSnackbar` widgets.
 - Add missing documentation on `LitSnackbar` widgets.
 - Extract the sans serif styles on `LitTextStyles` into seperate `LitSansSerifStyles` class.
 - Extract the serif styles on `LitTextStyles` into seperate `LitSerifStyles` class.
 - Add `upperCase` member on text widgets for easier text formatting on button labels.
 - Refactor `Example` app's homescreen to fit on the `main.dart` file.
-- Replace image assets with updated logo design and UI changes.
+- Update Readme's image assets using new logo design and screenshots.
 
 ## 1.0.3
 

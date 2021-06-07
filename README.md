@@ -1,4 +1,4 @@
-# ![alt text](assets/images/LitUIKit_Banner_2021.jpg "Lit UI Kit")
+# ![LitUIKit](assets/images/LitUIKit_Banner_2021.jpg "Lit UI Kit")
 
 LitUIKit is a collection of Flutter widgets to create unique user interfaces. It complements the default Material Widgets shipped with Flutter. Whose Widgets include custom implementation of Snackbars,
 AppBars and a settings panel. Utility Screens (e.g. required to verify the user's age and to show the
