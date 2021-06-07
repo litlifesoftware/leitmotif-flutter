@@ -1,7 +1,7 @@
-# ![alt text](assets/images/Lit_UI_Kit_Logo_512px-01.png "Lit UI Kit")
+# ![alt text](assets/images/LitUIKit_Banner_2021.jpg "Lit UI Kit")
 
 LitUIKit is a collection of Flutter widgets to create unique user interfaces. It complements the default Material Widgets shipped with Flutter. Whose Widgets include custom implementation of Snackbars,
-AppBars and a settings panel. Utility Screens (e.g. require to verify the user's age and to show the
+AppBars and a settings panel. Utility Screens (e.g. required to verify the user's age and to show the
 application's licenses) are also included.
 
 Visit our [website](https://litlifesoftware.github.io) for more details.
@@ -20,9 +20,9 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Screenshots
 
-| Example App                               | Settings Panel                            | Snackbar                                  | Remaining Lifetime                                |
-| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- | ------------------------------------------------- |
-| ![1](assets/images/Example_App_1.jpg "1") | ![2](assets/images/Example_App_2.jpg "2") | ![3](assets/images/Example_App_3.jpg "3") | ![4](assets/images/RL_1.jpg "Remaining Lifetime") |
+| Example HomeScreen                                                    | LitSettingsPanel                                                      | LitIconSnackbar                                                       | LitOnboardingScreen                                                   |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| ![1](assets/images/LitUIKit_Screenshot_1_20210606.jpg "Screenshot 1") | ![2](assets/images/LitUIKit_Screenshot_2_20210606.jpg "Screenshot 2") | ![3](assets/images/LitUIKit_Screenshot_3_20210606.jpg "Screenshot 3") | ![4](assets/images/LitUIKit_Screenshot_4_20210606.jpg "Screenshot 4") |
 
 ## Icons
 
@@ -46,7 +46,7 @@ features and functionality:
 
 ## Credits
 
-LitUIKit is made possible thanks to the Flutter Project. It uses the serif font
+LitUIKit is made possible thanks to the Flutter Project. It utilizes the serif font
 [Merriweather](https://fonts.google.com/specimen/Merriweather?query=merri&preview.text=LitLifeSoftware%20was%20here...&preview.text_type=custom) (designed by Sorkin Type), the sans serif font [Montserrat](https://fonts.google.com/specimen/Montserrat?query=montserrat&preview.text=LitLifeSoftware%20was%20here...&preview.text_type=custom) (designed by Julieta Ulanovsky, Sol Matas, Juan Pablo del Peral, Jacques Le Bailly) and the monospace font [VT323](https://fonts.google.com/specimen/VT323?query=VT323&preview.text=LitLifeSoftware%20was%20here...&preview.text_type=custom) (designed by Peter Hull).
 
 ## License

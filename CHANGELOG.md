@@ -10,6 +10,7 @@
 - Extract the serif styles on `LitTextStyles` into seperate `LitSerifStyles` class.
 - Add `upperCase` member on text widgets for easier text formatting on button labels.
 - Refactor `Example` app's homescreen to fit on the `main.dart` file.
+- Replace image assets with updated logo design and UI changes.
 
 ## 1.0.3
 
