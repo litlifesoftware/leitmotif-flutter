@@ -1,41 +1,78 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
+import 'package:lit_ui_kit/styles.dart';
+
 /// An icon displaying a lock.
 ///
 /// The icon is rendered using a [CustomPainter] to achieve a gradient background
 /// effect.
-class LitLockIcon extends StatelessWidget {
+class LitLockIcon extends StatefulWidget {
+  /// The icon size.
   final double size;
+
+  /// The icon color.
   final Color color;
+
+  /// The animation duration.
+  final Duration animationDuration;
 
   /// Creates a [LitLockIcon].
   ///
   /// Specify the [size] and [color] property to customize its appearance.
+  ///
+  /// * [size] is the icons's size.
+  /// * [color] is the icon's main color. The gradient's accent colors are
+  ///   using this color value generated.
+  /// * [animationDuration] is the duration the animation should have.
   const LitLockIcon({
     Key? key,
-
-    /// The total size of the [LitLockIcon] painted on the screen.
     this.size = 48.0,
-
-    /// The [LitLockIcon]'s [Color] on which the gradient shaders are built on.
-    this.color = const Color(0xFF827D7D),
+    this.color = const Color(0xFF444444),
+    this.animationDuration = const Duration(milliseconds: 400),
   }) : super(key: key);
+
+  @override
+  _LitLockIconState createState() => _LitLockIconState();
+}
+
+class _LitLockIconState extends State<LitLockIcon>
+    with TickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: widget.animationDuration,
+    );
+    _animationController.forward();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: _LockPainter(
-        lockSize: size,
-        color: color,
-      ),
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, _) {
+        return CustomPaint(
+          painter: _LockPainter(
+            animationController: _animationController,
+            lockSize: widget.size,
+            color: widget.color,
+          ),
+        );
+      },
     );
   }
 }
 
 class _LockPainter extends CustomPainter {
+  final AnimationController animationController;
   final double lockSize;
   final Color color;
   const _LockPainter({
+    required this.animationController,
     required this.lockSize,
     required this.color,
   });
@@ -54,7 +91,7 @@ class _LockPainter extends CustomPainter {
     final Color? light = Color.lerp(
       dark,
       white,
-      0.65,
+      0.75,
     );
 
     Offset canvasCenter = Offset(
@@ -62,7 +99,7 @@ class _LockPainter extends CustomPainter {
       (size.height / 2),
     );
 
-    Paint solidLight = Paint()..color = white;
+    Paint solidGrey = Paint()..color = LitColors.lightGrey;
     Paint strokeDark = Paint()
       ..shader = ui.Gradient.linear(
         Offset(
@@ -103,7 +140,9 @@ class _LockPainter extends CustomPainter {
     );
     Offset shackleCenter = Offset(
       canvasCenter.dx,
-      enclosureCenter.dx - (enclosureHeight * 0.083),
+      enclosureCenter.dx -
+          (enclosureHeight * 0.12) +
+          ((1.0 - animationController.value) * 16.0),
     );
     Offset bladeCenter = Offset(
       canvasCenter.dx,
@@ -152,8 +191,8 @@ class _LockPainter extends CustomPainter {
     canvas.drawRRect(shackle, strokeDark);
     canvas.drawRRect(enclosure, enclosurePaint);
 
-    canvas.drawRRect(wardBlade, solidLight);
-    canvas.drawRRect(wardBit, solidLight);
+    canvas.drawRRect(wardBlade, solidGrey);
+    canvas.drawRRect(wardBit, solidGrey);
   }
 
   @override
