@@ -11,13 +11,23 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 /// navigate to the details view by tapping on one of the list items.
 class ApplicationLicensesScreen extends StatefulWidget {
   final bool darkMode;
+  final String title;
+  final Duration animationDuration;
 
   /// Creates an [ApplicationLicensesScreen].
   ///
-  /// Define the [darkMode] value for a different color scheme.
+  /// * [darkMode] states whether to apply the dark mode specific styling.
+  ///
+  /// * [title] is the title displayed on the app bar.
+  ///
+  /// * [animationDuration] is the duration the initial animation should have.
   const ApplicationLicensesScreen({
     Key? key,
     this.darkMode = false,
+    this.title = "Open Source Licenses",
+    this.animationDuration = const Duration(
+      milliseconds: 450,
+    ),
   }) : super(key: key);
 
   @override
@@ -30,15 +40,56 @@ class _ApplicationLicensesScreenState extends State<ApplicationLicensesScreen>
   late AnimationController animationController;
   late ApplicationLicensesController licensesController;
 
+  /// Calculates a tween [Animation] based on the iterated listview index and
+  /// the total list length possible (defined by the [PackageLicenses]).
+  Animation _calcTweenAnimation(int index, PackageLicenses licenses) {
+    return Tween<double>(
+            begin: 1 - (index / licenses.packages.length), end: 1.0)
+        .animate(animationController);
+  }
+
+  /// Returns a [Matrix4], which a tween animation has been applied on.
+  Matrix4 _transform(int index, PackageLicenses licenses) {
+    return Matrix4.translationValues(
+        -300 + (300 * _calcTweenAnimation(index, licenses).value as double),
+        0,
+        0);
+  }
+
+  void _onPackageListItemPressed(
+      AsyncSnapshot<PackageLicenses> packageLicencesSnapshot, int index) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) {
+          final List<int> bindings =
+              licensesController.getPackageLicenseContracts(
+                  packageLicencesSnapshot.data!.packageLicenseJunctions,
+                  packageLicencesSnapshot.data!.packages.elementAt(index))!;
+
+          return ApplicationLicenseDetailsScreen(
+            darkMode: widget.darkMode,
+            packageName:
+                packageLicencesSnapshot.data!.packages.elementAt(index),
+            licenseEntries: licensesController.getLicenseEntries(
+                bindings, packageLicencesSnapshot.data!.licenses),
+          );
+        },
+      ),
+    );
+  }
+
+  String _getPackageListItemLabel(
+      AsyncSnapshot<PackageLicenses> packageLicencesSnapshot, int index) {
+    return "${packageLicencesSnapshot.data!.packages.elementAt(index)}";
+  }
+
   @override
   void initState() {
     super.initState();
     licensesController = ApplicationLicensesController();
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(
-        milliseconds: 1000,
-      ),
+      duration: widget.animationDuration,
     );
   }
 
@@ -53,7 +104,7 @@ class _ApplicationLicensesScreenState extends State<ApplicationLicensesScreen>
     return LitScaffold(
       backgroundColor: widget.darkMode ? LitColors.darkBlue : Colors.white,
       appBar: LitBlurredAppBar(
-        title: "Open Source Licenses",
+        title: widget.title,
         darkMode: widget.darkMode,
       ),
       body: FutureBuilder(
@@ -69,97 +120,32 @@ class _ApplicationLicensesScreenState extends State<ApplicationLicensesScreen>
                     return ListView.builder(
                       physics: BouncingScrollPhysics(),
                       padding: EdgeInsets.only(
+                        // Regarding the blurred app bar height, which has no
+                        // safe area applied on the scaffold.
                         top: LitBlurredAppBar.height + 16.0,
                         bottom: 16.0,
                       ),
                       itemCount: packageLicencesSnapshot.data!.packages.length,
                       itemBuilder: (context, index) {
-                        Animation tween = Tween<double>(
-                                begin: 1 -
-                                    (index /
-                                        packageLicencesSnapshot
-                                            .data!.packages.length),
-                                end: 1.0)
-                            .animate(animationController);
                         return Transform(
-                          transform: Matrix4.translationValues(
-                              -300 + (300 * tween.value as double), 0, 0),
+                          transform: _transform(
+                            index,
+                            packageLicencesSnapshot.data!,
+                          ),
                           child: AnimatedOpacity(
-                            opacity: (tween.value),
+                            opacity: (_calcTweenAnimation(
+                                    index, packageLicencesSnapshot.data!)
+                                .value),
                             duration: animationController.duration!,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 8.0,
-                                horizontal: 16.0,
+                            child: _PackageListItem(
+                              darkMode: widget.darkMode,
+                              label: _getPackageListItemLabel(
+                                packageLicencesSnapshot,
+                                index,
                               ),
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(
-                                  12.0,
-                                ),
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        final List<int> bindings =
-                                            licensesController
-                                                .getPackageLicenseContracts(
-                                                    packageLicencesSnapshot
-                                                        .data!
-                                                        .packageLicenseJunctions,
-                                                    packageLicencesSnapshot
-                                                        .data!.packages
-                                                        .elementAt(index))!;
-
-                                        return ApplicationLicenseDetailsScreen(
-                                          darkMode: widget.darkMode,
-                                          packageName: packageLicencesSnapshot
-                                              .data!.packages
-                                              .elementAt(index),
-                                          licenseEntries: licensesController
-                                              .getLicenseEntries(
-                                                  bindings,
-                                                  packageLicencesSnapshot
-                                                      .data!.licenses),
-                                        );
-                                      },
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  height: 52.0,
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                    color: widget.darkMode
-                                        ? LitColors.mediumGrey
-                                        : Colors.white,
-                                    borderRadius: BorderRadius.circular(
-                                      12.0,
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: widget.darkMode
-                                            ? Colors.black38
-                                            : Colors.black38,
-                                        blurRadius:
-                                            widget.darkMode ? 10.0 : 15.0,
-                                        offset: Offset(-2.0, -2.0),
-                                        spreadRadius: 2.0,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Center(
-                                        child: Text(
-                                      "${packageLicencesSnapshot.data!.packages.elementAt(index)}",
-                                      style: LitTextStyles.sansSerif.copyWith(
-                                        color: widget.darkMode
-                                            ? Colors.white
-                                            : LitColors.mediumGrey,
-                                      ),
-                                    )),
-                                  ),
-                                ),
+                              onPressed: () => _onPackageListItemPressed(
+                                packageLicencesSnapshot,
+                                index,
                               ),
                             ),
                           ),
@@ -167,20 +153,99 @@ class _ApplicationLicensesScreenState extends State<ApplicationLicensesScreen>
                       },
                     );
                   })
-              : Center(
-                  child: SizedBox(
-                    height: 50.0,
-                    width: 50.0,
-                    child: JugglingLoadingIndicator(
-                      indicatorColor:
-                          widget.darkMode ? Colors.white : LitColors.mediumGrey,
-                      backgroundColor:
-                          widget.darkMode ? LitColors.mediumGrey : Colors.white,
-                      shadowOpacity: widget.darkMode ? 0.1 : 0.25,
-                    ),
-                  ),
+              : _LoadingIndicator(
+                  darkMode: widget.darkMode,
                 );
         },
+      ),
+    );
+  }
+}
+
+/// A package list item widget, whose styling is dependend on the provided
+/// [darkMode] value.
+class _PackageListItem extends StatefulWidget {
+  final String label;
+  final bool darkMode;
+  final void Function() onPressed;
+
+  /// Creates a [_PackageListItem].
+  const _PackageListItem({
+    Key? key,
+    required this.label,
+    required this.darkMode,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  __PackageListItemState createState() => __PackageListItemState();
+}
+
+class __PackageListItemState extends State<_PackageListItem> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 8.0,
+        horizontal: 16.0,
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(
+          12.0,
+        ),
+        onTap: widget.onPressed,
+        child: Container(
+          height: 52.0,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: widget.darkMode ? LitColors.mediumGrey : Colors.white,
+            borderRadius: BorderRadius.circular(
+              12.0,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: widget.darkMode ? Colors.black38 : Colors.black38,
+                blurRadius: widget.darkMode ? 10.0 : 15.0,
+                offset: Offset(-2.0, -2.0),
+                spreadRadius: 2.0,
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Center(
+                child: Text(
+              widget.label,
+              style: LitTextStyles.sansSerif.copyWith(
+                color: widget.darkMode ? Colors.white : LitColors.mediumGrey,
+              ),
+            )),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A loading indicator, whose styling is dependend on the [darkMode] value.
+class _LoadingIndicator extends StatelessWidget {
+  final bool darkMode;
+  const _LoadingIndicator({
+    Key? key,
+    required this.darkMode,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        height: 50.0,
+        width: 50.0,
+        child: JugglingLoadingIndicator(
+          indicatorColor: darkMode ? Colors.white : LitColors.mediumGrey,
+          backgroundColor: darkMode ? LitColors.mediumGrey : Colors.white,
+          shadowOpacity: darkMode ? 0.1 : 0.25,
+        ),
       ),
     );
   }

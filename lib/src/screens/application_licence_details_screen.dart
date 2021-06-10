@@ -36,14 +36,16 @@ class _ApplicationLicenseDetailsScreenState
   List<Text> _buildLicenseText(LicenseEntry entry) {
     List<Text> textList = [];
     for (LicenseParagraph paragraph in entry.paragraphs) {
-      textList.add(Text(
-        paragraph.text,
-        style: widget.licenseTextStyle ??
-            LitTextStyles.monospace.copyWith(
-              fontSize: 18.0,
-              color: widget.darkMode ? Colors.white : LitColors.mediumGrey,
-            ),
-      ));
+      textList.add(
+        Text(
+          paragraph.text,
+          style: widget.licenseTextStyle ??
+              LitTextStyles.monospace.copyWith(
+                fontSize: 18.0,
+                color: widget.darkMode ? Colors.white : LitColors.mediumGrey,
+              ),
+        ),
+      );
     }
     return textList;
   }
@@ -51,32 +53,34 @@ class _ApplicationLicenseDetailsScreenState
   @override
   Widget build(BuildContext context) {
     return LitScaffold(
-        backgroundColor: widget.darkMode ? LitColors.darkBlue : Colors.white,
-        appBar: LitBlurredAppBar(
-          darkMode: widget.darkMode,
-          title: "${widget.packageName}",
-          textStyle: LitTextStyles.sansSerif,
+      backgroundColor: widget.darkMode ? LitColors.darkBlue : Colors.white,
+      appBar: LitBlurredAppBar(
+        darkMode: widget.darkMode,
+        title: "${widget.packageName}",
+        textStyle: LitTextStyles.sansSerif,
+      ),
+      body: ListView.builder(
+        padding: EdgeInsets.only(
+          /// Regarding that the scaffold has no safe area applied due to
+          /// the blurred app bar
+          top: LitBlurredAppBar.height + 16.0,
+          bottom: 16.0,
+          right: 32.0,
+          left: 32.0,
         ),
-        body: ListView.builder(
-            padding: EdgeInsets.only(
-              top: LitBlurredAppBar.height + 16.0,
-              bottom: 16.0,
-              right: 32.0,
-              left: 32.0,
+        physics: BouncingScrollPhysics(),
+        itemCount: widget.licenseEntries.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 8.0,
             ),
-            physics: BouncingScrollPhysics(),
-            itemCount: widget.licenseEntries.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8.0,
-                  ),
-                  child: Column(
-                    children: _buildLicenseText(widget.licenseEntries[index]),
-                  ));
-            })
-        // _OpenSourceLicensesView(),
-
-        );
+            child: Column(
+              children: _buildLicenseText(widget.licenseEntries[index]),
+            ),
+          );
+        },
+      ),
+    );
   }
 }

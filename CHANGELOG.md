@@ -2,6 +2,7 @@
 
 - Shorten the pubspec.yaml description's length to increase the pub score.
 - Add animation and adjust styling on LitLockIcon.
+- Refactor the ApplicationLicensesScreen
 
 ## 1.0.4
 
