@@ -10,12 +10,22 @@ class LitAppBar extends StatelessWidget implements CustomAppBar {
   final List<BoxShadow> boxShadow;
   final Color backgroundColor;
   final bool elevated;
+  final Color backButtonBackgroundColor;
+  final Color backButtonIconColor;
+
+  /// States whether to align the title to the right if there will be a back
+  /// button displayed on the left. This will increase the space the title can
+  /// occupy to avoid a clipped title.
+  final bool alignRight;
 
   /// The app bar height is depending on the abstract [CustomAppBar] height.
-  static final height = CustomAppBar.height;
+  static final double height = CustomAppBar.height;
 
   /// Creates a [LitAppBar].
   ///
+  /// * [alignRight] whether to align the title to the right if there will be a
+  /// back button displayed on the left. This will increase the space the title
+  /// can occupy to avoid a clipped title.
   const LitAppBar({
     Key? key,
     required this.title,
@@ -30,6 +40,10 @@ class LitAppBar extends StatelessWidget implements CustomAppBar {
       )
     ],
     this.backgroundColor = Colors.white,
+    this.backButtonBackgroundColor =
+        LitBackButtonDefaultStyling.backgroundColor,
+    this.backButtonIconColor = LitBackButtonDefaultStyling.iconColor,
+    this.alignRight = false,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -43,11 +57,17 @@ class LitAppBar extends StatelessWidget implements CustomAppBar {
             decoration: BoxDecoration(
                 color: backgroundColor, boxShadow: elevated ? [] : boxShadow),
             child: SafeArea(
-              child: Center(
+              child: Align(
+                alignment: Navigator.canPop(context) && alignRight
+                    ? Alignment.centerRight
+                    : Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: ClippedText(
                     "$title",
+                    textAlign: Navigator.canPop(context) && alignRight
+                        ? TextAlign.center
+                        : TextAlign.end,
                     style: textStyle,
                   ),
                 ),
@@ -61,10 +81,11 @@ class LitAppBar extends StatelessWidget implements CustomAppBar {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: SafeArea(
-                        child: LitBackButton(
-                      backgroundColor: LitColors.mediumGrey,
-                      iconColor: Colors.white,
-                    )),
+                      child: LitBackButton(
+                        backgroundColor: backButtonBackgroundColor,
+                        iconColor: backButtonIconColor,
+                      ),
+                    ),
                   ),
                 )
               : SizedBox()

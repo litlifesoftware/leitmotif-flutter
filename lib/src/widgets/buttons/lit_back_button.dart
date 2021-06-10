@@ -1,22 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
+class LitBackButtonDefaultStyling {
+  static const double height = 50.0;
+  static const double width = 100.0;
+  static const Color iconColor = Colors.white;
+  static const Color backgroundColor = LitColors.lightGrey;
+  static const IconData icon = LitIcons.arrow_left_solid;
+  static const double iconSize = 18.0;
+  static const EdgeInsets padding = const EdgeInsets.symmetric(
+    horizontal: 16.0,
+    vertical: 3.0,
+  );
+}
+
 class LitBackButton extends StatefulWidget {
-  final Color? backgroundColor;
+  final double height;
+  final double width;
+  final Color backgroundColor;
   final Color iconColor;
   final IconData icon;
+  final double iconSize;
   final EdgeInsets padding;
   final bool shouldNavigateBack;
   final void Function()? onInvalidNavigation;
   const LitBackButton({
     Key? key,
-    required this.backgroundColor,
-    required this.iconColor,
-    this.icon = LitIcons.arrow_left_solid,
-    this.padding = const EdgeInsets.symmetric(
-      horizontal: 16.0,
-      vertical: 3.0,
-    ),
+    this.height = LitBackButtonDefaultStyling.height,
+    this.width = LitBackButtonDefaultStyling.width,
+    this.backgroundColor = LitBackButtonDefaultStyling.backgroundColor,
+    this.iconColor = LitBackButtonDefaultStyling.iconColor,
+    this.icon = LitBackButtonDefaultStyling.icon,
+    this.iconSize = LitBackButtonDefaultStyling.iconSize,
+    this.padding = LitBackButtonDefaultStyling.padding,
     this.shouldNavigateBack = true,
     this.onInvalidNavigation,
   }) : super(key: key);
@@ -49,14 +65,14 @@ class _LitBackButtonState extends State<LitBackButton> {
         hoverColor: Colors.transparent,
         onTap: _onTap,
         child: SizedBox(
-          height: 50.0,
-          width: 100.0,
+          height: widget.height,
+          width: widget.width,
           child: LitTooltipContainer(
             backgroundColor: widget.backgroundColor,
             text: "${MaterialLocalizations.of(context).backButtonTooltip}",
             child: Icon(
               widget.icon,
-              size: 18.0,
+              size: widget.iconSize,
               color: widget.iconColor,
             ),
           ),
