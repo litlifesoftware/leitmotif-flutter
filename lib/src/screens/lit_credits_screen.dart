@@ -5,11 +5,12 @@ class LitCreditsScreen extends StatefulWidget {
   final String screenTitle;
   final String appTitle;
   final String? subTitle;
-
   final Widget art;
   final List<CreditData> credits;
   final Duration? animationDuration;
   final bool darkMode;
+  final bool alignAppBarTitleRight;
+  final bool autoScroll;
   const LitCreditsScreen({
     Key? key,
     this.screenTitle = "Credits",
@@ -19,6 +20,8 @@ class LitCreditsScreen extends StatefulWidget {
     required this.credits,
     this.animationDuration,
     this.darkMode = false,
+    this.alignAppBarTitleRight = false,
+    this.autoScroll = false,
   }) : super(key: key);
   @override
   _LitCreditsScreenState createState() => _LitCreditsScreenState();
@@ -37,8 +40,9 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
   }
 
   bool get _shouldAutoScroll {
-    return _scrollController.position.maxScrollExtent >
-        (MediaQuery.of(context).size.height / 2);
+    bool extendedListView = (_scrollController.position.maxScrollExtent >
+        (MediaQuery.of(context).size.height / 2));
+    return extendedListView && widget.autoScroll;
   }
 
   void stopAnimation() {
@@ -122,8 +126,11 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
     return LitScaffold(
       backgroundColor: _backgroundColor,
       appBar: LitAppBar(
+        alignRight: widget.alignAppBarTitleRight,
         title: widget.screenTitle,
         backgroundColor: _backgroundColor,
+        backButtonBackgroundColor: LitColors.mediumGrey,
+        backButtonIconColor: LitColors.lightGrey,
       ),
       body: GestureDetector(
         onVerticalDragCancel: stopAnimation,
@@ -155,41 +162,48 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
                           ),
                         );
                         list.add(widget.art);
-                        list.add(Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            widget.appTitle,
-                            style: LitTextStyles.sansSerifSubHeader.copyWith(
-                              color: Color(
-                                0xFF7e7e7e,
+                        list.add(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Text(
+                              widget.appTitle,
+                              style: LitTextStyles.sansSerifSubHeader.copyWith(
+                                color: Color(
+                                  0xFF7e7e7e,
+                                ),
                               ),
                             ),
                           ),
-                        ));
+                        );
                         if (widget.subTitle != "" && widget.subTitle != null) {
-                          list.add(Column(
-                            children: [
-                              Container(
-                                color: Color(0xFFB0B0B0),
-                                height: 2.0,
-                                width: 32.0,
-                              ),
-                              Text(
-                                "${widget.subTitle}",
-                                textAlign: TextAlign.center,
-                                style: LitTextStyles.sansSerifBodyTighterSmaller
-                                    .copyWith(
+                          list.add(
+                            Column(
+                              children: [
+                                Container(
                                   color: Color(0xFFB0B0B0),
+                                  height: 2.0,
+                                  width: 32.0,
                                 ),
-                              )
-                            ],
-                          ));
+                                Text(
+                                  "${widget.subTitle}",
+                                  textAlign: TextAlign.center,
+                                  style: LitTextStyles
+                                      .sansSerifBodyTighterSmaller
+                                      .copyWith(
+                                    color: Color(0xFFB0B0B0),
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
                         }
                         for (int i = 0; i < widget.credits.length; i++) {
-                          list.add(_CreditItem(
-                            credit: widget.credits[i],
-                            darkMode: widget.darkMode,
-                          ));
+                          list.add(
+                            _CreditItem(
+                              credit: widget.credits[i],
+                              darkMode: widget.darkMode,
+                            ),
+                          );
                         }
                         return LitScrollbar(
                           child: ScrollableColumn(
