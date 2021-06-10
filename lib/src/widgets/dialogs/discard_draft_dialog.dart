@@ -87,9 +87,10 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
             0.34,
           )!,
           accentColor: LitColors.mediumGrey,
-          child: Text(
+          child: ClippedText(
             widget.discardButtonLabel,
-            style: LitTextStyles.sansSerif.copyWith(
+            upperCase: true,
+            style: LitSansSerifStyles.button.copyWith(
               color: Colors.white,
             ),
           ),
@@ -97,9 +98,10 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
         ),
         LitGradientButton(
           boxShadow: [],
-          child: Text(
+          child: ClippedText(
             widget.cancelButtonLabel,
-            style: LitTextStyles.sansSerif,
+            upperCase: true,
+            style: LitSansSerifStyles.button,
           ),
           onPressed: _onCancel,
         ),
@@ -144,7 +146,7 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
                             child: Text(
                               widget.infoDescription,
                               textAlign: TextAlign.left,
-                              style: LitTextStyles.sansSerif.copyWith(
+                              style: LitSansSerifStyles.body.copyWith(
                                 color: LitColors.lightGrey,
                               ),
                             ),
@@ -161,7 +163,7 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
                     child: Text(
                       widget.discardText,
                       textAlign: TextAlign.left,
-                      style: LitTextStyles.sansSerifStyles[body],
+                      style: LitSansSerifStyles.body,
                     ),
                   ),
                 ],
