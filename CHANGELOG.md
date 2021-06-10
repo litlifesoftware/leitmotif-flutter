@@ -1,3 +1,6 @@
+## Unreleased - 1.0.5
+
+- Shorten the pubspec.yaml description's length to increase the pub score.
 ## 1.0.4
 
 - Remove `CustomInfoBar`, `DummyInfoBar` and `TransparentInfoBar`. Please use the existing `LitSnackbar` widgets to display feedback messages.

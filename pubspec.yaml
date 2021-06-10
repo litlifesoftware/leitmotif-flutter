@@ -3,8 +3,7 @@ version: 1.0.4
 homepage: https://github.com/litlifesoftware/lit_ui_kit
 description: >-
   Contains a collection of code implementing the Lit UI design language.
-  It provides several widgets and screens in addition to custom model 
-  classes and controller classes for easier use.
+  It provides several widgets and screens.
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
