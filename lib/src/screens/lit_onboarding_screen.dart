@@ -4,6 +4,7 @@ import 'package:lit_ui_kit/src/widgets/containers/lit_elevated_glass_card.dart';
 
 class LitOnboardingScreen extends StatefulWidget {
   final String title;
+  final String nextButtonLabel;
   final Widget art;
   final List<OnboardingText> textItems;
   final BorderRadius cardBorderRadius;
@@ -13,6 +14,7 @@ class LitOnboardingScreen extends StatefulWidget {
   const LitOnboardingScreen({
     Key? key,
     this.title = "Onboading",
+    this.nextButtonLabel = "Next",
     this.art = const SizedBox(),
     required this.textItems,
     this.cardBorderRadius = const BorderRadius.all(Radius.circular(42.0)),
@@ -40,7 +42,6 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
   late ScrollController _scrollController;
   int selectedTextItem = 0;
   void _onPressed() {
-    print("pressed");
     _animationController
         .reverse()
         .then((value) => _animationController.forward());
@@ -106,6 +107,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
               child: _Card(
                 animationController: _animationController,
                 text: widget.textItems[selectedTextItem],
+                nextButtonLabel: widget.nextButtonLabel,
                 art: widget.art,
                 buttonAnimationDuration: widget.animationDuration,
                 borderRadius: widget.cardBorderRadius,
@@ -131,6 +133,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
 class _Card extends StatefulWidget {
   final AnimationController animationController;
   final OnboardingText text;
+  final String nextButtonLabel;
   final BorderRadius borderRadius;
   final Widget art;
   final EdgeInsets padding;
@@ -143,6 +146,7 @@ class _Card extends StatefulWidget {
     Key? key,
     required this.animationController,
     required this.text,
+    required this.nextButtonLabel,
     required this.borderRadius,
     required this.art,
     this.padding = const EdgeInsets.only(
@@ -178,6 +182,7 @@ class __CardState extends State<_Card> {
           borderRadius: widget.borderRadius,
           child: _CardContent(
             text: widget.text,
+            nextButtonLabel: widget.nextButtonLabel,
             buttonAnimationDuration: widget.buttonAnimationDuration,
             onPressed: widget.onPressed,
           ),
@@ -191,11 +196,13 @@ class __CardState extends State<_Card> {
 
 class _CardContent extends StatelessWidget {
   final OnboardingText text;
+  final String nextButtonLabel;
   final Duration buttonAnimationDuration;
   final void Function() onPressed;
   const _CardContent({
     Key? key,
     required this.text,
+    required this.nextButtonLabel,
     required this.buttonAnimationDuration,
     required this.onPressed,
   }) : super(key: key);
@@ -265,8 +272,9 @@ class _CardContent extends StatelessWidget {
                     horizontal: 32.0,
                     vertical: 8.0,
                   ),
-                  child: Text(
-                    "Next",
+                  child: ClippedText(
+                    nextButtonLabel,
+                    upperCase: true,
                     style: LitTextStyles.sansSerif.copyWith(
                       fontSize: 14.0,
                       color: HexColor('#525252'),

@@ -2,8 +2,9 @@
 
 - Shorten the pubspec.yaml description's length to increase the pub score.
 - Add animation and adjust styling on LitLockIcon.
-- Refactor the ApplicationLicensesScreen
-- Add styling members to app bar widgets
+- Refactor the ApplicationLicensesScreen.
+- Add styling members to app bar widgets.
+- Add `nextButtonLabel` member on `LitOnboardingScreen`.
 
 ## 1.0.4
 
