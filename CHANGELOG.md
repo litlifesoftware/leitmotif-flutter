@@ -5,6 +5,7 @@
 - Refactor the ApplicationLicensesScreen.
 - Add styling members to app bar widgets.
 - Add `nextButtonLabel` member on `LitOnboardingScreen`.
+- Make labels uppercase on `LitPrivacyScreen`.
 
 ## 1.0.4
 

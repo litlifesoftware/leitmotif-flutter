@@ -222,10 +222,8 @@ class _AgreeButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: ScaledDownText(
             label,
-            style: LitTextStyles.sansSerif.copyWith(
-              fontSize: 18.0,
-              fontWeight: FontWeight.w700,
-            ),
+            uppercase: true,
+            style: LitSansSerifStyles.button,
           ),
         ),
         onPressed: onPressed,
@@ -248,49 +246,50 @@ class _PrivacyTextCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitElevatedCard(
-        padding: const EdgeInsets.symmetric(
-          vertical: 8.0,
-          horizontal: 16.0,
+      padding: const EdgeInsets.symmetric(
+        vertical: 8.0,
+        horizontal: 16.0,
+      ),
+      margin: const EdgeInsets.symmetric(
+        vertical: 8.0,
+        horizontal: 8.0,
+      ),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minHeight: 384.0,
         ),
-        margin: const EdgeInsets.symmetric(
-          vertical: 8.0,
-          horizontal: 8.0,
-        ),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: 384.0,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 8.0,
+            horizontal: 16.0,
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 8.0,
-              horizontal: 16.0,
-            ),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8.0,
-                    ),
-                    child: ClippedText(
-                      title,
-                      textAlign: TextAlign.left,
-                      style: LitTextStyles.sansSerifHeader,
-                    ),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8.0,
+                  ),
+                  child: ClippedText(
+                    title,
+                    textAlign: TextAlign.left,
+                    style: LitTextStyles.sansSerifHeader,
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    privacyText,
-                    style: LitTextStyles.sansSerifBodyLargeSpacing,
-                  ),
-                )
-              ],
-            ),
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  privacyText,
+                  style: LitTextStyles.sansSerifBodyLargeSpacing,
+                ),
+              )
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 
@@ -321,7 +320,8 @@ class _PrivacyTagLabel extends StatelessWidget {
         children: [
           ClippedText(
             "$labelText",
-            style: LitTextStyles.sanSerifBodySmall,
+            upperCase: true,
+            style: LitSansSerifStyles.caption,
           ),
           Icon(
             favorable ? LitIcons.check : LitIcons.times,
