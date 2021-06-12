@@ -75,7 +75,7 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
   }
 
   Color get _backgroundColor {
-    return widget.darkMode ? Color(0xFF333333) : LitColors.lightGrey;
+    return widget.darkMode ? Color(0xFF333333) : Colors.white;
   }
 
   BoxDecoration get _backgroundDecoration {
@@ -95,8 +95,8 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: const [
-                const Color(0xFFDCDCDC),
-                const Color(0xFFD7D7D7),
+                const Color(0xFFFFFFFF),
+                const Color(0xFFF1F1F1),
               ],
             ),
           );
@@ -151,60 +151,6 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
                     return AnimatedBuilder(
                       animation: _animationController,
                       builder: (_context, _) {
-                        List<Widget> list = [];
-                        list.add(
-                          SizedBox(
-                            // height: _animationController.value < 1.0
-                            //     ? _scrollController.position.maxScrollExtent *
-                            //         _animationController.value
-                            //     : 0.0,
-                            height: 0.0,
-                          ),
-                        );
-                        list.add(widget.art);
-                        list.add(
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(
-                              widget.appTitle,
-                              style: LitTextStyles.sansSerifSubHeader.copyWith(
-                                color: Color(
-                                  0xFF7e7e7e,
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                        if (widget.subTitle != "" && widget.subTitle != null) {
-                          list.add(
-                            Column(
-                              children: [
-                                Container(
-                                  color: Color(0xFFB0B0B0),
-                                  height: 2.0,
-                                  width: 32.0,
-                                ),
-                                Text(
-                                  "${widget.subTitle}",
-                                  textAlign: TextAlign.center,
-                                  style: LitTextStyles
-                                      .sansSerifBodyTighterSmaller
-                                      .copyWith(
-                                    color: Color(0xFFB0B0B0),
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        }
-                        for (int i = 0; i < widget.credits.length; i++) {
-                          list.add(
-                            _CreditItem(
-                              credit: widget.credits[i],
-                              darkMode: widget.darkMode,
-                            ),
-                          );
-                        }
                         return LitScrollbar(
                           child: ScrollableColumn(
                             controller: _scrollController,
@@ -212,7 +158,23 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
                               vertical: 48.0,
                             ),
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            children: list,
+                            children: [
+                              SizedBox(
+                                height: 0.0,
+                              ),
+                              widget.art,
+                              _AppTitle(
+                                subTitle: widget.subTitle,
+                                title: widget.appTitle,
+                              ),
+                              SizedBox(
+                                height: 24.0,
+                              ),
+                              _CreditList(
+                                credits: widget.credits,
+                                darkMode: widget.darkMode,
+                              ),
+                            ],
                           ),
                         );
                       },
@@ -224,6 +186,101 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
           ],
         ),
       ),
+    );
+  }
+}
+
+class _AppTitle extends StatefulWidget {
+  final String title;
+  final String? subTitle;
+
+  const _AppTitle({
+    Key? key,
+    required this.title,
+    required this.subTitle,
+  }) : super(key: key);
+
+  @override
+  _AppTitleState createState() => _AppTitleState();
+}
+
+class _AppTitleState extends State<_AppTitle> {
+  bool get _subTitleAvailable {
+    return widget.subTitle != "" && widget.subTitle != null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(
+            widget.title,
+            style: LitSansSerifStyles.header5.copyWith(
+              color: Color(
+                0xFF7e7e7e,
+              ),
+            ),
+          ),
+        ),
+        _subTitleAvailable
+            ? Column(
+                children: [
+                  Container(
+                    color: Color(0xFFB0B0B0),
+                    height: 2.0,
+                    width: 32.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text(
+                      "${widget.subTitle}",
+                      textAlign: TextAlign.center,
+                      style: LitSansSerifStyles.body.copyWith(
+                        color: Color(0xFFB0B0B0),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            : SizedBox()
+      ],
+    );
+  }
+}
+
+class _CreditList extends StatefulWidget {
+  final List<CreditData> credits;
+  final bool darkMode;
+  const _CreditList({
+    Key? key,
+    required this.credits,
+    required this.darkMode,
+  }) : super(key: key);
+
+  @override
+  __CreditListState createState() => __CreditListState();
+}
+
+class __CreditListState extends State<_CreditList> {
+  List<_CreditItem> get _creditsListItems {
+    List<_CreditItem> items = [];
+    for (CreditData creditData in widget.credits) {
+      items.add(
+        _CreditItem(
+          credit: creditData,
+          darkMode: widget.darkMode,
+        ),
+      );
+    }
+    return items;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: _creditsListItems,
     );
   }
 }
@@ -258,7 +315,7 @@ class __CreditItemState extends State<_CreditItem> {
       child: Text(
         name,
         textAlign: TextAlign.center,
-        style: LitTextStyles.sansSerifSubHeader.copyWith(
+        style: LitSansSerifStyles.header5.copyWith(
           color: _nameTextColor,
         ),
       ),

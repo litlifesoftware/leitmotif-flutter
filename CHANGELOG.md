@@ -8,6 +8,7 @@
 - Make labels uppercase on `LitPrivacyScreen`.
 - Add opacity animation on `LitSnackbar` widgets.
 - Add alternative animation behavior (`SnackbarAnimationType`) on `LitSnackbarController`.
+- Refactor `LitCreditsScreen` and adjust default styling.
 
 ## 1.0.4
 
