@@ -52,6 +52,7 @@ class ExampleHomeScreen extends StatefulWidget {
 class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
   late LitSettingsPanelController settingsPanelController;
   late LitSnackbarController _solidSnackbarController;
+  late LitSnackbarController _solidSnackbarControllerDiffAni;
   late LitSnackbarController _transparentSnackbarController;
   late LitNotificationController _notificationController;
   late bool darkMode;
@@ -59,6 +60,10 @@ class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
 
   void showSolidSnackbar() {
     _solidSnackbarController.showSnackBar();
+  }
+
+  void showDiffentlyAnimaSnackbar() {
+    _solidSnackbarControllerDiffAni.showSnackBar();
   }
 
   void showTransparentSnackbar() {
@@ -89,6 +94,9 @@ class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
     super.initState();
     settingsPanelController = LitSettingsPanelController();
     _solidSnackbarController = LitSnackbarController();
+    _solidSnackbarControllerDiffAni = LitSnackbarController(
+      animationType: SnackbarAnimationType.bottomToTop,
+    );
     _transparentSnackbarController = LitSnackbarController();
     _notificationController = LitNotificationController();
     darkMode = false;
@@ -113,6 +121,11 @@ class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
           LitIconSnackbar(
             snackBarController: _solidSnackbarController,
             text: "Snackbar!",
+            iconData: LitIcons.info,
+          ),
+          LitIconSnackbar(
+            snackBarController: _solidSnackbarControllerDiffAni,
+            text: "Different Snackbar animation!",
             iconData: LitIcons.info,
           ),
           LitTransparentIconSnackbar(
@@ -240,6 +253,7 @@ class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
                       buttonColor: buttonColor,
                       buttonTextColor: buttonTextColor,
                       showSolidSnackbar: showSolidSnackbar,
+                      showDifferentlyAnimaSnackbar: showDiffentlyAnimaSnackbar,
                       showTransparentSnackbar: showTransparentSnackbar,
                     ),
                   ],
@@ -258,6 +272,7 @@ class _ButtonList extends StatelessWidget {
   final Color buttonTextColor;
   final void Function() addNotification;
   final void Function() showSolidSnackbar;
+  final void Function() showDifferentlyAnimaSnackbar;
   final void Function() showTransparentSnackbar;
   const _ButtonList({
     Key? key,
@@ -265,6 +280,7 @@ class _ButtonList extends StatelessWidget {
     required this.buttonTextColor,
     required this.addNotification,
     required this.showSolidSnackbar,
+    required this.showDifferentlyAnimaSnackbar,
     required this.showTransparentSnackbar,
   }) : super(key: key);
 
@@ -316,6 +332,20 @@ class _ButtonList extends StatelessWidget {
                 ),
               ),
               onPressed: showSolidSnackbar),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 32.0),
+          child: LitRoundedElevatedButton(
+            color: buttonColor,
+            child: ClippedText(
+              "Show Differently anima. SnackBar!",
+              upperCase: true,
+              style: LitSansSerifStyles.button.copyWith(
+                color: buttonTextColor,
+              ),
+            ),
+            onPressed: showDifferentlyAnimaSnackbar,
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 32.0),

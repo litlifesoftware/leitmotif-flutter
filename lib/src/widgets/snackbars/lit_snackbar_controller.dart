@@ -2,7 +2,7 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-/// Creates a new controller for a [LitSnackbar].
+/// A controller to handle animations on [LitSnackbar] widgets.
 ///
 /// Each [LitSnackbar] is required to have a [LitSnackbarController] in order
 /// to perform the animation, which will slide in and out the [LitSnackbar]
@@ -12,27 +12,42 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 /// should be initialized by excuting the [LitSnackbarController]'s [init]
 /// method.
 ///
-/// {@tool snippet}
-/// Alternativly the [init] method could be executed on the
-/// [LitSnackbarController]'s initialization inside the [State.initState]
-/// method like stated below:
-/// ```dart
-/// _customSnackBarController = LitSnackbarController()..init(this);
-/// ```
-/// {@end-tool}
-///
 class LitSnackbarController {
+  /// The [AnimationController]' duration.
   final Duration animationDuration;
+
+  /// The duration the snackbar should be displayed.
   final Duration displayDuration;
+
+  /// The behavior of the snackbar's animation.
+  final SnackbarAnimationType animationType;
 
   /// The [AnimationController] necessary to animate the [LitSnackbar].
   late AnimationController animationController;
 
+  /// Creates a new controller for a [LitSnackbar].
+  ///
+  /// *  [animationDuration] is the animation's duration.
+  ///
+  /// * [displayDuration] is the duration a snackbar should be display on the
+  ///   screen.
+  ///
+  /// * [animationType] describes how the animation should behave.
+  ///
+  /// {@tool snippet}
+  /// Alternativly the [init] method could be executed on the
+  /// [LitSnackbarController]'s initialization inside the [State.initState]
+  /// method like stated below:
+  /// ```dart
+  /// _customSnackBarController = LitSnackbarController()..init(this);
+  /// ```
+  /// {@end-tool}
   LitSnackbarController({
     this.animationDuration = const Duration(
       milliseconds: 350,
     ),
     this.displayDuration = const Duration(milliseconds: 3500),
+    this.animationType = SnackbarAnimationType.rightToLeft,
   });
 
   /// Initalizes the [AnimationController] by passing the provided
@@ -104,4 +119,13 @@ class LitSnackbarController {
       ],
     );
   }
+}
+
+/// Available types of [LitSnackbar] animations.
+///
+/// Each animation will behave differently.
+enum SnackbarAnimationType {
+  rightToLeft,
+  topToBottom,
+  bottomToTop,
 }

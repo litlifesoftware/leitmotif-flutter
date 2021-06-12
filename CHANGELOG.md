@@ -6,6 +6,8 @@
 - Add styling members to app bar widgets.
 - Add `nextButtonLabel` member on `LitOnboardingScreen`.
 - Make labels uppercase on `LitPrivacyScreen`.
+- Add opacity animation on `LitSnackbar` widgets.
+- Add alternative animation behavior (`SnackbarAnimationType`) on `LitSnackbarController`.
 
 ## 1.0.4
 
