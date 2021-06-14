@@ -11,6 +11,7 @@ class LitPushedThroughButton extends StatefulWidget {
   final Color accentColor;
   final void Function() onPressed;
   final double borderRadius;
+  final EdgeInsets padding;
   final EdgeInsets margin;
   final List<BoxShadow> boxShadow;
   final Duration animationDuration;
@@ -24,6 +25,7 @@ class LitPushedThroughButton extends StatefulWidget {
     this.accentColor = Colors.grey,
     required this.onPressed,
     this.borderRadius = 15.0,
+    this.padding = const EdgeInsets.all(0.0),
     this.margin = const EdgeInsets.symmetric(
       vertical: 8.0,
       horizontal: 14.0,
@@ -104,56 +106,59 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
 
   @override
   Widget build(BuildContext context) {
-    return Listener(
-      onPointerDown: _onTapDown,
-      onPointerUp: _onTapUp,
-      child: AnimatedBuilder(
-        animation: _animationController,
-        builder: (context, child) {
-          return Transform.scale(
-            scale: (1 - (_animationController.value * 0.125)),
-            child: Opacity(
-              opacity: widget.disabled ? 0.2 : 1.0,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 150),
-                padding: widget.margin,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(widget.borderRadius),
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        _isPressed
-                            ? widget.backgroundColor
-                            : Color.lerp(widget.backgroundColor,
-                                widget.accentColor, 0.35)!,
-                        _isPressed
-                            ? Color.lerp(widget.backgroundColor,
-                                widget.accentColor, 0.45)!
-                            : widget.backgroundColor,
-                        _isPressed
-                            ? Color.lerp(widget.backgroundColor,
-                                widget.accentColor, 0.55)!
-                            : widget.backgroundColor,
-                        Color.lerp(
-                          widget.backgroundColor,
-                          widget.backgroundColor,
-                          _isPressed ? 0.20 : 0.50,
-                        )!,
-                      ],
-                      stops: [
-                        0.0,
-                        0.3,
-                        0.6,
-                        1.0,
-                      ]),
-                  boxShadow: _isPressed ? [] : widget.boxShadow,
+    return Padding(
+      padding: widget.padding,
+      child: Listener(
+        onPointerDown: _onTapDown,
+        onPointerUp: _onTapUp,
+        child: AnimatedBuilder(
+          animation: _animationController,
+          builder: (context, child) {
+            return Transform.scale(
+              scale: (1 - (_animationController.value * 0.125)),
+              child: Opacity(
+                opacity: widget.disabled ? 0.2 : 1.0,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 150),
+                  padding: widget.margin,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(widget.borderRadius),
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          _isPressed
+                              ? widget.backgroundColor
+                              : Color.lerp(widget.backgroundColor,
+                                  widget.accentColor, 0.35)!,
+                          _isPressed
+                              ? Color.lerp(widget.backgroundColor,
+                                  widget.accentColor, 0.45)!
+                              : widget.backgroundColor,
+                          _isPressed
+                              ? Color.lerp(widget.backgroundColor,
+                                  widget.accentColor, 0.55)!
+                              : widget.backgroundColor,
+                          Color.lerp(
+                            widget.backgroundColor,
+                            widget.backgroundColor,
+                            _isPressed ? 0.20 : 0.50,
+                          )!,
+                        ],
+                        stops: [
+                          0.0,
+                          0.3,
+                          0.6,
+                          1.0,
+                        ]),
+                    boxShadow: _isPressed ? [] : widget.boxShadow,
+                  ),
+                  child: widget.child,
                 ),
-                child: widget.child,
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

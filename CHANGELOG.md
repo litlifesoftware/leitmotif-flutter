@@ -9,6 +9,8 @@
 - Add opacity animation on `LitSnackbar` widgets.
 - Add alternative animation behavior (`SnackbarAnimationType`) on `LitSnackbarController`.
 - Refactor `LitCreditsScreen` and adjust default styling.
+- Add `DialogActionButton`, a button primarily designed to be used on the `LitTitledDialog`.
+- Constrain the action buttons on `LitTitledDialog`.
 
 ## 1.0.4
 

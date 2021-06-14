@@ -87,7 +87,7 @@ class LitTitledDialog extends StatelessWidget {
                     ),
                   ),
                   actionButtons.isNotEmpty
-                      ? _DialogBottomBar(
+                      ? _DialogActionButtonBuilder(
                           titleBarHeight: titleBarHeight,
                           borderRadius: borderRadius,
                           actionButtons: actionButtons,
@@ -198,11 +198,13 @@ class __DialogTopBarState extends State<_DialogTopBar> {
   }
 }
 
-class _DialogBottomBar extends StatelessWidget {
+/// A builder widget constraining the provided action button's width values
+/// to ensure no overflow will occur.
+class _DialogActionButtonBuilder extends StatelessWidget {
   final double titleBarHeight;
   final BorderRadius borderRadius;
   final List<Widget> actionButtons;
-  const _DialogBottomBar({
+  const _DialogActionButtonBuilder({
     Key? key,
     required this.titleBarHeight,
     required this.borderRadius,
@@ -229,9 +231,26 @@ class _DialogBottomBar extends StatelessWidget {
           Container(
             child: Align(
               alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: actionButtons,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  List<Widget> buttons = [];
+
+                  /// Wrap the action buttons inside a sized box based on the
+                  /// available space.
+                  for (Widget button in actionButtons) {
+                    buttons.add(
+                      SizedBox(
+                        width: constraints.maxWidth / actionButtons.length,
+                        child: button,
+                      ),
+                    );
+                  }
+
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: buttons,
+                  );
+                },
               ),
             ),
           ),

@@ -430,6 +430,26 @@ class _ButtonList extends StatelessWidget {
           child: LitRoundedElevatedButton(
             color: buttonColor,
             child: ClippedText(
+              "Show LitTitledDialog",
+              upperCase: true,
+              style: LitSansSerifStyles.button.copyWith(
+                color: buttonTextColor,
+              ),
+            ),
+            onPressed: () => {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return _LitTitledDialogImpl();
+                  })
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 32.0),
+          child: LitRoundedElevatedButton(
+            color: buttonColor,
+            child: ClippedText(
               "Show Discard Draft Dialog",
               upperCase: true,
               style: LitSansSerifStyles.button.copyWith(
@@ -704,6 +724,32 @@ class _Art extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _LitTitledDialogImpl extends StatelessWidget {
+  const _LitTitledDialogImpl({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LitTitledDialog(
+      child: Center(
+          child: Text(
+        "Example title with a description",
+        style: LitSansSerifStyles.body,
+      )),
+      titleText: "A dialog",
+      actionButtons: [
+        DialogActionButton(
+          onPressed: () {},
+          label: "Action Button Label 1",
+        ),
+        DialogActionButton(
+          onPressed: () {},
+          label: "Action Button Label 2",
+        )
+      ],
     );
   }
 }
