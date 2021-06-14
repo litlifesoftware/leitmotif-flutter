@@ -222,7 +222,7 @@ class _AgreeButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: ScaledDownText(
             label,
-            uppercase: true,
+            upperCase: true,
             style: LitSansSerifStyles.button,
           ),
         ),
