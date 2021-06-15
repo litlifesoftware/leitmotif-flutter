@@ -28,25 +28,15 @@ class LitCalendarNavigation extends StatelessWidget {
             SizedBox(
               width: constraints.maxWidth / 4,
               //decreaseByMonth
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                child: LitPushedThroughButton(
-                  onPressed: decreaseByMonth,
-                  child: Icon(
-                    LitIcons.chevron_left_solid,
-                    size: 16.0,
-                    color: LitColors.mediumGrey,
-                  ),
-                  accentColor: HexColor('#919191'),
-                  backgroundColor: HexColor('#eeeeee'),
-                ),
+              child: _MonthNavigatorButton(
+                icon: LitIcons.chevron_left_solid,
+                onChange: decreaseByMonth,
               ),
             ),
             SizedBox(
               width: constraints.maxWidth / 4,
               child: LitPlainLabelButton(
-                fontSize: 18.0,
+                fontSize: 16.0,
                 onPressed: onMonthLabelPress,
                 label: monthLabel,
               ),
@@ -54,7 +44,7 @@ class LitCalendarNavigation extends StatelessWidget {
             SizedBox(
               width: constraints.maxWidth / 4,
               child: LitPlainLabelButton(
-                fontSize: 18.0,
+                fontSize: 16.0,
                 onPressed: onYearLabelPress,
                 label: yearLabel,
               ),
@@ -62,24 +52,45 @@ class LitCalendarNavigation extends StatelessWidget {
             SizedBox(
               width: constraints.maxWidth / 4,
               //decreaseByMonth
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                child: LitPushedThroughButton(
-                  onPressed: increaseByMonth,
-                  child: Icon(
-                    LitIcons.chevron_right_solid,
-                    size: 16.0,
-                    color: LitColors.mediumGrey,
-                  ),
-                  accentColor: HexColor('#919191'),
-                  backgroundColor: HexColor('#eeeeee'),
-                ),
+              child: _MonthNavigatorButton(
+                icon: LitIcons.chevron_right_solid,
+                onChange: increaseByMonth,
               ),
             ),
           ],
         );
       }),
+    );
+  }
+}
+
+class _MonthNavigatorButton extends StatelessWidget {
+  final IconData icon;
+  final void Function() onChange;
+  const _MonthNavigatorButton({
+    Key? key,
+    required this.icon,
+    required this.onChange,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LitPushedThroughButton(
+      padding: const EdgeInsets.symmetric(
+        vertical: 8.0,
+        horizontal: 12.0,
+      ),
+      onPressed: onChange,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Icon(
+          icon,
+          size: 14.0,
+          color: LitColors.mediumGrey,
+        ),
+      ),
+      accentColor: Color(0xFF919191),
+      backgroundColor: Color(0xFFeeeeee),
     );
   }
 }

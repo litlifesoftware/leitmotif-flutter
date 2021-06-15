@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/calendar.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
-/// A date picker widget allowing the modification of the provided [selectedDate]
-/// DateTime value.
+/// A date picker widget allowing the modification of the provided
+/// [selectedDate] DateTime value.
 ///
 /// The total size will be determined using it's parent constraints.
 class LitDatePicker extends StatefulWidget {
@@ -85,8 +85,10 @@ class _LitDatePickerState extends State<LitDatePicker>
   @override
   void initState() {
     super.initState();
-    _appearAnimationController =
-        AnimationController(duration: Duration(milliseconds: 140), vsync: this);
+    _appearAnimationController = AnimationController(
+      duration: Duration(milliseconds: 140),
+      vsync: this,
+    );
     _appearAnimationController.forward();
   }
 
@@ -128,8 +130,10 @@ class _LitDatePickerState extends State<LitDatePicker>
                         Localizations.localeOf(context));
                 final List<Widget> labels = [];
                 for (String str in strings) {
-                  labels.add(LitCalendarWeekdayLabel(
-                      constraints: constraints, label: str));
+                  labels.add(
+                    LitCalendarWeekdayLabel(
+                        constraints: constraints, label: str),
+                  );
                 }
                 return Row(
                   children: labels,
@@ -178,6 +182,20 @@ class _SelectMonthDialogState extends State<_SelectMonthDialog> {
     LitRouteController(context).closeDialog();
   }
 
+  List<Widget> get _children {
+    final List<Widget> children = [];
+    for (int i = 0; i < widget.months.length; i++) {
+      children.add(
+        LitPlainLabelButton(
+          label: widget.months[i],
+          accentColor: LitColors.darkOliveGreen,
+          onPressed: () => _onPressed(i + 1),
+        ),
+      );
+    }
+    return children;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -188,20 +206,11 @@ class _SelectMonthDialogState extends State<_SelectMonthDialog> {
         titleText: "Month",
         child: Builder(
           builder: (context) {
-            final List<Widget> children = [];
-            widget.months.asMap().forEach((index, string) {
-              children.add(LitPlainLabelButton(
-                label: string,
-                accentColor: LitColors.darkOliveGreen,
-                onPressed: () => _onPressed(index + 1),
-              ));
-            });
-
             return SizedBox(
               height: 384.0,
               child: ScrollableColumn(
                 constrained: false,
-                children: children,
+                children: _children,
               ),
             );
           },
@@ -271,6 +280,22 @@ class _SelectYearDialogState extends State<_SelectYearDialog> {
             : 0;
   }
 
+  List<Widget> get _children {
+    final List<Widget> children = [];
+    for (int i = 0; i < widget.numberOfYears; i++) {
+      final DateTime iteratedDate = (_initialDate)
+          .subtract(Duration(milliseconds: millisecondsPerYear * i));
+      children.add(
+        LitPlainLabelButton(
+          label: "${iteratedDate.year}",
+          accentColor: LitColors.darkOliveGreen,
+          onPressed: () => _onPressed(iteratedDate.year),
+        ),
+      );
+    }
+    return children;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -288,55 +313,13 @@ class _SelectYearDialogState extends State<_SelectYearDialog> {
         titleText: "Year",
         child: Builder(
           builder: (context) {
-            final List<Widget> children = [];
-            for (int i = 0; i < widget.numberOfYears; i++) {
-              final DateTime iteratedDate = (_initialDate)
-                  .subtract(Duration(milliseconds: millisecondsPerYear * i));
-              children.add(
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 16.0,
-                      horizontal: 30.0,
-                    ),
-                    child: AspectRatio(
-                      aspectRatio: 3.0,
-                      child: LitRoundedElevatedButton(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 32.0,
-                          vertical: 16.0,
-                        ),
-                        color: HexColor('#E7E5E4'),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 12.0,
-                            color: Colors.black26,
-                            offset: Offset(-3, 3),
-                            spreadRadius: 1.0,
-                          )
-                        ],
-                        child: ScaledDownText(
-                          "${iteratedDate.year}",
-                          style: LitTextStyles.sansSerif.copyWith(
-                            fontSize: 16.0,
-                            color: LitColors.mediumGrey,
-                            letterSpacing: 1.45,
-                          ),
-                        ),
-                        onPressed: () => _onPressed(iteratedDate.year),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }
             return SizedBox(
               height: 384.0,
               child: ListView(
                 physics: BouncingScrollPhysics(),
                 //controller: _pageController,
                 scrollDirection: Axis.vertical,
-                children: children,
+                children: _children,
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 reverse: false,
               ),

@@ -11,6 +11,7 @@
 - Refactor `LitCreditsScreen` and adjust default styling.
 - Add `DialogActionButton`, a button primarily designed to be used on the `LitTitledDialog`.
 - Constrain the action buttons on `LitTitledDialog`.
+- Alter button styling on `LitDatePicker`.
 
 ## 1.0.4
 
