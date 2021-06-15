@@ -249,6 +249,7 @@ class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
                           )
                         : SizedBox(),
                     _ButtonList(
+                      darkMode: darkMode,
                       addNotification: _addNotification,
                       buttonColor: buttonColor,
                       buttonTextColor: buttonTextColor,
@@ -268,6 +269,7 @@ class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
 }
 
 class _ButtonList extends StatelessWidget {
+  final bool darkMode;
   final Color buttonColor;
   final Color buttonTextColor;
   final void Function() addNotification;
@@ -276,6 +278,7 @@ class _ButtonList extends StatelessWidget {
   final void Function() showTransparentSnackbar;
   const _ButtonList({
     Key? key,
+    required this.darkMode,
     required this.buttonColor,
     required this.buttonTextColor,
     required this.addNotification,
@@ -288,19 +291,17 @@ class _ButtonList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
-            color: buttonColor,
-            child: ClippedText(
-              "Add notification",
-              upperCase: true,
-              style: LitSansSerifStyles.button.copyWith(
-                color: buttonTextColor,
-              ),
+        SizedBox(height: 32.0),
+        LitRoundedElevatedButton(
+          color: buttonColor,
+          child: ClippedText(
+            "Add notification",
+            upperCase: true,
+            style: LitSansSerifStyles.button.copyWith(
+              color: buttonTextColor,
             ),
-            onPressed: addNotification,
           ),
+          onPressed: addNotification,
         ),
         Padding(
           padding: const EdgeInsets.only(top: 32.0),
@@ -565,11 +566,15 @@ class _ButtonList extends StatelessWidget {
               ),
             ),
             onPressed: () => {
-              LitRouteController(context)
-                  .pushCupertinoWidget(_LitCreditsScreenImplementation())
+              LitRouteController(context).pushCupertinoWidget(
+                _LitCreditsScreenImplementation(
+                  darkMode: darkMode,
+                ),
+              )
             },
           ),
         ),
+        SizedBox(height: 32.0),
       ],
     );
   }
@@ -652,11 +657,14 @@ class _LitSignupScreenImplementation extends StatelessWidget {
 }
 
 class _LitCreditsScreenImplementation extends StatelessWidget {
-  const _LitCreditsScreenImplementation({Key? key}) : super(key: key);
+  final bool darkMode;
+  const _LitCreditsScreenImplementation({Key? key, required this.darkMode})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return LitCreditsScreen(
+      darkMode: darkMode,
       appTitle: "LitUIKit",
       art: _Art(large: false),
       credits: [

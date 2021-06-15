@@ -129,8 +129,10 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
         alignRight: widget.alignAppBarTitleRight,
         title: widget.screenTitle,
         backgroundColor: _backgroundColor,
-        backButtonBackgroundColor: LitColors.mediumGrey,
-        backButtonIconColor: LitColors.lightGrey,
+        backButtonBackgroundColor: widget.darkMode
+            ? Colors.black
+            : LitBackButtonDefaultStyling.backgroundColor,
+        backButtonIconColor: LitBackButtonDefaultStyling.iconColor,
       ),
       body: GestureDetector(
         onVerticalDragCancel: stopAnimation,

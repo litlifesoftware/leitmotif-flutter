@@ -12,6 +12,7 @@
 - Add `DialogActionButton`, a button primarily designed to be used on the `LitTitledDialog`.
 - Constrain the action buttons on `LitTitledDialog`.
 - Alter button styling on `LitDatePicker`.
+- Alter `LitCreditsScreen`'s back button color.
 
 ## 1.0.4
 
