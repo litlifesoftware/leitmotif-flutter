@@ -15,6 +15,7 @@ class DialogActionButton extends StatelessWidget {
   final Color accentColor;
   final Color backgroundColor;
   final TextStyle style;
+  final bool disabled;
   final void Function() onPressed;
 
   /// Creates a [DialogActionButton].
@@ -35,6 +36,7 @@ class DialogActionButton extends StatelessWidget {
     this.accentColor = Colors.grey,
     this.backgroundColor = Colors.white,
     this.style = LitSansSerifStyles.button,
+    this.disabled = false,
     required this.onPressed,
   }) : super(key: key);
 
@@ -44,11 +46,13 @@ class DialogActionButton extends StatelessWidget {
       padding: padding,
       child: LitPushedThroughButton(
         onPressed: onPressed,
+        disabled: disabled,
         accentColor: accentColor,
         backgroundColor: backgroundColor,
         child: ClippedText(
           label,
           upperCase: true,
+          textAlign: TextAlign.center,
           style: style,
         ),
       ),

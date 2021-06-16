@@ -79,31 +79,18 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
       titleText: widget.titleText,
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       actionButtons: [
-        LitGradientButton(
-          boxShadow: [],
-          color: Color.lerp(
-            LitColors.mediumGrey,
-            LitColors.lightGrey,
-            0.34,
-          )!,
-          accentColor: LitColors.mediumGrey,
-          child: ClippedText(
-            widget.discardButtonLabel,
-            upperCase: true,
-            style: LitSansSerifStyles.button.copyWith(
-              color: Colors.white,
-            ),
-          ),
-          onPressed: widget.onDiscard,
-        ),
-        LitGradientButton(
-          boxShadow: [],
-          child: ClippedText(
-            widget.cancelButtonLabel,
-            upperCase: true,
-            style: LitSansSerifStyles.button,
-          ),
+        DialogActionButton(
+          label: widget.cancelButtonLabel,
           onPressed: _onCancel,
+        ),
+        DialogActionButton(
+          label: widget.discardButtonLabel,
+          onPressed: widget.onDiscard,
+          accentColor: LitColors.lightGrey,
+          backgroundColor: LitColors.mediumGrey,
+          style: LitSansSerifStyles.button.copyWith(
+            color: Colors.white,
+          ),
         ),
       ],
       child: AnimatedBuilder(
