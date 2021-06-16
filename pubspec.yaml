@@ -1,9 +1,8 @@
 name: lit_ui_kit
-version: 1.0.4
+version: 1.0.5
 homepage: https://github.com/litlifesoftware/lit_ui_kit
 description: >-
-  Contains a collection of code implementing the Lit UI design language.
-  It provides several widgets and screens.
+  A collection of widgets and screens for Flutter implementing the Lit UI design language.
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

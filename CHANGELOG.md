@@ -1,4 +1,4 @@
-## Unreleased - 1.0.5
+## 1.0.5
 
 - Shorten the pubspec.yaml description's length to increase the pub score.
 - Add animation and adjust styling on LitLockIcon.
