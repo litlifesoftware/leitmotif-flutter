@@ -13,6 +13,7 @@
 - Constrain the action buttons on `LitTitledDialog`.
 - Alter button styling on `LitDatePicker`.
 - Alter `LitCreditsScreen`'s back button color.
+- Add `resizeToAvoidBottomInset` member on `LitTabView` to enforce overlapping according to [Material Design's guidelines](https://material.io/components/app-bars-bottom#behavior).
 
 ## 1.0.4
 

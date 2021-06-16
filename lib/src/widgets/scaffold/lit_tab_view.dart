@@ -1,19 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/bottom_navigation.dart';
 
-/// A wrapper widget allowing to navigate the provided tab widgets inside an
-/// surrounding tab view. It implements the required logic for tracking the
-/// state and the for navigating between the tabs.
+/// A screen widget allowing to navigate the provided tab widgets inside an
+/// surrounding tab view.
 ///
-/// The [LitBottomNavigation] is used as view layer.
+/// It implements the [LitBottomNavigation] as a view layer and the required
+/// logic for tracking the state and the for navigating between the tabs.
+/// The tab wiew will ignore the any overlapping widgets when using a keyboard
+/// by disabling the [Scaffold.resizeToAvoidBottomInset]. To reenable the
+/// resize when using a keyboard, set the [resizeToAvoidBottomInset] to `true`.
+///
+/// Accoring to Material Design's guidelines (https://material.io/components/),
+/// bottom app bars should be able to overlap when using the keyboard.
+///
 class LitTabView extends StatefulWidget {
   /// The tabs the tab view should display.
   final List<LitNavigableTab> tabs;
 
+  /// States whether to resize the tab view widgets when using a keyboard.
+  final bool resizeToAvoidBottomInset;
+
   /// Creates a [LitTabView].
   ///
   /// * [tabs] are the widget and data objects the view should display.
-  const LitTabView({Key? key, required this.tabs}) : super(key: key);
+  const LitTabView({
+    Key? key,
+    required this.tabs,
+    this.resizeToAvoidBottomInset = false,
+  }) : super(key: key);
 
   @override
   _LitTabViewState createState() => _LitTabViewState();
@@ -54,6 +68,7 @@ class _LitTabViewState extends State<LitTabView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
       body: Builder(
         builder: (context) {
           return Stack(
