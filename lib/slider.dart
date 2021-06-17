@@ -8,3 +8,4 @@ export 'src/widgets/slider/lit_slider_thumb.dart';
 export 'src/widgets/slider/lit_slider_toggle_button.dart';
 export 'src/widgets/slider/lit_slider.dart';
 export 'src/widgets/slider/lit_slider_badge.dart';
+export 'src/widgets/slider/lit_slider_card.dart';

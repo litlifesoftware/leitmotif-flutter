@@ -1,3 +1,8 @@
+## 1.0.6 - Unreleased
+
+- Move `LitSliderCard` to `slider` library.
+- Align `_ValueLabel` on `LitSliderCard` to `topCenter`.
+
 ## 1.0.5
 
 - Shorten the pubspec.yaml description's length to increase the pub score.

@@ -72,7 +72,7 @@ class _LitSliderCardState extends State<LitSliderCard>
       _animationController!.forward().then(
         (_) {
           if (!_delayInProgress) {
-            print("not in progress");
+            //print("not in progress");
             _delayInProgress = !_delayInProgress;
             return Future.delayed(
               Duration(
@@ -168,13 +168,13 @@ class _ValueLabel extends StatelessWidget {
       animation: animationController!,
       builder: (context, _) {
         return Align(
-          alignment: Alignment.topRight,
+          alignment: Alignment.topCenter,
           child: AnimatedOpacity(
             duration: animationController!.duration!,
             opacity: animationController!.value,
             child: Transform(
               transform: Matrix4.translationValues(
-                -16.0,
+                0.0,
                 animationController!.value * -32.0,
                 0.0,
               ),
