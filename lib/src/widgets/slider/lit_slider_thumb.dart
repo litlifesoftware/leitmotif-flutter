@@ -56,7 +56,10 @@ class LitSliderThumb extends SliderComponentShape {
     final Paint shadowPaint = Paint()
       ..color = boxShadow.color
       ..style = PaintingStyle.fill
-      ..maskFilter = MaskFilter.blur(BlurStyle.normal, boxShadow.blurRadius);
+      ..maskFilter = MaskFilter.blur(
+        BlurStyle.normal,
+        boxShadow.blurRadius,
+      );
 
     final TextSpan text = TextSpan(
       style: LitTextStyles.sansSerif.copyWith(
@@ -76,17 +79,23 @@ class LitSliderThumb extends SliderComponentShape {
     );
 
     final RRect thumbShadow = RRect.fromLTRBR(
-      (center.dx - (width / 2)) + (boxShadow.offset.dx / 2),
-      (center.dy - (height / 2)) + (boxShadow.offset.dy / 2),
-      (center.dx + (width / 2)) + (boxShadow.offset.dx / 2),
-      (center.dy + (height / 2)) + (boxShadow.offset.dy / 2),
+      // Left
+      (center.dx + boxShadow.offset.dx - width / 2),
+      // Top
+      (center.dy + boxShadow.offset.dy - height / 2),
+      // Right
+      (center.dx + boxShadow.offset.dx + width / 2),
+      // Bottom
+      (center.dy + boxShadow.offset.dy + height / 2),
+      // Radius
       Radius.circular(radius),
     );
 
     final TextPainter textPainter = TextPainter(
-        text: text,
-        textAlign: TextAlign.center,
-        textDirection: TextDirection.ltr);
+      text: text,
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr,
+    );
 
     // Calling the layout method is required before determining the center of the
     // text.
