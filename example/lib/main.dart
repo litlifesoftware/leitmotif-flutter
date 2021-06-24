@@ -57,7 +57,7 @@ class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
   late LitNotificationController _notificationController;
   late bool darkMode;
   DateTime? dayOfBirth;
-
+  Color colorPickerBtnColor = Colors.white;
   void showSolidSnackbar() {
     _solidSnackbarController.showSnackBar();
   }
@@ -86,6 +86,12 @@ class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
           icon: LitIcons.bolt,
         ),
       );
+    });
+  }
+
+  void _setColorPickerColor(Color c) {
+    setState(() {
+      colorPickerBtnColor = c;
     });
   }
 
@@ -256,6 +262,8 @@ class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
                       showSolidSnackbar: showSolidSnackbar,
                       showDifferentlyAnimaSnackbar: showDiffentlyAnimaSnackbar,
                       showTransparentSnackbar: showTransparentSnackbar,
+                      colorPickerBtnColor: colorPickerBtnColor,
+                      setColorPickerBtnColor: _setColorPickerColor,
                     ),
                   ],
                 ),
@@ -272,10 +280,12 @@ class _ButtonList extends StatelessWidget {
   final bool darkMode;
   final Color buttonColor;
   final Color buttonTextColor;
+  final Color colorPickerBtnColor;
   final void Function() addNotification;
   final void Function() showSolidSnackbar;
   final void Function() showDifferentlyAnimaSnackbar;
   final void Function() showTransparentSnackbar;
+  final void Function(Color c) setColorPickerBtnColor;
   const _ButtonList({
     Key? key,
     required this.darkMode,
@@ -285,6 +295,8 @@ class _ButtonList extends StatelessWidget {
     required this.showSolidSnackbar,
     required this.showDifferentlyAnimaSnackbar,
     required this.showTransparentSnackbar,
+    required this.colorPickerBtnColor,
+    required this.setColorPickerBtnColor,
   }) : super(key: key);
 
   @override
@@ -442,6 +454,29 @@ class _ButtonList extends StatelessWidget {
                   context: context,
                   builder: (context) {
                     return _LitTitledDialogImpl();
+                  })
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 32.0),
+          child: LitRoundedElevatedButton(
+            color: colorPickerBtnColor,
+            child: ClippedText(
+              "Show LitColorPickerDialog",
+              upperCase: true,
+              style: LitSansSerifStyles.button.copyWith(
+                color: buttonTextColor,
+              ),
+            ),
+            onPressed: () => {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return _LitColorPickerDialogImpl(
+                      color: colorPickerBtnColor,
+                      onApply: setColorPickerBtnColor,
+                    );
                   })
             },
           ),
@@ -628,7 +663,10 @@ class _LitPrivacyScreenImplementation extends StatelessWidget {
 }
 
 class _LitSignupScreenImplementation extends StatelessWidget {
-  const _LitSignupScreenImplementation({Key? key}) : super(key: key);
+  const _LitSignupScreenImplementation({Key? key})
+      : super(
+          key: key,
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -658,8 +696,10 @@ class _LitSignupScreenImplementation extends StatelessWidget {
 
 class _LitCreditsScreenImplementation extends StatelessWidget {
   final bool darkMode;
-  const _LitCreditsScreenImplementation({Key? key, required this.darkMode})
-      : super(key: key);
+  const _LitCreditsScreenImplementation({
+    Key? key,
+    required this.darkMode,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -758,6 +798,25 @@ class _LitTitledDialogImpl extends StatelessWidget {
           label: "Action Button Label 2",
         )
       ],
+    );
+  }
+}
+
+class _LitColorPickerDialogImpl extends StatelessWidget {
+  final Color color;
+  final void Function(Color c) onApply;
+
+  const _LitColorPickerDialogImpl({
+    Key? key,
+    required this.color,
+    required this.onApply,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LitColorPickerDialog(
+      initialColor: color,
+      onApplyColor: onApply,
     );
   }
 }

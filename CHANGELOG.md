@@ -1,7 +1,10 @@
-## 1.0.6 - Unreleased
+## 1.1.0 - Unreleased
 
 - Move `LitSliderCard` to `slider` library.
 - Align `_ValueLabel` on `LitSliderCard` to `topCenter`.
+- Add `LitColorPickerDialog` to edit and create `Color` objects.
+- Alter `LitSlider`'s default styling.
+- Fix unclean box shadow rendering on `LitSliderThumb`.
 
 ## 1.0.5
 
