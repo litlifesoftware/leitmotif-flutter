@@ -5,6 +5,8 @@
 - Add `LitColorPickerDialog` to edit and create `Color` objects.
 - Alter `LitSlider`'s default styling.
 - Fix unclean box shadow rendering on `LitSliderThumb`.
+- Make `ConfirmAgeScreen` return the submitted date using a callback method.
+- Increase button legibility on `ConfirmAgeScreen`.
 
 ## 1.0.5
 

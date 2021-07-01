@@ -146,7 +146,7 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
 
   /// Conditionally returns the validity's color.
   Color get _validityColor {
-    return Color(_isValidAge ? 0xFFFAFFF5 : 0xFFFFE9E9);
+    return Color(_isValidAge ? 0xFFD4E8D1 : 0xFFFFE9E9);
   }
 
   @override
@@ -279,7 +279,6 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
                   child: Text(
                     widget.submitLabel.toUpperCase(),
                     style: LitTextStyles.sansSerifStyles[button].copyWith(
-                      color: Color(0xFF8D8D8D),
                       fontSize: 15.0,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1.1,
