@@ -387,7 +387,8 @@ class _ButtonList extends StatelessWidget {
             onPressed: () => {
               LitRouteController(context).pushCupertinoWidget(
                 ConfirmAgeScreen(
-                  onSubmit: () {
+                  onSubmit: (date) {
+                    print("ConfirmAgeScreen-submitted date: $date");
                     LitRouteController(context).pop();
                   },
                 ),

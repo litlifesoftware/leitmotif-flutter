@@ -22,8 +22,10 @@ class ConfirmAgeScreen extends StatefulWidget {
   /// The screen's subtitle.
   final String subtitle;
 
-  /// The callback executed once the user submits a valid age.
-  final void Function() onSubmit;
+  /// Called once the user submits a valid age.
+  ///
+  /// The submitted age will be returned using the callback arguement.
+  final void Function(DateTime date) onSubmit;
 
   /// The 'set' text label.
   final String setLabel;
@@ -116,7 +118,7 @@ class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
   /// method or showing a snackbar depending on the age's validity.
   void _onPressedSubmit() {
     if (_isValidAge) {
-      widget.onSubmit();
+      widget.onSubmit(_dateOfBirth!);
     } else {
       _snackbarController.showSnackBar();
     }
