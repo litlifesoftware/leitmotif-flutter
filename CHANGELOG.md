@@ -9,6 +9,7 @@
 - Increase button legibility on `ConfirmAgeScreen`.
 - Increase padding on `AnimatedActionButton`.
 - Add `addListener` member on `LitSettingsPanelController` to call custom callbacks on each settings panel action.
+- Add optional `hide` flag on `LitBottomNavigation` to hide the `LitBottomNavigation` if needed.
 
 ## 1.0.5
 

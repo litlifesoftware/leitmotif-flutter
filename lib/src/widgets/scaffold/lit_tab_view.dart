@@ -20,6 +20,10 @@ class LitTabView extends StatefulWidget {
   /// States whether to resize the tab view widgets when using a keyboard.
   final bool resizeToAvoidBottomInset;
 
+  /// States whether to hide the navigation bar, if any widget should occupy
+  /// its space temporarily (e.g. when expanding a panel).
+  final bool hideNavigationBar;
+
   /// Creates a [LitTabView].
   ///
   /// * [tabs] are the widget and data objects the view should display.
@@ -27,6 +31,7 @@ class LitTabView extends StatefulWidget {
     Key? key,
     required this.tabs,
     this.resizeToAvoidBottomInset = false,
+    this.hideNavigationBar = false,
   }) : super(key: key);
 
   @override
@@ -78,6 +83,7 @@ class _LitTabViewState extends State<LitTabView> {
                 selectedTabIndex: tabIndex,
                 onTabSelect: _setTabIndex,
                 tabs: _tabData,
+                hide: widget.hideNavigationBar,
               )
             ],
           );

@@ -9,29 +9,7 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 /// Only one widgets will be displayed at once by displaying the list item whose index value
 /// matches with the current [selectedTabIndex].
 class LitBottomNavigation extends StatefulWidget {
-  /// The currently displayed widget's index value.
-  final int selectedTabIndex;
-
-  /// The setter method to set the new tab index value on the parent widget.
-  final void Function(int) onTabSelect;
-
-  /// The relative width the bar the landscape mode.
-  final double landscapeWidthFactor;
-
-  /// The meta data of the navigatable tabs. These will have to match with the parent's widget
-  /// list in order to avoid index-based errors.
-  final List<LitBottomNavigationTabData> tabs;
-
   /// Creates a [LitBottomNavigation].
-  ///
-  /// * [selectedTabIndex] is the parent's currently selected tab's index.
-  ///
-  /// * [onTabSelect] sets the parent's tab index value using the new value.
-  ///
-  /// * [landscapeWidthFactor] is the relative width on the landscape mode. Defaults to ``0.65``.
-  ///
-  /// * [tabs] is a list of meta data objects which will be linked to the widget's instances. They will
-  ///   provide the icons and the 'is selected' condition.
   ///
   /// {@tool snippet}
   /// The [LitBottomNavigation]'s tabs need to match the parent's widget list to avoid index errors and
@@ -86,11 +64,41 @@ class LitBottomNavigation extends StatefulWidget {
   /// {@end-tool}
   const LitBottomNavigation({
     Key? key,
+    this.hide = true,
     required this.selectedTabIndex,
     required this.onTabSelect,
     this.landscapeWidthFactor = 0.65,
     required this.tabs,
+    this.padding = const EdgeInsets.symmetric(
+      vertical: 8.0,
+      horizontal: 8.0,
+    ),
+    this.height = 56.0,
   }) : super(key: key);
+
+  /// States whether to hide the bottom navigation.
+  ///
+  /// Hiding the bar could be used in order to avoid overlapping of widgets
+  /// displayed in front of the bottom navigation (such as panels).
+  final bool hide;
+
+  /// The currently displayed widget's index value.
+  final int selectedTabIndex;
+
+  /// The setter method to set the new tab index value on the parent widget.
+  final void Function(int) onTabSelect;
+
+  /// The relative width the bar the landscape mode.
+  final double landscapeWidthFactor;
+
+  /// The meta data of the navigatable tabs. These will have to match with the parent's widget
+  /// list in order to avoid index-based errors.
+  final List<LitBottomNavigationTabData> tabs;
+
+  final EdgeInsets padding;
+
+  final double height;
+
   @override
   _LitBottomNavigationState createState() => _LitBottomNavigationState();
 }
@@ -99,6 +107,7 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
 
+  /// Switches the currently selected tab using the provided index value.
   void switchTab(int value) {
     widget.onTabSelect(value);
     if (_animationController.isCompleted) {
@@ -106,6 +115,11 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
             (value) => _animationController.forward(),
           );
     }
+  }
+
+  /// Returns the vertical transform value applied by the animation.
+  double get _transformY {
+    return widget.height * 2;
   }
 
   @override
@@ -134,7 +148,9 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
         return Transform(
           transform: Matrix4.translationValues(
             0,
-            100 - (100 * _animationController.value),
+            widget.hide
+                ? _transformY
+                : _transformY - (_transformY * _animationController.value),
             0,
           ),
           child: LayoutBuilder(
@@ -143,16 +159,13 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
                 alignment: Alignment.bottomCenter,
                 child: SizedBox(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 8.0,
-                      horizontal: 8.0,
-                    ),
+                    padding: widget.padding,
                     child: LitConstrainedSizedBox(
                       landscapeWidthFactor: 0.55,
                       child: BluredBackgroundContainer(
                         blurRadius: 2.0,
                         child: Container(
-                          height: 56.0,
+                          height: widget.height,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15.0),
                             color: LitColors.lightGrey.withOpacity(0.6),

@@ -89,8 +89,12 @@ class _LitNotificationContainerState extends State<LitNotificationContainer> {
     return Material(
       child: SafeArea(
         child: Stack(
+          alignment: Alignment.topCenter,
           children: [
-            widget.child,
+            Align(
+              alignment: Alignment.topCenter,
+              child: widget.child,
+            ),
             Builder(builder: (context) {
               return Column(
                 children: snackbars,
