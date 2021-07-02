@@ -8,6 +8,7 @@
 - Make `ConfirmAgeScreen` return the submitted date using a callback method.
 - Increase button legibility on `ConfirmAgeScreen`.
 - Increase padding on `AnimatedActionButton`.
+- Add `addListener` member on `LitSettingsPanelController` to call custom callbacks on each settings panel action.
 
 ## 1.0.5
 
