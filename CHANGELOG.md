@@ -7,6 +7,7 @@
 - Fix unclean box shadow rendering on `LitSliderThumb`.
 - Make `ConfirmAgeScreen` return the submitted date using a callback method.
 - Increase button legibility on `ConfirmAgeScreen`.
+- Increase padding on `AnimatedActionButton`.
 
 ## 1.0.5
 
