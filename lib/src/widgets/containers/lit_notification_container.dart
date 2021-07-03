@@ -4,9 +4,9 @@ import 'package:lit_ui_kit/src/controller/lit_notification_controller.dart';
 
 /// A widget to show multiple notifications on top of the provided [child].
 ///
-/// The [LitNotificationController] will be used to add [LitIconSnackbar]s to the
-/// current view. Once the snackbar has reached it's maximum display duration,
-/// the snackbar will be disposed.
+/// The [LitNotificationController] will be used to add [LitIconSnackbar]s to
+/// the current view. Once the snackbar has reached it's maximum display
+/// duration, the snackbar will be disposed.
 class LitNotificationContainer extends StatefulWidget {
   final Widget child;
   final LitNotificationController controller;
@@ -45,18 +45,18 @@ class _LitNotificationContainerState extends State<LitNotificationContainer> {
     bool maxLengthReached =
         widget.controller.notifications.length == widget.controller.maxAtOnce;
 
-    /// If there should be any additional more notifications displayed
-    if (maxLengthReached) {
-      // Remove all notifications.
-      setState(() {
+    setState(() {
+      /// If there should be any additional more notifications displayed
+      if (maxLengthReached) {
+        // Remove all notifications.
+
         widget.controller.reset();
-      });
-    } else {
-      // Remove the provided notification.
-      setState(() {
+      } else {
+        // Remove the provided notification.
+
         widget.controller.remove(data);
-      });
-    }
+      }
+    });
   }
 
   /// The view model of [LitNotificationController]'s notification list is
@@ -66,15 +66,14 @@ class _LitNotificationContainerState extends State<LitNotificationContainer> {
     // Iterate through the controller's list and add snackbars to the view
     // model.
     for (int i = 0; i < widget.controller.notifications.length; i++) {
-      {
-        snackbars.add(
-          _NotificationItem(
-            notificationController: widget.controller,
-            notificationData: widget.controller.notifications[i],
-            onRemove: _onRemove,
-          ),
-        );
-      }
+      snackbars.add(
+        _NotificationItem(
+          notificationController: widget.controller,
+          notificationData: widget.controller.notifications[i],
+          onRemove: _onRemove,
+          index: i,
+        ),
+      );
     }
     return snackbars;
   }
@@ -96,7 +95,7 @@ class _LitNotificationContainerState extends State<LitNotificationContainer> {
               child: widget.child,
             ),
             Builder(builder: (context) {
-              return Column(
+              return Stack(
                 children: snackbars,
               );
             })
@@ -119,12 +118,16 @@ class _NotificationItem extends StatefulWidget {
   /// The callback function to set the state on the parent widget.
   final void Function(LitNotificationData) onRemove;
 
+  /// The item's index on the list.
+  final int index;
+
   /// Creates a [_NotificationItem].
   const _NotificationItem({
     Key? key,
     required this.notificationController,
     required this.notificationData,
     required this.onRemove,
+    required this.index,
   }) : super(key: key);
   @override
   __NotificationItemState createState() => __NotificationItemState();
@@ -135,7 +138,7 @@ class __NotificationItemState extends State<_NotificationItem>
   late LitSnackbarController _snackbarController;
 
   /// Removes the notification data object from the list.
-  void _remove(void value) {
+  void _remove() {
     widget.onRemove(widget.notificationData);
   }
 
@@ -144,10 +147,11 @@ class __NotificationItemState extends State<_NotificationItem>
     super.initState();
     // Initialize the snackbar controller.
     _snackbarController = LitSnackbarController()..init(this);
+    _snackbarController.addListener(_remove);
     // Try to play the snackbar animation without reverse animating at the end.
     try {
       // And remove the data notification data object from the list.
-      _snackbarController.showSnackBar(reverseAnimation: false).then(_remove);
+      _snackbarController.showSnackBar(reverseAnimation: false);
     } catch (e) {
       print(e);
     }
@@ -161,10 +165,16 @@ class __NotificationItemState extends State<_NotificationItem>
 
   @override
   Widget build(BuildContext context) {
-    return LitIconSnackbar(
-      snackBarController: _snackbarController,
-      text: widget.notificationData.description,
-      iconData: widget.notificationData.icon,
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: LitSnackbar.defaultHeight * widget.index +
+            (widget.index > 0 ? 8.0 : 0.0),
+      ),
+      child: LitIconSnackbar(
+        snackBarController: _snackbarController,
+        text: widget.notificationData.description,
+        iconData: widget.notificationData.icon,
+      ),
     );
   }
 }

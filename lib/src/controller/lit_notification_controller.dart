@@ -16,7 +16,7 @@ class LitNotificationController {
   /// ```
   /// {@end-tool}
   ///
-  LitNotificationController({this.maxAtOnce = 3});
+  LitNotificationController({this.maxAtOnce = 10});
 
   /// All current notifications<.
   List<LitNotificationData> notifications = [];

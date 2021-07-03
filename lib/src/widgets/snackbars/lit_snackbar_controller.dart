@@ -91,7 +91,7 @@ class LitSnackbarController {
           } catch (e) {
             _throwError();
           }
-        });
+        }).then((value) => _callListerns());
       },
     );
   }
@@ -118,6 +118,24 @@ class LitSnackbarController {
             "called snackbar after disposing its controller?"
       ],
     );
+  }
+
+  /// A list currently added listeners.
+  List<Function> _listeners = [];
+
+  /// Calls all provided listeners one by one.
+  void _callListerns() {
+    for (Function func in _listeners) {
+      func();
+    }
+  }
+
+  /// Adds a listener to the panel.
+  ///
+  /// Each action ([dismissSettingsPanel],[showSettingsPanel]) will trigger the
+  /// provided callbacks.
+  void addListener(void Function() func) {
+    _listeners.add(func);
   }
 }
 

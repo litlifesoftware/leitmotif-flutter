@@ -8,8 +8,10 @@
 - Make `ConfirmAgeScreen` return the submitted date using a callback method.
 - Increase button legibility on `ConfirmAgeScreen`.
 - Increase padding on `AnimatedActionButton`.
-- Add `addListener` member on `LitSettingsPanelController` to call custom callbacks on each settings panel action.
+- Add `addListener` member on `LitSettingsPanelController` to call custom callbacks on each action.
 - Add optional `hide` flag on `LitBottomNavigation` to hide the `LitBottomNavigation` if needed.
+- Add `addListener` member on `LitSnackbarController` to call custom callbacks on each action.
+- Replace `Column` with `Stack` to display grouped notifications on `LitNotificationContainer`.
 
 ## 1.0.5
 
