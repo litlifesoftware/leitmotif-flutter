@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class BluredBackgroundContainer extends StatelessWidget {
   final Widget child;
   final double blurRadius;
-  final BorderRadius? borderRadius;
+  final BorderRadius borderRadius;
 
   /// Creates a [BluredBackgroundContainer] [Widget].
   ///
@@ -14,13 +14,13 @@ class BluredBackgroundContainer extends StatelessWidget {
   const BluredBackgroundContainer({
     Key? key,
     required this.child,
-    required this.blurRadius,
-    this.borderRadius,
+    this.blurRadius = 2.0,
+    this.borderRadius: BorderRadius.zero,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: borderRadius ?? BorderRadius.zero,
+      borderRadius: borderRadius,
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: blurRadius, sigmaY: blurRadius),
         child: child,

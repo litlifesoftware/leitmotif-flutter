@@ -12,6 +12,7 @@
 - Add optional `hide` flag on `LitBottomNavigation` to hide the `LitBottomNavigation` if needed.
 - Add `addListener` member on `LitSnackbarController` to call custom callbacks on each action.
 - Replace `Column` with `Stack` to display grouped notifications on `LitNotificationContainer`.
+- Add default `blurRadius` on `BluredBackgroundContainer`
 
 ## 1.0.5
 
