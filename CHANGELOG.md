@@ -1,18 +1,15 @@
 ## 1.1.0 - Unreleased
 
 - Move `LitSliderCard` to `slider` library.
-- Align `_ValueLabel` on `LitSliderCard` to `topCenter`.
 - Add `LitColorPickerDialog` to edit and create `Color` objects.
 - Alter `LitSlider`'s default styling.
 - Fix unclean box shadow rendering on `LitSliderThumb`.
 - Make `ConfirmAgeScreen` return the submitted date using a callback method.
-- Increase button legibility on `ConfirmAgeScreen`.
-- Increase padding on `AnimatedActionButton`.
 - Add `addListener` member on `LitSettingsPanelController` to call custom callbacks on each action.
 - Add optional `hide` flag on `LitBottomNavigation` to hide the `LitBottomNavigation` if needed.
 - Add `addListener` member on `LitSnackbarController` to call custom callbacks on each action.
 - Replace `Column` with `Stack` to display grouped notifications on `LitNotificationContainer`.
-- Add default `blurRadius` on `BluredBackgroundContainer`
+- Add customization options on `LitBottomNavigation`.
 
 ## 1.0.5
 

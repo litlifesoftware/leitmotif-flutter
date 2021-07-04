@@ -14,6 +14,28 @@ import 'package:lit_ui_kit/bottom_navigation.dart';
 /// bottom app bars should be able to overlap when using the keyboard.
 ///
 class LitTabView extends StatefulWidget {
+  /// Creates a [LitTabView].
+  ///
+  /// * [tabs] are the widget and data objects the view should display.
+  const LitTabView({
+    Key? key,
+    required this.tabs,
+    this.resizeToAvoidBottomInset = false,
+    this.hideNavigationBar = false,
+    this.animationDuration =
+        LitBottomNavigationBarDefaultStyling.animationDuration,
+    this.barBlurRadius = LitBottomNavigationBarDefaultStyling.blurRadius,
+    this.barBackgroundColor =
+        LitBottomNavigationBarDefaultStyling.backgroundColor,
+    this.tabItemBackgroundColor =
+        LitBottomNavigationBarDefaultStyling.tabItemBackgroundColor,
+    this.tabItemBackgroundColorSelected =
+        LitBottomNavigationBarDefaultStyling.tabItemBackgroundColorSelected,
+    this.tabItemColor = LitBottomNavigationBarDefaultStyling.tabItemColor,
+    this.tabItemColorSelected =
+        LitBottomNavigationBarDefaultStyling.tabItemColorSelected,
+  }) : super(key: key);
+
   /// The tabs the tab view should display.
   final List<LitNavigableTab> tabs;
 
@@ -24,15 +46,26 @@ class LitTabView extends StatefulWidget {
   /// its space temporarily (e.g. when expanding a panel).
   final bool hideNavigationBar;
 
-  /// Creates a [LitTabView].
-  ///
-  /// * [tabs] are the widget and data objects the view should display.
-  const LitTabView({
-    Key? key,
-    required this.tabs,
-    this.resizeToAvoidBottomInset = false,
-    this.hideNavigationBar = false,
-  }) : super(key: key);
+  /// States how long each animation cycle should last.
+  final Duration animationDuration;
+
+  /// States the amount of blur applied to the navigation bar's background.
+  final double barBlurRadius;
+
+  /// The navigation bar's background color.
+  final Color barBackgroundColor;
+
+  /// The background color of the currently selected tab item.
+  final Color tabItemBackgroundColorSelected;
+
+  /// The background color of each unselected tab item.
+  final Color tabItemBackgroundColor;
+
+  /// The color of the currently selected tab item.
+  final Color tabItemColor;
+
+  /// The color of each unselected tab item.
+  final Color tabItemColorSelected;
 
   @override
   _LitTabViewState createState() => _LitTabViewState();
@@ -84,6 +117,14 @@ class _LitTabViewState extends State<LitTabView> {
                 onTabSelect: _setTabIndex,
                 tabs: _tabData,
                 hide: widget.hideNavigationBar,
+                animationDuration: widget.animationDuration,
+                backgroundColor: widget.barBackgroundColor,
+                blurRadius: widget.barBlurRadius,
+                tabItemColor: widget.tabItemColor,
+                tabItemColorSelected: widget.tabItemColorSelected,
+                tabItemBackgroundColor: widget.tabItemBackgroundColor,
+                tabItemBackgroundColorSelected:
+                    widget.tabItemBackgroundColorSelected,
               )
             ],
           );

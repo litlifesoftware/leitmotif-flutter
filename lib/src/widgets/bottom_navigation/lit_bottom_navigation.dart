@@ -39,8 +39,9 @@ class LitBottomNavigation extends StatefulWidget {
   /// ];
   /// ```
   ///
-  /// Now the list of tab data objects can be linked to the respective screen widget. Use a wrapping [Stack]
-  /// to stack the navigation on top of your currently selected screen widget:
+  /// Now the list of tab data objects can be linked to the respective screen
+  /// widget. Use a wrapping [Stack] to stack the navigation on top of your
+  /// currently selected screen widget:
   /// ```dart
   /// return Scaffold(
   ///    body: Builder(
@@ -49,7 +50,6 @@ class LitBottomNavigation extends StatefulWidget {
   ///          children: [
   ///            _tabs[tabIndex],
   ///            LitBottomNavigation(
-  ///              axis: Axis.vertical,
   ///              selectedTabIndex: tabIndex,
   ///              onTabSelect: _setTabIndex,
   ///              tabs: _tabData,
@@ -69,11 +69,19 @@ class LitBottomNavigation extends StatefulWidget {
     required this.onTabSelect,
     this.landscapeWidthFactor = 0.65,
     required this.tabs,
-    this.padding = const EdgeInsets.symmetric(
-      vertical: 8.0,
-      horizontal: 8.0,
-    ),
-    this.height = 56.0,
+    this.padding = LitBottomNavigationBarDefaultStyling.padding,
+    this.height = LitBottomNavigationBarDefaultStyling.height,
+    this.animationDuration =
+        LitBottomNavigationBarDefaultStyling.animationDuration,
+    this.blurRadius = LitBottomNavigationBarDefaultStyling.blurRadius,
+    this.backgroundColor = LitBottomNavigationBarDefaultStyling.backgroundColor,
+    this.tabItemBackgroundColorSelected =
+        LitBottomNavigationBarDefaultStyling.tabItemBackgroundColorSelected,
+    this.tabItemBackgroundColor =
+        LitBottomNavigationBarDefaultStyling.tabItemBackgroundColor,
+    this.tabItemColor = LitBottomNavigationBarDefaultStyling.tabItemColor,
+    this.tabItemColorSelected =
+        LitBottomNavigationBarDefaultStyling.tabItemColorSelected,
   }) : super(key: key);
 
   /// States whether to hide the bottom navigation.
@@ -95,10 +103,32 @@ class LitBottomNavigation extends StatefulWidget {
   /// list in order to avoid index-based errors.
   final List<LitBottomNavigationTabData> tabs;
 
+  /// The padding surrounding the navigation bar.
   final EdgeInsets padding;
 
+  /// The navigation bar's total height.
   final double height;
 
+  /// States how long each animation cycle should last.
+  final Duration animationDuration;
+
+  /// States the amount of blur applied to the navigation bar's background.
+  final double blurRadius;
+
+  /// The navigation bar's background color.
+  final Color backgroundColor;
+
+  /// The background color of the currently selected tab item.
+  final Color tabItemBackgroundColorSelected;
+
+  /// The background color of each unselected tab item.
+  final Color tabItemBackgroundColor;
+
+  /// The color of the currently selected tab item.
+  final Color tabItemColor;
+
+  /// The color of each unselected tab item.
+  final Color tabItemColorSelected;
   @override
   _LitBottomNavigationState createState() => _LitBottomNavigationState();
 }
@@ -122,13 +152,21 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
     return widget.height * 2;
   }
 
+  double get _animatedTransform {
+    return widget.hide
+        ? _transformY
+        : _transformY - (_transformY * _animationController.value);
+  }
+
+  bool getIsSelected(LitBottomNavigationTabData data) {
+    return widget.selectedTabIndex == data.index;
+  }
+
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: Duration(
-        milliseconds: 150,
-      ),
+      duration: widget.animationDuration,
       vsync: this,
     );
     _animationController.forward(from: 0.0);
@@ -148,9 +186,7 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
         return Transform(
           transform: Matrix4.translationValues(
             0,
-            widget.hide
-                ? _transformY
-                : _transformY - (_transformY * _animationController.value),
+            _animatedTransform,
             0,
           ),
           child: LayoutBuilder(
@@ -163,28 +199,35 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
                     child: LitConstrainedSizedBox(
                       landscapeWidthFactor: 0.55,
                       child: BluredBackgroundContainer(
-                        blurRadius: 2.0,
+                        blurRadius: widget.blurRadius,
                         child: Container(
                           height: widget.height,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15.0),
-                            color: LitColors.lightGrey.withOpacity(0.6),
+                            color: widget.backgroundColor,
                           ),
                           child: Builder(
                             builder: (context) {
                               final List<Widget> children = [];
-                              widget.tabs
-                                  .forEach((LitBottomNavigationTabData data) {
-                                children.add(
-                                  _BottomNavigationItem(
-                                    data: data,
-                                    selected:
-                                        widget.selectedTabIndex == data.index,
-                                    setSelectedTab: switchTab,
-                                    animationController: _animationController,
-                                  ),
-                                );
-                              });
+                              widget.tabs.forEach(
+                                (LitBottomNavigationTabData data) {
+                                  children.add(
+                                    _BottomNavigationItem(
+                                      data: data,
+                                      selected: getIsSelected(data),
+                                      setSelectedTab: switchTab,
+                                      animationController: _animationController,
+                                      tabItemBackgroundColor:
+                                          widget.tabItemBackgroundColor,
+                                      tabItemBackgroundColorSelected:
+                                          widget.tabItemBackgroundColorSelected,
+                                      tabItemColor: widget.tabItemColor,
+                                      tabItemColorSelected:
+                                          widget.tabItemColorSelected,
+                                    ),
+                                  );
+                                },
+                              );
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 8.0,
@@ -212,49 +255,83 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
   }
 }
 
-/// The navigation item which will create a view model for the provided data instance.
-class _BottomNavigationItem extends StatelessWidget {
+/// The navigation item which will create a view model for the provided data
+/// instance.
+class _BottomNavigationItem extends StatefulWidget {
   final LitBottomNavigationTabData data;
   final bool selected;
   final void Function(int) setSelectedTab;
   final AnimationController animationController;
+  final Color tabItemBackgroundColorSelected;
+  final Color tabItemBackgroundColor;
+  final Color tabItemColor;
+  final Color tabItemColorSelected;
+
   const _BottomNavigationItem({
     Key? key,
     required this.data,
     required this.selected,
     required this.setSelectedTab,
     required this.animationController,
+    required this.tabItemBackgroundColorSelected,
+    required this.tabItemBackgroundColor,
+    required this.tabItemColor,
+    required this.tabItemColorSelected,
   }) : super(key: key);
+
+  @override
+  __BottomNavigationItemState createState() => __BottomNavigationItemState();
+}
+
+class __BottomNavigationItemState extends State<_BottomNavigationItem> {
+  Color get _backgroundColor {
+    return widget.selected
+        ? widget.tabItemBackgroundColorSelected
+        : widget.tabItemBackgroundColor;
+  }
+
+  Color get _iconColor {
+    return widget.selected ? widget.tabItemColorSelected : widget.tabItemColor;
+  }
+
+  IconData get _icon {
+    return widget.selected ? widget.data.iconSelected : widget.data.icon;
+  }
+
+  List<BoxShadow> get _boxShadow {
+    return widget.selected
+        ? [
+            BoxShadow(
+              blurRadius: 6.0,
+              color: Colors.black38,
+              offset: Offset(-2, 2),
+              spreadRadius: -1.0,
+            )
+          ]
+        : [];
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: animationController,
+      animation: widget.animationController,
       builder: (context, _) {
         return AnimatedOpacity(
-          opacity: 0.5 + (0.5 * animationController.value),
-          duration: animationController.duration!,
+          opacity: 0.5 + (0.5 * widget.animationController.value),
+          duration: widget.animationController.duration!,
           child: InkWell(
-            onTap: selected
+            onTap: widget.selected
                 ? () {}
                 : () {
-                    setSelectedTab(data.index);
+                    widget.setSelectedTab(widget.data.index);
                   },
             child: Stack(
               children: [
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15.0),
-                    color: selected
-                        ? LitColors.mediumGrey
-                        : LitColors.mediumGrey.withOpacity(0.3),
-                    boxShadow: selected
-                        ? [
-                            BoxShadow(
-                              blurRadius: 14.0,
-                              color: Colors.black.withOpacity(0.4),
-                            )
-                          ]
-                        : [],
+                    color: _backgroundColor,
+                    boxShadow: _boxShadow,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -262,13 +339,13 @@ class _BottomNavigationItem extends StatelessWidget {
                       vertical: 8.0,
                     ),
                     child: Icon(
-                      selected ? data.iconSelected : data.icon,
-                      color: Colors.white,
-                      size: (animationController.value * 22.0),
+                      _icon,
+                      color: _iconColor,
+                      size: (widget.animationController.value * 22.0),
                     ),
                   ),
                 ),
-                selected
+                widget.selected
                     ? Padding(
                         padding: const EdgeInsets.symmetric(
                           vertical: 8.0,
@@ -277,21 +354,22 @@ class _BottomNavigationItem extends StatelessWidget {
                         child: Transform(
                           transform: Matrix4.translationValues(
                             0,
-                            25.0 - (25.0 * animationController.value),
+                            25.0 - (25.0 * widget.animationController.value),
                             0,
                           ),
                           child: Container(
-                            height: 4 + (4 * animationController.value),
-                            width: 4 + (4 * animationController.value),
+                            height: 4 + (4 * widget.animationController.value),
+                            width: 4 + (4 * widget.animationController.value),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(
-                                    2 + (2 * animationController.value)),
+                                  2 + (2 * widget.animationController.value),
+                                ),
                               ),
                               color: Color.lerp(
                                 Colors.white,
                                 LitColors.lightPink,
-                                animationController.value,
+                                widget.animationController.value,
                               ),
                             ),
                           ),
@@ -328,4 +406,20 @@ class LitBottomNavigationTabData {
     required this.icon,
     required this.iconSelected,
   });
+}
+
+/// The default styling of [LitBottomNavigation].
+class LitBottomNavigationBarDefaultStyling {
+  static const padding = const EdgeInsets.symmetric(
+    vertical: 8.0,
+    horizontal: 8.0,
+  );
+  static const height = 56.0;
+  static const animationDuration = const Duration(milliseconds: 150);
+  static const blurRadius = 3.0;
+  static const backgroundColor = const Color(0x82C7C7C7);
+  static const tabItemBackgroundColorSelected = LitColors.mediumGrey;
+  static const tabItemBackgroundColor = const Color(0x7fb7b7b7);
+  static const tabItemColor = LitColors.mediumGrey;
+  static const tabItemColorSelected = Colors.white;
 }
