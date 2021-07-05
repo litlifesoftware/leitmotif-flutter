@@ -10,6 +10,7 @@
 - Add `addListener` member on `LitSnackbarController` to call custom callbacks on each action.
 - Replace `Column` with `Stack` to display grouped notifications on `LitNotificationContainer`.
 - Add customization options on `LitBottomNavigation`.
+- Add `LitUserIcon` to display the username as an acronym on a colored background.
 
 ## 1.0.5
 

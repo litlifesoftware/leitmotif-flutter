@@ -319,6 +319,26 @@ class __ExampleScreenState extends State<_ExampleScreen> {
                             ),
                           )
                         : SizedBox(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 32.0,
+                      ),
+                      child: LitUserIcon(
+                        primaryColor: colorPickerBtnColor,
+                        onPressed: () => {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return _LitColorPickerDialogImpl(
+                                  color: colorPickerBtnColor,
+                                  onApply: (c) {
+                                    _setColorPickerColor(c);
+                                  },
+                                );
+                              })
+                        },
+                      ),
+                    ),
                     _ButtonList(
                       darkMode: darkMode,
                       addNotification: _addNotification,
