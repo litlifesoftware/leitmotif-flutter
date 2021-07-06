@@ -45,7 +45,9 @@ class _TitledCollapsibleCardState extends State<TitledCollapsibleCard> {
         child: AnimatedBuilder(
           animation: widget.collapsibleCardController.animationController,
           builder: (context, child) {
-            return SizedBox(
+            return SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: SizedBox(
                 height: widget.height,
                 width: MediaQuery.of(context).size.width,
                 child: Transform(
@@ -97,7 +99,9 @@ class _TitledCollapsibleCardState extends State<TitledCollapsibleCard> {
                       ),
                     ],
                   ),
-                ));
+                ),
+              ),
+            );
           },
         ));
   }
