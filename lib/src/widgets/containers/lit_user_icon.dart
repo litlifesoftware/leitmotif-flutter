@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/containers.dart';
 import 'package:lit_ui_kit/styles.dart';
@@ -67,13 +69,15 @@ class __UserIconState extends State<LitUserIcon> {
   /// Returns a stylized user color.
   Color get _userColor {
     Color uColor = widget.primaryColor;
-    Color contrastColor = Color(0xFFCDCDCD);
-    int alpha = uColor.alpha;
-    int red = (uColor.red * 0.8).floor();
-    int green = (uColor.green * 0.8).floor();
-    int blue = (uColor.blue * 0.8).floor();
-    Color desatColor = Color.fromARGB(alpha, red, green, blue);
-    return Color.lerp(contrastColor, desatColor, 0.3)!;
+    int alpha = (uColor.alpha * 0.75).floor();
+    int red = uColor.red;
+    int green = uColor.green;
+    int blue = uColor.blue;
+    return Color.fromARGB(alpha, red, green, blue);
+  }
+
+  Color get _contrastColor {
+    return Color(0xFFFFFFFF);
   }
 
   /// Returns the initials of the user derived by the username.
@@ -99,9 +103,19 @@ class __UserIconState extends State<LitUserIcon> {
   }
 
   Color get _textColor {
-    return _userColor.computeLuminance() >= 0.5
-        ? Colors.white
-        : Color(0xFF888888);
+    Color textLight = Colors.white;
+    Color textDark = Color(0xFF888888);
+    double luminanceUserColor = _userColor.computeLuminance();
+    double luminanceTextLight = textLight.computeLuminance();
+    double luminacneTextDark = textDark.computeLuminance();
+    double contrastLight = (max(luminanceUserColor, luminanceTextLight) +
+        0.05 / min(luminanceUserColor, luminanceTextLight) +
+        0.05);
+    double contrastDark = (max(luminanceUserColor, luminacneTextDark) +
+        0.05 / min(luminanceUserColor, luminacneTextDark) +
+        0.05);
+    Color textColor = (contrastDark > contrastLight) ? textDark : textLight;
+    return textColor;
   }
 
   void _onTap() {
@@ -126,7 +140,7 @@ class __UserIconState extends State<LitUserIcon> {
               end: Alignment.bottomLeft,
               colors: [
                 _userColor,
-                Colors.white,
+                _contrastColor,
               ]),
           borderRadius: widget.borderRadius,
         ),
