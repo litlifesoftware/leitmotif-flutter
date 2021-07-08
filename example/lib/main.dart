@@ -288,6 +288,7 @@ class __ExampleScreenState extends State<_ExampleScreen> {
         ],
       ),
       actionButton: AnimatedActionButton(
+          alignment: Alignment.bottomLeft,
           child: Icon(
             LitIcons.gear,
             color: Colors.white,
@@ -350,6 +351,22 @@ class __ExampleScreenState extends State<_ExampleScreen> {
                       colorPickerBtnColor: colorPickerBtnColor,
                       setColorPickerBtnColor: _setColorPickerColor,
                     ),
+                    LitSettingsFooter(
+                      children: [
+                        LitPlainLabelButton(
+                          label: "Option 1",
+                          onPressed: showSolidSnackbar,
+                        ),
+                        LitPlainLabelButton(
+                          label: "Option 1",
+                          onPressed: showTransparentSnackbar,
+                        ),
+                        LitPlainLabelButton(
+                          label: "Option 1",
+                          onPressed: showDiffentlyAnimaSnackbar,
+                        )
+                      ],
+                    )
                   ],
                 ),
               ],

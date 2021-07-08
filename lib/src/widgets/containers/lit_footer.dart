@@ -37,26 +37,31 @@ class LitFooter extends StatelessWidget {
               left: 16.0,
               right: 16.0,
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 8.0,
-                  ),
-                  child: ClippedText(
-                    title,
-                    textAlign: TextAlign.start,
-                    style: LitTextStyles.sansSerif.copyWith(
-                      fontSize: 22.0,
-                      color: HexColor('#878787'),
+            child: LitConstrainedSizedBox(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  LitConstrainedSizedBox(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 8.0,
+                      ),
+                      child: ClippedText(
+                        title,
+                        textAlign: TextAlign.end,
+                        style: LitSansSerifStyles.header6.copyWith(
+                          color: HexColor('#878787'),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                child,
-              ],
+                  LitConstrainedSizedBox(
+                    child: child,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
