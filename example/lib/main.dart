@@ -122,6 +122,7 @@ class __ExampleScreenState extends State<_ExampleScreen> {
   late bool darkMode;
   DateTime? dayOfBirth;
   Color colorPickerBtnColor = Colors.white;
+  double _userIconChar = 65;
   void showSolidSnackbar() {
     _solidSnackbarController.showSnackBar();
   }
@@ -156,6 +157,12 @@ class __ExampleScreenState extends State<_ExampleScreen> {
   void _setColorPickerColor(Color c) {
     setState(() {
       colorPickerBtnColor = c;
+    });
+  }
+
+  void _onChangeSlider(double value) {
+    setState(() {
+      _userIconChar = value;
     });
   }
 
@@ -325,6 +332,7 @@ class __ExampleScreenState extends State<_ExampleScreen> {
                         vertical: 32.0,
                       ),
                       child: LitUserIcon(
+                        username: String.fromCharCode(_userIconChar.toInt()),
                         primaryColor: colorPickerBtnColor,
                         onPressed: () => {
                           showDialog(
@@ -339,6 +347,10 @@ class __ExampleScreenState extends State<_ExampleScreen> {
                               })
                         },
                       ),
+                    ),
+                    _LitSliderImpl(
+                      userIconChar: _userIconChar,
+                      onChangeSlider: _onChangeSlider,
                     ),
                     _ButtonList(
                       darkMode: darkMode,
@@ -373,6 +385,32 @@ class __ExampleScreenState extends State<_ExampleScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _LitSliderImpl extends StatelessWidget {
+  final double userIconChar;
+  final void Function(double) onChangeSlider;
+  const _LitSliderImpl({
+    Key? key,
+    required this.userIconChar,
+    required this.onChangeSlider,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 4.0,
+        horizontal: 8.0,
+      ),
+      child: LitSlider(
+        min: 65,
+        max: 90,
+        onChanged: onChangeSlider,
+        value: userIconChar,
       ),
     );
   }
