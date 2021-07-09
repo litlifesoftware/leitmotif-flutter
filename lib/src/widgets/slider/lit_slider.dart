@@ -4,10 +4,10 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 class LitSlider extends StatelessWidget {
   final double min;
   final double max;
-  final double? value;
-  final Color? activeTrackColor;
+  final double value;
+  final Color activeTrackColor;
   final Color inactiveTrackColor;
-  final Color? thumbColor;
+  final Color thumbColor;
   final void Function(double) onChanged;
 
   final double thumbHeight;
@@ -37,7 +37,7 @@ class LitSlider extends StatelessWidget {
       offset: Offset(2.0, 2.0),
       spreadRadius: -1.0,
     ),
-    this.thumbFontSize = 15.0,
+    this.thumbFontSize = 13.0,
     this.thumbTextColor = LitColors.mediumGrey,
     this.overlayBoxShadow = const BoxShadow(
       blurRadius: 8.0,
@@ -66,7 +66,7 @@ class LitSlider extends StatelessWidget {
               width: thumbWidth,
               radius: thumbRadius,
               boxShadow: thumbBoxShadow,
-              fontSize: 14.0,
+              fontSize: thumbFontSize,
               textColor: Color.lerp(
                   Color.lerp(
                     thumbTextColor,
@@ -74,7 +74,7 @@ class LitSlider extends StatelessWidget {
                     0.5,
                   ),
                   thumbTextColor,
-                  value! / max),
+                  value / max),
               displayValue: displayValue,
               fontWeight: FontWeight.w700,
             ),
@@ -87,8 +87,12 @@ class LitSlider extends StatelessWidget {
             //trackShape: LitSliderTrack(),
             //valueIndicatorColor: Colors.white,
           ),
-          child:
-              Slider(max: max, min: min, value: value!, onChanged: onChanged),
+          child: Slider(
+            max: max,
+            min: min,
+            value: value,
+            onChanged: onChanged,
+          ),
         ),
         displayRangeBadges
             ? Padding(

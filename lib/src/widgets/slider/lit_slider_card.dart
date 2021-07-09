@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
 class LitSliderCard extends StatefulWidget {
-  final double? value;
+  final double value;
   final void Function(double) onChanged;
   final EdgeInsets padding;
   final EdgeInsets margin;
   final bool showValueLabel;
   final String valueTitleText;
-  final Color? activeTrackColor;
+  final Color activeTrackColor;
+  final Color inactiveTrackColor;
   final double min;
   final double max;
   final BoxDecoration cardDecoration;
@@ -29,7 +30,8 @@ class LitSliderCard extends StatefulWidget {
     ),
     this.showValueLabel = true,
     this.valueTitleText = "",
-    this.activeTrackColor = LitColors.mediumGrey,
+    this.activeTrackColor = const Color(0xFFb5a0a0),
+    this.inactiveTrackColor = const Color(0xFFcbc7c7),
     required this.min,
     required this.max,
     this.cardDecoration = const BoxDecoration(
@@ -151,7 +153,7 @@ class _LitSliderCardState extends State<LitSliderCard>
 class _ValueLabel extends StatelessWidget {
   final AnimationController? animationController;
   final String valueTitle;
-  final double? value;
+  final double value;
   final Color badgeTextColor;
   final Color badgeBackgroundColor;
   const _ValueLabel({
@@ -196,7 +198,7 @@ class _ValueLabel extends StatelessWidget {
                   child: Text(
                     valueTitle != ""
                         ? valueTitle
-                        : "${value!.toStringAsFixed(2)}",
+                        : "${value.toStringAsFixed(2)}",
                     textAlign: TextAlign.right,
                     style: LitTextStyles.sansSerif.copyWith(
                       fontSize: 13.5,
