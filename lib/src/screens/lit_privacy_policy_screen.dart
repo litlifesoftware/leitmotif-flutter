@@ -44,7 +44,7 @@ class LitPrivacyPolicyScreen extends StatefulWidget {
     Key? key,
     this.title = "Privacy",
     required this.privacyText,
-    this.art = const SizedBox(),
+    this.art,
     this.agreeLabel = "Agree",
     required this.onAgreeCallback,
     this.privacyTags = const [],
@@ -121,7 +121,7 @@ class _LitPrivacyPolicyScreenState extends State<LitPrivacyPolicyScreen>
                                 ? MainAxisAlignment.spaceBetween
                                 : MainAxisAlignment.center,
                             children: [
-                              widget.art != const SizedBox()
+                              widget.art != null
                                   ? Container(
                                       child: SizedBox(
                                         width: constraints.maxWidth * 0.35,
