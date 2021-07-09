@@ -1,4 +1,4 @@
-## 1.1.0 - Unreleased
+## 1.1.0
 
 - Move `LitSliderCard` to `slider` library.
 - Add `LitColorPickerDialog` to edit and create `Color` objects.
@@ -11,7 +11,7 @@
 - Replace `Column` with `Stack` to display grouped notifications on `LitNotificationContainer`.
 - Add customization options on `LitBottomNavigation`.
 - Add `LitUserIcon` to display the username as an acronym on a colored background.
-- Alter default styling on `LitSlider`
+- Alter default styling on `LitSlider` and `LitSliderCard`.
 - Add `LitSettingsFooter` to implement a minimalist settings section.
 - Constrain `LitFooter`'s width on landscape mode.
 
