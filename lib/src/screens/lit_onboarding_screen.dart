@@ -10,6 +10,7 @@ class LitOnboardingScreen extends StatefulWidget {
   final BorderRadius cardBorderRadius;
   final BoxDecoration backgroundDecoration;
   final Duration animationDuration;
+  final EdgeInsets cardPadding;
   final void Function() onExit;
   const LitOnboardingScreen({
     Key? key,
@@ -29,6 +30,9 @@ class LitOnboardingScreen extends StatefulWidget {
       ),
     ),
     this.animationDuration = const Duration(milliseconds: 120),
+    this.cardPadding = const EdgeInsets.only(
+      top: 128.0,
+    ),
     required this.onExit,
   }) : super(key: key);
 
@@ -105,6 +109,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
                 maxWidth: MediaQuery.of(context).size.width,
               ),
               child: _Card(
+                padding: widget.cardPadding,
                 animationController: _animationController,
                 text: widget.textItems[selectedTextItem],
                 nextButtonLabel: widget.nextButtonLabel,
@@ -149,9 +154,7 @@ class _Card extends StatefulWidget {
     required this.nextButtonLabel,
     required this.borderRadius,
     required this.art,
-    this.padding = const EdgeInsets.only(
-      top: 128.0,
-    ),
+    required this.padding,
     required this.onPressed,
     this.horizontalTransform = 60.0,
     required this.buttonAnimationDuration,
@@ -219,21 +222,25 @@ class _CardContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 16.0,
-            ),
-            child: Text(
-              text.subtitle.toUpperCase(),
-              textAlign: TextAlign.start,
-              style: LitTextStyles.sansSerif.copyWith(
-                fontSize: 16.0,
-                color: HexColor('#6c6c6c'),
-                letterSpacing: 1.5,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
+          text.subtitle != null
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 16.0,
+                  ),
+                  child: Text(
+                    text.subtitle!.toUpperCase(),
+                    textAlign: TextAlign.start,
+                    style: LitTextStyles.sansSerif.copyWith(
+                      fontSize: 16.0,
+                      color: HexColor('#6c6c6c'),
+                      letterSpacing: 1.5,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                )
+              : SizedBox(
+                  height: 12.0,
+                ),
           Text(
             text.title,
             style: LitTextStyles.sansSerif.copyWith(
@@ -294,13 +301,13 @@ class _CardContent extends StatelessWidget {
 /// A model class to describe the onboarding's card content. The card will display a
 /// subtitle, a title and the actual text.
 class OnboardingText {
-  final String subtitle;
+  final String? subtitle;
   final String title;
   final String text;
 
   /// Creates a [OnboardingText] data object.
   const OnboardingText({
-    required this.subtitle,
+    this.subtitle,
     required this.title,
     required this.text,
   });

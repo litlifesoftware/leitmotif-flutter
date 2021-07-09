@@ -1,3 +1,8 @@
+## 1.2.0
+
+- Fix overflow on `LitPrivacyPolicyScreen`.
+- Allow custom padding on `LitOnboardingScreen`.
+
 ## 1.1.0
 
 - Move `LitSliderCard` to `slider` library.
