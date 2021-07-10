@@ -84,10 +84,7 @@ class _LitPrivacyPolicyScreenState extends State<LitPrivacyPolicyScreen>
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
             widget.title,
-            style: LitTextStyles.sansSerif.copyWith(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w700,
-            ),
+            style: LitSansSerifStyles.header5,
           ),
         ),
       ),
@@ -126,9 +123,12 @@ class _LitPrivacyPolicyScreenState extends State<LitPrivacyPolicyScreen>
                                       child: SizedBox(
                                         width: constraints.maxWidth * 0.35,
                                         height: constraints.maxWidth * 0.35,
-                                        child: FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: widget.art,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: widget.art,
+                                          ),
                                         ),
                                       ),
                                     )
