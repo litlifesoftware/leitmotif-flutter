@@ -4,7 +4,7 @@
 /// To use, import `package:lit_ui_kit/utility.dart`.
 library utility;
 
-export 'src/util/hex_color_converter.dart';
+export 'src/util/color_utility.dart';
 export 'src/util/platform_info.dart';
 export 'src/util/calendar_localization_service.dart';
 export 'src/util/lit_alternative_layout.dart';
