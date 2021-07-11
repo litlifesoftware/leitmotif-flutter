@@ -1,9 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/containers.dart';
 import 'package:lit_ui_kit/styles.dart';
 import 'package:lit_ui_kit/text.dart';
+import 'package:lit_ui_kit/utility.dart';
 
 /// A widget displaying an username on a colored background.
 ///
@@ -18,14 +17,10 @@ class LitUserIcon extends StatefulWidget {
     this.username = "Some One",
     this.boxShadow = const [
       const BoxShadow(
-        blurRadius: 4.0,
-        color: Colors.black12,
-        offset: Offset(
-          -3.0,
-          2.0,
-        ),
-        spreadRadius: -1.0,
-      )
+          blurRadius: 4.0,
+          color: Colors.black12,
+          offset: Offset(-3.0, 2.0),
+          spreadRadius: -1.0)
     ],
     this.borderRadius = const BorderRadius.all(
       const Radius.circular(38.0),
@@ -68,16 +63,12 @@ class LitUserIcon extends StatefulWidget {
 class __UserIconState extends State<LitUserIcon> {
   /// Returns a stylized user color.
   Color get _userColor {
-    Color uColor = widget.primaryColor;
-    int alpha = (uColor.alpha * 0.75).floor();
-    int red = uColor.red;
-    int green = uColor.green;
-    int blue = uColor.blue;
-    return Color.fromARGB(alpha, red, green, blue);
+    return widget.primaryColor.desat(0.75);
   }
 
+  /// Returns a [Color] to contrast with the [_userColor].
   Color get _contrastColor {
-    return Color(0xFFFFFFFF);
+    return Colors.white;
   }
 
   /// Returns the initials of the user derived by the username.
@@ -102,22 +93,16 @@ class __UserIconState extends State<LitUserIcon> {
     return initals;
   }
 
+  /// Returns either a dark or a light themed text color based on the contrast
+  /// ratio.
   Color get _textColor {
-    Color textLight = Colors.white;
-    Color textDark = Color(0xFF888888);
-    double luminanceUserColor = _userColor.computeLuminance();
-    double luminanceTextLight = textLight.computeLuminance();
-    double luminacneTextDark = textDark.computeLuminance();
-    double contrastLight = (max(luminanceUserColor, luminanceTextLight) +
-        0.05 / min(luminanceUserColor, luminanceTextLight) +
-        0.05);
-    double contrastDark = (max(luminanceUserColor, luminacneTextDark) +
-        0.05 / min(luminanceUserColor, luminacneTextDark) +
-        0.05);
-    Color textColor = (contrastDark > contrastLight) ? textDark : textLight;
-    return textColor;
+    return _userColor.applyColorByContrast(
+      _contrastColor,
+      const Color(0xFF888888),
+    );
   }
 
+  /// Calls the provided [widget.onPressed] callback.
   void _onTap() {
     if (widget.onPressed != null) {
       widget.onPressed!();
