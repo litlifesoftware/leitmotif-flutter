@@ -750,7 +750,16 @@ class _ButtonList extends StatelessWidget {
             },
           ),
         ),
-        SizedBox(height: 128.0),
+        LitTextPageView(
+          textItems: [
+            TextPageContent(
+              subtitle: "Subtitle",
+              title: "Title",
+              text: "LitTextPageView",
+            ),
+          ],
+        ),
+        // SizedBox(height: 128.0),
       ],
     );
   }
@@ -765,12 +774,12 @@ class _LitOnboardingScreenImplementation extends StatelessWidget {
       art: _Art(large: false),
       title: "Onboading",
       textItems: const [
-        OnboardingText(
+        TextPageContent(
           subtitle: "Subtitle",
           title: "Title",
           text: exampleText,
         ),
-        OnboardingText(
+        TextPageContent(
           subtitle: "Subtitle",
           title: "Title",
           text: "Second Text Item",
