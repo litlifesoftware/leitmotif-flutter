@@ -28,7 +28,7 @@ class LitLockIcon extends StatefulWidget {
   const LitLockIcon({
     Key? key,
     this.size = 48.0,
-    this.color = const Color(0xFF444444),
+    this.color = const Color(0xFFAAAAAA),
     this.animationDuration = const Duration(milliseconds: 400),
   }) : super(key: key);
 
@@ -105,7 +105,7 @@ class _LockPainter extends CustomPainter {
       (size.height / 2),
     );
 
-    Paint solidGrey = Paint()..color = LitColors.lightGrey;
+    Paint solidGrey = Paint()..color = const Color(0xFF777777);
     Paint strokeDark = Paint()
       ..shader = ui.Gradient.linear(
         Offset(
