@@ -57,6 +57,9 @@ export 'loading_indicators.dart';
 /// Models
 export 'models.dart';
 
+/// Page view
+export 'pageview.dart';
+
 /// Scaffold
 export 'scaffold.dart';
 
