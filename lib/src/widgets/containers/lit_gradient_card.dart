@@ -46,7 +46,7 @@ class LitGradientCard extends StatelessWidget {
     this.landscapeWidthFactor = 0.60,
     this.boxShadow = const [
       const BoxShadow(
-        blurRadius: 8.0,
+        blurRadius: 4.0,
         color: Colors.black26,
         offset: Offset(-2, 2.0),
         spreadRadius: 1.0,
