@@ -3,6 +3,7 @@
 - Fix overflow on `LitPrivacyPolicyScreen`.
 - Allow custom padding on `LitOnboardingScreen`.
 - Add `LitTextPageView` widget to display a list of cards with a tranition animation.
+- Add `LitPrivacyDisclaimerScreen`.
 
 ## 1.1.0
 
