@@ -668,7 +668,7 @@ class _ButtonList extends StatelessWidget {
           child: LitRoundedElevatedButton(
             color: buttonColor,
             child: ClippedText(
-              "Show Offline App Disclaimer Screen",
+              "Show LitPrivacyDisclaimerScreen",
               upperCase: true,
               style: LitSansSerifStyles.button.copyWith(
                 color: buttonTextColor,
@@ -679,7 +679,7 @@ class _ButtonList extends StatelessWidget {
                 context,
                 CupertinoPageRoute(
                   builder: (context) {
-                    return LitOfflineAppDisclaimerScreen(
+                    return LitPrivacyDisclaimerScreen(
                       onConfirm: () => {
                         Navigator.pop(context),
                       },
