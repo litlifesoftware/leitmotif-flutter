@@ -4,6 +4,8 @@
 - Allow custom padding on `LitOnboardingScreen`.
 - Add `LitTextPageView` widget to display a list of cards with a tranition animation.
 - Add `LitPrivacyDisclaimerScreen`.
+- Add `LitBoxShadows`, a collection of styled box shadows.
+- Rename `ConfirmAgeScreen` to `LitConfirmAgeScreen`.
 
 ## 1.1.0
 

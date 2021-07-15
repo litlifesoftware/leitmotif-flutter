@@ -6,9 +6,9 @@ import 'package:lit_ui_kit/lit_ui_kit.dart';
 /// Age requirements vary depending on the user's location. In most cases, using
 /// apps downloaded on app stores require the user to be at least 13 years old.
 ///
-/// The [ConfirmAgeScreen] implements a very basic child protection on the first
+/// The [LitConfirmAgeScreen] implements a very basic child protection on the first
 /// startup.
-class ConfirmAgeScreen extends StatefulWidget {
+class LitConfirmAgeScreen extends StatefulWidget {
   /// The age requirement (in years).
   final int ageRequirement;
 
@@ -41,7 +41,7 @@ class ConfirmAgeScreen extends StatefulWidget {
 
   final String chooseDateLabel;
 
-  /// Creates a [ConfirmAgeScreen].
+  /// Creates a [LitConfirmAgeScreen].
   ///
   /// * [ageRequirement] is the required age in years.
   ///
@@ -64,7 +64,7 @@ class ConfirmAgeScreen extends StatefulWidget {
   /// * [validLabel] is the 'valid' text.
   ///
   /// * [chooseDateLabel] is the [LitDatePickerDialog]'s title.
-  const ConfirmAgeScreen({
+  const LitConfirmAgeScreen({
     Key? key,
     this.ageRequirement = 13,
     this.invalidAgeText =
@@ -80,10 +80,10 @@ class ConfirmAgeScreen extends StatefulWidget {
     this.chooseDateLabel = "Choose date",
   }) : super(key: key);
   @override
-  _ConfirmAgeScreenState createState() => _ConfirmAgeScreenState();
+  _LitConfirmAgeScreenState createState() => _LitConfirmAgeScreenState();
 }
 
-class _ConfirmAgeScreenState extends State<ConfirmAgeScreen> {
+class _LitConfirmAgeScreenState extends State<LitConfirmAgeScreen> {
   /// The user's date of birth stored as a [DateTime].
   DateTime? _dateOfBirth;
 
