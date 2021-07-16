@@ -1,3 +1,9 @@
+## 1.3.0
+
+- Rename `AboutAppDialog` to `LitAboutDialog`.
+- Add `LitInfoIcon` to `art` library.
+- Add `LitStaticLoadingScreen` to `screens` library.
+
 ## 1.2.0
 
 - Fix overflow on `LitPrivacyPolicyScreen`.

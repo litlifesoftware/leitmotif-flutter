@@ -718,6 +718,29 @@ class _ButtonList extends StatelessWidget {
           child: LitRoundedElevatedButton(
             color: buttonColor,
             child: ClippedText(
+              "Show Static Loading Screen",
+              upperCase: true,
+              style: LitSansSerifStyles.button.copyWith(
+                color: buttonTextColor,
+              ),
+            ),
+            onPressed: () => {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) {
+                    return LitStaticLoadingScreen();
+                  },
+                ),
+              )
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 32.0),
+          child: LitRoundedElevatedButton(
+            color: buttonColor,
+            child: ClippedText(
               "Show Signup Screen",
               upperCase: true,
               style: LitSansSerifStyles.button.copyWith(

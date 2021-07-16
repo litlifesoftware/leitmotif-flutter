@@ -16,3 +16,4 @@ export 'src/screens/photosensitive_disclaimer_screen.dart';
 export 'src/screens/lit_confirm_age_screen.dart';
 export 'src/screens/lit_startup_screen.dart';
 export 'src/screens/lit_privacy_disclaimer_screen.dart';
+export 'src/screens/lit_static_loading_screen.dart';
