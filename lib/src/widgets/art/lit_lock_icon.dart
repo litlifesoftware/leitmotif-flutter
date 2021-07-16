@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
-import 'package:lit_ui_kit/styles.dart';
-
 /// An icon displaying a lock.
 ///
 /// The icon is rendered using a [CustomPainter] to achieve a gradient background
