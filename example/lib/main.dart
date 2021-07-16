@@ -558,7 +558,7 @@ class _ButtonList extends StatelessWidget {
           child: LitRoundedElevatedButton(
             color: buttonColor,
             child: ClippedText(
-              "Show AboutApp dialog",
+              "Show About Dialog",
               upperCase: true,
               style: LitSansSerifStyles.button.copyWith(
                 color: buttonTextColor,
@@ -568,7 +568,7 @@ class _ButtonList extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (context) {
-                  return AboutAppDialog(
+                  return LitAboutDialog(
                     title: "About",
                     appName: "LitUIKit Example",
                     art: _Art(large: false),

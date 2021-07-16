@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 import 'package:package_info/package_info.dart';
 
-class AboutAppDialog extends StatefulWidget {
+class LitAboutDialog extends StatefulWidget {
   final String title;
   final String appName;
   final String? infoDescription;
   final EdgeInsets padding;
   final Widget art;
   final bool showBackButton;
-  const AboutAppDialog({
+  const LitAboutDialog({
     Key? key,
     this.title = "About",
     required this.appName,
@@ -19,10 +19,10 @@ class AboutAppDialog extends StatefulWidget {
     this.showBackButton = true,
   }) : super(key: key);
   @override
-  _AboutAppDialogState createState() => _AboutAppDialogState();
+  _LitAboutDialogState createState() => _LitAboutDialogState();
 }
 
-class _AboutAppDialogState extends State<AboutAppDialog> {
+class _LitAboutDialogState extends State<LitAboutDialog> {
   PackageInfo? _packageInfo;
 
   Future<void> _initPackageInfo() async {
