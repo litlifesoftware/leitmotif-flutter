@@ -39,10 +39,9 @@ experiment with the UI.
 LitUIKit uses the following Dart dependencies in order to implement certain
 features and functionality:
 
-- [package_info](https://pub.dev/packages/package_info) - [License](https://github.com/flutter/plugins/blob/master/LICENSE) (Used to detect the platform)
-- [url_launcher](https://pub.dev/packages/url_launcher) - [License](https://github.com/flutter/plugins/blob/master/packages/url_launcher/url_launcher/LICENSE) (Used to
-  redirect users to websites)
-- [dartdoc](https://pub.dev/packages/url_launcher) - [License](https://github.com/dart-lang/dartdoc/blob/master/LICENSE) (Used to create the documentation)
+- [package_info](https://pub.dev/packages/package_info) - [License](https://github.com/flutter/plugins/blob/master/LICENSE) (Used to detect the platform and version details)
+- [intl](https://pub.dev/packages/intl) - [License](https://pub.dev/packages/intl/license) (Used to implement localizations)
+- [dartdoc](https://pub.dev/packages/dartdoc) - [License](https://pub.dev/packages/dartdoc/license) (Used to create the documentation)
 
 ## Credits
 

@@ -2,10 +2,11 @@
 
 - Fix overflow on `LitPrivacyPolicyScreen`.
 - Allow custom padding on `LitOnboardingScreen`.
-- Add `LitTextPageView` widget to display a list of cards with a tranition animation.
+- Add `LitTextPageView` widget to display a list of cards using a transition animation.
 - Add `LitPrivacyDisclaimerScreen`.
 - Add `LitBoxShadows`, a collection of styled box shadows.
 - Rename `ConfirmAgeScreen` to `LitConfirmAgeScreen`.
+- Remove `url_launcher` dependency.
 
 ## 1.1.0
 

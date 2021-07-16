@@ -10,12 +10,11 @@
 /// Dependencies used:
 ///
 /// * package_info
-/// * url_launcher
 /// * intl
 ///
 /// To use the above mentioned dependencies, please include them
 /// separatly on the `pubspec.yaml` of your project. These will not be
-/// exported to avoid any namespace issues.
+/// exported to avoid namespace issues.
 library lit_ui_kit;
 
 /// App bars
