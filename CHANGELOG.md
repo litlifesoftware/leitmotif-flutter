@@ -3,6 +3,7 @@
 - Rename `AboutAppDialog` to `LitAboutDialog`.
 - Add `LitInfoIcon` to `art` library.
 - Add `LitStaticLoadingScreen` to `screens` library.
+- Improve error handling when calling `dispose` on several custom controller classes.
 
 ## 1.2.0
 

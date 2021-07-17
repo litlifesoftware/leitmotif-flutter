@@ -102,8 +102,15 @@ class SyncAnimationOnScrollController {
     );
   }
 
-  /// Disposes the [AnimationController].
+  /// Disposes the [SyncAnimationOnScrollController].
   void dispose() {
-    animationController!.dispose();
+    try {
+      animationController!.dispose();
+    } catch (e) {
+      print("Failed to dispose the `SyncAnimationOnScrollController`. " +
+          "Have you already disposed the controller on your `StatefulWidget`?" +
+          " When using the `LitScaffold`, keep in mind that most controllers " +
+          "will be disposed automatically.");
+    }
   }
 }

@@ -20,7 +20,14 @@ class CollapsibleCardController {
   /// dispose to ensure no [TickerProvider] leak will occur.  Call this method
   /// on the [StatefulWidget] by overriding its dispose method.
   void dispose() {
-    animationController.dispose();
+    try {
+      animationController.dispose();
+    } catch (e) {
+      print("Failed to dispose the `CollapsibleCardController`. " +
+          "Have you already disposed the controller on your `StatefulWidget`?" +
+          " When using the `LitScaffold`, keep in mind that most controllers " +
+          "will be disposed automatically.");
+    }
   }
 
   void expandCard(void Function() setStateCallback) {
