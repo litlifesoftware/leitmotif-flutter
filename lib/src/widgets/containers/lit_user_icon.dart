@@ -124,7 +124,7 @@ class __UserIconState extends State<LitUserIcon> {
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                _userColor,
+                _userColor.withAlpha(255),
                 _contrastColor,
               ]),
           borderRadius: widget.borderRadius,
