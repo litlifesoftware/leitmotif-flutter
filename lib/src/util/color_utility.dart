@@ -38,23 +38,20 @@ extension ColorUtility on Color {
   /// the contrast each of these colors would result in if applied on in front
   /// of the main [Color].
   Color applyColorByContrast(Color light, Color dark) {
+    /// The factor constant which is used to calculate the luminance.
+    ///
+    /// This value is generally set to `0.05` but will be `0.10` to
+    /// allow the dark text styling to be more present.
+    double factor = 0.10;
     double luminanceUserColor = this.computeLuminance();
     double luminanceTextLight = light.computeLuminance();
     double luminacneTextDark = dark.computeLuminance();
-    double contrastLight = (math.max(luminanceUserColor, luminanceTextLight) +
-        0.05 /
-            math.min(
-              luminanceUserColor,
-              luminanceTextLight,
-            ) +
-        0.05);
-    double contrastDark = (math.max(luminanceUserColor, luminacneTextDark) +
-        0.05 /
-            math.min(
-              luminanceUserColor,
-              luminacneTextDark,
-            ) +
-        0.05);
+    double maxLumLight = math.max(luminanceUserColor, luminanceTextLight);
+    double minLumLight = math.min(luminanceUserColor, luminanceTextLight);
+    double maxLumDark = math.max(luminanceUserColor, luminacneTextDark);
+    double minLumDark = math.min(luminanceUserColor, luminacneTextDark);
+    double contrastLight = (maxLumLight + factor / minLumLight + factor);
+    double contrastDark = (maxLumDark + factor / minLumDark + factor);
     Color textColor = (contrastDark > contrastLight) ? dark : light;
     return textColor;
   }
