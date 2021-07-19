@@ -31,6 +31,7 @@ class LitOnboardingScreen extends StatefulWidget {
     this.animationDuration = const Duration(milliseconds: 120),
     this.cardPadding = const EdgeInsets.only(
       top: 128.0,
+      bottom: 64.0,
     ),
     required this.onExit,
   }) : super(key: key);

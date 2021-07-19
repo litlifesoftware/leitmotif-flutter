@@ -65,6 +65,7 @@ class LitPrivacyDisclaimerScreen extends StatelessWidget {
             textItems: textItems,
             padding: const EdgeInsets.only(
               top: 152.0,
+              bottom: 64.0,
             ),
             nextButtonLabel: nextButtonLabel,
           ),
