@@ -32,9 +32,9 @@ class _LitAboutDialogState extends State<LitAboutDialog> {
     });
   }
 
-  void _onPop() {
-    return Navigator.of(context).pop();
-  }
+  // void _onPop() {
+  //   return Navigator.of(context).pop();
+  // }
 
   @override
   void initState() {
@@ -47,8 +47,7 @@ class _LitAboutDialogState extends State<LitAboutDialog> {
   Widget build(BuildContext context) {
     return LitTitledDialog(
       titleText: widget.title,
-      leading:
-          widget.showBackButton ? DialogBackButton(onPressed: _onPop) : null,
+      leading: widget.showBackButton ? LitBackButton() : null,
       child: SingleChildScrollView(
         padding: widget.padding,
         physics: BouncingScrollPhysics(),

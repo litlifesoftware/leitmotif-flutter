@@ -108,8 +108,8 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog>
                 physics: BouncingScrollPhysics(),
                 child: LitTitledDialog(
                   titleText: widget.title,
-                  leading: DialogBackButton(
-                    onPressed: widget.onBackCallback,
+                  leading: LitBackButton(
+                    onTap: widget.onBackCallback,
                   ),
                   margin: const EdgeInsets.symmetric(
                     horizontal: 8.0,
