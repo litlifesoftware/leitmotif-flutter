@@ -24,6 +24,7 @@ class LitBackButton extends StatefulWidget {
   final EdgeInsets padding;
   final bool shouldNavigateBack;
   final void Function()? onInvalidNavigation;
+  final void Function()? onTap;
   const LitBackButton({
     Key? key,
     this.height = LitBackButtonDefaultStyling.height,
@@ -35,6 +36,7 @@ class LitBackButton extends StatefulWidget {
     this.padding = LitBackButtonDefaultStyling.padding,
     this.shouldNavigateBack = true,
     this.onInvalidNavigation,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -43,12 +45,18 @@ class LitBackButton extends StatefulWidget {
 
 class _LitBackButtonState extends State<LitBackButton> {
   void _onTap() {
-    if (Navigator.canPop(context)) {
-      if (widget.shouldNavigateBack) {
-        Navigator.of(context).pop();
-      } else {
-        if (widget.onInvalidNavigation != null) {
-          widget.onInvalidNavigation!();
+    // If a callback was provided, execute it.
+    if (widget.onTap != null) {
+      widget.onTap!();
+      // Otherwise navigate back by default.
+    } else {
+      if (Navigator.canPop(context)) {
+        if (widget.shouldNavigateBack) {
+          Navigator.of(context).pop();
+        } else {
+          if (widget.onInvalidNavigation != null) {
+            widget.onInvalidNavigation!();
+          }
         }
       }
     }
@@ -70,10 +78,13 @@ class _LitBackButtonState extends State<LitBackButton> {
           child: LitTooltipContainer(
             backgroundColor: widget.backgroundColor,
             text: "${MaterialLocalizations.of(context).backButtonTooltip}",
-            child: Icon(
-              widget.icon,
-              size: widget.iconSize,
-              color: widget.iconColor,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Icon(
+                widget.icon,
+                size: widget.iconSize,
+                color: widget.iconColor,
+              ),
             ),
           ),
         ),
