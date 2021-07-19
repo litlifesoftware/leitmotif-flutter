@@ -8,7 +8,6 @@ class LitAboutDialog extends StatefulWidget {
   final String? infoDescription;
   final EdgeInsets padding;
   final Widget art;
-  final bool showBackButton;
   const LitAboutDialog({
     Key? key,
     this.title = "About",
@@ -16,7 +15,6 @@ class LitAboutDialog extends StatefulWidget {
     this.infoDescription = "",
     this.padding = const EdgeInsets.only(top: 16.0, bottom: 16.0),
     this.art = const SizedBox(),
-    this.showBackButton = true,
   }) : super(key: key);
   @override
   _LitAboutDialogState createState() => _LitAboutDialogState();
@@ -47,7 +45,6 @@ class _LitAboutDialogState extends State<LitAboutDialog> {
   Widget build(BuildContext context) {
     return LitTitledDialog(
       titleText: widget.title,
-      leading: widget.showBackButton ? LitBackButton() : null,
       child: SingleChildScrollView(
         padding: widget.padding,
         physics: BouncingScrollPhysics(),
