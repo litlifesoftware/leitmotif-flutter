@@ -7,7 +7,7 @@ class LitBackButtonDefaultStyling {
   static const Color iconColor = Colors.white;
   static const Color backgroundColor = LitColors.lightGrey;
   static const IconData icon = LitIcons.arrow_left_solid;
-  static const double iconSize = 18.0;
+  static const double iconSize = 14.0;
   static const EdgeInsets padding = const EdgeInsets.symmetric(
     horizontal: 16.0,
     vertical: 3.0,
