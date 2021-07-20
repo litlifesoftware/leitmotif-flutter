@@ -51,7 +51,7 @@ class LitFooter extends StatelessWidget {
                       child: ClippedText(
                         title,
                         textAlign: TextAlign.end,
-                        style: LitSansSerifStyles.header6.copyWith(
+                        style: LitSansSerifStyles.h6.copyWith(
                           color: HexColor('#878787'),
                         ),
                       ),

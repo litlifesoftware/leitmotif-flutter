@@ -219,7 +219,7 @@ class _AppTitleState extends State<_AppTitle> {
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
             widget.title,
-            style: LitSansSerifStyles.header5.copyWith(
+            style: LitSansSerifStyles.h5.copyWith(
               color: Color(
                 0xFF7e7e7e,
               ),
@@ -239,7 +239,7 @@ class _AppTitleState extends State<_AppTitle> {
                     child: Text(
                       "${widget.subTitle}",
                       textAlign: TextAlign.center,
-                      style: LitSansSerifStyles.body.copyWith(
+                      style: LitSansSerifStyles.body2.copyWith(
                         color: Color(0xFFB0B0B0),
                       ),
                     ),
@@ -317,7 +317,7 @@ class __CreditItemState extends State<_CreditItem> {
       child: Text(
         name,
         textAlign: TextAlign.center,
-        style: LitSansSerifStyles.header5.copyWith(
+        style: LitSansSerifStyles.h5.copyWith(
           color: _nameTextColor,
         ),
       ),

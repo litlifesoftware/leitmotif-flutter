@@ -84,7 +84,7 @@ class _LitPrivacyPolicyScreenState extends State<LitPrivacyPolicyScreen>
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
             widget.title,
-            style: LitSansSerifStyles.header5,
+            style: LitSansSerifStyles.h5,
           ),
         ),
       ),

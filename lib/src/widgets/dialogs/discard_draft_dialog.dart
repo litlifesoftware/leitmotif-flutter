@@ -133,7 +133,7 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
                             child: Text(
                               widget.infoDescription,
                               textAlign: TextAlign.left,
-                              style: LitSansSerifStyles.body.copyWith(
+                              style: LitSansSerifStyles.body2.copyWith(
                                 color: LitColors.lightGrey,
                               ),
                             ),
@@ -150,7 +150,7 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
                     child: Text(
                       widget.discardText,
                       textAlign: TextAlign.left,
-                      style: LitSansSerifStyles.body,
+                      style: LitSansSerifStyles.body2,
                     ),
                   ),
                 ],

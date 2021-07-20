@@ -134,7 +134,7 @@ class __UserIconState extends State<LitUserIcon> {
             padding: widget.margin,
             child: ClippedText(
               _usernameInitials,
-              style: LitSansSerifStyles.header5.copyWith(
+              style: LitSansSerifStyles.h5.copyWith(
                 fontSize: widget.fontSize,
                 color: _textColor,
                 fontWeight: FontWeight.w700,
