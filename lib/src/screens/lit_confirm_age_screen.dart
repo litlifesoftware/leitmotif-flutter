@@ -188,27 +188,23 @@ class _LitConfirmAgeScreenState extends State<LitConfirmAgeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(
-                      top: 42.0,
-                      bottom: 36.0,
-                      left: 24.0,
-                      right: 24.0,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 32.0,
+                      horizontal: 16.0,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           widget.title,
-                          style: LitTextStyles.sansSerifHeader.copyWith(
-                            color: Color(0xFF848484),
-                          ),
+                          style: LitSansSerifStyles.h5,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Text(
                             widget.subtitle,
-                            style: LitTextStyles.sansSerifBody.copyWith(
-                              color: Color(0xFF848484),
+                            style: LitSansSerifStyles.subtitle2.copyWith(
+                              color: LitColors.mediumGrey.withOpacity(0.75),
                             ),
                           ),
                         ),
@@ -216,13 +212,15 @@ class _LitConfirmAgeScreenState extends State<LitConfirmAgeScreen> {
                     ),
                   ),
                   LitElevatedCard(
-                    borderRadius: BorderRadius.all(Radius.circular(24.0)),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(24.0),
+                    ),
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 24.0,
+                      horizontal: 16.0,
                     ),
                     margin: const EdgeInsets.symmetric(
-                      horizontal: 24.0,
-                      vertical: 24.0,
+                      horizontal: 16.0,
+                      vertical: 16.0,
                     ),
                     child: Column(
                       children: [
@@ -236,7 +234,7 @@ class _LitConfirmAgeScreenState extends State<LitConfirmAgeScreen> {
                           yourAgeLabel: widget.yourAgeLabel,
                         ),
                         SizedBox(
-                          height: 48.0,
+                          height: 32.0,
                         ),
                         _ValidityLabel(
                           icon: _displayedIcon,
@@ -251,7 +249,9 @@ class _LitConfirmAgeScreenState extends State<LitConfirmAgeScreen> {
                   ),
                   !_isValidAge
                       ? Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24.0,
+                          ),
                           child: Text(
                             widget.invalidAgeText,
                             style: LitTextStyles.sansSerifBody.copyWith(
@@ -319,9 +319,50 @@ class _YourAgeInput extends StatefulWidget {
   __YourAgeInputState createState() => __YourAgeInputState();
 }
 
+class _WarningIcon extends StatelessWidget {
+  final BoxConstraints constraints;
+  final Color labelBackgroundColor;
+  const _WarningIcon({
+    Key? key,
+    required this.constraints,
+    required this.labelBackgroundColor,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: constraints.maxWidth * 0.10,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: constraints.maxWidth * 0.015,
+        ),
+        child: LitBadge(
+          padding: const EdgeInsets.symmetric(
+            vertical: 2.0,
+            horizontal: 2.0,
+          ),
+          backgroundColor: labelBackgroundColor,
+          child: Text(
+            "!",
+            style: LitTextStyles.sansSerifHeader.copyWith(
+              color: LitColors.mediumGrey,
+              fontSize: 12.0,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class __YourAgeInputState extends State<_YourAgeInput> {
   void _onPressed() {
     widget.onPressedSet();
+  }
+
+  bool get _isNull {
+    return widget.selectedAge == null;
   }
 
   @override
@@ -343,36 +384,14 @@ class __YourAgeInputState extends State<_YourAgeInput> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      widget.selectedAge != null
+                      !_isNull
                           ? Row(
                               children: [
                                 !widget.isValid
-                                    ? SizedBox(
-                                        width: constraints.maxWidth * 0.10,
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal:
-                                                constraints.maxWidth * 0.015,
-                                          ),
-                                          child: LitBadge(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 2.0,
-                                              horizontal: 2.0,
-                                            ),
-                                            backgroundColor:
-                                                widget.labelBackgroundColor,
-                                            child: Text(
-                                              "!",
-                                              style: LitTextStyles
-                                                  .sansSerifHeader
-                                                  .copyWith(
-                                                color: LitColors.mediumGrey,
-                                                fontSize: 12.0,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                        ),
+                                    ? _WarningIcon(
+                                        constraints: constraints,
+                                        labelBackgroundColor:
+                                            widget.labelBackgroundColor,
                                       )
                                     : SizedBox(),
                                 SizedBox(
@@ -398,8 +417,7 @@ class __YourAgeInputState extends State<_YourAgeInput> {
                                           child: Center(
                                             child: ClippedText(
                                               "${widget.ageInYears > 0 ? widget.ageInYears : '?'}",
-                                              style: LitTextStyles
-                                                  .sansSerifStyles[header5]
+                                              style: LitSansSerifStyles.h5
                                                   .copyWith(
                                                 color: widget.ageInYears > 0
                                                     ? Color(0xFF5B5B5B)
@@ -417,20 +435,11 @@ class __YourAgeInputState extends State<_YourAgeInput> {
                             )
                           : SizedBox(),
                       LitPushedThroughButton(
-                        borderRadius: 16.0,
-                        margin: const EdgeInsets.symmetric(
-                          vertical: 8.0,
-                          horizontal: 30.0,
-                        ),
                         onPressed: _onPressed,
                         child: Center(
                           child: ClippedText(
                             widget.setLabel.toUpperCase(),
-                            style:
-                                LitTextStyles.sansSerifStyles[button].copyWith(
-                              color: Color(0xFF5B5B5B),
-                              fontWeight: FontWeight.w700,
-                            ),
+                            style: LitSansSerifStyles.button,
                           ),
                         ),
                       ),
@@ -516,10 +525,10 @@ class _LabelText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text.toUpperCase(),
-      style: LitTextStyles.sansSerifSubHeader.copyWith(
-        color: Color(0xFFAFAFAF),
-        fontWeight: FontWeight.w700,
-        letterSpacing: 1.2,
+      style: LitSansSerifStyles.subtitle1.copyWith(
+        color: LitColors.darkGrey.withOpacity(
+          0.5,
+        ),
       ),
     );
   }
