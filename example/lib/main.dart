@@ -92,10 +92,111 @@ class _ExampleScreenTwo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text(
-          "Screen Two",
-          style: LitSansSerifStyles.body,
+      body: Container(
+        child: ScrollableColumn(
+          padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Text(
+                "Sans Serif",
+                style: LitSansSerifStyles.h4,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H1",
+                style: LitSansSerifStyles.h1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H2",
+                style: LitSansSerifStyles.h2,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H3",
+                style: LitSansSerifStyles.h3,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H4",
+                style: LitSansSerifStyles.h4,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H5",
+                style: LitSansSerifStyles.h5,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H6",
+                style: LitSansSerifStyles.h6,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Subtitle 2",
+                style: LitSansSerifStyles.subtitle2,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Subtitle 1",
+                style: LitSansSerifStyles.subtitle1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Body 1",
+                style: LitSansSerifStyles.body1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Body 2",
+                style: LitSansSerifStyles.body2,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "BUTTON",
+                style: LitSansSerifStyles.button,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Caption",
+                style: LitSansSerifStyles.caption,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "OVERLINE",
+                style: LitSansSerifStyles.overline,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -958,7 +1059,7 @@ class _LitTitledDialogImpl extends StatelessWidget {
       child: Center(
           child: Text(
         "Example title with a description",
-        style: LitSansSerifStyles.body,
+        style: LitSansSerifStyles.body2,
       )),
       titleText: "A dialog",
       actionButtons: [
