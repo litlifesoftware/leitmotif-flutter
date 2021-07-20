@@ -202,12 +202,7 @@ class _CardContent extends StatelessWidget {
                   child: Text(
                     text.subtitle!.toUpperCase(),
                     textAlign: TextAlign.start,
-                    style: LitTextStyles.sansSerif.copyWith(
-                      fontSize: 16.0,
-                      color: HexColor('#6c6c6c'),
-                      letterSpacing: 1.5,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: LitSansSerifStyles.subtitle1,
                   ),
                 )
               : SizedBox(
@@ -215,21 +210,13 @@ class _CardContent extends StatelessWidget {
                 ),
           Text(
             text.title,
-            style: LitTextStyles.sansSerif.copyWith(
-              fontSize: 32.0,
-              color: HexColor('#6E6E6E'),
-              letterSpacing: 2.0,
-              fontWeight: FontWeight.w800,
-            ),
+            style: LitSansSerifStyles.h4,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 32.0),
             child: Text(
               text.text,
-              style: LitTextStyles.sansSerif.copyWith(
-                fontSize: 14.0,
-                color: HexColor('#525252'),
-              ),
+              style: LitSansSerifStyles.body2,
             ),
           ),
           Center(
@@ -254,12 +241,7 @@ class _CardContent extends StatelessWidget {
                   child: ClippedText(
                     nextButtonLabel,
                     upperCase: true,
-                    style: LitTextStyles.sansSerif.copyWith(
-                      fontSize: 14.0,
-                      color: HexColor('#525252'),
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0.8,
-                    ),
+                    style: LitSansSerifStyles.button,
                   ),
                   onPressed: onPressed),
             ),
