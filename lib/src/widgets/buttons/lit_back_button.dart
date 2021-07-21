@@ -10,7 +10,7 @@ class LitBackButtonDefaultStyling {
   static const double iconSize = 14.0;
   static const EdgeInsets padding = const EdgeInsets.symmetric(
     horizontal: 16.0,
-    vertical: 3.0,
+    vertical: 4.0,
   );
 }
 
@@ -75,15 +75,18 @@ class _LitBackButtonState extends State<LitBackButton> {
         child: SizedBox(
           height: widget.height,
           width: widget.width,
-          child: LitTooltipContainer(
-            backgroundColor: widget.backgroundColor,
-            text: "${MaterialLocalizations.of(context).backButtonTooltip}",
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Icon(
-                widget.icon,
-                size: widget.iconSize,
-                color: widget.iconColor,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: LitTooltipContainer(
+              backgroundColor: widget.backgroundColor,
+              text: MaterialLocalizations.of(context).backButtonTooltip,
+              child: FittedBox(
+                alignment: Alignment.center,
+                child: Icon(
+                  widget.icon,
+                  size: widget.iconSize,
+                  color: widget.iconColor,
+                ),
               ),
             ),
           ),
