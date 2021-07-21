@@ -29,7 +29,7 @@ class LitAppBar extends StatelessWidget implements CustomAppBar {
   const LitAppBar({
     Key? key,
     required this.title,
-    this.textStyle = LitTextStyles.sansSerif,
+    this.textStyle = LitSansSerifStyles.subtitle2,
     this.elevated = false,
     this.boxShadow = const [
       BoxShadow(
