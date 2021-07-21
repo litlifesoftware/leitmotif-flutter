@@ -37,6 +37,7 @@ class LitSansSerifStyles {
   /// ```dart
   /// fontSize: 10.0,
   /// fontWeight: FontWeight.w400,
+  /// letterSpacing: 0.5,
   /// ```
   ///
   static const TextStyle overline = const TextStyle(
@@ -45,6 +46,7 @@ class LitSansSerifStyles {
     package: _package,
     fontSize: 10.0,
     fontWeight: FontWeight.w400,
+    letterSpacing: 0.5,
   );
 
   /// The styling applied on small caption text.
@@ -112,7 +114,7 @@ class LitSansSerifStyles {
   /// The styling applied on small subtitles.
   /// ```dart
   /// fontSize: 14.0,
-  /// fontWeight: FontWeight.w500,
+  /// fontWeight: FontWeight.w600,
   /// letterSpacing: 0.1,
   /// ```
   ///
@@ -121,8 +123,8 @@ class LitSansSerifStyles {
     fontFamily: _montserrat,
     package: _package,
     fontSize: 14.0,
-    fontWeight: FontWeight.w500,
-    letterSpacing: 0.1,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.20,
   );
 
   /// The styling applied on larger subtitles.
@@ -138,7 +140,7 @@ class LitSansSerifStyles {
     package: _package,
     fontSize: 16.0,
     fontWeight: FontWeight.w500,
-    letterSpacing: 0.2,
+    letterSpacing: 0.25,
   );
 
   /// The styling applied on h6 heading.
