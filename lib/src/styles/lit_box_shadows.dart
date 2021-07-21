@@ -25,10 +25,37 @@ class LitBoxShadows {
   /// A [BoxShadow] that can be applied on larger elements.
   static const List<BoxShadow> lg = const [
     const BoxShadow(
-      offset: Offset(-4, 4),
+      offset: Offset(-4.0, 4.0),
       blurRadius: 6.0,
       color: Colors.black38,
       spreadRadius: -2.0,
+    )
+  ];
+
+  /// A [BoxShadow] that can be applied on smaller text elements.
+  static const List<BoxShadow> textSm = const [
+    BoxShadow(
+      offset: Offset(1.0, 1.0),
+      color: Colors.black12,
+      blurRadius: 4.0,
+    )
+  ];
+
+  /// A [BoxShadow] that can be applied on medium-sized text elements.
+  static const List<BoxShadow> textMd = const [
+    BoxShadow(
+      offset: Offset(2.0, 2.0),
+      color: Colors.black12,
+      blurRadius: 4.0,
+    )
+  ];
+
+  /// A [BoxShadow] that can be applied on larger text elements.
+  static const List<BoxShadow> textLg = const [
+    BoxShadow(
+      offset: Offset(3.0, 3.0),
+      color: Colors.black12,
+      blurRadius: 4.0,
     )
   ];
 }
