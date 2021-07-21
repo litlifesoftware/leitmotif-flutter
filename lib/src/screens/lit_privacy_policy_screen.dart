@@ -84,7 +84,7 @@ class _LitPrivacyPolicyScreenState extends State<LitPrivacyPolicyScreen>
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
             widget.title,
-            style: LitSansSerifStyles.h5,
+            style: LitSansSerifStyles.subtitle2,
           ),
         ),
       ),
@@ -282,7 +282,7 @@ class _PrivacyTextCard extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: Text(
                   privacyText,
-                  style: LitTextStyles.sansSerifBodyLargeSpacing,
+                  style: LitSansSerifStyles.body2,
                 ),
               )
             ],
@@ -321,7 +321,7 @@ class _PrivacyTagLabel extends StatelessWidget {
           ClippedText(
             "$labelText",
             upperCase: true,
-            style: LitSansSerifStyles.caption,
+            style: LitSansSerifStyles.overline,
           ),
           Icon(
             favorable ? LitIcons.check : LitIcons.times,
