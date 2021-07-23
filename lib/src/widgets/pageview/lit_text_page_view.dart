@@ -3,7 +3,6 @@ import 'package:lit_ui_kit/buttons.dart';
 import 'package:lit_ui_kit/containers.dart';
 import 'package:lit_ui_kit/styles.dart';
 import 'package:lit_ui_kit/text.dart';
-import 'package:lit_ui_kit/utility.dart';
 
 class LitTextPageView extends StatefulWidget {
   final String nextButtonLabel;
