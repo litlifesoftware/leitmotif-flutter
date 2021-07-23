@@ -5,6 +5,7 @@
 - Add `LitStaticLoadingScreen` to `screens` library.
 - Improve error handling when calling `dispose` on several custom controller classes.
 - Update `LitSansSerifStyles` type system according to `Material Design` Guidelines ([https://material.io/design/typography/the-type-system.html#type-scale](https://material.io/design/typography/the-type-system.html#type-scale)).
+- Add customizable `initialTabIndex` and `transitionListener` members on `LitTabView`.
 
 ## 1.2.0
 

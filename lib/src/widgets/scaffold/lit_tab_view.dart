@@ -34,6 +34,8 @@ class LitTabView extends StatefulWidget {
     this.tabItemColor = LitBottomNavigationBarDefaultStyling.tabItemColor,
     this.tabItemColorSelected =
         LitBottomNavigationBarDefaultStyling.tabItemColorSelected,
+    this.initialTabIndex = 0,
+    this.transitionListener,
   }) : super(key: key);
 
   /// The tabs the tab view should display.
@@ -67,13 +69,19 @@ class LitTabView extends StatefulWidget {
   /// The color of each unselected tab item.
   final Color tabItemColorSelected;
 
+  /// The initial tab index (defaults to `0`)
+  final int initialTabIndex;
+
+  /// Called whenever the tab has been transitioned.
+  final void Function(int index)? transitionListener;
+
   @override
   _LitTabViewState createState() => _LitTabViewState();
 }
 
 class _LitTabViewState extends State<LitTabView> {
   /// The currently user selected tab stated as its index value.
-  int tabIndex = 0;
+  late int tabIndex;
 
   /// All available tab screen [Widget] objects that can be navigated.
   List<Widget> _tabs = [];
@@ -86,6 +94,9 @@ class _LitTabViewState extends State<LitTabView> {
     setState(() {
       tabIndex = value;
     });
+    if (widget.transitionListener != null) {
+      widget.transitionListener!(value);
+    }
   }
 
   /// Separetes the provided [LitNavigableTab] into individual [Widget] and
@@ -99,6 +110,7 @@ class _LitTabViewState extends State<LitTabView> {
 
   @override
   void initState() {
+    tabIndex = widget.initialTabIndex;
     bindWidgetsAndData();
     super.initState();
   }
