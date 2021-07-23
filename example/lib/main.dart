@@ -93,8 +93,12 @@ class _ExampleScreenTwo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: MediaQuery.of(context).size.width,
         child: ScrollableColumn(
-          padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(
+            vertical: 32.0,
+            horizontal: 16.0,
+          ),
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -928,7 +932,12 @@ class _LitPrivacyScreenImplementation extends StatelessWidget {
         ),
       ],
       art: _Art(large: false),
-      privacyText: LITUIKIT_DESCR,
+      privacyText: LITUIKIT_DESCR +
+          LITUIKIT_DESCR +
+          LITUIKIT_DESCR +
+          LITUIKIT_DESCR +
+          LITUIKIT_DESCR +
+          LITUIKIT_DESCR,
       onAgreeCallback: () {
         Navigator.pop(context);
       },

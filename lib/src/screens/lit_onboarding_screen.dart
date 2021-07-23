@@ -61,10 +61,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
     return LitScaffold(
       appBar: FixedOnScrollAppbar(
         scrollController: _scrollController,
-        child: ClippedText(
-          widget.title,
-          style: LitTextStyles.sansSerifStyles[body],
-        ),
+        title: widget.title,
       ),
       body: Stack(
         children: [

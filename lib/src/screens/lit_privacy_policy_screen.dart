@@ -67,7 +67,7 @@ class LitPrivacyPolicyScreen extends StatefulWidget {
 class _LitPrivacyPolicyScreenState extends State<LitPrivacyPolicyScreen>
     with TickerProviderStateMixin {
   /// [ScrollController] to animate link an animation to the user's scroll input.
-  ScrollController? _scrollController;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
@@ -80,13 +80,7 @@ class _LitPrivacyPolicyScreenState extends State<LitPrivacyPolicyScreen>
     return LitScaffold(
       appBar: FixedOnScrollAppbar(
         scrollController: _scrollController,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(
-            widget.title,
-            style: LitSansSerifStyles.subtitle2,
-          ),
-        ),
+        title: widget.title,
       ),
       body: SafeArea(
         child: Container(

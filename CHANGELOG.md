@@ -1,3 +1,7 @@
+## 1.4.0
+
+- Replace the `child` member with a simple `title` member on `FixedOnScrollAppbar`.
+
 ## 1.3.0
 
 - Rename `AboutAppDialog` to `LitAboutDialog`.

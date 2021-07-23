@@ -20,7 +20,7 @@ class FixedOnScrollAppbar extends StatefulWidget implements CustomAppBar {
 
   /// The height of the app bar. It defaults to [CustomAppBar.height].
   final double height;
-  final Widget child;
+  final String title;
   final EdgeInsets padding;
 
   final Color backButtonBackgroundColor;
@@ -45,7 +45,7 @@ class FixedOnScrollAppbar extends StatefulWidget implements CustomAppBar {
       )
     ],
     this.height = CustomAppBar.height,
-    required this.child,
+    required this.title,
     this.padding = const EdgeInsets.symmetric(horizontal: 8.0),
     this.backButtonBackgroundColor =
         LitBackButtonDefaultStyling.backgroundColor,
@@ -112,14 +112,40 @@ class _FixedOnScrollAppbarState extends State<FixedOnScrollAppbar>
                           shouldNavigateBack: widget.shouldNavigateBack,
                           onInvalidNavigation: widget.onInvalidNavigation,
                         ),
-                        widget.child,
+                        _Title(title: widget.title),
                       ],
                     )
-                  : widget.child,
+                  : _Title(title: widget.title),
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class _Title extends StatelessWidget {
+  final title;
+  const _Title({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 2,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: ClippedText(
+            title,
+            textAlign: TextAlign.center,
+            style: LitSansSerifStyles.subtitle2,
+          ),
+        ),
+      ),
     );
   }
 }
