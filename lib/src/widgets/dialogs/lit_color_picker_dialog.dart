@@ -338,9 +338,12 @@ class _ValIndicator extends StatelessWidget {
                             color: Colors.black.withAlpha(16),
                           ),
                           child: Center(
-                            child: Text(
-                              trnColorText,
-                              style: LitSansSerifStyles.caption,
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Text(
+                                trnColorText,
+                                style: LitSansSerifStyles.overline,
+                              ),
                             ),
                           ),
                         ),
