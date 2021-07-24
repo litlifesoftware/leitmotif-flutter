@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:lit_ui_kit/lit_ui_kit.dart';
 
+class LitFooterDefaultStyling {
+  static const List<Color> colorsLight = const [
+    const Color(0xFFD9D9D9),
+    Colors.white,
+  ];
+  static const List<Color> colorsDark = const [
+    LitColors.darkBlue,
+    Colors.black,
+  ];
+}
+
 class LitFooter extends StatelessWidget {
   final String title;
   final Widget child;
-
+  final List<Color> gradientColors;
   const LitFooter({
     Key? key,
     this.title = "Footer",
     required this.child,
+    this.gradientColors = LitFooterDefaultStyling.colorsLight,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -23,10 +35,7 @@ class LitFooter extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [
-                HexColor('#C4C4C4').withOpacity(0.4),
-                Colors.white,
-              ],
+              colors: gradientColors,
             ),
           ),
           width: MediaQuery.of(context).size.width,

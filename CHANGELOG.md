@@ -1,6 +1,7 @@
 ## 1.4.0
 
 - Replace the `child` member with a simple `title` member on `FixedOnScrollAppbar`.
+- Add a `gradientColors` member on `LitFooter` to customize its background gradient.
 
 ## 1.3.0
 
