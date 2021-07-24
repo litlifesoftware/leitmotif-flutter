@@ -14,6 +14,7 @@ class LitUserIcon extends StatefulWidget {
     Key? key,
     this.size = 96.0,
     this.primaryColor = Colors.white,
+    this.contrastColor = Colors.white,
     this.username = "Some One",
     this.boxShadow = const [
       const BoxShadow(
@@ -37,6 +38,9 @@ class LitUserIcon extends StatefulWidget {
 
   /// The primary color used to generate the gradient background.
   final Color primaryColor;
+
+  /// The contrasting color used to generate the gradient background.
+  final Color contrastColor;
 
   /// The displayed username, whose text is converted into an acronym.
   final String username;
@@ -68,7 +72,7 @@ class __UserIconState extends State<LitUserIcon> {
 
   /// Returns a [Color] to contrast with the [_userColor].
   Color get _contrastColor {
-    return Colors.white;
+    return widget.contrastColor;
   }
 
   /// Returns the initials of the user derived by the username.
