@@ -2,9 +2,11 @@
 
 # Leitmotif
 
-A collection of widgets and screens for Flutter implementing the Leitmotif Design Language. It complements the default Material Widgets shipped with Flutter. Whose Widgets include custom implementation of Snackbars, AppBars and a settings panel. Utility Screens (e.g. required to verify the user's age and to show the application's licenses) are also included.
+A collection of widgets and screens for Flutter implementing the Leitmotif Design Language. It complements the default Material Widgets shipped with Flutter. Whose Widgets include custom implementation of `Snackbars`, `AppBars` and a settings panel. Utility Screens (e.g. required to verify the user's age and to show the application's licenses) are also included.
 
-Leitmotif derived from the [LitUIKit](https://github.com/litlifesoftware/lit_ui_kit) project, which has been discontinued.
+> 'Leitmotif' is derived from the German noun 'Leitmotiv' which describes a dominant and recurring theme in music and literature.
+
+Leitmotif is based on the [LitUIKit](https://github.com/litlifesoftware/lit_ui_kit) project, which has been discontinued.
 
 Visit our [website](https://litlifesoftware.github.io) for more details.
 
@@ -12,9 +14,7 @@ Created and maintained by [LitLifeSoftware](https://www.github.com/litlifesoftwa
 
 ## Getting Started
 
-To use the Leitmotif in your Flutter app make sure to import it by including the
-code line `import 'package:leitmotif/leitmotif.dart';` in the header part of
-your `.dart` file.
+To use Leitmotif in your Flutter app make sure to import it by including the code line `import 'package:leitmotif/leitmotif.dart';` in the header part of your `.dart` file.
 
 For help getting started with Flutter, view Flutter's
 [online documentation](https://flutter.dev/docs), which offers tutorials,
