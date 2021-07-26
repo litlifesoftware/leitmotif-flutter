@@ -20,9 +20,13 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Screenshots
 
-| Example HomeScreen                                                    | LitSettingsPanel                                                      | LitIconSnackbar                                                       | LitOnboardingScreen                                                   |
-| --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| ![1](assets/images/LitUIKit_Screenshot_1_20210606.jpg "Screenshot 1") | ![2](assets/images/LitUIKit_Screenshot_2_20210606.jpg "Screenshot 2") | ![3](assets/images/LitUIKit_Screenshot_3_20210606.jpg "Screenshot 3") | ![4](assets/images/LitUIKit_Screenshot_4_20210606.jpg "Screenshot 4") |
+| Example HomeScreen                                                    | LitSettingsPanel                                                      |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| ![1](assets/images/LitUIKit_Screenshot_1_20210606.jpg "Screenshot 1") | ![2](assets/images/LitUIKit_Screenshot_2_20210606.jpg "Screenshot 2") |
+
+| LitIconSnackbar                                                       | LitOnboardingScreen                                                   |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| ![3](assets/images/LitUIKit_Screenshot_3_20210606.jpg "Screenshot 3") | ![4](assets/images/LitUIKit_Screenshot_4_20210606.jpg "Screenshot 4") |
 
 ## Icons
 
