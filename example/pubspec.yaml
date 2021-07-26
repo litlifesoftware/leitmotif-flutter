@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  lit_ui_kit:
+  leitmotif:
     path: ../
 
 dev_dependencies:

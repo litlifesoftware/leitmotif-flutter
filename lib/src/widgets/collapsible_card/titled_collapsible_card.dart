@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 class TitledCollapsibleCard extends StatefulWidget implements CollapsibleCard {
   final CollapsibleCardController collapsibleCardController;

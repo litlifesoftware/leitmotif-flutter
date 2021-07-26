@@ -34,7 +34,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.17.0"
-  lit_ui_kit:
+  leitmotif:
     dependency: "direct main"
     description:
       path: ".."

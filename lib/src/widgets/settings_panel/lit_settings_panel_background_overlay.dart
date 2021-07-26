@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/src/widgets/settings_panel/lit_settings_panel_controller.dart';
+import 'package:leitmotif/src/widgets/settings_panel/lit_settings_panel_controller.dart';
 
 class LitSettingsPanelBackgroundOverlay extends StatelessWidget {
   final LitSettingsPanelController controller;

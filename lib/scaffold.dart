@@ -1,6 +1,6 @@
 /// Flutter widgets implementing the custom styled scaffold.
 ///
-/// To use, import `package:lit_ui_kit/scaffold.dart`.
+/// To use, import `package:leitmotif/scaffold.dart`.
 library scaffold;
 
 export 'src/widgets/scaffold/lit_scaffold.dart';

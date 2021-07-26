@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
-import 'package:lit_ui_kit/src/util/sync_animation_on_scroll_controller.dart';
-import 'package:lit_ui_kit/src/widgets/settings_panel/lit_settings_panel_tile.dart';
-import 'package:lit_ui_kit/src/widgets/settings_panel/lit_settings_panel_controller.dart';
+import 'package:leitmotif/leitmotif.dart';
+import 'package:leitmotif/src/util/sync_animation_on_scroll_controller.dart';
+import 'package:leitmotif/src/widgets/settings_panel/lit_settings_panel_tile.dart';
+import 'package:leitmotif/src/widgets/settings_panel/lit_settings_panel_controller.dart';
 
 /// A [StatelessWidget] to allow the user to enable and disable
 /// various options.

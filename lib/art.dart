@@ -1,6 +1,6 @@
 /// Flutter widgets implementing art such as icons or painter.
 ///
-/// To use, import `package:lit_ui_kit/art.dart`.
+/// To use, import `package:leitmotif/art.dart`.
 library art;
 
 export 'src/widgets/art/background_bubbles_painter.dart';

@@ -1,6 +1,6 @@
 /// Flutter widgets implementing snackbars.
 ///
-/// To use, import `package:lit_ui_kit/snackbars.dart`.
+/// To use, import `package:leitmotif/snackbars.dart`.
 library snackbars;
 
 export 'src/widgets/snackbars/lit_snackbar.dart';

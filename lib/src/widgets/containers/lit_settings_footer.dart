@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/buttons.dart';
-import 'package:lit_ui_kit/containers.dart';
+import 'package:leitmotif/buttons.dart';
+import 'package:leitmotif/containers.dart';
 
 /// A widget displaying a List of minimalist buttons on a [LitFooter].
 ///

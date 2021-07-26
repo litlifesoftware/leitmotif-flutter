@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 /// A Container which will show a tooltip while being long pressing. The
 /// provided [child] will wrapped inside the Container.

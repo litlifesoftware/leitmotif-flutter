@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.litlifesoftware.lit_ui_kit">
+    package="com.litlifesoftware.leitmotif">
    <application
         android:label="example"
         android:icon="@mipmap/ic_launcher">

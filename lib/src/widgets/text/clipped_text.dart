@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 /// Prevents the [Text] widget from clipping by
 /// setting an overflow property. The text can

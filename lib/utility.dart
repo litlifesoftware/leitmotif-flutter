@@ -1,7 +1,7 @@
 /// Flutter widgets implementing utilies such as converter and class
 /// extenstions.
 ///
-/// To use, import `package:lit_ui_kit/utility.dart`.
+/// To use, import `package:leitmotif/utility.dart`.
 library utility;
 
 export 'src/util/color_utility.dart';

@@ -1,6 +1,6 @@
 /// Flutter widgets implementing custom styled dialogs.
 ///
-/// To use, import `package:lit_ui_kit/dialogs.dart`.
+/// To use, import `package:leitmotif/dialogs.dart`.
 library dialogs;
 
 export 'src/widgets/dialogs/lit_about_dialog.dart';

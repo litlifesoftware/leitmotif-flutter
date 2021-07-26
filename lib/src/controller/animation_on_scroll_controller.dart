@@ -126,7 +126,7 @@ class AnimationOnScrollController {
       animationController.dispose();
     } catch (e) {
       print(
-          "LitUIKit: AnimationOnScrollController's animation already disposed");
+          "Leitmotif: AnimationOnScrollController's animation already disposed");
     }
   }
 }

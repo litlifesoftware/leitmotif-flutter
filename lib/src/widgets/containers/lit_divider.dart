@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/utility.dart';
+import 'package:leitmotif/utility.dart';
 
 /// A widget visually seperating two similar looking widget.
 ///

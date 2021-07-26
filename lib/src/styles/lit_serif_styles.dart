@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/styles.dart';
+import 'package:leitmotif/styles.dart';
 
 /// A collection of serif [TextStyle]s.
 ///
@@ -14,8 +14,8 @@ import 'package:lit_ui_kit/styles.dart';
 /// * `header5`
 /// * `header6`
 class LitSerifStyles {
-  /// All fonts should be derived from this very package ('lit_ui_kit')
-  static const String package = "lit_ui_kit";
+  /// All fonts should be derived from this very package ('leitmotif')
+  static const String package = "leitmotif";
 
   /// The default serif font family.
   static const String merriweather = "Merriweather";

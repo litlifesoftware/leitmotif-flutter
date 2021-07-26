@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/containers.dart';
-import 'package:lit_ui_kit/styles.dart';
-import 'package:lit_ui_kit/text.dart';
-import 'package:lit_ui_kit/utility.dart';
+import 'package:leitmotif/containers.dart';
+import 'package:leitmotif/styles.dart';
+import 'package:leitmotif/text.dart';
+import 'package:leitmotif/utility.dart';
 
 /// A widget displaying an username on a colored background.
 ///

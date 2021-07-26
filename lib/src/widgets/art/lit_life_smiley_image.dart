@@ -21,7 +21,7 @@ class LitLifeSmileyImage extends StatelessWidget {
       fit: fit,
       image: AssetImage(
         "assets/images/Plain_Logo_Small.png",
-        package: "lit_ui_kit",
+        package: "leitmotif",
       ),
     );
   }

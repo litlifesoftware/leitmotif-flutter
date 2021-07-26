@@ -1,4 +1,4 @@
-import 'package:lit_ui_kit/src/model/lit_notification_data.dart';
+import 'package:leitmotif/src/model/lit_notification_data.dart';
 
 class LitNotificationController {
   /// States the threshold of notifications that should be displayed at once.

@@ -1,6 +1,6 @@
 /// Flutter widgets implementing the custom styled collapsible card.
 ///
-/// To use, import `package:lit_ui_kit/collapsible_card.dart`.
+/// To use, import `package:leitmotif/collapsible_card.dart`.
 library collapsible_card;
 
 export 'src/widgets/collapsible_card/collapsible_card_controller.dart';

@@ -1,6 +1,6 @@
 /// Flutter widgets implementing custom styled app bars.
 ///
-/// To use, import `package:lit_ui_kit/app_bars.dart`.
+/// To use, import `package:leitmotif/app_bars.dart`.
 library app_bars;
 
 export 'src/widgets/app_bars/custom_app_bar.dart';

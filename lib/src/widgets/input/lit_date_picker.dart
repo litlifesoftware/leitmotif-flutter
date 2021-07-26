@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/calendar.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/calendar.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 /// A date picker widget allowing the modification of the provided
 /// [selectedDate] DateTime value.

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/buttons.dart';
-import 'package:lit_ui_kit/dialogs.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
-import 'package:lit_ui_kit/slider.dart';
-import 'package:lit_ui_kit/styles.dart';
+import 'package:leitmotif/buttons.dart';
+import 'package:leitmotif/dialogs.dart';
+import 'package:leitmotif/leitmotif.dart';
+import 'package:leitmotif/slider.dart';
+import 'package:leitmotif/styles.dart';
 
 /// A dialog widget allowing to edit and create [Color] objects.
 ///

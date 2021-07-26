@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/styles.dart';
-import 'package:lit_ui_kit/utility.dart';
+import 'package:leitmotif/styles.dart';
+import 'package:leitmotif/utility.dart';
 
 class LitTextField extends StatefulWidget {
   final String label;

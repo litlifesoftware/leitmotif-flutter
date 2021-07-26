@@ -5,7 +5,7 @@
 /// A collection of Flutter widgets.
 ///
 ///
-/// To use, import `package:lit_ui_lit/lit_ui_kit.dart`.
+/// To use, import `package:leitmotif/leitmotif.dart`.
 ///
 /// Dependencies used:
 ///
@@ -15,7 +15,7 @@
 /// To use the above mentioned dependencies, please include them
 /// separatly on the `pubspec.yaml` of your project. These will not be
 /// exported to avoid namespace issues.
-library lit_ui_kit;
+library leitmotif;
 
 /// App bars
 export 'app_bars.dart';

@@ -1,6 +1,6 @@
 /// Flutter widgets implementing custom styled buttons.
 ///
-/// To use, import `package:lit_ui_kit/buttons.dart`.
+/// To use, import `package:leitmotif/buttons.dart`.
 library buttons;
 
 export 'src/widgets/buttons/lit_tooltip_button.dart';

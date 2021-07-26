@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 /// A screen [Widget] displaying package license details.
 ///

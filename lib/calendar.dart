@@ -1,6 +1,6 @@
 /// Flutter widgets implementing the custom calendar view.
 ///
-/// To use, import `package:lit_ui_kit/calendar.dart`.
+/// To use, import `package:leitmotif/calendar.dart`.
 library calendar;
 
 export 'src/widgets/calendar/lit_calendar_day_item.dart';

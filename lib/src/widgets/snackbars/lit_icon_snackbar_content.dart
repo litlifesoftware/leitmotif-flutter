@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/text.dart';
+import 'package:leitmotif/text.dart';
 
 /// A widget displaying an icon alongside text.
 ///

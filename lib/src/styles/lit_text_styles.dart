@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 const int caption = 0;
 const int button = 1;
@@ -44,8 +44,8 @@ const FontWeight black = FontWeight.w800;
 /// The [TextStyle]s are able to be used as default value on the constructor
 /// if required.
 class LitTextStyles {
-  /// All fonts should be derived from this very package ('lit_ui_kit')
-  static const String package = "lit_ui_kit";
+  /// All fonts should be derived from this very package ('leitmotif')
+  static const String package = "leitmotif";
 
   /// The default sans serif font family.
   static const String montserrat = "Montserrat";

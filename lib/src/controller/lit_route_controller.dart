@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 /// The [LitRouteController] enables navigation between multiple screens without the
 /// need to specify a particular [PageRoute] on every navigation as it is done by

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 /// Wrapps the [Text] widget inside a scaled down [FittedBox] to  ensure the Text
 /// will be displayed on all screens without any pixel overflow or clipping.

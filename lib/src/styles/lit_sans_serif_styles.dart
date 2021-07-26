@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/styles.dart';
+import 'package:leitmotif/styles.dart';
 
 /// A collection of sans serif [TextStyle]s.
 ///
@@ -21,8 +21,8 @@ import 'package:lit_ui_kit/styles.dart';
 /// * `h2`
 /// * `h1`
 class LitSansSerifStyles {
-  /// All fonts should be derived from this very package ('lit_ui_kit')
-  static const String _package = "lit_ui_kit";
+  /// All fonts should be derived from this very package ('leitmotif')
+  static const String _package = "leitmotif";
 
   /// The default sans serif font family.
   static const String _montserrat = "Montserrat";

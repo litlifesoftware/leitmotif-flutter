@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 void main() {
-  runApp(LitUIKitExample());
+  runApp(LeitmotifExample());
 }
 
-class LitUIKitExample extends StatefulWidget {
+class LeitmotifExample extends StatefulWidget {
   // This widget is the root of your application.
   @override
-  _LitUIKitExampleState createState() => _LitUIKitExampleState();
+  _LeitmotifExampleState createState() => _LeitmotifExampleState();
 }
 
-class _LitUIKitExampleState extends State<LitUIKitExample> {
+class _LeitmotifExampleState extends State<LeitmotifExample> {
   @override
   void initState() {
     super.initState();
@@ -24,7 +24,7 @@ class _LitUIKitExampleState extends State<LitUIKitExample> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'LitUIKit',
+      title: 'Leitmotif',
       home: ExampleHomeScreen(),
     );
   }
@@ -35,8 +35,8 @@ const String exampleText = "Lorem ipsum dolor sit amet, consetetur sadipscing" +
     " magna aliquyam erat, sed diam voluptua. At vero eos et accusam et " +
     "justo duo dolores et ea rebum. Stet clita kasd gubergren";
 
-const String LITUIKIT_DESCR =
-    "LitUIKit enables you to create unique user interfaces in less time. " +
+const String LEITMOTIF_DESCR =
+    "Leitmotif enables you to create unique user interfaces in less time. " +
         "Built with the framework. Whose Widgets include custom " +
         "implementation of Snackbars, AppBars and Utility Screens " +
         "(e.g. to verify the user's age and to show the application's" +
@@ -291,7 +291,7 @@ class __ExampleScreenState extends State<_ExampleScreen> {
     return LitScaffold(
       backgroundColor: darkMode ? LitColors.darkBlue : Colors.white,
       appBar: LitAppBar(
-        title: "LitUIKit Example",
+        title: "Leitmotif",
         backgroundColor: darkMode ? Colors.black : Colors.white,
         textStyle: LitTextStyles.sansSerif.copyWith(
           color: darkMode ? Colors.white : LitColors.mediumGrey,
@@ -675,9 +675,9 @@ class _ButtonList extends StatelessWidget {
                 builder: (context) {
                   return LitAboutDialog(
                     title: "About",
-                    appName: "LitUIKit Example",
+                    appName: "Leitmotif Example",
                     art: _Art(large: false),
-                    infoDescription: LITUIKIT_DESCR,
+                    infoDescription: LEITMOTIF_DESCR,
                   );
                 },
               )
@@ -932,12 +932,12 @@ class _LitPrivacyScreenImplementation extends StatelessWidget {
         ),
       ],
       art: _Art(large: false),
-      privacyText: LITUIKIT_DESCR +
-          LITUIKIT_DESCR +
-          LITUIKIT_DESCR +
-          LITUIKIT_DESCR +
-          LITUIKIT_DESCR +
-          LITUIKIT_DESCR,
+      privacyText: LEITMOTIF_DESCR +
+          LEITMOTIF_DESCR +
+          LEITMOTIF_DESCR +
+          LEITMOTIF_DESCR +
+          LEITMOTIF_DESCR +
+          LEITMOTIF_DESCR,
       onAgreeCallback: () {
         Navigator.pop(context);
       },
@@ -988,7 +988,7 @@ class _LitCreditsScreenImplementation extends StatelessWidget {
   Widget build(BuildContext context) {
     return LitCreditsScreen(
       darkMode: darkMode,
-      appTitle: "LitUIKit",
+      appTitle: "Leitmotif",
       art: _Art(large: false),
       credits: [
         CreditData(

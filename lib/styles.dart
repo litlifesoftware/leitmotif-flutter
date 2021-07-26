@@ -1,6 +1,6 @@
 /// Flutter widgets implementing styles such as color and texts styles.
 ///
-/// To use, import `package:lit_ui_kit/styles.dart`.
+/// To use, import `package:leitmotif/styles.dart`.
 library styles;
 
 export 'src/styles/lit_colors.dart';

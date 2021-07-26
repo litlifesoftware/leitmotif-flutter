@@ -1,7 +1,7 @@
 /// Flutter widgets implementing custom containers used to wrap child widgets,
 /// or to fill empty space.
 ///
-/// To use, import `package:lit_ui_kit/containers.dart`.
+/// To use, import `package:leitmotif/containers.dart`.
 library containers;
 
 export 'src/widgets/containers/fade_in_transform_container.dart';

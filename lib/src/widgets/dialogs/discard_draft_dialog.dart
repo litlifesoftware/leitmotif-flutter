@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
-/// A LitUIKit widget that displays a [LitTitledDialog] allowing the user to
+/// A Flutter widget that displays a [LitTitledDialog] allowing the user to
 /// either discard his unsaved draft or to cancel the discard process.
 ///
 /// The [onDiscard] method is called once the user confirms to discard the

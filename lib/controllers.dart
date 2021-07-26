@@ -1,7 +1,7 @@
 /// Flutter widgets implementing controllers required to perform certain
-/// UI-related operations on 'lit_ui_kit' widgets.
+/// UI-related operations on 'leitmotif' widgets.
 ///
-/// To use, import `package:lit_ui_kit/controllers.dart`.
+/// To use, import `package:leitmotif/controllers.dart`.
 library controllers;
 
 export 'src/controller/animation_on_scroll_controller.dart';

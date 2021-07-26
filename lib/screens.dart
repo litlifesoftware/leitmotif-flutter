@@ -1,7 +1,7 @@
 /// Flutter widgets implementing screens to either persent art, display general
 /// information or to get allow basic user inputs such as age and user data.
 ///
-/// To use, import `package:lit_ui_kit/screens.dart`.
+/// To use, import `package:leitmotif/screens.dart`.
 library screens;
 
 export 'src/screens/title_screen.dart';

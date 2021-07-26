@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/buttons.dart';
-import 'package:lit_ui_kit/dialogs.dart';
-import 'package:lit_ui_kit/styles.dart';
-import 'package:lit_ui_kit/text.dart';
+import 'package:leitmotif/buttons.dart';
+import 'package:leitmotif/dialogs.dart';
+import 'package:leitmotif/styles.dart';
+import 'package:leitmotif/text.dart';
 
 /// A button widget primarily designed to be used on the [LitTitledDialog] as
 /// a [LitTitledDialog.actionButtons] item.

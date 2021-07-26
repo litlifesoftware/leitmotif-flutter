@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/lit_ui_kit.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 /// A bottom navigation bar allowing to switch between a list of tabs, which are displayed
 /// on the parent component.

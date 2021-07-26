@@ -9,6 +9,6 @@ class LitIconData extends IconData {
       : super(
           codePoint,
           fontFamily: 'LitIcons',
-          fontPackage: 'lit_ui_kit',
+          fontPackage: 'leitmotif',
         );
 }

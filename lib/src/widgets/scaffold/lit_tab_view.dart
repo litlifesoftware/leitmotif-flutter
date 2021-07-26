@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lit_ui_kit/bottom_navigation.dart';
+import 'package:leitmotif/bottom_navigation.dart';
 
 /// A screen widget allowing to navigate the provided tab widgets inside an
 /// surrounding tab view.
