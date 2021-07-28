@@ -59,7 +59,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
   @override
   Widget build(BuildContext context) {
     return LitScaffold(
-      appBar: FixedOnScrollAppbar(
+      appBar: FixedOnScrollTitledAppbar(
         scrollController: _scrollController,
         title: widget.title,
       ),

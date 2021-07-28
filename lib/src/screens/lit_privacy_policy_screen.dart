@@ -78,7 +78,7 @@ class _LitPrivacyPolicyScreenState extends State<LitPrivacyPolicyScreen>
   @override
   Widget build(BuildContext context) {
     return LitScaffold(
-      appBar: FixedOnScrollAppbar(
+      appBar: FixedOnScrollTitledAppbar(
         scrollController: _scrollController,
         title: widget.title,
       ),

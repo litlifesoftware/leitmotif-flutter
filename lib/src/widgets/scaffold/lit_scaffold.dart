@@ -188,7 +188,8 @@ class __LitScaffoldBodyState extends State<_LitScaffoldBody> {
     if (widget.appBar is LitBlurredAppBar) {
       return false;
     }
-    if (widget.appBar is FixedOnScrollAppbar) {
+    if (widget.appBar is FixedOnScrollTitledAppbar ||
+        widget.appBar is FixedOnScrollTitledAppbar) {
       return false;
     }
     if (widget.appBar is MinimalistAppBar) {
