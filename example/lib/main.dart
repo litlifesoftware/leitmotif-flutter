@@ -224,6 +224,7 @@ class __ExampleScreenState extends State<_ExampleScreen> {
   late LitSnackbarController _solidSnackbarControllerDiffAni;
   late LitSnackbarController _transparentSnackbarController;
   late LitNotificationController _notificationController;
+  late ScrollController _scrollController;
   late bool darkMode;
   DateTime? dayOfBirth;
   Color colorPickerBtnColor = Colors.white;
@@ -282,6 +283,7 @@ class __ExampleScreenState extends State<_ExampleScreen> {
     );
     _transparentSnackbarController = LitSnackbarController();
     _notificationController = LitNotificationController();
+    _scrollController = ScrollController();
     darkMode = false;
     dayOfBirth = null;
   }
@@ -290,13 +292,13 @@ class __ExampleScreenState extends State<_ExampleScreen> {
   Widget build(BuildContext context) {
     return LitScaffold(
       backgroundColor: darkMode ? LitColors.darkBlue : Colors.white,
-      appBar: LitAppBar(
+      appBar: FixedOnScrollTitledAppbar(
         title: "Leitmotif",
         backgroundColor: darkMode ? Colors.black : Colors.white,
+        scrollController: _scrollController,
         textStyle: LitTextStyles.sansSerif.copyWith(
           color: darkMode ? Colors.white : LitColors.mediumGrey,
         ),
-        elevated: darkMode,
       ),
       snackbars: [
         LitIconSnackbar(
@@ -418,6 +420,7 @@ class __ExampleScreenState extends State<_ExampleScreen> {
             child: ScrollableColumn(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
+              controller: _scrollController,
               children: [
                 Column(
                   children: [
