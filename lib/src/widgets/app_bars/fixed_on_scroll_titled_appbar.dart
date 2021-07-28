@@ -26,6 +26,9 @@ class FixedOnScrollTitledAppbar extends StatefulWidget implements CustomAppBar {
 
   final Color backButtonBackgroundColor;
   final Color backButtonIconColor;
+
+  final TextStyle textStyle;
+
   //
   final bool shouldNavigateBack;
   final void Function()? onInvalidNavigation;
@@ -51,6 +54,7 @@ class FixedOnScrollTitledAppbar extends StatefulWidget implements CustomAppBar {
     this.backButtonBackgroundColor =
         LitBackButtonDefaultStyling.backgroundColor,
     this.backButtonIconColor = LitBackButtonDefaultStyling.iconColor,
+    this.textStyle = LitSansSerifStyles.subtitle2,
     this.shouldNavigateBack = true,
     this.onInvalidNavigation,
   }) : super(key: key);
@@ -94,56 +98,18 @@ class _FixedOnScrollTitledAppbarState extends State<FixedOnScrollTitledAppbar>
       onInvalidNavigation: widget.onInvalidNavigation,
       padding: widget.padding,
       shouldNavigateBack: widget.shouldNavigateBack,
-      child: _Title(title: widget.title),
+      child: _Title(title: widget.title, style: widget.textStyle),
     );
-    // AnimatedBuilder(
-    //   animation: _animationOnScrollController.animationController,
-    //   builder: (context, _) {
-    //     return AnimatedOpacity(
-    //       duration: _animationOnScrollController.animationController.duration!,
-    //       opacity: _animationOnScrollController.animationController.value,
-    //       child: Transform(
-    //         transform: Matrix4.translationValues(
-    //             0,
-    //             -widget.height +
-    //                 (widget.height *
-    //                     _animationOnScrollController.animationController.value),
-    //             0),
-    //         child: Container(
-    //           height: widget.height,
-    //           width: MediaQuery.of(context).size.width,
-    //           decoration: BoxDecoration(
-    //             color: widget.backgroundColor,
-    //             boxShadow: widget.boxShadow,
-    //           ),
-    //           padding: widget.padding,
-    //           child: Navigator.canPop(context)
-    //               ? Row(
-    //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //                   children: [
-    //                     LitBackButton(
-    //                       backgroundColor: widget.backButtonBackgroundColor,
-    //                       iconColor: widget.backButtonIconColor,
-    //                       shouldNavigateBack: widget.shouldNavigateBack,
-    //                       onInvalidNavigation: widget.onInvalidNavigation,
-    //                     ),
-    //                     _Title(title: widget.title),
-    //                   ],
-    //                 )
-    //               : _Title(title: widget.title),
-    //         ),
-    //       ),
-    //     );
-    //   },
-    // );
   }
 }
 
 class _Title extends StatelessWidget {
-  final title;
+  final String title;
+  final TextStyle style;
   const _Title({
     Key? key,
     required this.title,
+    required this.style,
   }) : super(key: key);
 
   @override
@@ -157,7 +123,7 @@ class _Title extends StatelessWidget {
           child: ClippedText(
             title,
             textAlign: TextAlign.center,
-            style: LitSansSerifStyles.subtitle2,
+            style: style,
           ),
         ),
       ),
