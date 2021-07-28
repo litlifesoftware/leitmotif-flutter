@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
+/// A draggable container that stretches across the whole screen.
+///
+/// It wrappes the [child] widget and therefore making its position adjustable
+/// by the user by dragging it across the screen.
+///
+/// To avoid the [child] to be dragged outside the boundaries provided by the
+/// screen, the [child] will only be dragged if it has been dragged on the
+/// viewable area.
 class LitDraggable extends StatefulWidget {
   final Widget child;
   final Offset initialDragOffset;
+  final EdgeInsets padding;
+  final Duration animationDuration;
+
+  /// Creates a [LitDraggable].
+  ///
+  /// Provide a custom [padding] to constrain the draggable area.
   const LitDraggable({
     Key? key,
     required this.child,
-    this.initialDragOffset = const Offset(0.0, 0.0),
+    this.initialDragOffset = const Offset(8.0, 16.0),
+    this.padding = const EdgeInsets.symmetric(
+      horizontal: 8.0,
+      vertical: 48.0,
+    ),
+    this.animationDuration = const Duration(milliseconds: 120),
   }) : super(key: key);
   @override
   _LitDraggableState createState() => _LitDraggableState();
@@ -17,84 +36,98 @@ class _LitDraggableState extends State<LitDraggable>
     with TickerProviderStateMixin {
   late AnimationController _dragAnimationController;
 
-  //Offset draggedOffset = Offset(0, 0);
-  double? draggedDx;
-  double? draggedDy;
+  /// The latest `dx` drag offset.
+  late double _draggedDx;
 
+  /// The latest `dy` drag offset.
+  late double _draggedDy;
+
+  /// Sets the [_draggedDx] and [_draggedDy] while animating the drag action.
   void _setDraggedOffset(double dx, double dy) {
     _dragAnimationController
         .reverse()
         .then((value) => _dragAnimationController.forward());
     setState(() {
-      draggedDx = dx;
-      draggedDy = dy;
+      _draggedDx = dx;
+      _draggedDy = dy;
     });
   }
 
-  bool isOnScreen(DraggableDetails details) {
-    return MediaQuery.of(context).size.height > details.offset.dy &&
-        MediaQuery.of(context).size.width > details.offset.dx &&
-        details.offset.dy > 0 &&
-        details.offset.dx > 0;
-  }
+  /// Handles the `onDragEnd` event and validates the provided drag [details].
+  void _onDragEnd(DraggableDetails details) {
+    final double adjustedHeight = MediaQuery.of(context).size.height -
+        oldSize!.height -
+        widget.padding.bottom -
+        widget.padding.top;
 
-  void _onDragEnd(Offset dragEndOffset) {
-    final double adjustedHeight =
-        MediaQuery.of(context).size.height - oldSize!.height - 30;
-    final double adjustedWidth =
-        MediaQuery.of(context).size.width - oldSize!.width;
-    print("Dragged dx:${dragEndOffset.dx} dy:${dragEndOffset.dy}");
-    print("Size dx: $adjustedWidth dy:$adjustedHeight");
+    final double adjustedWidth = MediaQuery.of(context).size.width -
+        oldSize!.width -
+        widget.padding.left -
+        widget.padding.right;
+
     // If dragged inside viewable screen area
-    if (dragEndOffset.dx > 0 && dragEndOffset.dy > 0) {
-      if (dragEndOffset.dx < adjustedWidth &&
-          dragEndOffset.dy < adjustedHeight) {
-        _setDraggedOffset(dragEndOffset.dx, dragEndOffset.dy);
+    if (details.offset.dx > 0 && details.offset.dy > 0) {
+      // If the drag occured inside the constrains
+      if (details.offset.dx < adjustedWidth &&
+          details.offset.dy < adjustedHeight) {
+        _setDraggedOffset(details.offset.dx, details.offset.dy);
+
+        /// Otherwise use the max constraints available.
       } else {
-        if (dragEndOffset.dx > adjustedWidth &&
-            dragEndOffset.dy > adjustedHeight) {
+        if (details.offset.dx > adjustedWidth &&
+            details.offset.dy > adjustedHeight) {
           _setDraggedOffset(adjustedWidth, adjustedHeight);
         }
 
-        if (dragEndOffset.dx > adjustedWidth &&
-            dragEndOffset.dy < adjustedHeight) {
-          _setDraggedOffset(adjustedWidth, dragEndOffset.dy);
+        /// If only the `dy` position is valid
+        if (details.offset.dx > adjustedWidth &&
+            details.offset.dy < adjustedHeight) {
+          _setDraggedOffset(adjustedWidth, details.offset.dy);
         }
 
-        if (dragEndOffset.dx < adjustedWidth &&
-            dragEndOffset.dy > adjustedHeight) {
-          _setDraggedOffset(dragEndOffset.dx, adjustedHeight);
+        // If only the `dx` position is valid
+        if (details.offset.dx < adjustedWidth &&
+            details.offset.dy > adjustedHeight) {
+          _setDraggedOffset(details.offset.dx, adjustedHeight);
         }
       }
+      // Else it's outside the viewable area.
     } else {
-      if (dragEndOffset.dx < 0 && dragEndOffset.dy < 0) {
-        _setDraggedOffset(0, 0);
+      // Use the min constrains available.
+      if (details.offset.dx < 0 && details.offset.dy < 0) {
+        _setDraggedOffset(widget.padding.left, widget.padding.top);
       }
 
-      if (dragEndOffset.dx < 0 && dragEndOffset.dy > 0) {
-        if (dragEndOffset.dy < adjustedHeight) {
-          _setDraggedOffset(0, dragEndOffset.dy);
+      if (details.offset.dx < 0 && details.offset.dy > 0) {
+        if (details.offset.dy < adjustedHeight) {
+          // Use the min `dx` and provided drag's `dy`.
+          _setDraggedOffset(widget.padding.left, details.offset.dy);
         } else {
-          _setDraggedOffset(0, adjustedHeight);
+          // Use the min `dx` and max `dy` values available.
+          _setDraggedOffset(widget.padding.left, adjustedHeight);
         }
       }
 
-      if (dragEndOffset.dx > 0 && dragEndOffset.dy < 0) {
-        if (dragEndOffset.dx > adjustedWidth) {
-          _setDraggedOffset(adjustedWidth, 0);
+      if (details.offset.dx > 0 && details.offset.dy < 0) {
+        if (details.offset.dx > adjustedWidth) {
+          // Use the max `dx` and min `dy` available..
+          _setDraggedOffset(adjustedWidth, widget.padding.top);
         } else {
-          _setDraggedOffset(dragEndOffset.dx, 0);
+          // Use the provided drag's `dx` and minimum `dy` value available.
+          _setDraggedOffset(details.offset.dx, widget.padding.top);
         }
       }
     }
-
-    // _setDraggedOffset(dragEndOffset.dx, dragEndOffset.dy);
   }
 
+  /// The container's key providing context on state.
   GlobalKey<State<StatefulWidget>> widgetKey = GlobalKey();
+
+  /// The [widget.child]'s size.
   Size? oldSize = Size(0.0, 0.0);
 
-  void postFrameCallback(_) {
+  /// Sets the [oldSize] value on widget build.
+  void _setSize(_) {
     BuildContext? context = widgetKey.currentContext;
     if (context == null) return;
 
@@ -107,10 +140,12 @@ class _LitDraggableState extends State<LitDraggable>
   @override
   void initState() {
     super.initState();
-    draggedDx = widget.initialDragOffset.dx;
-    draggedDy = widget.initialDragOffset.dy;
-    _dragAnimationController =
-        AnimationController(duration: Duration(milliseconds: 120), vsync: this);
+    _draggedDx = widget.initialDragOffset.dx;
+    _draggedDy = widget.initialDragOffset.dy;
+    _dragAnimationController = AnimationController(
+      duration: widget.animationDuration,
+      vsync: this,
+    );
 
     _dragAnimationController.forward();
   }
@@ -123,15 +158,15 @@ class _LitDraggableState extends State<LitDraggable>
 
   @override
   Widget build(BuildContext context) {
-    SchedulerBinding.instance!.addPostFrameCallback(postFrameCallback);
+    SchedulerBinding.instance!.addPostFrameCallback(_setSize);
     return Container(
       key: widgetKey,
       child: AnimatedBuilder(
         animation: _dragAnimationController,
         builder: (context, _) {
           return Positioned(
-            left: draggedDx,
-            top: draggedDy,
+            left: _draggedDx,
+            top: _draggedDy,
             // child: Draggable(
             //     feedback: FloatingActionButton(
             //         child: Icon(Icons.drag_handle), onPressed: () {}),
@@ -144,9 +179,7 @@ class _LitDraggableState extends State<LitDraggable>
               feedback: _Feedback(child: widget.child),
               child: widget.child,
               childWhenDragging: SizedBox(),
-              onDragEnd: (details) {
-                _onDragEnd(details.offset);
-              },
+              onDragEnd: _onDragEnd,
             ),
           );
         },
