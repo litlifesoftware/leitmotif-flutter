@@ -3,7 +3,7 @@ import 'package:leitmotif/leitmotif.dart';
 
 class LitBackButtonDefaultStyling {
   static const double height = 50.0;
-  static const double width = 100.0;
+  static const double width = 48.0;
   static const Color iconColor = Colors.white;
   static const Color backgroundColor = LitColors.lightGrey;
   static const IconData icon = LitIcons.arrow_left_solid;

@@ -103,17 +103,20 @@ class _FixedOnScrollAppbarState extends State<FixedOnScrollAppbar>
               ),
               padding: widget.padding,
               child: Navigator.canPop(context)
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        LitBackButton(
-                          backgroundColor: widget.backButtonBackgroundColor,
-                          iconColor: widget.backButtonIconColor,
-                          shouldNavigateBack: widget.shouldNavigateBack,
-                          onInvalidNavigation: widget.onInvalidNavigation,
-                        ),
-                        widget.child,
-                      ],
+                  ? Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          LitBackButton(
+                            backgroundColor: widget.backButtonBackgroundColor,
+                            iconColor: widget.backButtonIconColor,
+                            shouldNavigateBack: widget.shouldNavigateBack,
+                            onInvalidNavigation: widget.onInvalidNavigation,
+                          ),
+                          widget.child,
+                        ],
+                      ),
                     )
                   : widget.child,
             ),

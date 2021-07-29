@@ -3,7 +3,10 @@
 - Replace the `child` member with a simple `title` member on `FixedOnScrollAppbar`.
 - Add a `gradientColors` member on `LitFooter` to customize its background gradient.
 - Add a `contrastColor` member on `LitUserIcon` to customize its background gradient.
-- Rename `lit_ui_kit` package to `leitmotif`
+- Rename `lit_ui_kit` package to `leitmotif`.
+- Add `FixedOnScrollTitledAppbar`.
+- Revert changes on `FixedOnScrollAppbar` to accept a `child` property.
+- Refactor and document `LitDraggable`.
 
 ## 1.3.0
 
