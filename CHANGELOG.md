@@ -7,6 +7,7 @@
 - Add `FixedOnScrollTitledAppbar`.
 - Revert changes on `FixedOnScrollAppbar` to accept a `child` property.
 - Refactor and document `LitDraggable`.
+- Decrease `LitBackButton` default width to avoid overflow.
 
 ## 1.3.0
 

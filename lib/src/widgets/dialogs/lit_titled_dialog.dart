@@ -133,10 +133,8 @@ class __DialogTopBarState extends State<_DialogTopBar> {
       child: ClippedText(
         widget.titleText,
         textAlign: TextAlign.right,
-        style: LitTextStyles.sansSerif.copyWith(
-          fontSize: 16.0,
+        style: LitSansSerifStyles.subtitle2.copyWith(
           color: widget.titleTextColor,
-          fontWeight: FontWeight.w700,
         ),
       ),
     );
@@ -183,7 +181,7 @@ class __DialogTopBarState extends State<_DialogTopBar> {
                 )
               : SizedBox(),
           Expanded(
-            flex: widget.leading != null ? 5 : 1,
+            flex: widget.leading != null ? 4 : 1,
             child: widget.leading != null
                 ? _titleText
                 : Container(
