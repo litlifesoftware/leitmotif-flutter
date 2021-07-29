@@ -19,7 +19,7 @@ class LitTextBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return LitBadge(
       backgroundColor: backgroundColor,
-      child: Text(
+      child: ClippedText(
         "$label",
         style: LitTextStyles.sansSerif.copyWith(
           color: textColor,
