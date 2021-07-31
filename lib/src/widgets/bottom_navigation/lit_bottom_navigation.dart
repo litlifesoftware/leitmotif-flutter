@@ -200,10 +200,10 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
                       landscapeWidthFactor: 0.55,
                       child: BluredBackgroundContainer(
                         blurRadius: widget.blurRadius,
+                        borderRadius: BorderRadius.circular(15.0),
                         child: Container(
                           height: widget.height,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.0),
                             color: widget.backgroundColor,
                           ),
                           child: Builder(
