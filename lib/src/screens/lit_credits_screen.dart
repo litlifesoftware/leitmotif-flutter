@@ -158,6 +158,7 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
                             controller: _scrollController,
                             padding: const EdgeInsets.symmetric(
                               vertical: 48.0,
+                              horizontal: 16.0,
                             ),
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
