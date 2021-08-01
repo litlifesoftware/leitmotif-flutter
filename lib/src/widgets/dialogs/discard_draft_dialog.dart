@@ -102,7 +102,8 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   LayoutBuilder(builder:
@@ -116,8 +117,8 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
                             builder: (context, constraints) {
                               return ExclamationRectangle(
                                 margin: const EdgeInsets.symmetric(
-                                  vertical: 8.0,
-                                  horizontal: 8.0,
+                                  vertical: 4.0,
+                                  horizontal: 4.0,
                                 ),
                                 height: constraints.maxWidth,
                                 width: constraints.maxWidth,
@@ -126,32 +127,32 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
                           ),
                         ),
                         Expanded(
-                          flex: 2,
+                          flex: 5,
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 4.0),
-                            child: Text(
-                              widget.infoDescription,
-                              textAlign: TextAlign.left,
-                              style: LitSansSerifStyles.body2.copyWith(
-                                color: LitColors.lightGrey,
-                              ),
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Column(
+                              children: [
+                                ClippedText(
+                                  widget.infoDescription,
+                                  textAlign: TextAlign.left,
+                                  style: LitSansSerifStyles.caption.copyWith(
+                                    color: LitColors.lightGrey,
+                                  ),
+                                  maxLines: 2,
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ],
                     );
                   }),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 4.0,
-                      horizontal: 8.0,
-                    ),
-                    child: Text(
-                      widget.discardText,
-                      textAlign: TextAlign.left,
-                      style: LitSansSerifStyles.body2,
-                    ),
+                  SizedBox(height: 8.0),
+                  ClippedText(
+                    widget.discardText,
+                    textAlign: TextAlign.left,
+                    style: LitSansSerifStyles.body2,
+                    maxLines: 2,
                   ),
                 ],
               ),
