@@ -28,7 +28,11 @@ class CollapseOnScrollActionButton extends StatefulWidget
   /// The scroll offset threshold required to trigger the collapse.
   final double requiredScrollOffset;
 
+  /// The button's padding.
   final EdgeInsets padding;
+
+  /// States whether to blur the button's background.
+  final bool blurred;
 
   /// The button's callback method.
   final void Function() onPressed;
@@ -49,7 +53,11 @@ class CollapseOnScrollActionButton extends StatefulWidget
     required this.label,
     this.collapseDuration = const Duration(milliseconds: 500),
     this.requiredScrollOffset = 64.0,
-    this.padding = const EdgeInsets.symmetric(vertical: 8.0, horizontal: 22.0),
+    this.padding = const EdgeInsets.symmetric(
+      vertical: 8.0,
+      horizontal: 22.0,
+    ),
+    this.blurred = true,
     required this.onPressed,
   }) : super(key: key);
 
@@ -129,6 +137,7 @@ class _CollapseOnScrollActionButtonState
               padding: widget.padding,
               accentColor: _backgroundColor,
               color: _accentColor,
+              blurred: true,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
