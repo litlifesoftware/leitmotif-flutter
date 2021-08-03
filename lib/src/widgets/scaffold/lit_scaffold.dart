@@ -184,14 +184,20 @@ class _LitScaffoldBody extends StatefulWidget {
 }
 
 class __LitScaffoldBodyState extends State<_LitScaffoldBody> {
+  /// States whether to implement a safe area on the `Scaffold`'s body
+  /// (required when using always-on app bars).
   bool get _safeArea {
     if (widget.appBar is LitBlurredAppBar) {
       return false;
     }
-    if (widget.appBar is FixedOnScrollTitledAppbar ||
-        widget.appBar is FixedOnScrollTitledAppbar) {
+    if (widget.appBar is FixedOnScrollTitledAppbar) {
       return false;
     }
+
+    if (widget.appBar is FixedOnScrollAppbar) {
+      return false;
+    }
+
     if (widget.appBar is MinimalistAppBar) {
       return false;
     }
