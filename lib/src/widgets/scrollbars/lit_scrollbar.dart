@@ -25,8 +25,8 @@ class LitScrollbar extends StatelessWidget {
     Key? key,
     required this.child,
     this.scrollController,
-    this.thickness = 8.0,
-    this.radius = const Radius.circular(4.0),
+    this.thickness = 4.0,
+    this.radius = const Radius.circular(2.0),
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
