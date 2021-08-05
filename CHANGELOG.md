@@ -1,3 +1,7 @@
+## 1.4.1
+
+- Migrated from the deprecated package_info plugin to package_info_plus.
+
 ## 1.4.0
 
 - Replace the `child` member with a simple `title` member on `FixedOnScrollAppbar`.
