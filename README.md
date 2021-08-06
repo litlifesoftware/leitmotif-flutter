@@ -1,6 +1,6 @@
-# ![Leitmotif](assets/images/Leitmotif_Banner_2021.jpg "Leitmotif")
+![Leitmotif](assets/images/Leitmotif_Banner_2021.jpg "Leitmotif")
 
-# Leitmotif
+## What is Leitmotif?
 
 A collection of widgets and screens for Flutter implementing the Leitmotif Design Language. It complements the default Material Widgets shipped with Flutter. Whose Widgets include custom implementation of `Snackbars`, `AppBars` and a settings panel. Utility Screens (e.g. required to verify the user's age and to show the application's licenses) are also included.
 

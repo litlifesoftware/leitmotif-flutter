@@ -1,3 +1,12 @@
+## 1.4.1
+
+- Fix missing clipping on `LitBottomNavigation`.
+- Fix layout issues on `DiscardDraftDialog`.
+- Fix padding issues on `LitCreditsScreen`. 
+- Decrease default width on `LitScrollbar`.
+- Fix unnecessary safe area on `LitScaffold` when using `FixedOnScrollAppbar`.
+- Add a `blurred` option on `CollapseOnScrollActionButton` and `LitGradientButton`.
+
 ## 1.4.0
 
 - Replace the `child` member with a simple `title` member on `FixedOnScrollAppbar`.
