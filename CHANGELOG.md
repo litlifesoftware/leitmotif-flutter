@@ -1,6 +1,7 @@
 ## 1.4.2
 
-- Migrated from the deprecated package_info plugin to package_info_plus (provided by (lscbot)[https://lscbot.com/].
+- Migrated from the deprecated package_info plugin to package_info_plus (provided by [lscbot](https://lscbot.com/)).
+- Add support for Windows, Linux and Web-based platforms.
 
 ## 1.4.1
 
