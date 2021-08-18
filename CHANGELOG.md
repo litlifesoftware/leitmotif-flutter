@@ -1,6 +1,15 @@
+## 1.4.2
+
+- Migrated from the deprecated package_info plugin to package_info_plus (provided by (lscbot)[https://lscbot.com/].
+
 ## 1.4.1
 
-- Migrated from the deprecated package_info plugin to package_info_plus.
+- Fix missing clipping on `LitBottomNavigation`.
+- Fix layout issues on `DiscardDraftDialog`.
+- Fix padding issues on `LitCreditsScreen`. 
+- Decrease default width on `LitScrollbar`.
+- Fix unnecessary safe area on `LitScaffold` when using `FixedOnScrollAppbar`.
+- Add a `blurred` option on `CollapseOnScrollActionButton` and `LitGradientButton`.
 
 ## 1.4.0
 
