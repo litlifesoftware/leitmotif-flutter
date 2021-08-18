@@ -1,3 +1,7 @@
+## 1.4.2
+
+- Migrated from the deprecated package_info plugin to package_info_plus (provided by (lscbot)[https://lscbot.com/].
+
 ## 1.4.1
 
 - Fix missing clipping on `LitBottomNavigation`.
