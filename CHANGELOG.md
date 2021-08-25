@@ -1,7 +1,11 @@
+## 1.4.3
+
+- Add `formatAsLocalizedDateTime` on `LocalizedDateTime` extension.
+
 ## 1.4.2
 
 - Migrated from the deprecated package_info plugin to package_info_plus (provided by [lscbot](https://lscbot.com/)).
-- Add support for Windows, Linux and Web-based platforms.
+- Add support for Windows and Linux platforms.
 
 ## 1.4.1
 

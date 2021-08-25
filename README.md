@@ -1,5 +1,7 @@
 ![Leitmotif](assets/images/Leitmotif_Banner_2021.jpg "Leitmotif")
 
+> [![leitmotif][leitmotif_badge_pub]][leitmotif] [![pub points][leitmotif_badge_pub_points]][leitmotif_pub_points]
+
 ## What is Leitmotif?
 
 A collection of widgets and screens for Flutter implementing the Leitmotif Design Language. It complements the default Material Widgets shipped with Flutter. Whose Widgets include custom implementation of `Snackbars`, `AppBars` and a settings panel. Utility Screens (e.g. required to verify the user's age and to show the application's licenses) are also included.
@@ -22,13 +24,13 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Screenshots
 
-| Example HomeScreen                                                    | LitSettingsPanel                                                      |
-| --------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| ![1](assets/images/Leitmotif_Screenshot_1.jpg "Screenshot 1") | ![2](assets/images/Leitmotif_Screenshot_2.jpg "Screenshot 2") |
+| Example HomeScreen | LitSettingsPanel   |
+| ------------------ | ------------------ |
+| ![1][screenshot_1] | ![2][screenshot_2] |
 
-| LitIconSnackbar                                                       | LitOnboardingScreen                                                   |
-| --------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| ![3](assets/images/Leitmotif_Screenshot_3.jpg "Screenshot 3") | ![4](assets/images/Leitmotif_Screenshot_4.jpg "Screenshot 4") |
+| LitIconSnackbar    | LitOnboardingScreen |
+| ------------------ | ------------------- |
+| ![3][screenshot_3] | ![4][screenshot_4]  |
 
 ## Icons
 
@@ -66,3 +68,12 @@ All the icons in the `src/fonts/Icons` folder are distributed under the **CC-BY*
 
 Everything else in this repository including the source code is distributed under the
 **BSD 3-Clause** license as specified in the `LICENSE` file.
+
+[screenshot_1]: assets/images/Leitmotif_Screenshot_1.jpg
+[screenshot_2]: assets/images/Leitmotif_Screenshot_2.jpg
+[screenshot_3]: assets/images/Leitmotif_Screenshot_3.jpg
+[screenshot_4]: assets/images/Leitmotif_Screenshot_4.jpg
+[leitmotif]: https://pub.dev/packages/leitmotif
+[leitmotif_pub_points]: https://pub.dev/packages/leitmotif/score
+[leitmotif_badge_pub]: https://img.shields.io/pub/v/leitmotif.svg
+[leitmotif_badge_pub_points]: https://badges.bar/leitmotif/pub%20points
