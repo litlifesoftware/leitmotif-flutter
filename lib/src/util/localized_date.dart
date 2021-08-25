@@ -19,6 +19,22 @@ extension LocalizedDateTime on DateTime {
 
   /// Formats the [DateTime] to a localized and human-readible string.
   ///
+  /// The formatted string will output the the day, the month and the
+  /// year included in the [DateTime].
+  ///
+  /// For example the english localization of the corresponding [DateTime] will
+  /// return `April 10, 2021`.
+  String formatAsLocalizedDateTime(BuildContext context) {
+    final String formattedDate =
+        DateFormat.yMMMMd(Localizations.localeOf(context).languageCode)
+            .format(this);
+    String formattedTime = DateFormat('kk:mm').format(this);
+
+    return "$formattedDate $formattedTime";
+  }
+
+  /// Formats the [DateTime] to a localized and human-readible string.
+  ///
   /// The formatted string will output the weekday, the day, the month and the
   /// year included in the [DateTime].
   ///
