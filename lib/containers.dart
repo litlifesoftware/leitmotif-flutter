@@ -22,3 +22,4 @@ export 'src/widgets/containers/clean_ink_well.dart';
 export 'src/widgets/containers/indexed_page_view.dart';
 export 'src/widgets/containers/lit_divider.dart';
 export 'src/widgets/containers/lit_user_icon.dart';
+export 'src/widgets/containers/lit_titled_action_card.dart';
