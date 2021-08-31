@@ -1,6 +1,10 @@
 ## 1.4.3
 
 - Add `formatAsLocalizedDateTime` on `LocalizedDateTime` extension.
+- Create `titles` library.
+- Add `LitScreenTitle` and `LitCardTitle` widgets to `titles` library.
+- Add `LitTitledActionCard`.
+- Improve scale animation on `LitPushedThroughButton`.
 
 ## 1.4.2
 
