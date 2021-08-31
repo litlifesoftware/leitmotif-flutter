@@ -115,7 +115,7 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
           animation: _animationController,
           builder: (context, child) {
             return Transform.scale(
-              scale: (1 - (_animationController.value * 0.125)),
+              scale: (1 - (_animationController.value * 0.050)),
               child: Opacity(
                 opacity: widget.disabled ? 0.2 : 1.0,
                 child: AnimatedContainer(
