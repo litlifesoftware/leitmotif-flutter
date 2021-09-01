@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
+///
 class LitTitledActionCard extends StatelessWidget {
   final String title;
   final String? subtitle;
@@ -69,8 +70,8 @@ class _ButtonBuilder extends StatelessWidget {
             SizedBox(
               width: constraints.maxWidth,
               child: LitPushedThroughButton(
-                backgroundColor: actionButton.backgroundColor,
-                accentColor: actionButton.accentColor,
+                backgroundColor: actionButton.backgroundColor ?? Colors.white,
+                accentColor: actionButton.accentColor ?? LitColors.lightGrey,
                 child: Text(
                   actionButton.title.toUpperCase(),
                   style: LitSansSerifStyles.button,
