@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:leitmotif/styles.dart';
 
 /// A button which will be animated on pressing it.
 ///
@@ -22,7 +23,7 @@ class LitPushedThroughButton extends StatefulWidget {
     Key? key,
     required this.child,
     this.backgroundColor = Colors.white,
-    this.accentColor = Colors.grey,
+    this.accentColor = LitColors.lightGrey,
     required this.onPressed,
     this.borderRadius = 15.0,
     this.padding = const EdgeInsets.all(0.0),
@@ -124,33 +125,21 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(widget.borderRadius),
                     gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          _isPressed
-                              ? widget.backgroundColor
-                              : Color.lerp(widget.backgroundColor,
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: _isPressed
+                          ? [
+                              Color.lerp(widget.backgroundColor,
                                   widget.accentColor, 0.35)!,
-                          _isPressed
-                              ? Color.lerp(widget.backgroundColor,
-                                  widget.accentColor, 0.45)!
-                              : widget.backgroundColor,
-                          _isPressed
-                              ? Color.lerp(widget.backgroundColor,
-                                  widget.accentColor, 0.55)!
-                              : widget.backgroundColor,
-                          Color.lerp(
-                            widget.backgroundColor,
-                            widget.backgroundColor,
-                            _isPressed ? 0.20 : 0.50,
-                          )!,
-                        ],
-                        stops: [
-                          0.0,
-                          0.3,
-                          0.6,
-                          1.0,
-                        ]),
+                              Color.lerp(widget.backgroundColor,
+                                  widget.accentColor, 0.45)!,
+                              Color.lerp(widget.backgroundColor,
+                                  widget.accentColor, 0.55)!,
+                              widget.backgroundColor,
+                            ]
+                          : [widget.accentColor, widget.backgroundColor],
+                      //stops: [0.0, 0.3, 0.6, 1.0],
+                    ),
                     boxShadow: _isPressed ? [] : widget.boxShadow,
                   ),
                   child: widget.child,
