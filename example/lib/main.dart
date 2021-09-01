@@ -549,349 +549,352 @@ class _ButtonList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 32.0),
-        LitRoundedElevatedButton(
-          color: buttonColor,
-          child: ClippedText(
-            "Add notification",
-            upperCase: true,
-            style: LitSansSerifStyles.button.copyWith(
-              color: buttonTextColor,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        children: [
+          SizedBox(height: 32.0),
+          LitRoundedElevatedButton(
+            color: buttonColor,
+            child: ClippedText(
+              "Add notification",
+              upperCase: true,
+              style: LitSansSerifStyles.button.copyWith(
+                color: buttonTextColor,
+              ),
             ),
+            onPressed: addNotification,
           ),
-          onPressed: addNotification,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
+                color: buttonColor,
+                child: ClippedText(
+                  "Show Licenses",
+                  upperCase: true,
+                  style: LitSansSerifStyles.button.copyWith(
+                    color: buttonTextColor,
+                  ),
+                ),
+                onPressed: () => {
+                      Navigator.push(context,
+                          CupertinoPageRoute(builder: (context) {
+                        return ApplicationLicensesScreen();
+                      }))
+                    }),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
+                color: buttonColor,
+                child: ClippedText(
+                  "Show Solid SnackBar!",
+                  upperCase: true,
+                  style: LitSansSerifStyles.button.copyWith(
+                    color: buttonTextColor,
+                  ),
+                ),
+                onPressed: showSolidSnackbar),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
               color: buttonColor,
               child: ClippedText(
-                "Show Licenses",
+                "Show Differently anima. SnackBar!",
+                upperCase: true,
+                style: LitSansSerifStyles.button.copyWith(
+                  color: buttonTextColor,
+                ),
+              ),
+              onPressed: showDifferentlyAnimaSnackbar,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
+                color: buttonColor,
+                child: ClippedText(
+                  "Show Transparent SnackBar!",
+                  upperCase: true,
+                  style: LitSansSerifStyles.button.copyWith(
+                    color: buttonTextColor,
+                  ),
+                ),
+                onPressed: showTransparentSnackbar),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
+              color: buttonColor,
+              child: ClippedText(
+                "Show Confirm Age Screen",
                 upperCase: true,
                 style: LitSansSerifStyles.button.copyWith(
                   color: buttonTextColor,
                 ),
               ),
               onPressed: () => {
-                    Navigator.push(context,
-                        CupertinoPageRoute(builder: (context) {
-                      return ApplicationLicensesScreen();
-                    }))
-                  }),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
+                LitRouteController(context).pushCupertinoWidget(
+                  LitConfirmAgeScreen(
+                    onSubmit: (date) {
+                      print("ConfirmAgeScreen-submitted date: $date");
+                      LitRouteController(context).pop();
+                    },
+                  ),
+                ),
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
               color: buttonColor,
               child: ClippedText(
-                "Show Solid SnackBar!",
+                "Show Onboarding Screen",
                 upperCase: true,
                 style: LitSansSerifStyles.button.copyWith(
                   color: buttonTextColor,
                 ),
               ),
-              onPressed: showSolidSnackbar),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
-            color: buttonColor,
-            child: ClippedText(
-              "Show Differently anima. SnackBar!",
-              upperCase: true,
-              style: LitSansSerifStyles.button.copyWith(
-                color: buttonTextColor,
-              ),
+              onPressed: () => {
+                LitRouteController(context)
+                    .pushCupertinoWidget(_LitOnboardingScreenImplementation())
+              },
             ),
-            onPressed: showDifferentlyAnimaSnackbar,
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
               color: buttonColor,
               child: ClippedText(
-                "Show Transparent SnackBar!",
+                "Show About Dialog",
                 upperCase: true,
                 style: LitSansSerifStyles.button.copyWith(
                   color: buttonTextColor,
                 ),
               ),
-              onPressed: showTransparentSnackbar),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
-            color: buttonColor,
-            child: ClippedText(
-              "Show Confirm Age Screen",
-              upperCase: true,
-              style: LitSansSerifStyles.button.copyWith(
-                color: buttonTextColor,
-              ),
-            ),
-            onPressed: () => {
-              LitRouteController(context).pushCupertinoWidget(
-                LitConfirmAgeScreen(
-                  onSubmit: (date) {
-                    print("ConfirmAgeScreen-submitted date: $date");
-                    LitRouteController(context).pop();
-                  },
-                ),
-              ),
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
-            color: buttonColor,
-            child: ClippedText(
-              "Show Onboarding Screen",
-              upperCase: true,
-              style: LitSansSerifStyles.button.copyWith(
-                color: buttonTextColor,
-              ),
-            ),
-            onPressed: () => {
-              LitRouteController(context)
-                  .pushCupertinoWidget(_LitOnboardingScreenImplementation())
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
-            color: buttonColor,
-            child: ClippedText(
-              "Show About Dialog",
-              upperCase: true,
-              style: LitSansSerifStyles.button.copyWith(
-                color: buttonTextColor,
-              ),
-            ),
-            onPressed: () => {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return LitAboutDialog(
-                    title: "About",
-                    appName: "Leitmotif Example",
-                    art: _Art(large: false),
-                    infoDescription: LEITMOTIF_DESCR,
-                  );
-                },
-              )
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
-            color: buttonColor,
-            child: ClippedText(
-              "Show LitTitledDialog",
-              upperCase: true,
-              style: LitSansSerifStyles.button.copyWith(
-                color: buttonTextColor,
-              ),
-            ),
-            onPressed: () => {
-              showDialog(
+              onPressed: () => {
+                showDialog(
                   context: context,
                   builder: (context) {
-                    return _LitTitledDialogImpl();
-                  })
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
-            color: colorPickerBtnColor,
-            child: ClippedText(
-              "Show LitColorPickerDialog",
-              upperCase: true,
-              style: LitSansSerifStyles.button.copyWith(
-                color: buttonTextColor,
-              ),
-            ),
-            onPressed: () => {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return _LitColorPickerDialogImpl(
-                      color: colorPickerBtnColor,
-                      onApply: setColorPickerBtnColor,
-                    );
-                  })
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
-            color: buttonColor,
-            child: ClippedText(
-              "Show Discard Draft Dialog",
-              upperCase: true,
-              style: LitSansSerifStyles.button.copyWith(
-                color: buttonTextColor,
-              ),
-            ),
-            onPressed: () => {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return DiscardDraftDialog(
-                      onDiscard: () {
-                        LitRouteController(context).closeDialog();
-                      },
-                    );
-                  })
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
-            color: buttonColor,
-            child: ClippedText(
-              "Show Privacy Policy Screen",
-              upperCase: true,
-              style: LitSansSerifStyles.button.copyWith(
-                color: buttonTextColor,
-              ),
-            ),
-            onPressed: () => {
-              LitRouteController(context)
-                  .pushCupertinoWidget(_LitPrivacyScreenImplementation())
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
-            color: buttonColor,
-            child: ClippedText(
-              "Show LitPrivacyDisclaimerScreen",
-              upperCase: true,
-              style: LitSansSerifStyles.button.copyWith(
-                color: buttonTextColor,
-              ),
-            ),
-            onPressed: () => {
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) {
-                    return LitPrivacyDisclaimerScreen(
-                      onConfirm: () => {
-                        Navigator.pop(context),
-                      },
+                    return LitAboutDialog(
+                      title: "About",
+                      appName: "Leitmotif Example",
+                      art: _Art(large: false),
+                      infoDescription: LEITMOTIF_DESCR,
                     );
                   },
+                )
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
+              color: buttonColor,
+              child: ClippedText(
+                "Show LitTitledDialog",
+                upperCase: true,
+                style: LitSansSerifStyles.button.copyWith(
+                  color: buttonTextColor,
                 ),
-              )
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
-            color: buttonColor,
-            child: ClippedText(
-              "Show Startup Screen",
-              upperCase: true,
-              style: LitSansSerifStyles.button.copyWith(
-                color: buttonTextColor,
               ),
+              onPressed: () => {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return _LitTitledDialogImpl();
+                    })
+              },
             ),
-            onPressed: () => {
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) {
-                    return LitStartupScreen();
-                  },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
+              color: colorPickerBtnColor,
+              child: ClippedText(
+                "Show LitColorPickerDialog",
+                upperCase: true,
+                style: LitSansSerifStyles.button.copyWith(
+                  color: buttonTextColor,
                 ),
-              )
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
-            color: buttonColor,
-            child: ClippedText(
-              "Show Static Loading Screen",
-              upperCase: true,
-              style: LitSansSerifStyles.button.copyWith(
-                color: buttonTextColor,
               ),
+              onPressed: () => {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return _LitColorPickerDialogImpl(
+                        color: colorPickerBtnColor,
+                        onApply: setColorPickerBtnColor,
+                      );
+                    })
+              },
             ),
-            onPressed: () => {
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) {
-                    return LitStaticLoadingScreen();
-                  },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
+              color: buttonColor,
+              child: ClippedText(
+                "Show Discard Draft Dialog",
+                upperCase: true,
+                style: LitSansSerifStyles.button.copyWith(
+                  color: buttonTextColor,
                 ),
-              )
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
-            color: buttonColor,
-            child: ClippedText(
-              "Show Signup Screen",
-              upperCase: true,
-              style: LitSansSerifStyles.button.copyWith(
-                color: buttonTextColor,
               ),
+              onPressed: () => {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return DiscardDraftDialog(
+                        onDiscard: () {
+                          LitRouteController(context).closeDialog();
+                        },
+                      );
+                    })
+              },
             ),
-            onPressed: () => {
-              LitRouteController(context)
-                  .pushCupertinoWidget(_LitSignupScreenImplementation())
-            },
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: LitRoundedElevatedButton(
-            color: buttonColor,
-            child: ClippedText(
-              "Show Credits Screen",
-              upperCase: true,
-              style: LitSansSerifStyles.button.copyWith(
-                color: buttonTextColor,
-              ),
-            ),
-            onPressed: () => {
-              LitRouteController(context).pushCupertinoWidget(
-                _LitCreditsScreenImplementation(
-                  darkMode: darkMode,
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
+              color: buttonColor,
+              child: ClippedText(
+                "Show Privacy Policy Screen",
+                upperCase: true,
+                style: LitSansSerifStyles.button.copyWith(
+                  color: buttonTextColor,
                 ),
-              )
-            },
-          ),
-        ),
-        LitTextPageView(
-          textItems: [
-            TextPageContent(
-              subtitle: "Subtitle",
-              title: "Title",
-              text: "LitTextPageView",
+              ),
+              onPressed: () => {
+                LitRouteController(context)
+                    .pushCupertinoWidget(_LitPrivacyScreenImplementation())
+              },
             ),
-          ],
-        ),
-        // SizedBox(height: 128.0),
-      ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
+              color: buttonColor,
+              child: ClippedText(
+                "Show LitPrivacyDisclaimerScreen",
+                upperCase: true,
+                style: LitSansSerifStyles.button.copyWith(
+                  color: buttonTextColor,
+                ),
+              ),
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) {
+                      return LitPrivacyDisclaimerScreen(
+                        onConfirm: () => {
+                          Navigator.pop(context),
+                        },
+                      );
+                    },
+                  ),
+                )
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
+              color: buttonColor,
+              child: ClippedText(
+                "Show Startup Screen",
+                upperCase: true,
+                style: LitSansSerifStyles.button.copyWith(
+                  color: buttonTextColor,
+                ),
+              ),
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) {
+                      return LitStartupScreen();
+                    },
+                  ),
+                )
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
+              color: buttonColor,
+              child: ClippedText(
+                "Show Static Loading Screen",
+                upperCase: true,
+                style: LitSansSerifStyles.button.copyWith(
+                  color: buttonTextColor,
+                ),
+              ),
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) {
+                      return LitStaticLoadingScreen();
+                    },
+                  ),
+                )
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
+              color: buttonColor,
+              child: ClippedText(
+                "Show Signup Screen",
+                upperCase: true,
+                style: LitSansSerifStyles.button.copyWith(
+                  color: buttonTextColor,
+                ),
+              ),
+              onPressed: () => {
+                LitRouteController(context)
+                    .pushCupertinoWidget(_LitSignupScreenImplementation())
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
+              color: buttonColor,
+              child: ClippedText(
+                "Show Credits Screen",
+                upperCase: true,
+                style: LitSansSerifStyles.button.copyWith(
+                  color: buttonTextColor,
+                ),
+              ),
+              onPressed: () => {
+                LitRouteController(context).pushCupertinoWidget(
+                  _LitCreditsScreenImplementation(
+                    darkMode: darkMode,
+                  ),
+                )
+              },
+            ),
+          ),
+          LitTextPageView(
+            textItems: [
+              TextPageContent(
+                subtitle: "Subtitle",
+                title: "Title",
+                text: "LitTextPageView",
+              ),
+            ],
+          ),
+          // SizedBox(height: 128.0),
+        ],
+      ),
     );
   }
 }
