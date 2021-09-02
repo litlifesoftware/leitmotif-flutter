@@ -102,7 +102,7 @@ class _FixedOnScrollAppbarState extends State<FixedOnScrollAppbar>
                 boxShadow: widget.boxShadow,
               ),
               padding: widget.padding,
-              child: Navigator.canPop(context)
+              child: (Navigator.canPop(context) && widget.shouldNavigateBack)
                   ? Container(
                       width: MediaQuery.of(context).size.width,
                       child: Row(

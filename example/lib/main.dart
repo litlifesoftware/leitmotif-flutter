@@ -293,6 +293,7 @@ class __ExampleScreenState extends State<_ExampleScreen> {
     return LitScaffold(
       backgroundColor: darkMode ? LitColors.darkBlue : Colors.white,
       appBar: FixedOnScrollTitledAppbar(
+        shouldNavigateBack: false,
         title: "Leitmotif",
         backgroundColor: darkMode ? Colors.black : Colors.white,
         scrollController: _scrollController,
