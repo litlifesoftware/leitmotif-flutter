@@ -11,7 +11,7 @@ class LitBadge extends StatelessWidget {
     Key? key,
     this.backgroundColor = LitColors.mediumGrey,
     this.borderRadius = const BorderRadius.all(
-      Radius.circular(8.0),
+      Radius.circular(16.0),
     ),
     required this.child,
     this.padding = const EdgeInsets.symmetric(
