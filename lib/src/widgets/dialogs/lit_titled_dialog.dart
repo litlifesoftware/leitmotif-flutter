@@ -223,7 +223,7 @@ class _DialogActionButtonBuilder extends StatelessWidget {
                 bottomLeft: borderRadius.bottomLeft,
                 bottomRight: borderRadius.bottomRight,
               ),
-              color: LitColors.lightGrey,
+              color: Color(0xFFEEEEEE),
             ),
           ),
           Container(
