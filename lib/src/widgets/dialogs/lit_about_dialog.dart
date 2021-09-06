@@ -12,7 +12,7 @@ class LitAboutDialog extends StatefulWidget {
     Key? key,
     this.title = "About",
     required this.appName,
-    this.infoDescription = "",
+    this.infoDescription,
     this.padding = const EdgeInsets.only(top: 16.0, bottom: 16.0),
     this.art = const SizedBox(),
   }) : super(key: key);
@@ -45,106 +45,129 @@ class _LitAboutDialogState extends State<LitAboutDialog> {
   Widget build(BuildContext context) {
     return LitTitledDialog(
       titleText: widget.title,
-      child: SingleChildScrollView(
-        padding: widget.padding,
-        physics: BouncingScrollPhysics(),
+      child: Container(
         child: _packageInfo != null
-            ? Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: widget.art,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: Text(
-                      "${widget.appName}",
-                      style: LitTextStyles.sansSerifSmallHeader,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Text(
-                    "Version: ${_packageInfo!.version}",
-                    style: LitTextStyles.sansSerifBody,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 4.0,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                          child:
-                              Text("for", style: LitTextStyles.sansSerifBody),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25.0),
-                                color: LitColors.beigeGrey),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 4.0,
-                                horizontal: 8.0,
-                              ),
-                              child: Text(
-                                PlatformInfo.platformLabel,
-                                style: LitTextStyles.sansSerifBodyTighterSmaller
-                                    .copyWith(
-                                  color: Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        widget.infoDescription != null
-                            ? Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 4.0,
-                                  horizontal: 24.0,
-                                ),
-                                child: Text(
-                                  "${widget.infoDescription}",
-                                  style:
-                                      LitTextStyles.sansSerifBodyTighterSmaller,
-                                  textAlign: TextAlign.start,
-                                ),
-                              )
-                            : SizedBox()
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 4.0,
-                      bottom: 8.0,
-                    ),
-                    child: Text(
-                      PlatformInfo.legalNotice,
-                      style: LitTextStyles.sanSerifBodySmall,
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                ],
+            ? _AboutDialogContent(
+                appName: widget.appName,
+                art: widget.art,
+                infoDescription: widget.infoDescription,
+                version: _packageInfo!.version,
               )
-            : JugglingLoadingIndicator(
-                indicatorColor: Colors.grey,
-                backgroundColor: Colors.white,
-                shadowOpacity: 0.3),
+            : SizedBox(),
       ),
+    );
+  }
+}
+
+class _AboutDialogContent extends StatelessWidget {
+  final Widget art;
+  final String appName;
+  final String version;
+  final String? infoDescription;
+  const _AboutDialogContent({
+    Key? key,
+    required this.art,
+    required this.appName,
+    required this.version,
+    required this.infoDescription,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 16.0,
+        horizontal: 16.0,
+      ),
+      child: ScrollableColumn(
+        constrained: false,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          art,
+          SizedBox(height: 8.0),
+          _AppDetails(
+            appName: appName,
+            version: version,
+            infoDescription: infoDescription,
+          ),
+          SizedBox(height: 8.0),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              infoDescription != null
+                  ? ClippedText(
+                      infoDescription!,
+                      style: LitSansSerifStyles.caption,
+                      textAlign: TextAlign.start,
+                      maxLines: 4,
+                    )
+                  : SizedBox()
+            ],
+          ),
+          SizedBox(height: 8.0),
+          Text(
+            PlatformInfo.legalNotice,
+            style: LitSansSerifStyles.overline,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AppDetails extends StatelessWidget {
+  final String appName;
+  final String version;
+  final String? infoDescription;
+  const _AppDetails({
+    Key? key,
+    required this.appName,
+    required this.version,
+    required this.infoDescription,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          appName,
+          style: LitSansSerifStyles.subtitle1,
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          ("Version: " + version),
+          style: LitSansSerifStyles.caption,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 4.0,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                child: Text("for", style: LitSansSerifStyles.caption),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                child: LitBadge(
+                  backgroundColor: LitColors.beigeGrey,
+                  child: Text(
+                    PlatformInfo.platformLabel,
+                    style: LitSansSerifStyles.caption.copyWith(
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
