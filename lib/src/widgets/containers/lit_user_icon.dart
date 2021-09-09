@@ -16,13 +16,7 @@ class LitUserIcon extends StatefulWidget {
     this.primaryColor = Colors.white,
     this.contrastColor = Colors.white,
     this.username = "Some One",
-    this.boxShadow = const [
-      const BoxShadow(
-          blurRadius: 4.0,
-          color: Colors.black12,
-          offset: Offset(-3.0, 2.0),
-          spreadRadius: -1.0)
-    ],
+    this.boxShadow = LitBoxShadows.md,
     this.borderRadius = const BorderRadius.all(
       const Radius.circular(38.0),
     ),
@@ -66,11 +60,11 @@ class LitUserIcon extends StatefulWidget {
 
 class __UserIconState extends State<LitUserIcon> {
   /// Returns a stylized user color.
-  Color get _userColor {
+  Color get _primaryColor {
     return widget.primaryColor.desat(0.75);
   }
 
-  /// Returns a [Color] to contrast with the [_userColor].
+  /// Returns a [Color] to contrast with the [_primaryColor].
   Color get _contrastColor {
     return widget.contrastColor;
   }
@@ -100,9 +94,32 @@ class __UserIconState extends State<LitUserIcon> {
   /// Returns either a dark or a light themed text color based on the contrast
   /// ratio.
   Color get _textColor {
-    return _userColor.applyColorByContrast(
-      _contrastColor,
-      const Color(0xFF888888),
+    return _primaryColor.computeLuminance() >= 0.5
+        ? Color(0xFF757575)
+        : Colors.white;
+  }
+
+  List<BoxShadow> get _boxShadow {
+    if (widget.size > 96.0) {
+      return LitBoxShadows.lg;
+    }
+    if (widget.size > 42.0) {
+      return LitBoxShadows.md;
+    }
+    return LitBoxShadows.sm;
+  }
+
+  double get _fontSize {
+    return widget.size / 2.75;
+  }
+
+  EdgeInsets get _margin {
+    return EdgeInsets.all(widget.size / 5);
+  }
+
+  BorderRadius get _borderRadius {
+    return BorderRadius.all(
+      Radius.circular(widget.size / 2.5),
     );
   }
 
@@ -119,34 +136,45 @@ class __UserIconState extends State<LitUserIcon> {
   Widget build(BuildContext context) {
     return CleanInkWell(
       onTap: _onTap,
-      child: Container(
-        height: widget.size,
-        width: widget.size,
-        decoration: BoxDecoration(
-          boxShadow: widget.boxShadow,
-          gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                _userColor.withAlpha(255),
-                _contrastColor,
-              ]),
-          borderRadius: widget.borderRadius,
-        ),
-        child: Center(
-          child: Padding(
-            padding: widget.margin,
-            child: ClippedText(
-              _usernameInitials,
-              style: LitSansSerifStyles.h5.copyWith(
-                fontSize: widget.fontSize,
-                color: _textColor,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.0,
+      child: Stack(
+        children: [
+          // Ensure to always paint on a white solid background.
+          Container(
+            height: widget.size,
+            width: widget.size,
+            decoration: BoxDecoration(
+              boxShadow: widget.boxShadow,
+              borderRadius: _borderRadius,
+              color: Colors.white,
+            ),
+          ),
+          Container(
+            height: widget.size,
+            width: widget.size,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [Colors.white, _primaryColor],
+              ),
+              borderRadius: _borderRadius,
+            ),
+            child: Center(
+              child: Padding(
+                padding: _margin,
+                child: ClippedText(
+                  _usernameInitials,
+                  style: LitSansSerifStyles.h5.copyWith(
+                    fontSize: _fontSize,
+                    color: _textColor,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.0,
+                  ),
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
