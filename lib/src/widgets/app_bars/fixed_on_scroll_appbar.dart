@@ -25,8 +25,11 @@ class FixedOnScrollAppbar extends StatefulWidget implements CustomAppBar {
 
   final Color backButtonBackgroundColor;
   final Color backButtonIconColor;
-  //
+  // TODO
   final bool shouldNavigateBack;
+
+  // TODO
+  final bool displayBackButton;
   final void Function()? onInvalidNavigation;
 
   /// Creates a [FixedOnScrollAppbar] widget.
@@ -50,6 +53,7 @@ class FixedOnScrollAppbar extends StatefulWidget implements CustomAppBar {
     this.backButtonBackgroundColor =
         LitBackButtonDefaultStyling.backgroundColor,
     this.backButtonIconColor = LitBackButtonDefaultStyling.iconColor,
+    this.displayBackButton = true,
     this.shouldNavigateBack = true,
     this.onInvalidNavigation,
   }) : super(key: key);
@@ -102,7 +106,7 @@ class _FixedOnScrollAppbarState extends State<FixedOnScrollAppbar>
                 boxShadow: widget.boxShadow,
               ),
               padding: widget.padding,
-              child: (Navigator.canPop(context) && widget.shouldNavigateBack)
+              child: (Navigator.canPop(context) && widget.displayBackButton)
                   ? Container(
                       width: MediaQuery.of(context).size.width,
                       child: Row(

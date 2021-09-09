@@ -29,8 +29,11 @@ class FixedOnScrollTitledAppbar extends StatefulWidget implements CustomAppBar {
 
   final TextStyle textStyle;
 
-  //
+  //TODO
   final bool shouldNavigateBack;
+
+  // TODO
+  final bool displayBackButton;
   final void Function()? onInvalidNavigation;
 
   /// Creates a [FixedOnScrollTitledAppbar] widget.
@@ -56,6 +59,7 @@ class FixedOnScrollTitledAppbar extends StatefulWidget implements CustomAppBar {
     this.backButtonIconColor = LitBackButtonDefaultStyling.iconColor,
     this.textStyle = LitSansSerifStyles.subtitle2,
     this.shouldNavigateBack = true,
+    this.displayBackButton = true,
     this.onInvalidNavigation,
   }) : super(key: key);
 
@@ -98,6 +102,7 @@ class _FixedOnScrollTitledAppbarState extends State<FixedOnScrollTitledAppbar>
       onInvalidNavigation: widget.onInvalidNavigation,
       padding: widget.padding,
       shouldNavigateBack: widget.shouldNavigateBack,
+      displayBackButton: widget.displayBackButton,
       child: _Title(title: widget.title, style: widget.textStyle),
     );
   }
