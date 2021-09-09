@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 /// A controller class to provided extended functionality to default [Color]
@@ -34,25 +32,12 @@ extension ColorUtility on Color {
     return Color.fromARGB(a, r, g, b);
   }
 
-  /// Returns one of the provided text colors (light and dark colors) based on
-  /// the contrast each of these colors would result in if applied on in front
-  /// of the main [Color].
+  /// Returns either one of the of the provided text colors (`light` or
+  /// `dark` color) based on the contrast each of these colors would result
+  /// in when placed in from of `this` color.
+  ///
+  /// Use this method to avoid unreadable text colors.
   Color applyColorByContrast(Color light, Color dark) {
-    /// The factor constant which is used to calculate the luminance.
-    ///
-    /// This value is generally set to `0.05` but will be `0.10` to
-    /// allow the dark text styling to be more present.
-    double factor = 0.10;
-    double luminanceUserColor = this.computeLuminance();
-    double luminanceTextLight = light.computeLuminance();
-    double luminacneTextDark = dark.computeLuminance();
-    double maxLumLight = math.max(luminanceUserColor, luminanceTextLight);
-    double minLumLight = math.min(luminanceUserColor, luminanceTextLight);
-    double maxLumDark = math.max(luminanceUserColor, luminacneTextDark);
-    double minLumDark = math.min(luminanceUserColor, luminacneTextDark);
-    double contrastLight = (maxLumLight + factor / minLumLight + factor);
-    double contrastDark = (maxLumDark + factor / minLumDark + factor);
-    Color textColor = (contrastDark > contrastLight) ? dark : light;
-    return textColor;
+    return this.computeLuminance() >= 0.5 ? dark : light;
   }
 }

@@ -94,9 +94,12 @@ class __UserIconState extends State<LitUserIcon> {
   /// Returns either a dark or a light themed text color based on the contrast
   /// ratio.
   Color get _textColor {
-    return _primaryColor.computeLuminance() >= 0.5
-        ? Color(0xFF757575)
-        : Colors.white;
+    // return _primaryColor.computeLuminance() >= 0.5
+    //     ? Color(0xFF757575)
+    //     : Colors.white;
+    Color light = Colors.white;
+    Color dark = Color(0xFF757575);
+    return _primaryColor.applyColorByContrast(light, dark);
   }
 
   List<BoxShadow> get _boxShadow {
