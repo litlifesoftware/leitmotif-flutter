@@ -290,132 +290,135 @@ class __ExampleScreenState extends State<_ExampleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return LitScaffold(
-      backgroundColor: darkMode ? LitColors.darkBlue : Colors.white,
-      appBar: FixedOnScrollTitledAppbar(
-        shouldNavigateBack: false,
-        title: "Leitmotif",
-        backgroundColor: darkMode ? Colors.black : Colors.white,
-        scrollController: _scrollController,
-        textStyle: LitTextStyles.sansSerif.copyWith(
-          color: darkMode ? Colors.white : LitColors.mediumGrey,
+    return LitNotificationContainer(
+      controller: _notificationController,
+      child: LitScaffold(
+        backgroundColor: darkMode ? LitColors.darkBlue : Colors.white,
+        appBar: FixedOnScrollTitledAppbar(
+          shouldNavigateBack: false,
+          title: "Leitmotif",
+          backgroundColor: darkMode ? Colors.black : Colors.white,
+          scrollController: _scrollController,
+          textStyle: LitTextStyles.sansSerif.copyWith(
+            color: darkMode ? Colors.white : LitColors.mediumGrey,
+          ),
         ),
-      ),
-      snackbars: [
-        LitIconSnackbar(
-          snackBarController: _solidSnackbarController,
-          text: "Snackbar!",
-          iconData: LitIcons.info,
-        ),
-        LitIconSnackbar(
-          snackBarController: _solidSnackbarControllerDiffAni,
-          text: "Different Snackbar animation!",
-          iconData: LitIcons.info,
-        ),
-        LitTransparentIconSnackbar(
-          snackBarController: _transparentSnackbarController,
-          text: "Transparent Snackbar!",
-          iconData: LitIcons.info,
-        ),
-      ],
-      settingsPanel: LitSettingsPanel(
-        controller: _settingsPanelController,
-        title: "Settings",
-        darkMode: darkMode,
-        settingsTiles: [
-          LitSettingsPanelTile(
-            onValueToggled: (toggledValue) {
-              setState(() {
-                darkMode = toggledValue;
-              });
-            },
-            darkMode: darkMode,
-            enabled: darkMode,
-            optionName: "Dark mode",
-            iconData: LitIcons.moon_with_stars_solid,
+        snackbars: [
+          LitIconSnackbar(
+            snackBarController: _solidSnackbarController,
+            text: "Snackbar!",
+            iconData: LitIcons.info,
           ),
-          LitSettingsPanelTile(
-            onValueToggled: (toggledValue) {
-              setState(() {
-                darkMode = toggledValue;
-              });
-            },
-            darkMode: darkMode,
-            enabled: darkMode,
-            optionName: "Dark mode",
-            iconData: LitIcons.moon_with_stars_solid,
+          LitIconSnackbar(
+            snackBarController: _solidSnackbarControllerDiffAni,
+            text: "Different Snackbar animation!",
+            iconData: LitIcons.info,
           ),
-          LitSettingsPanelTile(
-            onValueToggled: (toggledValue) {
-              setState(() {
-                darkMode = toggledValue;
-              });
-            },
-            darkMode: darkMode,
-            enabled: darkMode,
-            optionName: "Dark mode",
-            iconData: LitIcons.moon_with_stars_solid,
-          ),
-          LitSettingsPanelTile(
-            onValueToggled: (toggledValue) {
-              setState(() {
-                darkMode = toggledValue;
-              });
-            },
-            darkMode: darkMode,
-            enabled: darkMode,
-            optionName: "Dark mode",
-            iconData: LitIcons.moon_with_stars_solid,
-          ),
-          LitSettingsPanelTile(
-            onValueToggled: (toggledValue) {
-              setState(() {
-                darkMode = toggledValue;
-              });
-            },
-            darkMode: darkMode,
-            enabled: darkMode,
-            optionName: "Dark mode",
-            iconData: LitIcons.moon_with_stars_solid,
-          ),
-          LitSettingsPanelTile(
-            onValueToggled: (toggledValue) {
-              setState(() {
-                darkMode = toggledValue;
-              });
-            },
-            darkMode: darkMode,
-            enabled: darkMode,
-            optionName: "Dark mode",
-            iconData: LitIcons.moon_with_stars_solid,
-          ),
-          LitSettingsPanelTile(
-            onValueToggled: (toggledValue) {
-              setState(() {
-                darkMode = toggledValue;
-              });
-            },
-            darkMode: darkMode,
-            enabled: darkMode,
-            optionName: "Dark mode",
-            iconData: LitIcons.moon_with_stars_solid,
+          LitTransparentIconSnackbar(
+            snackBarController: _transparentSnackbarController,
+            text: "Transparent Snackbar!",
+            iconData: LitIcons.info,
           ),
         ],
-      ),
-      actionButton: AnimatedActionButton(
-          alignment: Alignment.bottomLeft,
-          child: Icon(
-            LitIcons.gear,
-            color: Colors.white,
-            size: 18.0,
-          ),
-          backgroundColor: LitColors.mediumGrey,
-          onPressed: () => {
-                _settingsPanelController.showSettingsPanel(),
-              }),
-      body: LitNotificationContainer(
-        controller: _notificationController,
-        child: SizedBox(
+        settingsPanel: LitSettingsPanel(
+          controller: _settingsPanelController,
+          title: "Settings",
+          darkMode: darkMode,
+          settingsTiles: [
+            LitSettingsPanelTile(
+              onValueToggled: (toggledValue) {
+                setState(() {
+                  darkMode = toggledValue;
+                });
+              },
+              darkMode: darkMode,
+              enabled: darkMode,
+              optionName: "Dark mode",
+              iconData: LitIcons.moon_with_stars_solid,
+            ),
+            LitSettingsPanelTile(
+              onValueToggled: (toggledValue) {
+                setState(() {
+                  darkMode = toggledValue;
+                });
+              },
+              darkMode: darkMode,
+              enabled: darkMode,
+              optionName: "Dark mode",
+              iconData: LitIcons.moon_with_stars_solid,
+            ),
+            LitSettingsPanelTile(
+              onValueToggled: (toggledValue) {
+                setState(() {
+                  darkMode = toggledValue;
+                });
+              },
+              darkMode: darkMode,
+              enabled: darkMode,
+              optionName: "Dark mode",
+              iconData: LitIcons.moon_with_stars_solid,
+            ),
+            LitSettingsPanelTile(
+              onValueToggled: (toggledValue) {
+                setState(() {
+                  darkMode = toggledValue;
+                });
+              },
+              darkMode: darkMode,
+              enabled: darkMode,
+              optionName: "Dark mode",
+              iconData: LitIcons.moon_with_stars_solid,
+            ),
+            LitSettingsPanelTile(
+              onValueToggled: (toggledValue) {
+                setState(() {
+                  darkMode = toggledValue;
+                });
+              },
+              darkMode: darkMode,
+              enabled: darkMode,
+              optionName: "Dark mode",
+              iconData: LitIcons.moon_with_stars_solid,
+            ),
+            LitSettingsPanelTile(
+              onValueToggled: (toggledValue) {
+                setState(() {
+                  darkMode = toggledValue;
+                });
+              },
+              darkMode: darkMode,
+              enabled: darkMode,
+              optionName: "Dark mode",
+              iconData: LitIcons.moon_with_stars_solid,
+            ),
+            LitSettingsPanelTile(
+              onValueToggled: (toggledValue) {
+                setState(() {
+                  darkMode = toggledValue;
+                });
+              },
+              darkMode: darkMode,
+              enabled: darkMode,
+              optionName: "Dark mode",
+              iconData: LitIcons.moon_with_stars_solid,
+            ),
+          ],
+        ),
+        actionButton: AnimatedActionButton(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Icon(
+                LitIcons.gear,
+                color: Colors.white,
+                size: 16.0,
+              ),
+            ),
+            backgroundColor: LitColors.mediumGrey,
+            onPressed: () => {
+                  _settingsPanelController.showSettingsPanel(),
+                }),
+        body: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: LitScrollbar(
             child: ScrollableColumn(
@@ -892,6 +895,13 @@ class _ButtonList extends StatelessWidget {
                 text: "LitTextPageView",
               ),
             ],
+          ),
+          LitDescriptionTextBox(
+            text: "This text is descriping something."
+                " "
+                "This text is descriping something."
+                " "
+                "This text is descriping something.",
           ),
           // SizedBox(height: 128.0),
         ],
