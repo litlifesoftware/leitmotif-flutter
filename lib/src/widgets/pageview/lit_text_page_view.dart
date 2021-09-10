@@ -17,12 +17,12 @@ class LitTextPageView extends StatefulWidget {
     this.nextButtonLabel = "NEXT",
     required this.textItems,
     this.cardBorderRadius = const BorderRadius.all(
-      Radius.circular(42.0),
+      Radius.circular(32.0),
     ),
     this.animationDuration = const Duration(milliseconds: 120),
     this.padding = const EdgeInsets.symmetric(vertical: 32.0),
     this.margin = const EdgeInsets.symmetric(
-      horizontal: 24.0,
+      horizontal: 16.0,
       vertical: 32.0,
     ),
     this.middleLayer = const SizedBox(),
@@ -186,8 +186,8 @@ class _CardContent extends StatelessWidget {
       padding: const EdgeInsets.only(
         top: 16.0,
         bottom: 32.0,
-        left: 32.0,
-        right: 32.0,
+        left: 24.0,
+        right: 24.0,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
