@@ -31,14 +31,7 @@ class LitPushedThroughButton extends StatefulWidget {
       vertical: 8.0,
       horizontal: 14.0,
     ),
-    this.boxShadow = const [
-      const BoxShadow(
-        blurRadius: 4.0,
-        color: Colors.black12,
-        offset: Offset(-2.0, 2.0),
-        spreadRadius: 1.0,
-      )
-    ],
+    this.boxShadow = LitBoxShadows.lg,
     this.animationDuration = const Duration(
       milliseconds: 400,
     ),
@@ -140,7 +133,7 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
                           : [widget.accentColor, widget.backgroundColor],
                       //stops: [0.0, 0.3, 0.6, 1.0],
                     ),
-                    boxShadow: _isPressed ? [] : widget.boxShadow,
+                    boxShadow: widget.boxShadow,
                   ),
                   child: widget.child,
                 ),
