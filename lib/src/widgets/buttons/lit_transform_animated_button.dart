@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 class LitTransformAnimatedButton extends StatefulWidget {
   final Widget child;
@@ -61,30 +62,13 @@ class _LitTransformAnimatedButtonState extends State<LitTransformAnimatedButton>
             1 - _buttonAnimationController.value * widget.verticalTransform,
             0,
           ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: 3,
-                sigmaY: 3,
-              ),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(20.0),
-                onTap: widget.onTap,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    color: widget.backgroundColor,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 8.0,
-                    ),
-                    child: widget.child,
-                  ),
-                ),
-              ),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minWidth: 64.0),
+            child: LitPushedThroughButton(
+              child: widget.child,
+              onPressed: widget.onTap,
+              backgroundColor: widget.backgroundColor,
+              accentColor: widget.backgroundColor,
             ),
           ),
         );

@@ -84,7 +84,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
               color: LitColors.mediumGrey,
               size: 16.0,
             ),
-          )
+          ),
         ],
       ),
     );

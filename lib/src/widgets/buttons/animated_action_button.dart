@@ -26,7 +26,7 @@ class AnimatedActionButton extends StatefulWidget
       vertical: 64.0,
       horizontal: 32.0,
     ),
-    this.margin = const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+    this.margin = const EdgeInsets.symmetric(horizontal: 4.0, vertical: 0.0),
   }) : super(key: key);
   @override
   _AnimatedActionButtonState createState() => _AnimatedActionButtonState();

@@ -74,18 +74,18 @@ class LitPrivacyDisclaimerScreen extends StatelessWidget {
             alignment: Alignment.bottomLeft,
             child: Row(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   LitIcons.times,
                   color: LitColors.mediumGrey,
-                  size: 14.0,
+                  size: 12.0,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    confirmButtonLabel.toUpperCase(),
-                    style: LitSansSerifStyles.button,
-                  ),
+                SizedBox(width: 6.0),
+                ClippedText(
+                  confirmButtonLabel.toUpperCase(),
+                  style: LitSansSerifStyles.button,
                 ),
               ],
             ),
