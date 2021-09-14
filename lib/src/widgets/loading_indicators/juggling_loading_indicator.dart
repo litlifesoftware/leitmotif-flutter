@@ -1,26 +1,26 @@
 import 'dart:math' as Math;
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:leitmotif/styles.dart';
 
-/// A [Widget] to display a loading animation.
+/// A Flutter widget displaying an animated loading animation.
 ///
-/// Use this [Widget] as a placeholder while the result of an asychronous
-/// [Future] is awaited. This works similarly to the [CircularProgressIndicator].
 class JugglingLoadingIndicator extends StatefulWidget {
   /// The color of the circles transformed.
   final Color indicatorColor;
 
-  /// The [Color] of the painting canvas.
+  /// The background's color.
   final Color backgroundColor;
 
   /// The itensity of the backdrop shadow.
   final double shadowOpacity;
 
-  /// Creates a [JungglingLoadingIndicator].
+  /// Creates a [JugglingLoadingIndicator].
   const JugglingLoadingIndicator({
     Key? key,
-    required this.indicatorColor,
-    required this.backgroundColor,
-    required this.shadowOpacity,
+    this.indicatorColor = LitColors.mediumGrey,
+    this.backgroundColor = Colors.white,
+    this.shadowOpacity = 0.25,
   }) : super(key: key);
   @override
   _JugglingLoadingIndicatorState createState() =>
@@ -29,40 +29,47 @@ class JugglingLoadingIndicator extends StatefulWidget {
 
 class _JugglingLoadingIndicatorState extends State<JugglingLoadingIndicator>
     with TickerProviderStateMixin {
-  /// Animates the rotation [Transform].
-  AnimationController? rotateAnimationController;
+  /// Animates the rotation transform.
+  late AnimationController rotateAnimationController;
 
-  /// Animates the scale [Transform].
+  /// Animates the scale transform.
   late AnimationController scaleAnimationController;
 
   @override
   void initState() {
     super.initState();
+
     rotateAnimationController = AnimationController(
-        vsync: this,
-        duration: Duration(
-          milliseconds: 2000,
-        ));
-    rotateAnimationController!.repeat(reverse: false);
+      vsync: this,
+      duration: Duration(
+        milliseconds: 2000,
+      ),
+    );
+
     scaleAnimationController = AnimationController(
-        vsync: this,
-        duration: Duration(
-          milliseconds: 2000,
-        ));
+      vsync: this,
+      duration: Duration(
+        milliseconds: 2000,
+      ),
+    );
+
+    rotateAnimationController.repeat(reverse: false);
     scaleAnimationController.repeat(reverse: true);
   }
 
   @override
   void dispose() {
-    rotateAnimationController!.dispose();
+    rotateAnimationController.dispose();
     scaleAnimationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return AnimatedBuilder(
+    // TODO: Constraint size by adding `size` property on API.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return AnimatedBuilder(
           animation: scaleAnimationController,
           builder: (context, child) {
             return Opacity(
@@ -71,55 +78,50 @@ class _JugglingLoadingIndicatorState extends State<JugglingLoadingIndicator>
                 aspectRatio: 1,
                 child: Container(
                   decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(constraints.maxWidth / 3),
-                      color: widget.backgroundColor,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(widget.shadowOpacity),
-                          offset: Offset(-4, 4),
-                          blurRadius: 25,
-                          spreadRadius: 2,
-                        )
-                      ]),
+                    borderRadius:
+                        BorderRadius.circular(constraints.maxWidth / 3),
+                    color: widget.backgroundColor,
+                    boxShadow: LitBoxShadows.lg,
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Transform.scale(
-                      //scale: 0.20,
-                      scale: 1.0,
-                      child: Center(
-                          child: AnimatedBuilder(
-                              animation: rotateAnimationController!,
-                              builder: (context, child) {
-                                return Transform.scale(
-                                  scale: -0.7 -
-                                      (scaleAnimationController.value * -0.4),
-                                  child: Transform.rotate(
-                                    angle: (rotateAnimationController!.value) *
-                                        2 *
-                                        Math.pi,
-                                    child: CustomPaint(
-                                      painter: JugglingLoadingIndicatorPaint(
-                                        animation: rotateAnimationController,
-                                        size: constraints.maxWidth,
-                                        color: widget.indicatorColor,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              })),
+                    child: Center(
+                      child: AnimatedBuilder(
+                        animation: rotateAnimationController,
+                        builder: (context, child) {
+                          return Transform.scale(
+                            scale:
+                                -0.7 - (scaleAnimationController.value * -0.4),
+                            child: Transform.rotate(
+                              angle: (rotateAnimationController.value) *
+                                  2 *
+                                  Math.pi,
+                              child: CustomPaint(
+                                painter: JugglingLoadingIndicatorPaint(
+                                  animation: rotateAnimationController,
+                                  size: constraints.maxWidth,
+                                  color: widget.indicatorColor,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
               ),
             );
-          });
-    });
+          },
+        );
+      },
+    );
   }
 }
 
+/// A CustomPainter to paing the progress animation.
 class JugglingLoadingIndicatorPaint extends CustomPainter {
-  final Animation? animation;
+  final Animation animation;
   final double size;
   final Color color;
   JugglingLoadingIndicatorPaint({
@@ -157,6 +159,6 @@ class JugglingLoadingIndicatorPaint extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return this.animation!.status == AnimationStatus.forward;
+    return this.animation.status == AnimationStatus.forward;
   }
 }
