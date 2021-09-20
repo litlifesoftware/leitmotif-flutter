@@ -106,6 +106,7 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  // TODO - Implement `LitDescriptionTextBox`
                   LayoutBuilder(builder:
                       (BuildContext context, BoxConstraints constraints) {
                     return Row(
