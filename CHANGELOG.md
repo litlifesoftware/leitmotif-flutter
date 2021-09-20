@@ -5,6 +5,10 @@
 - Add `LitScreenTitle` and `LitCardTitle` widgets to `titles` library.
 - Add `LitTitledActionCard`.
 - Improve scale animation on `LitPushedThroughButton`.
+- Improve button sizing on `LitCalendarNavigation`.
+- Add `displayBackButton` option to hide and display navigation buttons on 'fixed on scroll' app bars.
+- Add `LitDescriptionTextBox`, a Flutter widget displaying an `Icon` alongside the provided description.
+- Add `LitGradients` library.
 
 ## 1.4.2
 
@@ -15,7 +19,7 @@
 
 - Fix missing clipping on `LitBottomNavigation`.
 - Fix layout issues on `DiscardDraftDialog`.
-- Fix padding issues on `LitCreditsScreen`. 
+- Fix padding issues on `LitCreditsScreen`.
 - Decrease default width on `LitScrollbar`.
 - Fix unnecessary safe area on `LitScaffold` when using `FixedOnScrollAppbar`.
 - Add a `blurred` option on `CollapseOnScrollActionButton` and `LitGradientButton`.
