@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
+import 'package:leitmotif/styles.dart';
+
 /// An icon displaying a lock.
 ///
 /// The icon is rendered using a [CustomPainter] to achieve a gradient background
@@ -26,8 +28,8 @@ class LitLockIcon extends StatefulWidget {
   const LitLockIcon({
     Key? key,
     this.size = 48.0,
-    this.color = const Color(0xFFAAAAAA),
-    this.animationDuration = const Duration(milliseconds: 400),
+    this.color = LitColors.darkOliveGreen,
+    this.animationDuration = const Duration(milliseconds: 550),
   }) : super(key: key);
 
   @override
@@ -82,13 +84,11 @@ class _LockPainter extends CustomPainter {
   });
   @override
   void paint(Canvas canvas, Size size) {
-    double enclosureHeight = lockSize;
-    double enclosureWidth = lockSize * 1.083;
+    double enclosureHeight = lockSize * 0.8;
+    double enclosureWidth = lockSize;
     double shackleHeight = enclosureHeight * 1.166;
     double shackleWidth = shackleHeight / 2;
     double wardBladeHeight = enclosureHeight / 4;
-    double wardBladeRadius = wardBladeHeight / 3;
-    double wardBitWidth = wardBladeRadius * 1.2;
 
     final Color white = const Color(0xFFFFFFFF);
     final Color dark = color;
@@ -103,7 +103,6 @@ class _LockPainter extends CustomPainter {
       (size.height / 2),
     );
 
-    Paint solidGrey = Paint()..color = const Color(0xFF777777);
     Paint strokeDark = Paint()
       ..shader = ui.Gradient.linear(
         Offset(
@@ -148,14 +147,6 @@ class _LockPainter extends CustomPainter {
           (enclosureHeight * 0.12) +
           ((1.0 - animationController.value) * 16.0),
     );
-    Offset bladeCenter = Offset(
-      canvasCenter.dx,
-      enclosureCenter.dy - (enclosureHeight * 0.0625),
-    );
-    Offset bitCenter = Offset(
-      canvasCenter.dx,
-      bladeCenter.dy + (enclosureHeight * 0.1875),
-    );
 
     RRect enclosure = RRect.fromRectAndRadius(
       Rect.fromCenter(
@@ -175,28 +166,8 @@ class _LockPainter extends CustomPainter {
       Radius.circular(shackleHeight * 0.4),
     );
 
-    RRect wardBlade = RRect.fromRectAndRadius(
-      Rect.fromCenter(
-        center: bladeCenter,
-        height: wardBladeHeight,
-        width: wardBladeHeight,
-      ),
-      Radius.circular(wardBladeRadius),
-    );
-
-    RRect wardBit = RRect.fromRectAndRadius(
-      Rect.fromCenter(
-        center: bitCenter,
-        height: wardBladeHeight,
-        width: wardBitWidth,
-      ),
-      Radius.circular(wardBladeRadius),
-    );
     canvas.drawRRect(shackle, strokeDark);
     canvas.drawRRect(enclosure, enclosurePaint);
-
-    canvas.drawRRect(wardBlade, solidGrey);
-    canvas.drawRRect(wardBit, solidGrey);
   }
 
   @override
