@@ -6,7 +6,6 @@ class LitOnboardingScreen extends StatefulWidget {
   final String nextButtonLabel;
   final Widget art;
   final List<TextPageContent> textItems;
-  final BorderRadius cardBorderRadius;
   final BoxDecoration backgroundDecoration;
   final Duration animationDuration;
   final EdgeInsets cardPadding;
@@ -17,7 +16,6 @@ class LitOnboardingScreen extends StatefulWidget {
     this.nextButtonLabel = "Next",
     this.art = const SizedBox(),
     required this.textItems,
-    this.cardBorderRadius = const BorderRadius.all(Radius.circular(42.0)),
     this.backgroundDecoration = const BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topRight,
@@ -68,13 +66,15 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
           Container(
             decoration: widget.backgroundDecoration,
           ),
-          LitTextPageView(
-            middleLayer: widget.art,
-            textItems: widget.textItems,
-            padding: widget.cardPadding,
-            cardBorderRadius: widget.cardBorderRadius,
-            animationDuration: widget.animationDuration,
-            nextButtonLabel: widget.nextButtonLabel,
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: LitTextPageView(
+              middleLayer: widget.art,
+              textItems: widget.textItems,
+              padding: widget.cardPadding,
+              animationDuration: widget.animationDuration,
+              nextButtonLabel: widget.nextButtonLabel,
+            ),
           ),
           AnimatedActionButton(
             onPressed: widget.onExit,

@@ -26,14 +26,7 @@ class LitPrivacyDisclaimerScreen extends StatelessWidget {
     ],
     required this.onConfirm,
     this.backgroundDecoration = const BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topRight,
-        end: Alignment.bottomLeft,
-        colors: const [
-          Colors.white,
-          LitColors.lightBlue,
-        ],
-      ),
+      gradient: LitGradients.greyGradient,
     ),
   }) : super(key: key);
 
@@ -60,14 +53,17 @@ class LitPrivacyDisclaimerScreen extends StatelessWidget {
           Container(
             decoration: backgroundDecoration,
           ),
-          LitTextPageView(
-            middleLayer: _Art(),
-            textItems: textItems,
-            padding: const EdgeInsets.only(
-              top: 152.0,
-              bottom: 64.0,
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: LitTextPageView(
+              middleLayer: _Art(),
+              textItems: textItems,
+              padding: const EdgeInsets.only(
+                top: 152.0,
+                bottom: 64.0,
+              ),
+              nextButtonLabel: nextButtonLabel,
             ),
-            nextButtonLabel: nextButtonLabel,
           ),
           AnimatedActionButton(
             onPressed: onConfirm,

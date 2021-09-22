@@ -10,21 +10,16 @@ class LitTextPageView extends StatefulWidget {
   final BorderRadius cardBorderRadius;
   final Duration animationDuration;
   final EdgeInsets padding;
-  final EdgeInsets margin;
   final Widget middleLayer;
   const LitTextPageView({
     Key? key,
     this.nextButtonLabel = "NEXT",
     required this.textItems,
     this.cardBorderRadius = const BorderRadius.all(
-      Radius.circular(32.0),
+      Radius.circular(24.0),
     ),
     this.animationDuration = const Duration(milliseconds: 120),
     this.padding = const EdgeInsets.symmetric(vertical: 32.0),
-    this.margin = const EdgeInsets.symmetric(
-      horizontal: 16.0,
-      vertical: 32.0,
-    ),
     this.middleLayer = const SizedBox(),
   }) : super(key: key);
 
@@ -81,7 +76,6 @@ class _LitTextPageViewState extends State<LitTextPageView>
         SingleChildScrollView(
           controller: _scrollController,
           physics: BouncingScrollPhysics(),
-          padding: widget.margin,
           child: ConstrainedBox(
             constraints: BoxConstraints(
               maxWidth: MediaQuery.of(context).size.width,
@@ -185,9 +179,9 @@ class _CardContent extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(
         top: 16.0,
-        bottom: 32.0,
-        left: 24.0,
-        right: 24.0,
+        bottom: 16.0,
+        left: 16.0,
+        right: 16.0,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -196,12 +190,12 @@ class _CardContent extends StatelessWidget {
           text.subtitle != null
               ? Padding(
                   padding: const EdgeInsets.symmetric(
-                    vertical: 16.0,
+                    vertical: 8.0,
                   ),
                   child: Text(
                     text.subtitle!.toUpperCase(),
                     textAlign: TextAlign.start,
-                    style: LitSansSerifStyles.subtitle1,
+                    style: LitSansSerifStyles.overline,
                   ),
                 )
               : SizedBox(
@@ -209,10 +203,10 @@ class _CardContent extends StatelessWidget {
                 ),
           Text(
             text.title,
-            style: LitSansSerifStyles.h4,
+            style: LitSansSerifStyles.h5,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 32.0),
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Text(
               text.text,
               style: LitSansSerifStyles.body2,
