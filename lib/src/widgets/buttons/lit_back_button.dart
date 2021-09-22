@@ -9,7 +9,7 @@ class LitBackButtonDefaultStyling {
   static const IconData icon = LitIcons.arrow_left_solid;
   static const double iconSize = 14.0;
   static const EdgeInsets padding = const EdgeInsets.symmetric(
-    horizontal: 16.0,
+    horizontal: 8.0,
     vertical: 4.0,
   );
 }
