@@ -24,7 +24,7 @@ class LitBlurredAppBar extends StatelessWidget implements CustomAppBar {
   const LitBlurredAppBar({
     Key? key,
     required this.title,
-    this.textStyle = LitTextStyles.sansSerif,
+    this.textStyle = LitSansSerifStyles.body2,
     this.darkMode = false,
   }) : super(key: key);
   @override

@@ -19,7 +19,7 @@ class ClippedText extends StatelessWidget {
   const ClippedText(
     this.value, {
     Key? key,
-    this.style = LitTextStyles.sansSerif,
+    this.style = LitSansSerifStyles.body2,
     this.textAlign = TextAlign.left,
     this.overflow = TextOverflow.ellipsis,
     this.maxLines,

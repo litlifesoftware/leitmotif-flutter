@@ -22,7 +22,7 @@ class ScaledDownText extends StatelessWidget {
   const ScaledDownText(
     this.value, {
     Key? key,
-    this.style = LitTextStyles.sansSerif,
+    this.style = LitSansSerifStyles.body2,
     this.textAlign = TextAlign.left,
     this.upperCase = false,
   }) : super(key: key);
