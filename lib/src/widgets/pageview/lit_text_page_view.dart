@@ -178,7 +178,7 @@ class _CardContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        top: 16.0,
+        top: 8.0,
         bottom: 16.0,
         left: 16.0,
         right: 16.0,
@@ -206,7 +206,7 @@ class _CardContent extends StatelessWidget {
             style: LitSansSerifStyles.h5,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
               text.text,
               style: LitSansSerifStyles.body2,
