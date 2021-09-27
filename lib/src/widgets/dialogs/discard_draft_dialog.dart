@@ -1,42 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A Flutter widget that displays a [LitTitledDialog] allowing the user to
-/// either discard his unsaved draft or to cancel the discard process.
+/// The [DiscardDraftDialog]'s `Localization`.
 ///
-/// The [onDiscard] method is called once the user confirms to discard the
-/// draft.
-class DiscardDraftDialog extends StatefulWidget {
-  /// The text dialog's title.
-  final String titleText;
+/// Contains the localized strings used on this dialog.
+class DiscardDraftDialogLocalization {
+  /// The dialog's title.
+  final String title;
 
-  /// The 'discard' button's label.
+  /// The `discard` button label.
+  ///
+  /// Defaults to `Discard`.
   final String discardButtonLabel;
 
-  /// The 'cancel' button's label.
+  /// The `cancel` button label.
+  ///
+  /// Defaults to `Cancel`.
   final String cancelButtonLabel;
 
-  /// The info description.
-  final String infoDescription;
+  /// The description's body.
+  ///
+  /// Defaults to `There have been unsaved changes detected.`.
+  final String descriptionBody;
 
-  /// The discard action description.
-  final String discardText;
+  /// The confirm text's body.
+  ///
+  /// Defaults to `Do you want to discard your changes?`.
+  final String confirmDiscardBody;
 
+  /// Creates a [DiscardDraftDialogLocalization].
+  const DiscardDraftDialogLocalization({
+    required this.title,
+    required this.discardButtonLabel,
+    required this.cancelButtonLabel,
+    required this.descriptionBody,
+    required this.confirmDiscardBody,
+  });
+}
+
+/// A `Leitmotif` widget allowing the user to confirm discarding the current
+/// draft.
+///
+/// [onDiscard] is called once the user confirms to discard the draft.
+class DiscardDraftDialog extends StatefulWidget {
+  /// The dialog's default localization.
+  static const DiscardDraftDialogLocalization _defaultLocalization =
+      DiscardDraftDialogLocalization(
+    title: "Unsaved Changes",
+    discardButtonLabel: "Discard",
+    cancelButtonLabel: "Cancel",
+    descriptionBody: "There have been unsaved changes detected.",
+    confirmDiscardBody: "Do you want to discard your changes?",
+  );
+
+  /// The dialog's localization.
+  final DiscardDraftDialogLocalization localizationData;
+
+  final EdgeInsets margin;
+
+  /// The initial animation's duration.
   final Duration animationDuration;
 
   /// The callback once the discard has been confirmed.
   final void Function() onDiscard;
 
   /// Creates a [DiscardDraftDialog].
-  ///
-  /// Pass a [onDiscard] to provide logic in order to discard the changes.
   const DiscardDraftDialog({
     Key? key,
-    this.titleText = "Unsaved changes",
-    this.discardButtonLabel = "Discard",
-    this.cancelButtonLabel = "Cancel",
-    this.infoDescription = "There have been unsaved changes detected.",
-    this.discardText = "Do you want to discard your changes?",
+    this.localizationData = _defaultLocalization,
+    this.margin = const EdgeInsets.symmetric(
+      horizontal: 16.0,
+      vertical: 8.0,
+    ),
     this.animationDuration = const Duration(milliseconds: 230),
     required this.onDiscard,
   }) : super(key: key);
@@ -46,121 +81,96 @@ class DiscardDraftDialog extends StatefulWidget {
 
 class _DiscardDraftDialogState extends State<DiscardDraftDialog>
     with TickerProviderStateMixin {
-  late AnimationController _appearAnimationController;
+  late AnimationController _animationController;
 
   /// Closes the dialog.
   void _onCancel() {
     LitRouteController(context).closeDialog();
   }
 
+  /// The current animation value.
   double get _animationValue {
-    return _appearAnimationController.value;
+    return _animationController.value;
+  }
+
+  /// The current animated opacity.
+  double get _opacity {
+    double minOpacity = 0.5;
+    return minOpacity + (_animationValue * (1.0 - minOpacity));
   }
 
   @override
   void initState() {
     super.initState();
-    _appearAnimationController = AnimationController(
+    _animationController = AnimationController(
       vsync: this,
       duration: widget.animationDuration,
     );
-    _appearAnimationController.forward();
+    _animationController.forward();
   }
 
   @override
   void dispose() {
-    _appearAnimationController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return LitTitledDialog(
-      titleText: widget.titleText,
-      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      actionButtons: [
-        DialogActionButton(
-          label: widget.cancelButtonLabel,
-          onPressed: _onCancel,
-        ),
-        DialogActionButton(
-          label: widget.discardButtonLabel,
-          onPressed: widget.onDiscard,
-          accentColor: LitColors.lightGrey,
-          backgroundColor: LitColors.mediumGrey,
-          style: LitSansSerifStyles.button.copyWith(
-            color: Colors.white,
-          ),
-        ),
-      ],
+      titleText: widget.localizationData.title,
+      margin: widget.margin,
       child: AnimatedBuilder(
-        animation: _appearAnimationController,
+        animation: _animationController,
         builder: (BuildContext context, Widget? _) {
           return AnimatedOpacity(
-            duration: _appearAnimationController.duration!,
-            opacity: 0.5 + (_animationValue * 0.5),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // TODO - Implement `LitDescriptionTextBox`
-                  LayoutBuilder(builder:
-                      (BuildContext context, BoxConstraints constraints) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: LayoutBuilder(
-                            builder: (context, constraints) {
-                              return ExclamationRectangle(
-                                margin: const EdgeInsets.symmetric(
-                                  vertical: 4.0,
-                                  horizontal: 4.0,
-                                ),
-                                height: constraints.maxWidth,
-                                width: constraints.maxWidth,
-                              );
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          flex: 5,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Column(
-                              children: [
-                                ClippedText(
-                                  widget.infoDescription,
-                                  textAlign: TextAlign.left,
-                                  style: LitSansSerifStyles.caption.copyWith(
-                                    color: LitColors.lightGrey,
-                                  ),
-                                  maxLines: 2,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  }),
-                  SizedBox(height: 8.0),
-                  ClippedText(
-                    widget.discardText,
-                    textAlign: TextAlign.left,
-                    style: LitSansSerifStyles.body2,
-                    maxLines: 2,
-                  ),
-                ],
-              ),
+            duration: _animationController.duration!,
+            opacity: _opacity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _Spacing(),
+                LitDescriptionTextBox(
+                  text: widget.localizationData.descriptionBody,
+                  maxLines: 3,
+                ),
+                ClippedText(
+                  widget.localizationData.confirmDiscardBody,
+                  textAlign: TextAlign.left,
+                  style: LitSansSerifStyles.body2,
+                  maxLines: 2,
+                ),
+                _Spacing(),
+              ],
             ),
           );
         },
       ),
+      actionButtons: [
+        DialogActionButton(
+          label: widget.localizationData.cancelButtonLabel,
+          onPressed: _onCancel,
+          accentColor: LitColors.lightGrey,
+          backgroundColor: LitColors.lightGrey,
+        ),
+        DialogActionButton(
+          label: widget.localizationData.discardButtonLabel,
+          onPressed: widget.onDiscard,
+        ),
+      ],
     );
+  }
+}
+
+/// A spacing item seperating individual widgets.
+class _Spacing extends StatelessWidget {
+  final double height = 8.0;
+  const _Spacing({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(height: height);
   }
 }
