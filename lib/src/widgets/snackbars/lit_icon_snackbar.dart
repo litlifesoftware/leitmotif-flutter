@@ -8,13 +8,15 @@ import 'package:leitmotif/src/widgets/snackbars/lit_icon_snackbar_content.dart';
 /// text.
 class LitIconSnackbar extends StatelessWidget implements LitSnackbar {
   final LitSnackbarController snackBarController;
+  final String? title;
   final String text;
   final TextStyle textStyle;
   final IconData iconData;
   final Color iconBackgroundColor;
-  final Color iconColor;
+
   final Alignment alignment;
   final EdgeInsets padding;
+  final EdgeInsets margin;
   final double width;
 
   /// Creates a [LitIconSnackbar] widget.
@@ -23,13 +25,14 @@ class LitIconSnackbar extends StatelessWidget implements LitSnackbar {
   const LitIconSnackbar({
     Key? key,
     required this.snackBarController,
+    this.title,
     required this.text,
-    this.textStyle = LitTextStyles.sansSerif,
+    this.textStyle = LitSansSerifStyles.caption,
     required this.iconData,
-    this.iconBackgroundColor = LitColors.mediumGrey,
-    this.iconColor = Colors.white,
+    this.iconBackgroundColor = Colors.white,
     this.alignment = Alignment.topRight,
     this.padding = LitSnackbar.defaultPadding,
+    this.margin = const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
     this.width = LitSnackbar.defaultWidth,
   }) : super(key: key);
   @override
@@ -42,9 +45,9 @@ class LitIconSnackbar extends StatelessWidget implements LitSnackbar {
       padding: padding,
       child: LitIconSnackbarContent(
         iconBackgroundColor: iconBackgroundColor,
-        iconColor: iconColor,
         iconData: iconData,
         textStyle: textStyle,
+        title: title,
         text: text,
       ),
     );
