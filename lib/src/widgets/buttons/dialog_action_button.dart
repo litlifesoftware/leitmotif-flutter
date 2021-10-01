@@ -33,7 +33,7 @@ class DialogActionButton extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(
       horizontal: 8.0,
     ),
-    this.accentColor = LitColors.lightGrey,
+    this.accentColor = Colors.white,
     this.backgroundColor = Colors.white,
     this.style = LitSansSerifStyles.button,
     this.disabled = false,
