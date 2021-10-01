@@ -306,16 +306,19 @@ class __ExampleScreenState extends State<_ExampleScreen> {
         snackbars: [
           LitIconSnackbar(
             snackBarController: _solidSnackbarController,
+            title: "Title",
             text: "Snackbar!",
             iconData: LitIcons.info,
           ),
           LitIconSnackbar(
             snackBarController: _solidSnackbarControllerDiffAni,
+            title: "Title",
             text: "Different Snackbar animation!",
             iconData: LitIcons.info,
           ),
           LitTransparentIconSnackbar(
             snackBarController: _transparentSnackbarController,
+            title: "Title",
             text: "Transparent Snackbar!",
             iconData: LitIcons.info,
           ),
@@ -448,15 +451,16 @@ class __ExampleScreenState extends State<_ExampleScreen> {
                         primaryColor: colorPickerBtnColor,
                         onPressed: () => {
                           showDialog(
-                              context: context,
-                              builder: (context) {
-                                return _LitColorPickerDialogImpl(
-                                  color: colorPickerBtnColor,
-                                  onApply: (c) {
-                                    _setColorPickerColor(c);
-                                  },
-                                );
-                              })
+                            context: context,
+                            builder: (context) {
+                              return _LitColorPickerDialogImpl(
+                                color: colorPickerBtnColor,
+                                onApply: (c) {
+                                  _setColorPickerColor(c);
+                                },
+                              );
+                            },
+                          )
                         },
                       ),
                     ),
@@ -911,6 +915,7 @@ class _ButtonList extends StatelessWidget {
                 " "
                 "This text is descriping something.",
           ),
+
           // SizedBox(height: 128.0),
         ],
       ),
@@ -1074,7 +1079,7 @@ class _Art extends StatelessWidget {
               child: Text(
                 "Provide art",
                 textAlign: TextAlign.center,
-                style: LitTextStyles.sansSerifBodyTighterSmaller,
+                style: LitSansSerifStyles.body2,
               ),
             ),
           ),
