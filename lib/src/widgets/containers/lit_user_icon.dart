@@ -69,10 +69,11 @@ class __UserIconState extends State<LitUserIcon> {
     return widget.contrastColor;
   }
 
+//TODO refactor
   /// Returns the initials of the user derived by the username.
   String get _usernameInitials {
     String initals = "";
-    List<String> names = "${widget.username}".split(" ");
+    List<String> names = widget.username.split(" ");
 
     // Add the first character of each substring (name elements).
     for (String nameElement in names) {
@@ -113,7 +114,7 @@ class __UserIconState extends State<LitUserIcon> {
   }
 
   double get _fontSize {
-    return widget.size / 2.75;
+    return widget.size / 3.75;
   }
 
   EdgeInsets get _margin {
@@ -126,7 +127,7 @@ class __UserIconState extends State<LitUserIcon> {
     );
   }
 
-  /// Calls the provided [widget.onPressed] callback.
+  /// Calls the provided [widget.onToggleViewMode] callback.
   void _onTap() {
     if (widget.onPressed != null) {
       widget.onPressed!();
