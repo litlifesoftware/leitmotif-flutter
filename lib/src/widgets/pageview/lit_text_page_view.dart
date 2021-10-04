@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:leitmotif/buttons.dart';
 import 'package:leitmotif/containers.dart';
+import 'package:leitmotif/leitmotif.dart';
 import 'package:leitmotif/styles.dart';
-import 'package:leitmotif/text.dart';
 
 class LitTextPageView extends StatefulWidget {
   final String nextButtonLabel;
@@ -19,7 +18,7 @@ class LitTextPageView extends StatefulWidget {
       Radius.circular(24.0),
     ),
     this.animationDuration = const Duration(milliseconds: 120),
-    this.padding = const EdgeInsets.symmetric(vertical: 32.0),
+    this.padding = const EdgeInsets.all(0.0),
     this.middleLayer = const SizedBox(),
   }) : super(key: key);
 
@@ -71,28 +70,15 @@ class _LitTextPageViewState extends State<LitTextPageView>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SingleChildScrollView(
-          controller: _scrollController,
-          physics: BouncingScrollPhysics(),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width,
-            ),
-            child: _Card(
-              padding: widget.padding,
-              animationController: _animationController,
-              text: widget.textItems[selectedTextItem],
-              nextButtonLabel: widget.nextButtonLabel,
-              middleLayer: widget.middleLayer,
-              buttonAnimationDuration: widget.animationDuration,
-              borderRadius: widget.cardBorderRadius,
-              onPressed: _onPressed,
-            ),
-          ),
-        ),
-      ],
+    return _Card(
+      padding: widget.padding,
+      animationController: _animationController,
+      text: widget.textItems[selectedTextItem],
+      nextButtonLabel: widget.nextButtonLabel,
+      // middleLayer: widget.middleLayer,
+      buttonAnimationDuration: widget.animationDuration,
+      borderRadius: widget.cardBorderRadius,
+      onPressed: _onPressed,
     );
   }
 }
@@ -102,7 +88,7 @@ class _Card extends StatefulWidget {
   final TextPageContent text;
   final String nextButtonLabel;
   final BorderRadius borderRadius;
-  final Widget middleLayer;
+  // final Widget middleLayer;
   final EdgeInsets padding;
   final void Function() onPressed;
   final double horizontalTransform;
@@ -115,7 +101,7 @@ class _Card extends StatefulWidget {
     required this.text,
     required this.nextButtonLabel,
     required this.borderRadius,
-    required this.middleLayer,
+    // required this.middleLayer,
     required this.padding,
     required this.onPressed,
     this.horizontalTransform = 60.0,
@@ -139,25 +125,34 @@ class __CardState extends State<_Card> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: widget.animationController,
-      builder: (context, _) {
-        return LitElevatedGlassCard(
-          padding: widget.padding,
-          borderRadius: widget.borderRadius,
-          child: _CardContent(
-            text: widget.text,
-            nextButtonLabel: widget.nextButtonLabel,
-            buttonAnimationDuration: widget.buttonAnimationDuration,
-            onPressed: widget.onPressed,
-          ),
-          middleLayer: Align(
-            alignment: Alignment.topCenter,
-            child: widget.middleLayer,
-          ),
-          transform: _transform,
-        );
-      },
+    return Padding(
+      padding: widget.padding,
+      child: AnimatedBuilder(
+        animation: widget.animationController,
+        builder: (context, _) {
+          return Transform(
+            transform: _transform,
+            child: LitTitledActionCard(
+              title: widget.text.title,
+              subtitle: widget.text.subtitle,
+              child: _CardContent(
+                text: widget.text,
+                nextButtonLabel: widget.nextButtonLabel,
+                buttonAnimationDuration: widget.buttonAnimationDuration,
+                onPressed: widget.onPressed,
+              ),
+              actionButtonData: [
+                ActionButtonData(
+                  title: widget.nextButtonLabel,
+                  onPressed: widget.onPressed,
+                  backgroundColor: Colors.white,
+                  accentColor: Colors.white,
+                )
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -176,71 +171,18 @@ class _CardContent extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 8.0,
-        bottom: 16.0,
-        left: 16.0,
-        right: 16.0,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          text.subtitle != null
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8.0,
-                  ),
-                  child: Text(
-                    text.subtitle!.toUpperCase(),
-                    textAlign: TextAlign.start,
-                    style: LitSansSerifStyles.overline,
-                  ),
-                )
-              : SizedBox(
-                  height: 12.0,
-                ),
-          Text(
-            text.title,
-            style: LitSansSerifStyles.h5,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Text(
-              text.text,
-              style: LitSansSerifStyles.body2,
-            ),
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: LitPushedThroughButton(
-                  accentColor: Colors.white,
-                  backgroundColor: Colors.white,
-                  animationDuration: buttonAnimationDuration,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 8.0,
-                      color: Colors.black45,
-                      offset: Offset(-4, 3),
-                      spreadRadius: -2.0,
-                    )
-                  ],
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 32.0,
-                    vertical: 8.0,
-                  ),
-                  child: ClippedText(
-                    nextButtonLabel,
-                    upperCase: true,
-                    style: LitSansSerifStyles.button,
-                  ),
-                  onPressed: onPressed),
-            ),
-          )
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          height: 8.0,
+        ),
+        Text(
+          text.text,
+          style: LitSansSerifStyles.body2,
+        ),
+      ],
     );
   }
 }
