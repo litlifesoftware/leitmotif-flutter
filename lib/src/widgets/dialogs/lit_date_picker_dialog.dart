@@ -1,205 +1,119 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
+/// The [LitDatePickerDialog]'s `Localization`.
+///
+/// Contains the localized strings used on the dialog.
+class LitDatePickerDialogLocalization {
+  final String submitLabel;
+
+  const LitDatePickerDialogLocalization({
+    required this.submitLabel,
+  });
+}
+
+/// A Leitmotif `dialog` widget.
+///
+/// Allows the user to submit a date.
+///
+/// Returns the submitted date as a [DateTime] using the [onSubmit] method
+/// allowing further validation on the parent widget.
+///
 class LitDatePickerDialog extends StatefulWidget {
-  final void Function() onBackCallback;
+  /// The default localization.
+  ///
+  /// Applied on the screen if none [localizationData] has been provided.
+  static const LitDatePickerDialogLocalization _defaultLocalization =
+      LitDatePickerDialogLocalization(submitLabel: "Submit");
+
+  final LitDatePickerDialogLocalization localizationData;
+
+  /// The dialog's title.
+  final String? title;
+
+  /// The initial date the calendar will start at.
+  ///
+  /// If none provided, use [DateTime.now].
+  final DateTime? defaultDate;
+
+  /// The dialog's margin.
+  final EdgeInsets margin;
 
   final void Function(DateTime) onSubmit;
-  final bool allowFutureDates;
-  final String excludedMonthErrorMessage;
-  final String futureDateErrorMessage;
-  final DateTime? initialDate;
-  final String title;
+
+  /// Creates a [LitDatePickerDialog].
   const LitDatePickerDialog({
     Key? key,
-    required this.onBackCallback,
+    this.localizationData = _defaultLocalization,
+    this.title,
+    this.defaultDate,
+    this.margin = const EdgeInsets.symmetric(
+      horizontal: 8.0,
+    ),
     required this.onSubmit,
-    this.allowFutureDates = true,
-    this.excludedMonthErrorMessage = "Date not included in current month.",
-    this.futureDateErrorMessage = "Future dates are not allowed.",
-    this.initialDate,
-    this.title = "Choose date",
   }) : super(key: key);
   @override
   _LitDatePickerDialogState createState() => _LitDatePickerDialogState();
 }
 
-class _LitDatePickerDialogState extends State<LitDatePickerDialog>
-    with TickerProviderStateMixin {
-  late AnimationController _selectAnimationController;
-  late CalendarController _calendarController;
-  late LitSnackbarController _exclusiveDateSnackBarController;
-  late LitSnackbarController _futureDateSnackbarController;
+class _LitDatePickerDialogState extends State<LitDatePickerDialog> {
+  /// The currently selected date. `null` as long as none date has been
+  /// selected.
   DateTime? selectedDate;
-  String? weekdayLabels;
 
-  void _setSelectedDate(DateTime date) {
-    print(date);
+  /// Handles the `select date` action by either resetting the current date
+  /// or updating the date using the provided [date] value.
+  void _onSelectDate(DateTime? date) {
+    if (selectedDate == date) {
+      _resetDate();
+    } else {
+      _setDate(date);
+    }
+  }
+
+  /// Resets the [selectedDate] value using by setting the state.
+  void _resetDate() {
     setState(() {
-      if (selectedDate == date) {
-        selectedDate = null;
-        _selectAnimationController.reverse();
-      } else {
-        selectedDate = date;
-        _selectAnimationController.forward(from: 0);
-      }
+      selectedDate = null;
     });
   }
 
-  void _onExclusiveMonth() {
-    _exclusiveDateSnackBarController.showSnackBar();
+  /// Sets the [selectedDate] value using by provided value..
+
+  void _setDate(DateTime? date) {
+    setState(() {
+      selectedDate = date;
+    });
+    // print(date.toIso8601String());
   }
 
-  void _onFutureDate() {
-    _futureDateSnackbarController.showSnackBar();
-  }
-
+  /// Handles the `submit date` action by triggering the parent's callback.
   void _onSubmitDate() {
     widget.onSubmit(selectedDate!);
   }
 
-  @override
-  void initState() {
-    super.initState();
-
-    _calendarController = CalendarController(
-      templateDate: widget.initialDate,
-    );
-
-    _selectAnimationController = AnimationController(
-      duration: Duration(milliseconds: 140),
-      vsync: this,
-    );
-
-    _exclusiveDateSnackBarController = LitSnackbarController()
-      ..init(
-        this,
-      );
-
-    _futureDateSnackbarController = LitSnackbarController()
-      ..init(
-        this,
-      );
-  }
-
-  @override
-  void dispose() {
-    _exclusiveDateSnackBarController.dispose();
-    _futureDateSnackbarController.dispose();
-    super.dispose();
+  /// States whether the currently selected date is invalid.
+  bool get _invalidDate {
+    return selectedDate == null;
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _selectAnimationController,
-      builder: (context, _) {
-        return Material(
-          color: selectedDate != null
-              ? Colors.black
-                  .withOpacity((0.38 * _selectAnimationController.value))
-              : Colors.transparent,
-          child: Stack(
-            alignment: alternativeAlignment(MediaQuery.of(context).size,
-                portraitAlignment: Alignment.center,
-                landscapeAlignment: Alignment.topCenter),
-            children: [
-              SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: LitTitledDialog(
-                  titleText: widget.title,
-                  leading: LitBackButton(
-                    onTap: widget.onBackCallback,
-                  ),
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                  ),
-                  child: LitDatePicker(
-                    calendarController: _calendarController,
-                    selectedDate: selectedDate,
-                    setSelectedDate: _setSelectedDate,
-                    onExclusiveMonth: _onExclusiveMonth,
-                    onFutureDate: _onFutureDate,
-                    allowFutureDates: widget.allowFutureDates,
-                    initialDate: widget.initialDate,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: alternativeAlignment(MediaQuery.of(context).size,
-                    portraitAlignment: Alignment.bottomCenter,
-                    landscapeAlignment: Alignment.topRight),
-                child: Container(
-                  child: selectedDate != null
-                      ? AnimatedOpacity(
-                          duration: _selectAnimationController.duration!,
-                          opacity:
-                              0.5 + (_selectAnimationController.value * 0.5),
-                          child: Transform(
-                            transform: Matrix4.translationValues(
-                                0,
-                                -32 + (_selectAnimationController.value * 32),
-                                0),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 24.0,
-                                horizontal: 16.0,
-                              ),
-                              child: LitGradientButton(
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 8.0,
-                                    color: Colors.black45,
-                                    offset: Offset(-2, 2),
-                                    spreadRadius: 2.0,
-                                  ),
-                                ],
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 8.0,
-                                  horizontal: 16.0,
-                                ),
-                                child: Text(
-                                  selectedDate!.formatAsLocalizedDate(context),
-                                  style: LitTextStyles.sansSerif.copyWith(
-                                      fontSize: alternativeFontSize(
-                                        MediaQuery.of(context).size,
-                                        potraitFontSize: 19.0,
-                                        landscapeFontSize: 16.0,
-                                      ),
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                onPressed: _onSubmitDate,
-                              ),
-                            ),
-                          ),
-                        )
-                      : SizedBox(),
-                ),
-              ),
-              LitIconSnackbar(
-                iconData: LitIcons.info,
-                text: widget.excludedMonthErrorMessage,
-                snackBarController: _exclusiveDateSnackBarController,
-                alignment: Alignment.topRight,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8.0,
-                  horizontal: 16.0,
-                ),
-              ),
-              LitIconSnackbar(
-                iconData: LitIcons.info,
-                text: widget.futureDateErrorMessage,
-                snackBarController: _futureDateSnackbarController,
-                alignment: Alignment.topRight,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8.0,
-                  horizontal: 16.0,
-                ),
-              ),
-            ],
-          ),
-        );
-      },
+    return LitTitledDialog(
+      titleText:
+          widget.title ?? MaterialLocalizations.of(context).dateInputLabel,
+      margin: widget.margin,
+      child: LitDatePicker(
+        defaultDate: widget.defaultDate,
+        onSelectDate: _onSelectDate,
+      ),
+      actionButtons: [
+        DialogActionButton(
+          onPressed: _onSubmitDate,
+          label: widget.localizationData.submitLabel,
+          disabled: _invalidDate,
+        )
+      ],
     );
   }
 }

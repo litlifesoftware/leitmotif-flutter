@@ -1,332 +1,851 @@
 import 'package:flutter/material.dart';
-import 'package:leitmotif/calendar.dart';
 import 'package:leitmotif/leitmotif.dart';
+import 'package:leitmotif/buttons.dart';
 
-/// A date picker widget allowing the modification of the provided
-/// [selectedDate] DateTime value.
+/// The views implement on the [LitDatePicker] for selecting a date, a month or
+/// a year.
+enum LitCalendarViews { day, month, year }
+
+/// The [LitDatePicker]'s `Localization`.
 ///
-/// The total size will be determined using it's parent constraints.
+/// Contains the localized strings used on the widget.
+class LitDatePickerLocalization {
+  /// The localized name of the first day of the week.
+  final String dayOfWeek1;
+
+  /// The localized name of the second day of the week.
+  final String dayOfWeek2;
+
+  /// The localized name of the third day of the week.
+  final String dayOfWeek3;
+
+  /// The localized name of the forth day of the week.
+  final String dayOfWeek4;
+
+  /// The localized name of the fith day of the week.
+  final String dayOfWeek5;
+
+  /// The localiized name of the sixth day of the week.
+  final String dayOfWeek6;
+
+  /// The localized name of the seventh day of the week.
+  final String dayOfWeek7;
+
+  /// The localized name of the month `January`.
+  final String january;
+
+  /// The localized name of the month `February`
+  final String february;
+
+  /// The localized name of the month `March`
+  final String march;
+
+  /// The localized name of the month `April`
+  final String april;
+
+  /// The localized name of the month `May`
+  final String may;
+
+  /// The localized name of the month `June`
+  final String june;
+
+  /// The localized name of the month `July`
+  final String july;
+
+  /// The localized name of the month `August`
+  final String august;
+
+  /// The localized name of the month `September`
+  final String september;
+
+  /// The localized name of the month `October`
+  final String october;
+
+  /// The localized name of the month `November`
+  final String november;
+
+  /// The localized name of the month `December`
+  final String december;
+
+  final String cancelButtonLabel;
+
+  const LitDatePickerLocalization({
+    required this.dayOfWeek1,
+    required this.dayOfWeek2,
+    required this.dayOfWeek3,
+    required this.dayOfWeek4,
+    required this.dayOfWeek5,
+    required this.dayOfWeek6,
+    required this.dayOfWeek7,
+    required this.january,
+    required this.february,
+    required this.march,
+    required this.april,
+    required this.may,
+    required this.june,
+    required this.july,
+    required this.august,
+    required this.september,
+    required this.october,
+    required this.november,
+    required this.december,
+    required this.cancelButtonLabel,
+  });
+}
+
+/// A Leitmotif `input` widget allowing the user to provide a date input by
+/// picking a day on a calendar view.
+///
+/// The business logic is based on `Hitesh Verma`'s implementation available on
+/// [GitHub](https://github.com/Hitesh822/flutter_custom_calendar).
+///
+/// Returns the picked value by calling the [onSelectDate].
 class LitDatePicker extends StatefulWidget {
-  final CalendarController calendarController;
-  final DateTime? selectedDate;
-  final void Function(DateTime value) setSelectedDate;
-  final void Function() onExclusiveMonth;
-  final void Function() onFutureDate;
-  final bool allowFutureDates;
-  final DateTime? initialDate;
+  /// The localization.
+  final LitDatePickerLocalization localization;
+
+  /// The initial date the calendar should start at.
+  final DateTime? defaultDate;
+
+  /// States whether to invert the first day of the week.
+  ///
+  /// In the `ISO 8601` specification, `Sunday` is defined as the last/7th
+  /// day of the week, while in some regions it is set to be the first day of
+  /// the week.
+  ///
+  final bool invertFirstDayOfWeek;
+
+  /// Returns the selected date.
+  final void Function(DateTime?) onSelectDate;
+
   const LitDatePicker({
     Key? key,
-    required this.calendarController,
-    required this.selectedDate,
-    required this.setSelectedDate,
-    required this.onExclusiveMonth,
-    required this.onFutureDate,
-    this.allowFutureDates = true,
-    this.initialDate,
+    this.localization = _defaultLocalization,
+    this.defaultDate,
+    this.invertFirstDayOfWeek = false,
+    required this.onSelectDate,
   }) : super(key: key);
+
+  /// The default `LitDatePicker` localization.
+  static const LitDatePickerLocalization _defaultLocalization =
+      LitDatePickerLocalization(
+    dayOfWeek1: "Monday",
+    dayOfWeek2: "Tuesday",
+    dayOfWeek3: "Wednesday",
+    dayOfWeek4: "Thursday",
+    dayOfWeek5: "Friday",
+    dayOfWeek6: "Saturday",
+    dayOfWeek7: "Sunday",
+    january: "January",
+    february: "February",
+    march: "March",
+    april: "April",
+    may: "May",
+    june: "June",
+    july: "July",
+    august: "August",
+    september: "September",
+    october: "October",
+    november: "November",
+    december: "December",
+    cancelButtonLabel: "Cancel",
+  );
 
   @override
   _LitDatePickerState createState() => _LitDatePickerState();
 }
 
-class _LitDatePickerState extends State<LitDatePicker>
-    with TickerProviderStateMixin {
-  late AnimationController _appearAnimationController;
+class _LitDatePickerState extends State<LitDatePicker> {
+  /// States which view is currently displayed.
+  LitCalendarViews _currentView = LitCalendarViews.day;
 
-  void _decreaseByMonth() {
-    setState(() => {widget.calendarController.decreaseByMonth()});
+  /// The date on which the calendar days are based on.
+  late DateTime _templateDate;
+  DateTime? _selectedDate;
+  List<LitCalendarDate> _sequentialDates = [];
+
+  /// The year, the sequential years (displayed on the year grid) are based on.
+  int? _medianYear;
+  late List<String> _weekDays;
+  late List<String> _monthNames;
+
+  void _initState() {
+    if (widget.defaultDate != null) {
+      _templateDate = DateTime(
+        widget.defaultDate!.year,
+        widget.defaultDate!.month,
+      );
+      _selectedDate = DateTime(
+        widget.defaultDate!.year,
+        widget.defaultDate!.month,
+        widget.defaultDate!.day,
+      );
+    } else {
+      final now = DateTime.now();
+      _templateDate = DateTime(now.year, now.month);
+    }
+    _getCalendar();
   }
 
-  void _increaseByMonth() {
-    setState(() => {widget.calendarController.increaseByMonth()});
+  String _abbrDayOfWeek(String label, {int length = 2}) {
+    return label.substring(0, length);
   }
 
-  void _setDisplayedMonth(int month) {
+  void _initLocalization() {
+    _weekDays = [
+      _abbrDayOfWeek(widget.localization.dayOfWeek1),
+      _abbrDayOfWeek(widget.localization.dayOfWeek2),
+      _abbrDayOfWeek(widget.localization.dayOfWeek3),
+      _abbrDayOfWeek(widget.localization.dayOfWeek4),
+      _abbrDayOfWeek(widget.localization.dayOfWeek5),
+      _abbrDayOfWeek(widget.localization.dayOfWeek6),
+      _abbrDayOfWeek(widget.localization.dayOfWeek7),
+    ];
+    _monthNames = [
+      widget.localization.january,
+      widget.localization.february,
+      widget.localization.march,
+      widget.localization.april,
+      widget.localization.may,
+      widget.localization.june,
+      widget.localization.july,
+      widget.localization.august,
+      widget.localization.september,
+      widget.localization.october,
+      widget.localization.november,
+      widget.localization.december,
+    ];
+  }
+
+  void _selectViewMode(LitCalendarViews view) {
     setState(() {
-      widget.calendarController.selectMonth(month);
+      _currentView = view;
     });
   }
 
-  void _setDisplayedYear(int year) {
+  void _selectYearView() {
+    _selectViewMode(LitCalendarViews.year);
+  }
+
+  void _selectMonthView() {
+    _selectViewMode(LitCalendarViews.month);
+  }
+
+  void _selectDateView() {
+    _selectViewMode(LitCalendarViews.day);
+  }
+
+  void _onNextYears() {
     setState(() {
-      widget.calendarController.selectYear(year);
+      _medianYear =
+          (_medianYear == null) ? _templateDate.year + 9 : _medianYear! + 9;
     });
   }
 
-  void _onMonthLabelPress() {
-    showDialog(
-      context: context,
-      builder: (_) => _SelectMonthDialog(
-        setDisplayedMonthCallback: _setDisplayedMonth,
-        months: CalendarLocalizationService.getLocalizedCalendarMonths(
-          Localizations.localeOf(context),
-        ),
-      ),
+  void _onPreviousYears() {
+    setState(() {
+      _medianYear =
+          (_medianYear == null) ? _templateDate.year - 9 : _medianYear! - 9;
+    });
+  }
+
+  // get next month calendar
+  void _getNextMonth() {
+    setState(() {
+      if (_templateDate.month == 12) {
+        _templateDate = DateTime(_templateDate.year + 1, 1);
+      } else {
+        _templateDate = DateTime(_templateDate.year, _templateDate.month + 1);
+      }
+      _getCalendar();
+    });
+  }
+
+  // get previous month calendar
+  void _getPrevMonth() {
+    setState(() {
+      if (_templateDate.month == 1) {
+        _templateDate = DateTime(_templateDate.year - 1, 12);
+      } else {
+        _templateDate = DateTime(_templateDate.year, _templateDate.month - 1);
+      }
+      _getCalendar();
+    });
+  }
+
+  // get calendar for current month
+  void _getCalendar() {
+    _sequentialDates = LitCalendarController().getCalendarDates(
+      _templateDate.month,
+      _templateDate.year,
+      firstDayOfWeek: widget.invertFirstDayOfWeek
+          ? FirstDayOfTheWeek.sunday
+          : FirstDayOfTheWeek.monday,
     );
   }
 
-  void _onYearLabelPress() {
-    showDialog(
-      context: context,
-      builder: (_) => _SelectYearDialog(
-        setDisplayedYearCallback: _setDisplayedYear,
-        templateDate: widget.calendarController.templateDate,
-        initialDate: widget.initialDate,
-      ),
-    );
+  void _unselectDates() {
+    setState(() {
+      _selectedDate = null;
+      widget.onSelectDate(null);
+    });
   }
 
-  String get _localizedMonth {
-    return CalendarLocalizationService.getLocalizedCalendarMonths(
-            Localizations.localeOf(context))[
-        widget.calendarController.templateDate!.month - 1];
+  void _onSelect(LitCalendarDate calendarDate) {
+    if (_selectedDate != calendarDate.date) {
+      if (calendarDate.nextMonth) {
+        _getNextMonth();
+      } else if (calendarDate.prevMonth) {
+        _getPrevMonth();
+      }
+      setState(() {
+        _selectedDate = calendarDate.date;
+        widget.onSelectDate(calendarDate.date);
+      });
+    } else {
+      _unselectDates();
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    _appearAnimationController = AnimationController(
-      duration: Duration(milliseconds: 140),
-      vsync: this,
-    );
-    _appearAnimationController.forward();
-  }
-
-  @override
-  void dispose() {
-    _appearAnimationController.dispose();
-    super.dispose();
+    _initState();
+    _initLocalization();
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _appearAnimationController,
-      builder: (BuildContext context, Widget? _) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
+    return ConstrainedBox(
+      constraints: BoxConstraints(minHeight: 0.0),
+      child: Builder(
+        builder: (context) {
+          switch (_currentView) {
+            // Dates view
+            case LitCalendarViews.day:
+              return _DatesGridView(
+                child: _CalendarGridBuilder(
+                  sequentialDates: _sequentialDates,
+                  selectedDateTime: _selectedDate,
+                  weekDays: _weekDays,
+                  invertFirstDayOfWeek: widget.invertFirstDayOfWeek,
+                  onSelect: _onSelect,
+                ),
+                monthLabels: _monthNames,
+                onPressedNext: _getNextMonth,
+                onPressedPrevious: _getPrevMonth,
+                onChangeViewMode: _selectMonthView,
+                templateDate: _templateDate,
+              );
+            // Month view
+            case LitCalendarViews.month:
+              return _MonthListView(
+                monthNames: _monthNames,
+                templateDate: _templateDate,
+                onSelect: (index) {
+                  _templateDate = DateTime(_templateDate.year, index + 1);
+                  _getCalendar();
+                  _selectDateView();
+                },
+                onChangeViewMode: _selectYearView,
+              );
+            // Year view
+            case LitCalendarViews.year:
+              return _YearsGridView(
+                localization: widget.localization,
+                medianYear: _medianYear ?? _templateDate.year,
+                onNext: _onNextYears,
+                onPrevious: _onPreviousYears,
+                onSelect: (thisYear) {
+                  _templateDate = DateTime(thisYear, _templateDate.month);
+                  _getCalendar();
+                  _selectMonthView();
+                },
+                templateDate: _templateDate,
+                onChangeViewMode: _selectDateView,
+              );
+
+            default:
+              throw UnimplementedError(
+                "This view type has not been implemented",
+              );
+          }
+        },
+      ),
+    );
+  }
+}
+
+class _DatesGridView extends StatelessWidget {
+  final List<String> monthLabels;
+  final DateTime templateDate;
+  final Widget child;
+  final void Function() onPressedPrevious;
+  final void Function() onPressedNext;
+  final void Function() onChangeViewMode;
+
+  const _DatesGridView({
+    Key? key,
+    required this.monthLabels,
+    required this.templateDate,
+    required this.child,
+    required this.onPressedPrevious,
+    required this.onPressedNext,
+    required this.onChangeViewMode,
+  }) : super(key: key);
+
+  String get _monthLabel {
+    return monthLabels[templateDate.month - 1];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        SizedBox(height: 8.0),
+
+        // header
+        Row(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FadeInTransformContainer(
-              transform: Matrix4.translationValues(
-                  -20 + (20 * _appearAnimationController.value), 0, 0),
-              animationController: _appearAnimationController,
-              child: LitCalendarNavigation(
-                decreaseByMonth: _decreaseByMonth,
-                increaseByMonth: _increaseByMonth,
-                onMonthLabelPress: _onMonthLabelPress,
-                onYearLabelPress: _onYearLabelPress,
-                monthLabel: _localizedMonth,
-                yearLabel: "${widget.calendarController.templateDate!.year}",
+            // prev month button
+            LitNavigationButton(
+              mode: LitCalendarNavigationMode.previous,
+              onPressed: onPressedPrevious,
+            ),
+            // month and year
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: InkWell(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(8.0),
+                  ),
+                  onTap: onChangeViewMode,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: LitColors.lightGrey.withOpacity(0.1),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(8.0),
+                      ),
+                    ),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: Text(
+                          _monthLabel.toUpperCase() +
+                              " " +
+                              templateDate.year.toString(),
+                          style: LitSansSerifStyles.button,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-              ),
-              child: LayoutBuilder(builder: (context, constraints) {
-                final List<String> strings =
-                    CalendarLocalizationService.getLocalizedCalendarWeekdays(
-                        Localizations.localeOf(context));
-                final List<Widget> labels = [];
-                for (String str in strings) {
-                  labels.add(
-                    LitCalendarWeekdayLabel(
-                        constraints: constraints, label: str),
-                  );
-                }
-                return Row(
-                  children: labels,
-                );
-              }),
+            // next month button
+            LitNavigationButton(
+              mode: LitCalendarNavigationMode.next,
+              onPressed: onPressedNext,
             ),
-            FadeInTransformContainer(
-              animationController: _appearAnimationController,
-              child: LitCalendarGrid(
-                calendarController: widget.calendarController,
-                selectedDate: widget.selectedDate,
-                setSelectedDateTime: widget.setSelectedDate,
-                exclusiveMonthCallback: widget.onExclusiveMonth,
-                futureDateCallback: widget.onFutureDate,
-                allowFutureDates: widget.allowFutureDates,
-              ),
-              transform: Matrix4.translationValues(
-                0,
-                -20 + (20 * _appearAnimationController.value),
-                0,
-              ),
-            )
           ],
+        ),
+        SizedBox(height: 4.0),
+        child,
+        SizedBox(height: 4.0),
+      ],
+    );
+  }
+}
+
+class _MonthListView extends StatelessWidget {
+  final DateTime templateDate;
+  final List<String> monthNames;
+  final void Function(int index) onSelect;
+  final void Function() onChangeViewMode;
+  const _MonthListView({
+    Key? key,
+    required this.templateDate,
+    required this.monthNames,
+    required this.onSelect,
+    required this.onChangeViewMode,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(
+          height: 4.0,
+        ),
+        InkWell(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(8.0),
+          ),
+          onTap: onChangeViewMode,
+          child: Container(
+            height: 42.0,
+            // color: Colors.black12,
+            decoration: BoxDecoration(
+              color: LitColors.lightGrey.withOpacity(0.1),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(8.0),
+              ),
+            ),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: Center(
+                child: Text(
+                  templateDate.year.toString(),
+                  style: LitSansSerifStyles.button,
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 384.0,
+          child: ListView.builder(
+            physics: BouncingScrollPhysics(),
+            // padding: EdgeInsets.zero,
+            itemCount: monthNames.length,
+            itemBuilder: (context, index) {
+              return _MonthListItem(
+                index: index,
+                monthNames: monthNames,
+                onSelect: onSelect,
+                templateDate: templateDate,
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _CalendarGridBuilder extends StatelessWidget {
+  final List<LitCalendarDate> sequentialDates;
+
+  final DateTime? selectedDateTime;
+  final List<String> weekDays;
+  final bool invertFirstDayOfWeek;
+  final void Function(LitCalendarDate) onSelect;
+
+  const _CalendarGridBuilder({
+    Key? key,
+    required this.sequentialDates,
+    required this.selectedDateTime,
+    required this.weekDays,
+    required this.invertFirstDayOfWeek,
+    required this.onSelect,
+  }) : super(key: key);
+
+  bool isSelected(int index) {
+    return sequentialDates[index - 7].date == selectedDateTime;
+  }
+
+  String _getHeaderLabelAt(int index) {
+    if (invertFirstDayOfWeek) {
+      return weekDays[index != 0 ? (index - 1) : (weekDays.length - 1)];
+    } else {
+      return weekDays[index];
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (sequentialDates.length == 0) return Container();
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.zero,
+      itemCount: sequentialDates.length + 7,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        mainAxisSpacing: 4,
+        crossAxisCount: 7,
+        crossAxisSpacing: 4,
+      ),
+      itemBuilder: (context, index) {
+        if (index < 7)
+          return _CalendarWeekdayHeader(
+            label: _getHeaderLabelAt(index),
+          );
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            return _CalendarGridItem(
+              isSelected: isSelected(index),
+              borderRadius: BorderRadius.all(
+                Radius.circular(constraints.maxWidth / 2.5),
+              ),
+              calendar: sequentialDates[index - 7],
+              onPressed: () => onSelect(
+                sequentialDates[index - 7],
+              ),
+            );
+          },
         );
+        //_calendarDates(_sequentialDates[index - 7]);
       },
     );
   }
 }
 
-class _SelectMonthDialog extends StatefulWidget {
-  final void Function(int) setDisplayedMonthCallback;
-  final List<String> months;
-  const _SelectMonthDialog({
+class _MonthListItem extends StatelessWidget {
+  final int index;
+  final DateTime templateDate;
+  final void Function(int) onSelect;
+  final List<String> monthNames;
+  const _MonthListItem({
     Key? key,
-    required this.setDisplayedMonthCallback,
-    required this.months,
+    required this.index,
+    required this.templateDate,
+    required this.onSelect,
+    required this.monthNames,
   }) : super(key: key);
 
-  @override
-  _SelectMonthDialogState createState() => _SelectMonthDialogState();
-}
-
-class _SelectMonthDialogState extends State<_SelectMonthDialog> {
-  void _onPressed(int value) {
-    widget.setDisplayedMonthCallback(value);
-    LitRouteController(context).closeDialog();
+  bool get _isSelected {
+    return (index == templateDate.month - 1);
   }
 
-  List<Widget> get _children {
-    final List<Widget> children = [];
-    for (int i = 0; i < widget.months.length; i++) {
-      children.add(
-        LitPlainLabelButton(
-          label: widget.months[i],
-          accentColor: LitColors.darkOliveGreen,
-          onPressed: () => _onPressed(i + 1),
-        ),
-      );
-    }
-    return children;
+  void _onSelect() {
+    onSelect(index);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 30.0,
-      ),
-      child: LitTitledDialog(
-        titleText: "Month",
-        child: Builder(
-          builder: (context) {
-            return SizedBox(
-              height: 384.0,
-              child: ScrollableColumn(
-                constrained: false,
-                children: _children,
-              ),
-            );
-          },
+    return ListTile(
+      tileColor: _isSelected ? Colors.black12 : null,
+      onTap: _onSelect,
+      title: Center(
+        child: Text(
+          monthNames[index].toUpperCase(),
+          style: LitSansSerifStyles.button.copyWith(
+            color: _isSelected
+                ? LitSansSerifStyles.defaultColor
+                : LitSansSerifStyles.defaultColor.withOpacity(0.6),
+          ),
         ),
       ),
     );
   }
 }
 
-/// A dialog [Widget] displaying a list of selectable years.
-///
-/// Once the year has been selected by the user, the provided callback method
-/// will return the desired year as an integer (e.g. 2021).
-class _SelectYearDialog extends StatefulWidget {
-  final void Function(int year) setDisplayedYearCallback;
-  final DateTime? templateDate;
-  final int numberOfYears;
-  final DateTime? initialDate;
-
-  /// Creates a [SelectYearDialog].
-  ///
-  /// Pass a [setDisplayedYearCallback] to set the parent's state and a
-  /// [templateDate] to set the initially displayed year inside the list.
-  const _SelectYearDialog({
+class _CalendarGridItem extends StatelessWidget {
+  final isSelected;
+  final LitCalendarDate calendar;
+  final BorderRadius borderRadius;
+  final void Function() onPressed;
+  const _CalendarGridItem({
     Key? key,
-    required this.setDisplayedYearCallback,
-    required this.templateDate,
-    this.numberOfYears = 80,
-    this.initialDate,
+    required this.isSelected,
+    required this.calendar,
+    required this.borderRadius,
+    required this.onPressed,
   }) : super(key: key);
 
-  @override
-  _SelectYearDialogState createState() => _SelectYearDialogState();
-}
-
-class _SelectYearDialogState extends State<_SelectYearDialog> {
-  //PageController? _pageController;
-
-  final int millisecondsPerYear = 31556926000;
-
-  void _onPressed(int value) {
-    widget.setDisplayedYearCallback(value);
-    LitRouteController(context).closeDialog();
+  List<Color> get _gradientColors {
+    return (calendar.thisMonth)
+        ? [Color(0xFFef93a1), Color(0xFFb2b2b2)]
+        : [Color(0xFFe3e3e3), Color(0xFFe7e7e7)];
   }
 
-  DateTime get _initialDate {
-    return DateTime.now();
-  }
-
-  /// Gets the inital page that should be selected on the page view.
-  int get initialPage {
-    return
-        // If the provided template date is as recently as the provided number
-        // of years allow (e.g. as recently as 20 years ago).
-        widget.templateDate!.year >
-                (_initialDate)
-                    .subtract(Duration(
-                        milliseconds:
-                            millisecondsPerYear * widget.numberOfYears))
-                    .year
-            // Set the index to display the provided template year
-            ? ((_initialDate).year -
-                (DateTime.fromMillisecondsSinceEpoch(
-                        widget.templateDate!.millisecondsSinceEpoch))
-                    .year)
-            // Otherwise select the first year in the page list.
-            : 0;
-  }
-
-  List<Widget> get _children {
-    final List<Widget> children = [];
-    for (int i = 0; i < widget.numberOfYears; i++) {
-      final DateTime iteratedDate = (_initialDate)
-          .subtract(Duration(milliseconds: millisecondsPerYear * i));
-      children.add(
-        LitPlainLabelButton(
-          label: "${iteratedDate.year}",
-          accentColor: LitColors.darkOliveGreen,
-          onPressed: () => _onPressed(iteratedDate.year),
-        ),
-      );
-    }
-    return children;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    //_pageController = PageController(initialPage: initialPage);
+  Color get _textColor {
+    return (calendar.thisMonth)
+        ? isSelected
+            ? Colors.white
+            : Color(0xFF7a7a7a)
+        : Color(0xFF7a7a7a).withOpacity(0.45);
   }
 
   @override
   Widget build(BuildContext context) {
-    //print(_pageController!.initialPage);
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 30.0,
-      ),
-      child: LitTitledDialog(
-        titleText: "Year",
-        child: Builder(
-          builder: (context) {
-            return SizedBox(
-              height: 384.0,
-              child: ListView(
-                physics: BouncingScrollPhysics(),
-                //controller: _pageController,
-                scrollDirection: Axis.vertical,
-                children: _children,
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                reverse: false,
+      padding: const EdgeInsets.all(2.0),
+      child: Container(
+        decoration: isSelected
+            ? BoxDecoration(
+                boxShadow: LitBoxShadows.xs,
+                gradient: LinearGradient(
+                  colors: _gradientColors,
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  stops: [0.2, 0.9],
+                ),
+                borderRadius: borderRadius,
+              )
+            : BoxDecoration(),
+        child: InkWell(
+          borderRadius: borderRadius,
+          onTap: onPressed,
+          child: Center(
+            child: ScaledDownText(
+              calendar.date.day.toString(),
+              style: LitSansSerifStyles.subtitle1.copyWith(
+                color: _textColor,
               ),
-            );
-          },
+            ),
+          ),
         ),
       ),
+    );
+  }
+}
+
+class _CalendarWeekdayHeader extends StatelessWidget {
+  final String label;
+  const _CalendarWeekdayHeader({
+    Key? key,
+    required this.label,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        label,
+        style: LitSansSerifStyles.caption,
+      ),
+    );
+  }
+}
+
+class _YearsGridView extends StatelessWidget {
+  final LitDatePickerLocalization localization;
+  final int medianYear;
+  final DateTime templateDate;
+  final EdgeInsets padding;
+  final void Function() onNext;
+  final void Function() onPrevious;
+  final void Function(int thisYear) onSelect;
+  final void Function() onChangeViewMode;
+  const _YearsGridView({
+    Key? key,
+    required this.localization,
+    required this.medianYear,
+    required this.onNext,
+    required this.onPrevious,
+    required this.onSelect,
+    required this.templateDate,
+    required this.onChangeViewMode,
+    this.padding = const EdgeInsets.symmetric(
+      vertical: 8.0,
+      horizontal: 8.0,
+    ),
+  }) : super(key: key);
+
+  bool _isSelected(year) {
+    return (year == templateDate.year);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: 4.0),
+        Row(
+          children: [
+            LitNavigationButton(
+              mode: LitCalendarNavigationMode.previous,
+              onPressed: onPrevious,
+            ),
+            Expanded(
+              child: Padding(
+                padding: padding,
+                child: InkWell(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(8.0),
+                  ),
+                  onTap: onChangeViewMode,
+                  child: Container(
+                    //width: constraints.maxWidth,
+                    decoration: BoxDecoration(
+                      color: LitColors.lightGrey.withOpacity(0.1),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(8.0),
+                      ),
+                    ),
+                    child: Center(
+                      child: Padding(
+                        padding: padding,
+                        child: Text(
+                          localization.cancelButtonLabel.toUpperCase(),
+                          style: LitSansSerifStyles.button,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            LitNavigationButton(
+              mode: LitCalendarNavigationMode.next,
+              onPressed: onNext,
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 324.0,
+          child: GridView.builder(
+            shrinkWrap: true,
+            itemCount: 9,
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+            ),
+            itemBuilder: (context, index) {
+              int thisYear;
+              if (index < 4) {
+                thisYear = medianYear - (4 - index);
+              } else if (index > 4) {
+                thisYear = medianYear + (index - 4);
+              } else {
+                thisYear = medianYear;
+              }
+              return LayoutBuilder(
+                builder: (context, constraints) {
+                  return Padding(
+                    padding: padding,
+                    child: InkWell(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(constraints.maxWidth / 4),
+                      ),
+                      onTap: () => onSelect(thisYear),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: _isSelected(thisYear)
+                              ? Color(0xFFebebeb)
+                              : Color(0xFFfbfbfb),
+                          boxShadow: LitBoxShadows.md,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(constraints.maxWidth / 4),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            thisYear.toString(),
+                            style: LitSansSerifStyles.button.copyWith(
+                              color: _isSelected(thisYear)
+                                  ? LitSansSerifStyles.defaultColor
+                                  : LitSansSerifStyles.defaultColor
+                                      .withOpacity(0.65),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
