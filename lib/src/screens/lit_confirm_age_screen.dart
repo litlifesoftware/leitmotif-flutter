@@ -1,83 +1,95 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A screen widget allowing the user to submit his age.
+//TODO: Rename to `LitVerifyAgeScreen`
+
+/// The [LitConfirmAgeScreen]'s `Localization`.
 ///
-/// Age requirements vary depending on the user's location. In most cases, using
-/// apps downloaded on app stores require the user to be at least 13 years old.
+/// Contains the localized strings used on the screen.
+class LitConfirmAgeScreenLocalization {
+  final String title;
+  final String subtitle;
+  final String errorCardTitle;
+  final String errorCardSubtitle;
+  final String errorTextBody;
+  final String successCardTitle;
+  final String successCardSubtitle;
+  final String yourAgeLabel;
+  final String startButtonLabel;
+  final String submitButtonLabel;
+  final String descriptionTextBody;
+  final String successTextBody;
+
+  /// Creates a [LitConfirmAgeScreenLocalization].
+  const LitConfirmAgeScreenLocalization({
+    required this.title,
+    required this.subtitle,
+    required this.errorCardTitle,
+    required this.errorCardSubtitle,
+    required this.errorTextBody,
+    required this.successCardTitle,
+    required this.successCardSubtitle,
+    required this.yourAgeLabel,
+    required this.startButtonLabel,
+    required this.submitButtonLabel,
+    required this.descriptionTextBody,
+    required this.successTextBody,
+  });
+}
+
+/// A Leitmotif `screen` widget.
 ///
-/// The [LitConfirmAgeScreen] implements a very basic child protection on the first
-/// startup.
+/// Allows the user to submit an age by providing a date of birth. Verifying the
+/// user's age is required in most regions and is generally considered good
+/// practice.
+///
 class LitConfirmAgeScreen extends StatefulWidget {
+  /// The default localization.
+  ///
+  /// Applied on the screen if none [localizationData] has been provided.
+  static const LitConfirmAgeScreenLocalization _defaultLocalization =
+      LitConfirmAgeScreenLocalization(
+    title: "Confirm your Age",
+    subtitle: "Are you 13 years old or older?",
+    errorCardTitle: "Select",
+    errorCardSubtitle: "Select your age",
+    errorTextBody:
+        "Please check your input. You may not be old enough to use this app.",
+    successCardTitle: "Age confirmed",
+    successCardSubtitle: "Your age has been confirmed",
+    yourAgeLabel: "Your age",
+    startButtonLabel: "Start",
+    submitButtonLabel: "Submit",
+    descriptionTextBody:
+        "Your date of birth helps us to confirm that you are old enough"
+        "to use this app. This app does not send any information to"
+        "anyone. Your age will not be shared.",
+    successTextBody: "Thank you for confirming your age. Have a good time!",
+  );
+
   /// The age requirement (in years).
+  ///
+  /// Defaults to `13`.
   final int ageRequirement;
 
-  /// The message displayed if the user's age don't comply with the age
-  /// requirement.
-  final String invalidAgeText;
-
-  /// The screen's title.
-  final String title;
-
-  /// The screen's subtitle.
-  final String subtitle;
+  /// The screen's localization. Includes labels and text strings displayed on
+  /// this screen.
+  final LitConfirmAgeScreenLocalization localizationData;
 
   /// Called once the user submits a valid age.
   ///
   /// The submitted age will be returned using the callback arguement.
   final void Function(DateTime date) onSubmit;
 
-  /// The 'set' text label.
-  final String setLabel;
-
-  /// The 'submit' text label.
-  final String submitLabel;
-
-  /// The 'your age' text label.
-  final String yourAgeLabel;
-
-  /// The 'valid' text label.
-  final String validLabel;
-
-  final String chooseDateLabel;
-
   /// Creates a [LitConfirmAgeScreen].
   ///
-  /// * [ageRequirement] is the required age in years.
+  /// Provide a [localizationData] value to apply custom localizations.
   ///
-  /// * [invalidAgeText] is the text displayed if the user's age is too
-  ///   young. Provide a localized string if preferred.
-  ///
-  /// * [validAgeMessage] is the text displayed if the user's age is valid.
-  ///   Provide a localized string if preferred.
-  ///
-  /// * [title] is the screen's title.
-  ///
-  /// * [subtitle] is the screen's subtitle.
-  ///
-  /// * [setLabel] is the 'set' text.
-  ///
-  /// * [submitLabel] is the 'submit' text.
-  ///
-  /// * [yourAgeLabel] is the 'your age' text.
-  ///
-  /// * [validLabel] is the 'valid' text.
-  ///
-  /// * [chooseDateLabel] is the [LitDatePickerDialog]'s title.
   const LitConfirmAgeScreen({
     Key? key,
     this.ageRequirement = 13,
-    this.invalidAgeText =
-        "Seems like you are not old enough to use this app. " +
-            "Please check your inputted age",
-    this.title = "Confirm your Age",
-    this.subtitle = "Are you 13 years old or older?",
     required this.onSubmit,
-    this.setLabel = "Set",
-    this.submitLabel = "Submit",
-    this.yourAgeLabel = "Your age",
-    this.validLabel = "Valid",
-    this.chooseDateLabel = "Choose date",
+    this.localizationData = _defaultLocalization,
   }) : super(key: key);
   @override
   _LitConfirmAgeScreenState createState() => _LitConfirmAgeScreenState();
@@ -93,30 +105,29 @@ class _LitConfirmAgeScreenState extends State<LitConfirmAgeScreen> {
     return MediaQuery.of(context).size;
   }
 
-  /// Shows the [LitDatePickerDialog] to allow user input.
-  void _onPressedSet() {
+  /// Shows the a date picker to allow the user to input his date of birth.
+  void _onSubmit() {
     LitRouteController(context).showDialogWidget(
       LitDatePickerDialog(
-        title: widget.chooseDateLabel,
-        onBackCallback: () {
-          LitRouteController(context).closeDialog();
-        },
         onSubmit: (date) {
-          if (this.mounted) {
-            setState(() {
-              _dateOfBirth = date;
-            });
-            LitRouteController(context).closeDialog();
+          setState(() {
+            _dateOfBirth = date;
+            print(date.toIso8601String());
+          });
+          LitRouteController(context).closeDialog();
+          if (!_isValidAge) {
+            _snackbarController.showSnackBar();
           }
         },
-        initialDate: _dateOfBirth,
+        defaultDate: _dateOfBirth,
       ),
     );
   }
 
-  /// Handles the 'submit' action by either calling the provided callback
-  /// method or showing a snackbar depending on the age's validity.
-  void _onPressedSubmit() {
+  /// Handles the 'start' action.
+  ///
+  /// Triggers the [widget.onSubmit] method once a valid age has been provided.
+  void _onStart() {
     if (_isValidAge) {
       widget.onSubmit(_dateOfBirth!);
     } else {
@@ -139,16 +150,6 @@ class _LitConfirmAgeScreenState extends State<LitConfirmAgeScreen> {
     return _ageInYears >= widget.ageRequirement;
   }
 
-  /// Conditionally returns the validity's icon.
-  IconData get _displayedIcon {
-    return _isValidAge ? LitIcons.check : LitIcons.times;
-  }
-
-  /// Conditionally returns the validity's color.
-  Color get _validityColor {
-    return Color(_isValidAge ? 0xFFD4E8D1 : 0xFFFFE9E9);
-  }
-
   @override
   void initState() {
     super.initState();
@@ -162,130 +163,58 @@ class _LitConfirmAgeScreenState extends State<LitConfirmAgeScreen> {
         LitIconSnackbar(
           iconData: LitIcons.info,
           snackBarController: _snackbarController,
-          text: widget.invalidAgeText,
+          title: widget.localizationData.yourAgeLabel,
+          text: widget.localizationData.errorTextBody,
         ),
       ],
       body: Container(
         height: _deviceSize.height,
         width: _deviceSize.width,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFFFFFFF),
-              Color(0xFFE8E8E8),
-            ],
-          ),
+          gradient: LitGradients.greyGradient,
         ),
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
             ConstrainedBox(
-              constraints: BoxConstraints(minHeight: _deviceSize.height),
+              constraints: BoxConstraints(
+                minHeight: _deviceSize.height,
+              ),
               child: ScrollableColumn(
                 constrained: false,
                 crossAxisAlignment: CrossAxisAlignment.start,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 16.0,
+                ),
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 32.0,
-                      horizontal: 16.0,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.title,
-                          style: LitSansSerifStyles.h5,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            widget.subtitle,
-                            style: LitSansSerifStyles.subtitle2.copyWith(
-                              color: LitColors.mediumGrey.withOpacity(0.75),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                  LitScreenTitle(
+                    title: widget.localizationData.title,
+                    subtitle: widget.localizationData.subtitle,
                   ),
-                  LitElevatedCard(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(24.0),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                    ),
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 16.0,
-                    ),
-                    child: Column(
-                      children: [
-                        _YourAgeInput(
-                          selectedAge: _dateOfBirth,
-                          onPressedSet: _onPressedSet,
-                          ageInYears: _ageInYears,
-                          labelBackgroundColor: _validityColor,
-                          isValid: _isValidAge,
-                          setLabel: widget.setLabel,
-                          yourAgeLabel: widget.yourAgeLabel,
-                        ),
-                        SizedBox(
-                          height: 32.0,
-                        ),
-                        _ValidityLabel(
-                          icon: _displayedIcon,
-                          iconBackgroundColor: _validityColor,
-                          validLabel: widget.validLabel,
-                        ),
-                      ],
-                    ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: (_dateOfBirth == null || !_isValidAge)
+                        ? _InvalidAgeCard(
+                            dateOfBirth: _dateOfBirth,
+                            ageInYears: _ageInYears,
+                            localizationData: widget.localizationData,
+                            onSubmit: _onSubmit,
+                            isValidAge: _isValidAge,
+                          )
+                        : _ValidAgeCard(
+                            isValidAge: _isValidAge,
+                            localizationData: widget.localizationData,
+                            onStart: _onStart,
+                          ),
                   ),
                   SizedBox(
                     height: 32.0,
                   ),
-                  !_isValidAge
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24.0,
-                          ),
-                          child: Text(
-                            widget.invalidAgeText,
-                            style: LitTextStyles.sansSerifBody.copyWith(
-                              color: Color(0xFF848484),
-                              letterSpacing: 1.0,
-                            ),
-                          ),
-                        )
-                      : SizedBox(),
+                  Text(
+                    _dateOfBirth != null ? _dateOfBirth!.toIso8601String() : "",
+                  )
                 ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 32.0),
-                child: LitPushedThroughButton(
-                  disabled: !_isValidAge,
-                  backgroundColor: _validityColor,
-                  borderRadius: 16.0,
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 32.0,
-                    vertical: 10.0,
-                  ),
-                  child: Text(
-                    widget.submitLabel.toUpperCase(),
-                    style: LitTextStyles.sansSerifStyles[button].copyWith(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 1.1,
-                    ),
-                  ),
-                  onPressed: _onPressedSubmit,
-                ),
               ),
             ),
           ],
@@ -295,219 +224,123 @@ class _LitConfirmAgeScreenState extends State<LitConfirmAgeScreen> {
   }
 }
 
-/// Label and button combination to allow age input.
-class _YourAgeInput extends StatefulWidget {
-  final void Function() onPressedSet;
-  final DateTime? selectedAge;
-  final int ageInYears;
-  final Color labelBackgroundColor;
-  final bool isValid;
-  final String setLabel;
-  final String yourAgeLabel;
-  const _YourAgeInput({
-    Key? key,
-    required this.onPressedSet,
-    required this.selectedAge,
-    required this.ageInYears,
-    required this.labelBackgroundColor,
-    required this.isValid,
-    required this.setLabel,
-    required this.yourAgeLabel,
-  }) : super(key: key);
-
-  @override
-  __YourAgeInputState createState() => __YourAgeInputState();
-}
-
-class _WarningIcon extends StatelessWidget {
-  final BoxConstraints constraints;
-  final Color labelBackgroundColor;
-  const _WarningIcon({
-    Key? key,
-    required this.constraints,
-    required this.labelBackgroundColor,
-  }) : super(key: key);
+/// A [LitTitledActionCard] providing feedback after inputting a valid age.
+class _ValidAgeCard extends StatelessWidget {
+  final LitConfirmAgeScreenLocalization localizationData;
+  final bool isValidAge;
+  final void Function() onStart;
+  const _ValidAgeCard(
+      {Key? key,
+      required this.localizationData,
+      required this.isValidAge,
+      required this.onStart})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: constraints.maxWidth * 0.10,
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: constraints.maxWidth * 0.015,
-        ),
-        child: LitBadge(
-          padding: const EdgeInsets.symmetric(
-            vertical: 2.0,
-            horizontal: 2.0,
+    return LitTitledActionCard(
+      title: localizationData.successCardTitle,
+      subtitle: localizationData.successCardSubtitle,
+      child: Column(
+        children: [
+          _InfoDescription(
+            localizationData: localizationData,
           ),
-          backgroundColor: labelBackgroundColor,
-          child: Text(
-            "!",
-            style: LitTextStyles.sansSerifHeader.copyWith(
-              color: LitColors.mediumGrey,
-              fontSize: 12.0,
-            ),
-            textAlign: TextAlign.center,
+          _AgeIndicator(
+            isValidAge: isValidAge,
+            localizationData: localizationData,
           ),
-        ),
+        ],
       ),
-    );
-  }
-}
-
-class __YourAgeInputState extends State<_YourAgeInput> {
-  void _onPressed() {
-    widget.onPressedSet();
-  }
-
-  bool get _isNull {
-    return widget.selectedAge == null;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        LayoutBuilder(
-          builder: (context, constraints) {
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: constraints.maxWidth * 0.65,
-                  child: _LabelText(widget.yourAgeLabel),
-                ),
-                SizedBox(
-                  width: constraints.maxWidth * 0.35,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      !_isNull
-                          ? Row(
-                              children: [
-                                !widget.isValid
-                                    ? _WarningIcon(
-                                        constraints: constraints,
-                                        labelBackgroundColor:
-                                            widget.labelBackgroundColor,
-                                      )
-                                    : SizedBox(),
-                                SizedBox(
-                                  width: constraints.maxWidth *
-                                      (widget.isValid ? 0.35 : 0.25),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 16.0),
-                                    child: CleanInkWell(
-                                      onTap: widget.onPressedSet,
-                                      child: SizedBox(
-                                        child: Container(
-                                          height: 38.0,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(14.0)),
-                                            color: widget.labelBackgroundColor,
-                                            border: Border.all(
-                                              color: Color(0xFFCBCACA),
-                                              width: 1.5,
-                                            ),
-                                          ),
-                                          child: Center(
-                                            child: ClippedText(
-                                              "${widget.ageInYears > 0 ? widget.ageInYears : '?'}",
-                                              style: LitSansSerifStyles.h5
-                                                  .copyWith(
-                                                color: widget.ageInYears > 0
-                                                    ? Color(0xFF5B5B5B)
-                                                    : Color(0xFF000000),
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            )
-                          : SizedBox(),
-                      LitPushedThroughButton(
-                        onPressed: _onPressed,
-                        child: Center(
-                          child: ClippedText(
-                            widget.setLabel.toUpperCase(),
-                            style: LitSansSerifStyles.button,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          },
+      actionButtonData: [
+        ActionButtonData(
+          title: "Start",
+          onPressed: onStart,
+          backgroundColor: Colors.white,
+          accentColor: Colors.white,
         ),
       ],
     );
   }
 }
 
-/// Label to display the current 'your age is (in)valid' state.
-class _ValidityLabel extends StatelessWidget {
-  final IconData icon;
-  final Color iconBackgroundColor;
-  final String validLabel;
-  const _ValidityLabel({
+/// A [LitTitledActionCard] allowing the user to input the date of birth.
+class _InvalidAgeCard extends StatelessWidget {
+  final LitConfirmAgeScreenLocalization localizationData;
+  final DateTime? dateOfBirth;
+  final bool isValidAge;
+  final int ageInYears;
+  final void Function() onSubmit;
+  const _InvalidAgeCard({
     Key? key,
-    required this.icon,
-    required this.iconBackgroundColor,
-    required this.validLabel,
+    required this.localizationData,
+    required this.dateOfBirth,
+    required this.isValidAge,
+    required this.ageInYears,
+    required this.onSubmit,
   }) : super(key: key);
+  final EdgeInsets _padding = const EdgeInsets.symmetric(vertical: 8.0);
+
+  @override
+  Widget build(BuildContext context) {
+    return LitTitledActionCard(
+      title: localizationData.errorCardTitle,
+      subtitle: localizationData.errorCardSubtitle,
+      child: Column(
+        children: [
+          _InfoDescription(
+            localizationData: localizationData,
+          ),
+          dateOfBirth != null
+              ? Padding(
+                  padding: _padding,
+                  child: _AgeIndicator(
+                    isValidAge: isValidAge,
+                    localizationData: localizationData,
+                  ),
+                )
+              : SizedBox(),
+        ],
+      ),
+      actionButtonData: [
+        ActionButtonData(
+          title: localizationData.submitButtonLabel,
+          onPressed: onSubmit,
+          backgroundColor: Colors.white,
+          accentColor: Colors.white,
+        ),
+      ],
+    );
+  }
+}
+
+class _AgeIndicator extends StatelessWidget {
+  final LitConfirmAgeScreenLocalization localizationData;
+  final bool isValidAge;
+  const _AgeIndicator({
+    Key? key,
+    required this.localizationData,
+    required this.isValidAge,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: constraints.maxWidth * 0.78,
-              child: _LabelText(validLabel),
-            ),
-            SizedBox(
-              width: constraints.maxWidth * 0.22,
-              child: Container(
-                height: constraints.maxWidth * 0.22,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      constraints.maxWidth * 0.07,
-                    ),
-                  ),
-                  color: iconBackgroundColor,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 5.0,
-                      color: Colors.black38,
-                      offset: const Offset(-3, 3),
-                      spreadRadius: -1.0,
-                    )
-                  ],
-                ),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      icon,
-                      color: Color(0xFF727272),
-                      size: constraints.maxWidth * 0.09,
-                    ),
-                  ),
-                ),
+              width: constraints.maxWidth - 32.0 - 8.0,
+              child: Text(
+                isValidAge
+                    ? localizationData.successTextBody
+                    : localizationData.errorTextBody,
+                style: LitSansSerifStyles.body2,
               ),
+            ),
+            SizedBox(width: 8.0),
+            _ValidityIconContainer(
+              isValid: isValidAge,
             ),
           ],
         );
@@ -516,20 +349,58 @@ class _ValidityLabel extends StatelessWidget {
   }
 }
 
-/// Styled [Text] using uppercase letters.
-class _LabelText extends StatelessWidget {
-  final String text;
+class _ValidityIconContainer extends StatelessWidget {
+  final bool isValid;
+  static const double _height = 32.0;
+  static const double _width = 32.0;
+  static const BorderRadius _borderRadius =
+      const BorderRadius.all(Radius.circular(12.0));
+  static const Color _bgColorValid = Color(0xFFECFFE9);
+  static const Color _bgColorInvalid = Color(0xFFF2E4E4);
+  static const double _iconSize = 13.0;
+  static const Color _iconColor = Color(0xFF616161);
+  static const IconData _iconValid = LitIcons.check;
+  static const IconData _iconInvalid = LitIcons.times;
 
-  const _LabelText(this.text, {Key? key}) : super(key: key);
+  const _ValidityIconContainer({
+    Key? key,
+    required this.isValid,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text.toUpperCase(),
-      style: LitSansSerifStyles.subtitle1.copyWith(
-        color: LitColors.darkGrey.withOpacity(
-          0.5,
+    return Container(
+      height: _height,
+      width: _width,
+      decoration: BoxDecoration(
+        color: isValid ? _bgColorValid : _bgColorInvalid,
+        boxShadow: LitBoxShadows.sm,
+        borderRadius: _borderRadius,
+      ),
+      child: Center(
+        child: Icon(
+          isValid ? _iconValid : _iconInvalid,
+          size: _iconSize,
+          color: _iconColor,
         ),
       ),
+    );
+  }
+}
+
+/// A Flutter widget displaying a text for what backups are used for.
+class _InfoDescription extends StatelessWidget {
+  final LitConfirmAgeScreenLocalization localizationData;
+  const _InfoDescription({
+    Key? key,
+    required this.localizationData,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LitDescriptionTextBox(
+      padding: const EdgeInsets.all(0),
+      text: localizationData.descriptionTextBody,
     );
   }
 }
