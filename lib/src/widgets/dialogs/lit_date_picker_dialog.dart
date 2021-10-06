@@ -5,9 +5,15 @@ import 'package:leitmotif/leitmotif.dart';
 ///
 /// Contains the localized strings used on the dialog.
 class LitDatePickerDialogLocalization {
+  /// The date picker's localization.
+  final LitDatePickerLocalization pickerLocalization;
+
+  /// The `submit`'s button label.
   final String submitLabel;
 
+  /// Creates a [LitDatePickerDialogLocalization].
   const LitDatePickerDialogLocalization({
+    required this.pickerLocalization,
     required this.submitLabel,
   });
 }
@@ -20,13 +26,8 @@ class LitDatePickerDialogLocalization {
 /// allowing further validation on the parent widget.
 ///
 class LitDatePickerDialog extends StatefulWidget {
-  /// The default localization.
-  ///
-  /// Applied on the screen if none [localizationData] has been provided.
-  static const LitDatePickerDialogLocalization _defaultLocalization =
-      LitDatePickerDialogLocalization(submitLabel: "Submit");
-
-  final LitDatePickerDialogLocalization localizationData;
+  /// The localization applied on this dialog.
+  final LitDatePickerDialogLocalization localization;
 
   /// The dialog's title.
   final String? title;
@@ -44,7 +45,7 @@ class LitDatePickerDialog extends StatefulWidget {
   /// Creates a [LitDatePickerDialog].
   const LitDatePickerDialog({
     Key? key,
-    this.localizationData = _defaultLocalization,
+    this.localization = defaultLocalization,
     this.title,
     this.defaultDate,
     this.margin = const EdgeInsets.symmetric(
@@ -54,6 +55,15 @@ class LitDatePickerDialog extends StatefulWidget {
   }) : super(key: key);
   @override
   _LitDatePickerDialogState createState() => _LitDatePickerDialogState();
+
+  /// The default localization.
+  ///
+  /// Applied on the screen if none [localization] has been provided.
+  static const LitDatePickerDialogLocalization defaultLocalization =
+      LitDatePickerDialogLocalization(
+    pickerLocalization: LitDatePicker.defaultLocalization,
+    submitLabel: "Submit",
+  );
 }
 
 class _LitDatePickerDialogState extends State<LitDatePickerDialog> {
@@ -106,11 +116,12 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog> {
       child: LitDatePicker(
         defaultDate: widget.defaultDate,
         onSelectDate: _onSelectDate,
+        localization: widget.localization.pickerLocalization,
       ),
       actionButtons: [
         DialogActionButton(
           onPressed: _onSubmitDate,
-          label: widget.localizationData.submitLabel,
+          label: widget.localization.submitLabel,
           disabled: _invalidDate,
         )
       ],

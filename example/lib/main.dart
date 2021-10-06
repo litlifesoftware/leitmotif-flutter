@@ -636,7 +636,7 @@ class _ButtonList extends StatelessWidget {
             child: LitRoundedElevatedButton(
               color: buttonColor,
               child: ClippedText(
-                "Show Confirm Age Screen",
+                "Show VerifyAgeScreen",
                 upperCase: true,
                 style: LitSansSerifStyles.button.copyWith(
                   color: buttonTextColor,
@@ -646,7 +646,6 @@ class _ButtonList extends StatelessWidget {
                 LitRouteController(context).pushCupertinoWidget(
                   LitVerifyAgeScreen(
                     onSubmit: (date) {
-                      print("ConfirmAgeScreen-submitted date: $date");
                       LitRouteController(context).pop();
                     },
                   ),

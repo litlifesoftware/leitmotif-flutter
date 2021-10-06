@@ -120,14 +120,14 @@ class LitDatePicker extends StatefulWidget {
 
   const LitDatePicker({
     Key? key,
-    this.localization = _defaultLocalization,
+    this.localization = defaultLocalization,
     this.defaultDate,
     this.invertFirstDayOfWeek = false,
     required this.onSelectDate,
   }) : super(key: key);
 
   /// The default `LitDatePicker` localization.
-  static const LitDatePickerLocalization _defaultLocalization =
+  static const LitDatePickerLocalization defaultLocalization =
       LitDatePickerLocalization(
     dayOfWeek1: "Monday",
     dayOfWeek2: "Tuesday",

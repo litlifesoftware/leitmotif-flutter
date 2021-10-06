@@ -17,6 +17,7 @@ class LitVerifyAgeScreenLocalization {
   final String submitButtonLabel;
   final String descriptionTextBody;
   final String successTextBody;
+  final LitDatePickerDialogLocalization datePickerDialogLocalization;
 
   /// Creates a [LitVerifyAgeScreenLocalization].
   const LitVerifyAgeScreenLocalization({
@@ -32,6 +33,7 @@ class LitVerifyAgeScreenLocalization {
     required this.submitButtonLabel,
     required this.descriptionTextBody,
     required this.successTextBody,
+    required this.datePickerDialogLocalization,
   });
 }
 
@@ -42,10 +44,37 @@ class LitVerifyAgeScreenLocalization {
 /// practice.
 ///
 class LitVerifyAgeScreen extends StatefulWidget {
+  /// The age requirement (in years).
+  ///
+  /// Defaults to `13`.
+  final int ageRequirement;
+
+  /// The screen's localization. Includes labels and text strings displayed on
+  /// this screen.
+  final LitVerifyAgeScreenLocalization localization;
+
+  /// Called once the user submits a valid age.
+  ///
+  /// The submitted age will be returned using the callback arguement.
+  final void Function(DateTime date) onSubmit;
+
+  /// Creates a [LitVerifyAgeScreen].
+  ///
+  /// Provide a [localization] value to apply custom localizations.
+  ///
+  const LitVerifyAgeScreen({
+    Key? key,
+    this.ageRequirement = 13,
+    required this.onSubmit,
+    this.localization = defaultLocalization,
+  }) : super(key: key);
+  @override
+  _LitVerifyAgeScreenState createState() => _LitVerifyAgeScreenState();
+
   /// The default localization.
   ///
-  /// Applied on the screen if none [localizationData] has been provided.
-  static const LitVerifyAgeScreenLocalization _defaultLocalization =
+  /// Applied on the screen if none [localization] has been provided.
+  static const LitVerifyAgeScreenLocalization defaultLocalization =
       LitVerifyAgeScreenLocalization(
     title: "Confirm your Age",
     subtitle: "Are you 13 years old or older?",
@@ -59,38 +88,14 @@ class LitVerifyAgeScreen extends StatefulWidget {
     startButtonLabel: "Start",
     submitButtonLabel: "Submit",
     descriptionTextBody:
-        "Your date of birth helps us to confirm that you are old enough"
-        "to use this app. This app does not send any information to"
-        "anyone. Your age will not be shared.",
+        "Your date of birth helps us to confirm that you are old enough" +
+            " " +
+            "to use this app. This app does not send any information to" +
+            " " +
+            "anyone. Your age will not be shared.",
     successTextBody: "Thank you for confirming your age. Have a good time!",
+    datePickerDialogLocalization: LitDatePickerDialog.defaultLocalization,
   );
-
-  /// The age requirement (in years).
-  ///
-  /// Defaults to `13`.
-  final int ageRequirement;
-
-  /// The screen's localization. Includes labels and text strings displayed on
-  /// this screen.
-  final LitVerifyAgeScreenLocalization localizationData;
-
-  /// Called once the user submits a valid age.
-  ///
-  /// The submitted age will be returned using the callback arguement.
-  final void Function(DateTime date) onSubmit;
-
-  /// Creates a [LitVerifyAgeScreen].
-  ///
-  /// Provide a [localizationData] value to apply custom localizations.
-  ///
-  const LitVerifyAgeScreen({
-    Key? key,
-    this.ageRequirement = 13,
-    required this.onSubmit,
-    this.localizationData = _defaultLocalization,
-  }) : super(key: key);
-  @override
-  _LitVerifyAgeScreenState createState() => _LitVerifyAgeScreenState();
 }
 
 class _LitVerifyAgeScreenState extends State<LitVerifyAgeScreen> {
@@ -107,6 +112,7 @@ class _LitVerifyAgeScreenState extends State<LitVerifyAgeScreen> {
   void _onSubmit() {
     LitRouteController(context).showDialogWidget(
       LitDatePickerDialog(
+        localization: widget.localization.datePickerDialogLocalization,
         onSubmit: (date) {
           setState(() {
             _dateOfBirth = date;
@@ -161,8 +167,8 @@ class _LitVerifyAgeScreenState extends State<LitVerifyAgeScreen> {
         LitIconSnackbar(
           iconData: LitIcons.info,
           snackBarController: _snackbarController,
-          title: widget.localizationData.yourAgeLabel,
-          text: widget.localizationData.errorTextBody,
+          title: widget.localization.yourAgeLabel,
+          text: widget.localization.errorTextBody,
         ),
       ],
       body: Container(
@@ -187,8 +193,8 @@ class _LitVerifyAgeScreenState extends State<LitVerifyAgeScreen> {
                 ),
                 children: [
                   LitScreenTitle(
-                    title: widget.localizationData.title,
-                    subtitle: widget.localizationData.subtitle,
+                    title: widget.localization.title,
+                    subtitle: widget.localization.subtitle,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -196,22 +202,16 @@ class _LitVerifyAgeScreenState extends State<LitVerifyAgeScreen> {
                         ? _InvalidAgeCard(
                             dateOfBirth: _dateOfBirth,
                             ageInYears: _ageInYears,
-                            localizationData: widget.localizationData,
+                            localizationData: widget.localization,
                             onSubmit: _onSubmit,
                             isValidAge: _isValidAge,
                           )
                         : _ValidAgeCard(
                             isValidAge: _isValidAge,
-                            localizationData: widget.localizationData,
+                            localizationData: widget.localization,
                             onStart: _onStart,
                           ),
                   ),
-                  SizedBox(
-                    height: 32.0,
-                  ),
-                  Text(
-                    _dateOfBirth != null ? _dateOfBirth!.toIso8601String() : "",
-                  )
                 ],
               ),
             ),
