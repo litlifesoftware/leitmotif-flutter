@@ -9,7 +9,6 @@ export 'src/screens/application_licenses_screen.dart';
 export 'src/screens/application_licence_details_screen.dart';
 export 'src/screens/lit_privacy_policy_screen.dart';
 export 'src/screens/lit_onboarding_screen.dart';
-export 'src/screens/lit_offline_app_disclaimer_screen.dart';
 export 'src/screens/lit_credits_screen.dart';
 export 'src/screens/lit_sign_up_screen.dart';
 export 'src/screens/photosensitive_disclaimer_screen.dart';

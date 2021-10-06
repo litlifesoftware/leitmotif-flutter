@@ -6,7 +6,6 @@ library controllers;
 
 export 'src/controller/animation_on_scroll_controller.dart';
 export 'src/controller/application_licenses_controller.dart';
-export 'src/controller/calendar_controller.dart';
 export 'src/controller/image_cache_controller.dart';
 export 'src/controller/lit_calendar_controller.dart';
 export 'src/controller/lit_focus_controller.dart';
