@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-//TODO: Rename to `LitVerifyAgeScreen`
-
-/// The [LitConfirmAgeScreen]'s `Localization`.
+/// The [LitVerifyAgeScreen]'s `Localization`.
 ///
 /// Contains the localized strings used on the screen.
-class LitConfirmAgeScreenLocalization {
+class LitVerifyAgeScreenLocalization {
   final String title;
   final String subtitle;
   final String errorCardTitle;
@@ -20,8 +18,8 @@ class LitConfirmAgeScreenLocalization {
   final String descriptionTextBody;
   final String successTextBody;
 
-  /// Creates a [LitConfirmAgeScreenLocalization].
-  const LitConfirmAgeScreenLocalization({
+  /// Creates a [LitVerifyAgeScreenLocalization].
+  const LitVerifyAgeScreenLocalization({
     required this.title,
     required this.subtitle,
     required this.errorCardTitle,
@@ -43,12 +41,12 @@ class LitConfirmAgeScreenLocalization {
 /// user's age is required in most regions and is generally considered good
 /// practice.
 ///
-class LitConfirmAgeScreen extends StatefulWidget {
+class LitVerifyAgeScreen extends StatefulWidget {
   /// The default localization.
   ///
   /// Applied on the screen if none [localizationData] has been provided.
-  static const LitConfirmAgeScreenLocalization _defaultLocalization =
-      LitConfirmAgeScreenLocalization(
+  static const LitVerifyAgeScreenLocalization _defaultLocalization =
+      LitVerifyAgeScreenLocalization(
     title: "Confirm your Age",
     subtitle: "Are you 13 years old or older?",
     errorCardTitle: "Select",
@@ -74,28 +72,28 @@ class LitConfirmAgeScreen extends StatefulWidget {
 
   /// The screen's localization. Includes labels and text strings displayed on
   /// this screen.
-  final LitConfirmAgeScreenLocalization localizationData;
+  final LitVerifyAgeScreenLocalization localizationData;
 
   /// Called once the user submits a valid age.
   ///
   /// The submitted age will be returned using the callback arguement.
   final void Function(DateTime date) onSubmit;
 
-  /// Creates a [LitConfirmAgeScreen].
+  /// Creates a [LitVerifyAgeScreen].
   ///
   /// Provide a [localizationData] value to apply custom localizations.
   ///
-  const LitConfirmAgeScreen({
+  const LitVerifyAgeScreen({
     Key? key,
     this.ageRequirement = 13,
     required this.onSubmit,
     this.localizationData = _defaultLocalization,
   }) : super(key: key);
   @override
-  _LitConfirmAgeScreenState createState() => _LitConfirmAgeScreenState();
+  _LitVerifyAgeScreenState createState() => _LitVerifyAgeScreenState();
 }
 
-class _LitConfirmAgeScreenState extends State<LitConfirmAgeScreen> {
+class _LitVerifyAgeScreenState extends State<LitVerifyAgeScreen> {
   /// The user's date of birth stored as a [DateTime].
   DateTime? _dateOfBirth;
 
@@ -226,7 +224,7 @@ class _LitConfirmAgeScreenState extends State<LitConfirmAgeScreen> {
 
 /// A [LitTitledActionCard] providing feedback after inputting a valid age.
 class _ValidAgeCard extends StatelessWidget {
-  final LitConfirmAgeScreenLocalization localizationData;
+  final LitVerifyAgeScreenLocalization localizationData;
   final bool isValidAge;
   final void Function() onStart;
   const _ValidAgeCard(
@@ -266,7 +264,7 @@ class _ValidAgeCard extends StatelessWidget {
 
 /// A [LitTitledActionCard] allowing the user to input the date of birth.
 class _InvalidAgeCard extends StatelessWidget {
-  final LitConfirmAgeScreenLocalization localizationData;
+  final LitVerifyAgeScreenLocalization localizationData;
   final DateTime? dateOfBirth;
   final bool isValidAge;
   final int ageInYears;
@@ -315,7 +313,7 @@ class _InvalidAgeCard extends StatelessWidget {
 }
 
 class _AgeIndicator extends StatelessWidget {
-  final LitConfirmAgeScreenLocalization localizationData;
+  final LitVerifyAgeScreenLocalization localizationData;
   final bool isValidAge;
   const _AgeIndicator({
     Key? key,
@@ -390,7 +388,7 @@ class _ValidityIconContainer extends StatelessWidget {
 
 /// A Flutter widget displaying a text for what backups are used for.
 class _InfoDescription extends StatelessWidget {
-  final LitConfirmAgeScreenLocalization localizationData;
+  final LitVerifyAgeScreenLocalization localizationData;
   const _InfoDescription({
     Key? key,
     required this.localizationData,

@@ -644,7 +644,7 @@ class _ButtonList extends StatelessWidget {
               ),
               onPressed: () => {
                 LitRouteController(context).pushCupertinoWidget(
-                  LitConfirmAgeScreen(
+                  LitVerifyAgeScreen(
                     onSubmit: (date) {
                       print("ConfirmAgeScreen-submitted date: $date");
                       LitRouteController(context).pop();
@@ -892,6 +892,7 @@ class _ButtonList extends StatelessWidget {
             ),
           ),
           LitTextPageView(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
             textItems: [
               TextPageContent(
                 subtitle: "Subtitle",
@@ -902,11 +903,7 @@ class _ButtonList extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: SizedBox(
-              height: 54.0,
-              width: 54.0,
-              child: JugglingLoadingIndicator(),
-            ),
+            child: JugglingLoadingIndicator(),
           ),
           LitDescriptionTextBox(
             text: "This text is descriping something."
