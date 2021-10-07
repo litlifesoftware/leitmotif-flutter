@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
 class LitCardTitle extends StatelessWidget {
-  final String title;
+  final String? title;
   final String? subtitle;
   const LitCardTitle({
     Key? key,
@@ -15,10 +15,12 @@ class LitCardTitle extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: LitSansSerifStyles.h6,
-        ),
+        title != null
+            ? Text(
+                title!,
+                style: LitSansSerifStyles.h6,
+              )
+            : SizedBox(),
         subtitle != null ? SizedBox(height: 4.0) : SizedBox(),
         subtitle != null
             ? Text(
