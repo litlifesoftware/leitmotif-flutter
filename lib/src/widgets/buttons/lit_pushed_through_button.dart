@@ -17,6 +17,7 @@ class LitPushedThroughButton extends StatefulWidget {
   final List<BoxShadow> boxShadow;
   final Duration animationDuration;
   final bool disabled;
+  final bool constrained;
 
   /// Create a [PushedThroughButton] [Widget].
   const LitPushedThroughButton({
@@ -36,6 +37,7 @@ class LitPushedThroughButton extends StatefulWidget {
       milliseconds: 400,
     ),
     this.disabled = false,
+    this.constrained = true,
   }) : super(key: key);
 
   @override
@@ -100,48 +102,60 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: widget.padding,
-      child: Listener(
-        onPointerDown: _onTapDown,
-        onPointerUp: _onTapUp,
-        child: AnimatedBuilder(
-          animation: _animationController,
-          builder: (context, child) {
-            return Transform.scale(
-              scale: (1 - (_animationController.value * 0.050)),
-              child: Opacity(
-                opacity: widget.disabled ? 0.2 : 1.0,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 150),
-                  padding: widget.margin,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(widget.borderRadius),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: _isPressed
-                          ? [
-                              Color.lerp(widget.backgroundColor,
-                                  widget.accentColor, 0.35)!,
-                              Color.lerp(widget.backgroundColor,
-                                  widget.accentColor, 0.45)!,
-                              Color.lerp(widget.backgroundColor,
-                                  widget.accentColor, 0.55)!,
-                              widget.backgroundColor,
-                            ]
-                          : [widget.accentColor, widget.backgroundColor],
-                      //stops: [0.0, 0.3, 0.6, 1.0],
-                    ),
-                    boxShadow: widget.boxShadow,
-                  ),
-                  child: widget.child,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return ConstrainedBox(
+          constraints: widget.constrained
+              ? constraints
+              : BoxConstraints(
+                  minWidth: constraints.maxWidth,
                 ),
+          child: Padding(
+            padding: widget.padding,
+            child: Listener(
+              onPointerDown: _onTapDown,
+              onPointerUp: _onTapUp,
+              child: AnimatedBuilder(
+                animation: _animationController,
+                builder: (context, child) {
+                  return Transform.scale(
+                    scale: (1 - (_animationController.value * 0.050)),
+                    child: Opacity(
+                      opacity: widget.disabled ? 0.2 : 1.0,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 150),
+                        padding: widget.margin,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(widget.borderRadius),
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: _isPressed
+                                ? [
+                                    Color.lerp(widget.backgroundColor,
+                                        widget.accentColor, 0.35)!,
+                                    Color.lerp(widget.backgroundColor,
+                                        widget.accentColor, 0.45)!,
+                                    Color.lerp(widget.backgroundColor,
+                                        widget.accentColor, 0.55)!,
+                                    widget.backgroundColor,
+                                  ]
+                                : [widget.accentColor, widget.backgroundColor],
+                            //stops: [0.0, 0.3, 0.6, 1.0],
+                          ),
+                          boxShadow: widget.boxShadow,
+                        ),
+                        child: widget.child,
+                      ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
-      ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
