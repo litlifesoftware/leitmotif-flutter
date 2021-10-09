@@ -54,7 +54,7 @@ class LitTextStyles {
   static const String serifFontFamily = "Merriweather";
 
   /// The default monospace font family.
-  static const String monospaceFontFamily = "VT323";
+  static const String monospaceFontFamily = "CourierPrime";
 
   /// The default sans serif [TextStyle].
   static const TextStyle sansSerif = TextStyle(

@@ -75,9 +75,12 @@ flutter:
         - asset: assets/fonts/Montserrat/Montserrat-SemiBoldItalic.ttf
         - asset: assets/fonts/Montserrat/Montserrat-Thin.ttf
         - asset: assets/fonts/Montserrat/Montserrat-ThinItalic.ttf
-    - family: VT323
+    - family: CourierPrime
       fonts:
-        - asset: assets/fonts/VT323/VT323-Regular.ttf
+        - asset: assets/fonts/CourierPrime/CourierPrime-Bold.ttf
+        - asset: assets/fonts/CourierPrime/CourierPrime-BoldItalic.ttf
+        - asset: assets/fonts/CourierPrime/CourierPrime-Italic.ttf
+        - asset: assets/fonts/CourierPrime/CourierPrime-Regular.ttf
   # - family: Trajan Pro
   #   fonts:
   #     - asset: fonts/TrajanPro.ttf
