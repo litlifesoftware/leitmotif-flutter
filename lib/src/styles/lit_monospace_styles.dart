@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/styles.dart';
 
-/// A collection of sans serif [TextStyle]s.
+/// A collection of monospace [TextStyle]s.
 ///
 /// The styles are implementing the `Material Design` styles using different
-/// default values and the `Montserrat` font family.
+/// default values and the `CourierPrime` font family.
 ///
 /// These styles are included:
 ///
@@ -20,12 +20,12 @@ import 'package:leitmotif/styles.dart';
 /// * `h3`
 /// * `h2`
 /// * `h1`
-class LitSansSerifStyles {
+class LitMonospaceStyles {
   /// All fonts should be derived from this very package ('leitmotif')
   static const String _package = "leitmotif";
 
   /// The default sans serif font family.
-  static const String _montserrat = "Montserrat";
+  static const String _montserrat = "CourierPrime";
 
   /// The default text color for all [TextStyle]s.
   static const Color defaultColor = LitColors.grey400;
