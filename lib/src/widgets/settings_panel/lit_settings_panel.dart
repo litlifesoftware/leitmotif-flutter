@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
-import 'package:leitmotif/src/util/sync_animation_on_scroll_controller.dart';
+import 'package:leitmotif/controllers.dart';
 import 'package:leitmotif/src/widgets/settings_panel/lit_settings_panel_tile.dart';
 import 'package:leitmotif/src/widgets/settings_panel/lit_settings_panel_controller.dart';
 
