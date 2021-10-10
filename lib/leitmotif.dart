@@ -53,6 +53,9 @@ export 'icons.dart';
 /// Loading indicators
 export 'loading_indicators.dart';
 
+/// Localization
+export 'localization.dart';
+
 /// Models
 export 'models.dart';
 
