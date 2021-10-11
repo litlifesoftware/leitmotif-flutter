@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-class LitTitledDialog extends StatelessWidget {
+/// A Leitmotif `dialog` widget displaying the provided [child] on inside a
+/// titled dialog.
+class LitTitledDialog extends StatefulWidget {
   final double titleBarHeight;
   final BorderRadius borderRadius;
   final Widget child;
@@ -14,23 +16,17 @@ class LitTitledDialog extends StatelessWidget {
   final double minHeight;
   final EdgeInsets margin;
   final List<Widget> actionButtons;
+  final Duration animationDuration;
+
+  /// Creates a [LitTitledDialog].
   const LitTitledDialog({
     Key? key,
     this.titleBarHeight = 52.0,
-    this.borderRadius = const BorderRadius.all(const Radius.circular(24.0)),
-    required this.child,
-    this.titleGradient = const LinearGradient(
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight,
-      stops: [
-        0.65,
-        1.00,
-      ],
-      colors: [
-        Color(0xFFf4f4f7),
-        Color(0xFFd1cdcd),
-      ],
+    this.borderRadius = const BorderRadius.all(
+      const Radius.circular(24.0),
     ),
+    required this.child,
+    this.titleGradient = LitGradients.lightGreyGradient,
     required this.titleText,
     this.titleTextColor = const Color(0xFF444444),
     this.elevated = true,
@@ -42,68 +38,159 @@ class LitTitledDialog extends StatelessWidget {
       top: 0.0,
       bottom: 0.0,
     ),
+    this.animationDuration = const Duration(
+      milliseconds: 180,
+    ),
   }) : super(key: key);
+
+  @override
+  _LitTitledDialogState createState() => _LitTitledDialogState();
+}
+
+class _LitTitledDialogState extends State<LitTitledDialog>
+    with TickerProviderStateMixin {
+  /// Default scale
+  static const double defSc = 1.0;
+
+  /// Animation scale
+  static const double anmSc = 1.25;
+  late AnimationController _anmCon;
+
+  /// Returns the currently animated transform.
+  Matrix4 get _transform {
+    final double x = defSc;
+    final double y = anmSc - ((anmSc - defSc) * _anmCon.value);
+    return Matrix4.identity()..scale(x, y);
+  }
+
+  /// Returns the currently animated opacity.
+  double get _opacity {
+    return 0.5 + 0.5 * _anmCon.value;
+  }
+
+  /// Returns the dialog's content minimum height.
+  double _minHeight(BoxConstraints constraints) {
+    return (widget.minHeight - (2 * widget.titleBarHeight));
+  }
+
+  /// Returns the dialog's content maximum width.
+  double _maxWidth(BoxConstraints constraints) {
+    return constraints.maxWidth > widget.maxWidth
+        ? widget.maxWidth
+        : constraints.maxWidth;
+  }
+
+  @override
+  void initState() {
+    _anmCon = AnimationController(
+      vsync: this,
+      duration: widget.animationDuration,
+    )..forward();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _anmCon.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: borderRadius,
-      ),
-      elevation: 0.0,
-      child: ClipRRect(
-        borderRadius: borderRadius,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: minHeight,
-                maxWidth: constraints.maxWidth > maxWidth
-                    ? maxWidth
-                    : constraints.maxWidth,
+    return AnimatedBuilder(
+      animation: _anmCon,
+      builder: (context, _) {
+        return AnimatedOpacity(
+          opacity: _opacity,
+          duration: _anmCon.duration!,
+          child: Transform(
+            transform: _transform,
+            child: Dialog(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: widget.borderRadius,
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _DialogTopBar(
-                    titleBarHeight: titleBarHeight,
-                    borderRadius: borderRadius,
-                    titleGradient: titleGradient,
-                    elevated: elevated,
-                    titleText: titleText,
-                    titleTextColor: titleTextColor,
-                    leading: leading,
-                  ),
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: (minHeight - (2 * titleBarHeight)),
-                      maxWidth: constraints.maxWidth > maxWidth
-                          ? maxWidth
-                          : constraints.maxWidth,
-                    ),
-                    child: Padding(
-                      padding: margin,
-                      child: child,
-                    ),
-                  ),
-                  actionButtons.isNotEmpty
-                      ? _DialogActionButtonBuilder(
-                          titleBarHeight: titleBarHeight,
-                          borderRadius: borderRadius,
-                          actionButtons: actionButtons,
-                        )
-                      : SizedBox(),
-                ],
+              elevation: 0.0,
+              child: ClipRRect(
+                borderRadius: widget.borderRadius,
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: widget.minHeight,
+                        maxWidth: _maxWidth(constraints),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _DialogTopBar(
+                            titleBarHeight: widget.titleBarHeight,
+                            borderRadius: widget.borderRadius,
+                            titleGradient: widget.titleGradient,
+                            elevated: widget.elevated,
+                            titleText: widget.titleText,
+                            titleTextColor: widget.titleTextColor,
+                            leading: widget.leading,
+                          ),
+                          ConstrainedBox(
+                            constraints: BoxConstraints(
+                              minHeight: _minHeight(constraints),
+                              maxWidth: _maxWidth(constraints),
+                            ),
+                            child: Padding(
+                              padding: widget.margin,
+                              child: widget.child,
+                            ),
+                          ),
+                          widget.actionButtons.isNotEmpty
+                              ? _DialogActionButtonBuilder(
+                                  titleBarHeight: widget.titleBarHeight,
+                                  borderRadius: widget.borderRadius,
+                                  actionButtons: widget.actionButtons,
+                                )
+                              : SizedBox(),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
-            );
-          },
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _DialogTopBarLabel extends StatelessWidget {
+  final String title;
+  final Color textColor;
+  const _DialogTopBarLabel({
+    Key? key,
+    required this.title,
+    required this.textColor,
+  }) : super(key: key);
+  static const EdgeInsets padding = const EdgeInsets.symmetric(
+    horizontal: 24.0,
+  );
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: padding,
+      child: ClippedText(
+        title,
+        textAlign: TextAlign.right,
+        style: LitSansSerifStyles.subtitle2.copyWith(
+          color: textColor,
         ),
       ),
     );
   }
 }
 
-class _DialogTopBar extends StatefulWidget {
+/// The [LitTitledDialog]'s top bar displaying the dialog's title.
+class _DialogTopBar extends StatelessWidget {
   final double titleBarHeight;
   final BorderRadius borderRadius;
   final Gradient titleGradient;
@@ -122,71 +209,57 @@ class _DialogTopBar extends StatefulWidget {
     required this.leading,
   }) : super(key: key);
 
-  @override
-  __DialogTopBarState createState() => __DialogTopBarState();
-}
-
-class __DialogTopBarState extends State<_DialogTopBar> {
-  Widget get _titleText {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: ClippedText(
-        widget.titleText,
-        textAlign: TextAlign.right,
-        style: LitSansSerifStyles.subtitle2.copyWith(
-          color: widget.titleTextColor,
-        ),
-      ),
-    );
-  }
-
-  List<BoxShadow> get _elevatedBoxShadow {
-    return [
-      const BoxShadow(
-        color: Colors.black38,
-        blurRadius: 14.0,
-        offset: Offset(0.0, -2.0),
-        spreadRadius: 1.0,
-      )
-    ];
-  }
+  static const List<BoxShadow> _elevatedBoxShadow = [
+    const BoxShadow(
+      color: Colors.black38,
+      blurRadius: 14.0,
+      offset: Offset(0.0, -2.0),
+      spreadRadius: 1.0,
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: widget.titleBarHeight,
+      height: titleBarHeight,
       alignment: Alignment.topCenter,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
-          topLeft: widget.borderRadius.topLeft,
-          topRight: widget.borderRadius.topRight,
+          topLeft: borderRadius.topLeft,
+          topRight: borderRadius.topRight,
         ),
-        gradient: widget.titleGradient,
-        boxShadow: widget.elevated ? _elevatedBoxShadow : [],
+        gradient: titleGradient,
+        boxShadow: elevated ? _DialogTopBar._elevatedBoxShadow : [],
       ),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
-          widget.leading != null
+          leading != null
               ? Expanded(
                   flex: 2,
                   child: Container(
-                    height: widget.titleBarHeight,
+                    height: titleBarHeight,
                     child: Align(
                       alignment: Alignment.topLeft,
-                      child: widget.leading,
+                      child: leading,
                     ),
                   ),
                 )
               : SizedBox(),
           Expanded(
-            flex: widget.leading != null ? 4 : 1,
-            child: widget.leading != null
-                ? _titleText
+            flex: leading != null ? 4 : 1,
+            child: leading != null
+                ? _DialogTopBarLabel(
+                    title: titleText,
+                    textColor: titleTextColor,
+                  )
                 : Container(
                     child: Center(
-                      child: _titleText,
+                      child: _DialogTopBarLabel(
+                        title: titleText,
+                        textColor: titleTextColor,
+                      ),
                     ),
                   ),
           ),
