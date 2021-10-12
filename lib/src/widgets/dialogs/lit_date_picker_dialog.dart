@@ -6,7 +6,7 @@ import 'package:leitmotif/leitmotif.dart';
 /// Contains the localized strings used on the dialog.
 class LitDatePickerDialogLocalization {
   /// The date picker's localization.
-  final LitDatePickerLocalization pickerLocalization;
+  final LitDatePickerLocalization? pickerLocalization;
 
   /// The `submit`'s button label.
   final String submitLabel;
@@ -27,7 +27,7 @@ class LitDatePickerDialogLocalization {
 ///
 class LitDatePickerDialog extends StatefulWidget {
   /// The localization applied on this dialog.
-  final LitDatePickerDialogLocalization localization;
+  final LitDatePickerDialogLocalization? localization;
 
   /// The dialog's title.
   final String? title;
@@ -45,7 +45,7 @@ class LitDatePickerDialog extends StatefulWidget {
   /// Creates a [LitDatePickerDialog].
   const LitDatePickerDialog({
     Key? key,
-    this.localization = defaultLocalization,
+    this.localization,
     this.title,
     this.defaultDate,
     this.margin = const EdgeInsets.symmetric(
@@ -55,15 +55,6 @@ class LitDatePickerDialog extends StatefulWidget {
   }) : super(key: key);
   @override
   _LitDatePickerDialogState createState() => _LitDatePickerDialogState();
-
-  /// The default localization.
-  ///
-  /// Applied on the screen if none [localization] has been provided.
-  static const LitDatePickerDialogLocalization defaultLocalization =
-      LitDatePickerDialogLocalization(
-    pickerLocalization: LitDatePicker.defaultLocalization,
-    submitLabel: "Submit",
-  );
 }
 
 class _LitDatePickerDialogState extends State<LitDatePickerDialog> {
@@ -111,17 +102,43 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog> {
   Widget build(BuildContext context) {
     return LitTitledDialog(
       titleText:
-          widget.title ?? MaterialLocalizations.of(context).dateInputLabel,
+          widget.title ?? LeitmotifLocalizations.of(context).dateInputLabel,
       margin: widget.margin,
       child: LitDatePicker(
         defaultDate: widget.defaultDate,
         onSelectDate: _onSelectDate,
-        localization: widget.localization.pickerLocalization,
+        localization: widget.localization != null
+            ? widget.localization!.pickerLocalization!
+            : LitDatePickerLocalization(
+                dayOfWeek1: LeitmotifLocalizations.of(context).dayOfWeek1,
+                dayOfWeek2: LeitmotifLocalizations.of(context).dayOfWeek2,
+                dayOfWeek3: LeitmotifLocalizations.of(context).dayOfWeek3,
+                dayOfWeek4: LeitmotifLocalizations.of(context).dayOfWeek4,
+                dayOfWeek5: LeitmotifLocalizations.of(context).dayOfWeek5,
+                dayOfWeek6: LeitmotifLocalizations.of(context).dayOfWeek6,
+                dayOfWeek7: LeitmotifLocalizations.of(context).dayOfWeek7,
+                january: LeitmotifLocalizations.of(context).january,
+                february: LeitmotifLocalizations.of(context).february,
+                march: LeitmotifLocalizations.of(context).march,
+                april: LeitmotifLocalizations.of(context).april,
+                may: LeitmotifLocalizations.of(context).may,
+                june: LeitmotifLocalizations.of(context).june,
+                july: LeitmotifLocalizations.of(context).july,
+                august: LeitmotifLocalizations.of(context).august,
+                september: LeitmotifLocalizations.of(context).september,
+                october: LeitmotifLocalizations.of(context).october,
+                november: LeitmotifLocalizations.of(context).november,
+                december: LeitmotifLocalizations.of(context).december,
+                cancelButtonLabel:
+                    LeitmotifLocalizations.of(context).cancelLabel,
+              ),
       ),
       actionButtons: [
         DialogActionButton(
           onPressed: _onSubmitDate,
-          label: widget.localization.submitLabel,
+          label: widget.localization != null
+              ? widget.localization!.submitLabel
+              : LeitmotifLocalizations.of(context).submitLabel,
           disabled: _invalidDate,
         )
       ],
