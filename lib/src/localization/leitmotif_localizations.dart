@@ -32,7 +32,11 @@ class LeitmotifLocalizations {
     'en': const {
       _Keys.submitLabel: 'Submit',
       _Keys.cancelLabel: 'Cancel',
+      _Keys.startLabel: 'Start',
+      _Keys.selectLabel: 'Select',
       _Keys.dateInputLabel: 'Enter Date',
+      _Keys.ageInputLabel: 'Enter your Age',
+      _Keys.ageRequiredLabel: 'This app does need your age',
       _Keys.dayOfWeek1: 'Monday',
       _Keys.dayOfWeek2: 'Tuesday',
       _Keys.dayOfWeek3: 'Wednesday',
@@ -54,14 +58,26 @@ class LeitmotifLocalizations {
       _Keys.december: 'December',
       _Keys.yourAgeLabel: 'Your Age',
       _Keys.invalidInputBody: 'Please check your input.',
-      _Keys.verifyAgeScreenTitle: 'Enter your Age',
-      _Keys.verifyAgeScreenSubtitle: 'This app does need your age',
+      _Keys.verifyAgeScreenSuccessTitle: 'Age confirmed',
+      _Keys.verifyAgeScreenSuccessSubtitle: 'Your age has been confirmed',
+      _Keys.verifyAgeScreenSuccessBody:
+          'Thank you for verifying your age. Have a good time!',
+      _Keys.verifyAgeScreenDescriptionBody:
+          "Your date of birth helps us to enable certain functions" +
+              " " +
+              "on this app. We won't send any data to" +
+              " " +
+              "anyone. Your age will not be shared.",
     },
     // 'German' localization
     'de': const {
       _Keys.submitLabel: 'Bestätigen',
       _Keys.cancelLabel: 'Abbrechen',
+      _Keys.startLabel: 'Start',
+      _Keys.selectLabel: 'Select',
       _Keys.dateInputLabel: 'Datum eingeben',
+      _Keys.ageInputLabel: 'Gib dein Alter ein',
+      _Keys.ageRequiredLabel: 'Diese App benötigt dein Alter',
       _Keys.dayOfWeek1: 'Montag',
       _Keys.dayOfWeek2: 'Dienstag',
       _Keys.dayOfWeek3: 'Mittwoch',
@@ -83,8 +99,16 @@ class LeitmotifLocalizations {
       _Keys.december: 'Dezember',
       _Keys.yourAgeLabel: 'Dein Alter',
       _Keys.invalidInputBody: 'Bitte überprüfe deine Eingabe.',
-      _Keys.verifyAgeScreenTitle: 'Gib dein Alter ein',
-      _Keys.verifyAgeScreenSubtitle: 'Diese App benötigt dein Alter',
+      _Keys.verifyAgeScreenSuccessTitle: 'Age confirmed',
+      _Keys.verifyAgeScreenSuccessSubtitle: 'Your age has been confirmed',
+      _Keys.verifyAgeScreenSuccessBody:
+          'Vielen Dank für die Altersbestätigung. Viel Vergnügen!',
+      _Keys.verifyAgeScreenDescriptionBody:
+          "Dein Alter hilft uns Funktionen dieser App zu gewährleisten" +
+              " " +
+              "Diese App wird keine Daten weitergeben." +
+              " " +
+              "Dein Alter wird nicht geteilt.",
     },
   };
 
@@ -101,6 +125,22 @@ class LeitmotifLocalizations {
 
   String get dateInputLabel {
     return _localizedValues[locale.languageCode]![_Keys.dateInputLabel]!;
+  }
+
+  String get ageInputLabel {
+    return _localizedValues[locale.languageCode]![_Keys.ageInputLabel]!;
+  }
+
+  String get ageRequiredLabel {
+    return _localizedValues[locale.languageCode]![_Keys.ageRequiredLabel]!;
+  }
+
+  String get startLabel {
+    return _localizedValues[locale.languageCode]![_Keys.startLabel]!;
+  }
+
+  String get selectLabel {
+    return _localizedValues[locale.languageCode]![_Keys.selectLabel]!;
   }
 
   String get dayOfWeek1 {
@@ -187,13 +227,24 @@ class LeitmotifLocalizations {
     return _localizedValues[locale.languageCode]![_Keys.invalidInputBody]!;
   }
 
-  String get verifyAgeScreenTitle {
-    return _localizedValues[locale.languageCode]![_Keys.verifyAgeScreenTitle]!;
+  String get verifyAgeScreenSuccessTitle {
+    return _localizedValues[locale.languageCode]![
+        _Keys.verifyAgeScreenSuccessTitle]!;
   }
 
-  String get verifyAgeScreenSubtitle {
+  String get verifyAgeScreenSuccessSubtitle {
     return _localizedValues[locale.languageCode]![
-        _Keys.verifyAgeScreenSubtitle]!;
+        _Keys.verifyAgeScreenSuccessSubtitle]!;
+  }
+
+  String get verifyAgeScreenSuccessBody {
+    return _localizedValues[locale.languageCode]![
+        _Keys.verifyAgeScreenSuccessBody]!;
+  }
+
+  String get verifyAgeScreenDescriptionBody {
+    return _localizedValues[locale.languageCode]![
+        _Keys.verifyAgeScreenDescriptionBody]!;
   }
 }
 
@@ -226,7 +277,11 @@ class LeitmotifLocalizationsDelegate
 class _Keys {
   static const String submitLabel = 'submitLabel';
   static const String cancelLabel = 'cancelLabel';
+  static const String startLabel = 'startLabel';
+  static const String selectLabel = 'select';
   static const String dateInputLabel = 'dateInputLabel';
+  static const String ageInputLabel = 'ageInputLabel';
+  static const String ageRequiredLabel = 'ageRequiredLabel';
   static const String dayOfWeek1 = 'dayOfWeek1';
   static const String dayOfWeek2 = 'dayOfWeek2';
   static const String dayOfWeek3 = 'dayOfWeek3';
@@ -248,6 +303,11 @@ class _Keys {
   static const String december = 'december';
   static const String yourAgeLabel = 'yourAgeLabel';
   static const String invalidInputBody = 'invalidInputBody';
-  static const String verifyAgeScreenTitle = 'verifyAgeScreenTitle';
-  static const String verifyAgeScreenSubtitle = 'verifyAgeScreenSubtitle';
+  static const String verifyAgeScreenSuccessTitle =
+      'verifyAgeScreenSuccessTitle';
+  static const String verifyAgeScreenSuccessSubtitle =
+      'verifyAgeScreenSuccessSubtitle';
+  static const String verifyAgeScreenSuccessBody = 'verifyAgeScreenSuccessBody';
+  static const String verifyAgeScreenDescriptionBody =
+      'verifyAgeScreenDescriptionBody';
 }

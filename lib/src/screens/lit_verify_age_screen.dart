@@ -7,51 +7,52 @@ import 'package:leitmotif/leitmotif.dart';
 class LitVerifyAgeScreenLocalization {
   final String title;
   final String subtitle;
-  final String errorCardTitle;
-  final String errorCardSubtitle;
-  final String errorTextBody;
+  final String selectLabel;
+  final String ageInputLabel;
+  final String invalidInputBody;
   final String successCardTitle;
   final String successCardSubtitle;
   final String yourAgeLabel;
-  final String startButtonLabel;
-  final String submitButtonLabel;
-  final String descriptionTextBody;
-  final String successTextBody;
-  final LitDatePickerDialogLocalization datePickerDialogLocalization;
+  final String startLabel;
+  final String submitLabel;
+  final String descriptionBody;
+  final String successBody;
 
   /// Creates a [LitVerifyAgeScreenLocalization].
   const LitVerifyAgeScreenLocalization({
     required this.title,
     required this.subtitle,
-    required this.errorCardTitle,
-    required this.errorCardSubtitle,
-    required this.errorTextBody,
+    required this.selectLabel,
+    required this.ageInputLabel,
+    required this.invalidInputBody,
     required this.successCardTitle,
     required this.successCardSubtitle,
     required this.yourAgeLabel,
-    required this.startButtonLabel,
-    required this.submitButtonLabel,
-    required this.descriptionTextBody,
-    required this.successTextBody,
-    required this.datePickerDialogLocalization,
+    required this.startLabel,
+    required this.submitLabel,
+    required this.descriptionBody,
+    required this.successBody,
   });
 }
 
 /// A Leitmotif `screen` widget.
 ///
-/// Allows the user to submit an age by providing a date of birth. Verifying the
-/// user's age is required in most regions and is generally considered good
-/// practice.
+/// Allows the user to submit his age by providing a date of birth and returns
+/// the submited value using the [onSubmit] callback.
 ///
+/// Verifying the user's age is required in most regions for certain features,
+/// but is disabled by default.
 class LitVerifyAgeScreen extends StatefulWidget {
   /// The age requirement (in years).
   ///
-  /// Defaults to `13`.
-  final int ageRequirement;
+  /// Defaults to `0` to disable age verification
+  final int minAge;
 
   /// The screen's localization. Includes labels and text strings displayed on
   /// this screen.
-  final LitVerifyAgeScreenLocalization localization;
+  final LitVerifyAgeScreenLocalization? localization;
+
+  final LitDatePickerDialogLocalization? datePickerDialogLocalization;
 
   /// Called once the user submits a valid age.
   ///
@@ -64,38 +65,13 @@ class LitVerifyAgeScreen extends StatefulWidget {
   ///
   const LitVerifyAgeScreen({
     Key? key,
-    this.ageRequirement = 13,
+    this.minAge = 0,
     required this.onSubmit,
-    this.localization = defaultLocalization,
+    this.localization,
+    this.datePickerDialogLocalization,
   }) : super(key: key);
   @override
   _LitVerifyAgeScreenState createState() => _LitVerifyAgeScreenState();
-
-  /// The default localization.
-  ///
-  /// Applied on the screen if none [localization] has been provided.
-  static const LitVerifyAgeScreenLocalization defaultLocalization =
-      LitVerifyAgeScreenLocalization(
-    title: "Confirm your Age",
-    subtitle: "Are you 13 years old or older?",
-    errorCardTitle: "Select",
-    errorCardSubtitle: "Select your age",
-    errorTextBody:
-        "Please check your input. You may not be old enough to use this app.",
-    successCardTitle: "Age confirmed",
-    successCardSubtitle: "Your age has been confirmed",
-    yourAgeLabel: "Your age",
-    startButtonLabel: "Start",
-    submitButtonLabel: "Submit",
-    descriptionTextBody:
-        "Your date of birth helps us to confirm that you are old enough" +
-            " " +
-            "to use this app. This app does not send any information to" +
-            " " +
-            "anyone. Your age will not be shared.",
-    successTextBody: "Thank you for confirming your age. Have a good time!",
-    datePickerDialogLocalization: LitDatePickerDialog.defaultLocalization,
-  );
 }
 
 class _LitVerifyAgeScreenState extends State<LitVerifyAgeScreen> {
@@ -112,11 +88,10 @@ class _LitVerifyAgeScreenState extends State<LitVerifyAgeScreen> {
   void _onSubmit() {
     LitRouteController(context).showDialogWidget(
       LitDatePickerDialog(
-        localization: widget.localization.datePickerDialogLocalization,
+        //localization: widget.localization.datePickerDialogLocalization,
         onSubmit: (date) {
           setState(() {
             _dateOfBirth = date;
-            print(date.toIso8601String());
           });
           LitRouteController(context).closeDialog();
           if (!_isValidAge) {
@@ -139,11 +114,13 @@ class _LitVerifyAgeScreenState extends State<LitVerifyAgeScreen> {
     }
   }
 
-  /// Gets the user's age in years.
+  /// Gets the user's age in years and verifies the inputted value.
+  ///
+  /// If the provided date of birth is in the future, the age is invalid.
   int get _ageInYears {
     // If the date of birth has not been initialized, return an invalid age.
     if (_dateOfBirth == null) {
-      return 0;
+      return -1;
     }
 
     return _dateOfBirth!.convertToAgeInYears;
@@ -151,7 +128,11 @@ class _LitVerifyAgeScreenState extends State<LitVerifyAgeScreen> {
 
   /// Checks if the age is valid.
   bool get _isValidAge {
-    return _ageInYears >= widget.ageRequirement;
+    return _ageInYears >= widget.minAge;
+  }
+
+  bool get _l10nAvail {
+    return widget.localization != null;
   }
 
   @override
@@ -167,8 +148,12 @@ class _LitVerifyAgeScreenState extends State<LitVerifyAgeScreen> {
         LitIconSnackbar(
           iconData: LitIcons.info,
           snackBarController: _snackbarController,
-          title: widget.localization.yourAgeLabel,
-          text: widget.localization.errorTextBody,
+          title: _l10nAvail
+              ? widget.localization!.yourAgeLabel
+              : LeitmotifLocalizations.of(context).yourAgeLabel,
+          text: _l10nAvail
+              ? widget.localization!.invalidInputBody
+              : LeitmotifLocalizations.of(context).invalidInputBody,
         ),
       ],
       body: Container(
@@ -193,8 +178,12 @@ class _LitVerifyAgeScreenState extends State<LitVerifyAgeScreen> {
                 ),
                 children: [
                   LitScreenTitle(
-                    title: widget.localization.title,
-                    subtitle: widget.localization.subtitle,
+                    title: _l10nAvail
+                        ? widget.localization!.title
+                        : LeitmotifLocalizations.of(context).ageInputLabel,
+                    subtitle: _l10nAvail
+                        ? widget.localization!.subtitle
+                        : LeitmotifLocalizations.of(context).ageRequiredLabel,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -202,13 +191,15 @@ class _LitVerifyAgeScreenState extends State<LitVerifyAgeScreen> {
                         ? _InvalidAgeCard(
                             dateOfBirth: _dateOfBirth,
                             ageInYears: _ageInYears,
-                            localizationData: widget.localization,
+                            l10nAvail: _l10nAvail,
+                            localization: widget.localization,
                             onSubmit: _onSubmit,
                             isValidAge: _isValidAge,
                           )
                         : _ValidAgeCard(
                             isValidAge: _isValidAge,
-                            localizationData: widget.localization,
+                            l10nAvail: _l10nAvail,
+                            localization: widget.localization,
                             onStart: _onStart,
                           ),
                   ),
@@ -224,35 +215,45 @@ class _LitVerifyAgeScreenState extends State<LitVerifyAgeScreen> {
 
 /// A [LitTitledActionCard] providing feedback after inputting a valid age.
 class _ValidAgeCard extends StatelessWidget {
-  final LitVerifyAgeScreenLocalization localizationData;
+  final LitVerifyAgeScreenLocalization? localization;
   final bool isValidAge;
+  final bool l10nAvail;
   final void Function() onStart;
   const _ValidAgeCard(
       {Key? key,
-      required this.localizationData,
+      required this.localization,
       required this.isValidAge,
+      required this.l10nAvail,
       required this.onStart})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return LitTitledActionCard(
-      title: localizationData.successCardTitle,
-      subtitle: localizationData.successCardSubtitle,
+      title: l10nAvail
+          ? localization!.successCardTitle
+          : LeitmotifLocalizations.of(context).verifyAgeScreenSuccessTitle,
+      subtitle: l10nAvail
+          ? localization!.successCardSubtitle
+          : LeitmotifLocalizations.of(context).verifyAgeScreenSuccessSubtitle,
       child: Column(
         children: [
           _InfoDescription(
-            localizationData: localizationData,
+            l10nAvail: l10nAvail,
+            localization: localization,
           ),
           _AgeIndicator(
             isValidAge: isValidAge,
-            localizationData: localizationData,
+            l10nAvail: l10nAvail,
+            localization: localization,
           ),
         ],
       ),
       actionButtonData: [
         ActionButtonData(
-          title: "Start",
+          title: l10nAvail
+              ? localization!.startLabel
+              : LeitmotifLocalizations.of(context).startLabel,
           onPressed: onStart,
           backgroundColor: Colors.white,
           accentColor: Colors.white,
@@ -264,14 +265,17 @@ class _ValidAgeCard extends StatelessWidget {
 
 /// A [LitTitledActionCard] allowing the user to input the date of birth.
 class _InvalidAgeCard extends StatelessWidget {
-  final LitVerifyAgeScreenLocalization localizationData;
+  final LitVerifyAgeScreenLocalization? localization;
+  final bool l10nAvail;
+
   final DateTime? dateOfBirth;
   final bool isValidAge;
   final int ageInYears;
   final void Function() onSubmit;
   const _InvalidAgeCard({
     Key? key,
-    required this.localizationData,
+    required this.localization,
+    required this.l10nAvail,
     required this.dateOfBirth,
     required this.isValidAge,
     required this.ageInYears,
@@ -282,19 +286,25 @@ class _InvalidAgeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitTitledActionCard(
-      title: localizationData.errorCardTitle,
-      subtitle: localizationData.errorCardSubtitle,
+      title: l10nAvail
+          ? localization!.selectLabel
+          : LeitmotifLocalizations.of(context).selectLabel,
+      subtitle: l10nAvail
+          ? localization!.ageInputLabel
+          : LeitmotifLocalizations.of(context).ageInputLabel,
       child: Column(
         children: [
           _InfoDescription(
-            localizationData: localizationData,
+            l10nAvail: l10nAvail,
+            localization: localization,
           ),
           dateOfBirth != null
               ? Padding(
                   padding: _padding,
                   child: _AgeIndicator(
+                    l10nAvail: l10nAvail,
                     isValidAge: isValidAge,
-                    localizationData: localizationData,
+                    localization: localization,
                   ),
                 )
               : SizedBox(),
@@ -302,10 +312,10 @@ class _InvalidAgeCard extends StatelessWidget {
       ),
       actionButtonData: [
         ActionButtonData(
-          title: localizationData.submitButtonLabel,
+          title: l10nAvail
+              ? localization!.submitLabel
+              : LeitmotifLocalizations.of(context).submitLabel,
           onPressed: onSubmit,
-          backgroundColor: Colors.white,
-          accentColor: Colors.white,
         ),
       ],
     );
@@ -313,11 +323,13 @@ class _InvalidAgeCard extends StatelessWidget {
 }
 
 class _AgeIndicator extends StatelessWidget {
-  final LitVerifyAgeScreenLocalization localizationData;
+  final LitVerifyAgeScreenLocalization? localization;
+  final bool l10nAvail;
   final bool isValidAge;
   const _AgeIndicator({
     Key? key,
-    required this.localizationData,
+    required this.localization,
+    required this.l10nAvail,
     required this.isValidAge,
   }) : super(key: key);
 
@@ -331,8 +343,13 @@ class _AgeIndicator extends StatelessWidget {
               width: constraints.maxWidth - 32.0 - 8.0,
               child: Text(
                 isValidAge
-                    ? localizationData.successTextBody
-                    : localizationData.errorTextBody,
+                    ? l10nAvail
+                        ? localization!.descriptionBody
+                        : LeitmotifLocalizations.of(context)
+                            .verifyAgeScreenSuccessBody
+                    : l10nAvail
+                        ? localization!.descriptionBody
+                        : LeitmotifLocalizations.of(context).invalidInputBody,
                 style: LitSansSerifStyles.body2,
               ),
             ),
@@ -388,17 +405,22 @@ class _ValidityIconContainer extends StatelessWidget {
 
 /// A Flutter widget displaying a text for what backups are used for.
 class _InfoDescription extends StatelessWidget {
-  final LitVerifyAgeScreenLocalization localizationData;
+  final LitVerifyAgeScreenLocalization? localization;
+  final bool l10nAvail;
+
   const _InfoDescription({
     Key? key,
-    required this.localizationData,
+    required this.localization,
+    required this.l10nAvail,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return LitDescriptionTextBox(
       padding: const EdgeInsets.all(0),
-      text: localizationData.descriptionTextBody,
+      text: l10nAvail
+          ? localization!.descriptionBody
+          : LeitmotifLocalizations.of(context).verifyAgeScreenDescriptionBody,
     );
   }
 }
