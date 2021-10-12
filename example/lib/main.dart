@@ -25,6 +25,14 @@ class _LeitmotifExampleState extends State<LeitmotifExample> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Leitmotif',
+      localizationsDelegates: const [
+        LeitmotifLocalizationsDelegate(),
+        DefaultMaterialLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', ''),
+        Locale('de', ''),
+      ],
       home: ExampleHomeScreen(),
     );
   }
