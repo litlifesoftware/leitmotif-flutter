@@ -31,10 +31,13 @@ class LeitmotifLocalizations {
     // 'English' localization
     'en': const {
       _Keys.submitLabel: 'Submit',
+      _Keys.applyLabel: 'Apply',
       _Keys.cancelLabel: 'Cancel',
       _Keys.startLabel: 'Start',
       _Keys.selectLabel: 'Select',
+      _Keys.resetLabel: 'Reset',
       _Keys.dateInputLabel: 'Enter Date',
+      _Keys.colorInputLabel: 'Enter Color',
       _Keys.ageInputLabel: 'Enter your Age',
       _Keys.ageRequiredLabel: 'This app does need your age',
       _Keys.dayOfWeek1: 'Monday',
@@ -68,14 +71,19 @@ class LeitmotifLocalizations {
               "on this app. We won't send any data to" +
               " " +
               "anyone. Your age will not be shared.",
+      _Keys.creditsLabel: 'Credits',
+      _Keys.fullyTransparentLabel: 'Color is fully transparent',
     },
     // 'German' localization
     'de': const {
       _Keys.submitLabel: 'Bestätigen',
+      _Keys.applyLabel: 'Anwenden',
       _Keys.cancelLabel: 'Abbrechen',
       _Keys.startLabel: 'Start',
-      _Keys.selectLabel: 'Select',
+      _Keys.selectLabel: 'Auswählen',
+      _Keys.resetLabel: 'Zurücksetzen',
       _Keys.dateInputLabel: 'Datum eingeben',
+      _Keys.colorInputLabel: 'Enter Color',
       _Keys.ageInputLabel: 'Gib dein Alter ein',
       _Keys.ageRequiredLabel: 'Diese App benötigt dein Alter',
       _Keys.dayOfWeek1: 'Montag',
@@ -109,6 +117,8 @@ class LeitmotifLocalizations {
               "Diese App wird keine Daten weitergeben." +
               " " +
               "Dein Alter wird nicht geteilt.",
+      _Keys.creditsLabel: 'Mitwirkende',
+      _Keys.fullyTransparentLabel: 'Diese Farbe ist vollständig transparent',
     },
   };
 
@@ -119,12 +129,24 @@ class LeitmotifLocalizations {
     return _localizedValues[locale.languageCode]![_Keys.submitLabel]!;
   }
 
+  String get applyLabel {
+    return _localizedValues[locale.languageCode]![_Keys.applyLabel]!;
+  }
+
   String get cancelLabel {
     return _localizedValues[locale.languageCode]![_Keys.cancelLabel]!;
   }
 
+  String get resetLabel {
+    return _localizedValues[locale.languageCode]![_Keys.resetLabel]!;
+  }
+
   String get dateInputLabel {
     return _localizedValues[locale.languageCode]![_Keys.dateInputLabel]!;
+  }
+
+  String get colorInputLabel {
+    return _localizedValues[locale.languageCode]![_Keys.colorInputLabel]!;
   }
 
   String get ageInputLabel {
@@ -246,6 +268,14 @@ class LeitmotifLocalizations {
     return _localizedValues[locale.languageCode]![
         _Keys.verifyAgeScreenDescriptionBody]!;
   }
+
+  String get creditsLabel {
+    return _localizedValues[locale.languageCode]![_Keys.creditsLabel]!;
+  }
+
+  String get fullyTransprentLabel {
+    return _localizedValues[locale.languageCode]![_Keys.fullyTransparentLabel]!;
+  }
 }
 
 /// A Leitmotif delegate class initializing the [LeitmotifLocalizations].
@@ -276,10 +306,14 @@ class LeitmotifLocalizationsDelegate
 /// [_Keys] property to enforce integrity.
 class _Keys {
   static const String submitLabel = 'submitLabel';
+  static const String applyLabel = 'applyLabel';
+
   static const String cancelLabel = 'cancelLabel';
   static const String startLabel = 'startLabel';
-  static const String selectLabel = 'select';
+  static const String selectLabel = 'selectLabel';
+  static const String resetLabel = 'resetLabel';
   static const String dateInputLabel = 'dateInputLabel';
+  static const String colorInputLabel = 'colorInputLabel';
   static const String ageInputLabel = 'ageInputLabel';
   static const String ageRequiredLabel = 'ageRequiredLabel';
   static const String dayOfWeek1 = 'dayOfWeek1';
@@ -310,4 +344,6 @@ class _Keys {
   static const String verifyAgeScreenSuccessBody = 'verifyAgeScreenSuccessBody';
   static const String verifyAgeScreenDescriptionBody =
       'verifyAgeScreenDescriptionBody';
+  static const String creditsLabel = 'creditsLabel';
+  static const String fullyTransparentLabel = 'fullyTransprentLabel';
 }

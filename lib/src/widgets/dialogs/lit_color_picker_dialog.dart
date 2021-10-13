@@ -1,43 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:leitmotif/buttons.dart';
-import 'package:leitmotif/dialogs.dart';
 import 'package:leitmotif/leitmotif.dart';
-import 'package:leitmotif/slider.dart';
-import 'package:leitmotif/styles.dart';
 
-/// A dialog widget allowing to edit and create [Color] objects.
+/// The [LitColorPickerDialog]'s `Localization`.
 ///
-/// Each color channel will have its own slider.
-class LitColorPickerDialog extends StatefulWidget {
-  /// Creates a [LitColorPickerDialog].
-  const LitColorPickerDialog({
-    Key? key,
-    this.titleText = "Pick a color",
-    this.transparentColorText = "Color is fully transparent",
-    this.resetLabel = "reset",
-    this.applyLabel = "apply",
-    this.initialColor = const Color(0x00000000),
-    required this.onApplyColor,
-  }) : super(key: key);
-
-  /// The dialog's title text.
-  final String titleText;
-
-  /// The text display whenever the currently edited color is fully transparent.
-  final String transparentColorText;
-
-  /// The text label on the 'reset' button.
+/// Contains the localized strings used on the dialog.
+class LitColorPickerDialogLocalization {
+  final String title;
+  final String fullyTransparentLabel;
+  final String applyLabel;
   final String resetLabel;
 
-  /// The text label on the 'apply' button.
-  final String applyLabel;
+  const LitColorPickerDialogLocalization({
+    required this.title,
+    required this.fullyTransparentLabel,
+    required this.applyLabel,
+    required this.resetLabel,
+  });
+}
+
+/// A Leitmotif `dialog` widget allowing to edit and create [Color] objects.
+///
+/// Inputting color will be done using one slider per color channel.
+class LitColorPickerDialog extends StatefulWidget {
+  /// The localization applied on this dialog.
+  ///
+  /// Uses the `LeitmotifLocalizations` on default.
+  final LitColorPickerDialogLocalization? localization;
 
   /// The initial slider values provided as a [Color] object.
   final Color initialColor;
 
+  /// The dialog's margin.
+  final EdgeInsets margin;
+
   /// The callback to method to pass the edited [Color] back onto the parent
   /// widget.
   final void Function(Color) onApplyColor;
+
+  /// Creates a [LitColorPickerDialog].
+  const LitColorPickerDialog({
+    Key? key,
+    this.localization,
+    this.margin = const EdgeInsets.symmetric(
+      horizontal: 16.0,
+      vertical: 8.0,
+    ),
+    this.initialColor = const Color(0x00000000),
+    required this.onApplyColor,
+  }) : super(key: key);
 
   @override
   _LitColorPickerDialogState createState() => _LitColorPickerDialogState();
@@ -71,6 +81,11 @@ class _LitColorPickerDialogState extends State<LitColorPickerDialog>
   /// Returns the current [_appearAnmCon]'s animation value.
   double get _appearAnmVal {
     return _appearAnmCon.value;
+  }
+
+  /// Returs the animated opacity.
+  double get _opacity {
+    return 0.5 + (_appearAnmVal * 0.5);
   }
 
   /// Sets the [a] value.
@@ -122,6 +137,10 @@ class _LitColorPickerDialogState extends State<LitColorPickerDialog>
     LitRouteController(context).closeDialog();
   }
 
+  bool get _l10nAvail {
+    return widget.localization != null;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -147,31 +166,35 @@ class _LitColorPickerDialogState extends State<LitColorPickerDialog>
   @override
   Widget build(BuildContext context) {
     return LitTitledDialog(
-      titleText: widget.titleText,
+      titleText: _l10nAvail
+          ? widget.localization!.title
+          : LeitmotifLocalizations.of(context).colorInputLabel,
       actionButtons: [
         DialogActionButton(
+          accentColor: LitColors.mediumGrey,
           backgroundColor: LitColors.mediumGrey,
           style: LitSansSerifStyles.button.copyWith(
             color: Colors.white,
           ),
           onPressed: _onReset,
-          label: widget.resetLabel,
+          label: _l10nAvail
+              ? widget.localization!.resetLabel
+              : LeitmotifLocalizations.of(context).resetLabel,
         ),
         DialogActionButton(
           onPressed: _handleOnApply,
-          label: widget.applyLabel,
+          label: _l10nAvail
+              ? widget.localization!.applyLabel
+              : LeitmotifLocalizations.of(context).applyLabel,
         )
       ],
-      margin: const EdgeInsets.symmetric(
-        horizontal: 16.0,
-        vertical: 8.0,
-      ),
+      margin: widget.margin,
       child: AnimatedBuilder(
         animation: _appearAnmCon,
         builder: (BuildContext context, Widget? _) {
           return AnimatedOpacity(
             duration: _appearAnmCon.duration!,
-            opacity: 0.5 + (_appearAnmVal * 0.5),
+            opacity: _opacity,
             child: Column(
               children: [
                 _ColorMixer(
@@ -190,7 +213,9 @@ class _LitColorPickerDialogState extends State<LitColorPickerDialog>
                   b: b,
                   g: g,
                   r: r,
-                  trnColorText: widget.transparentColorText,
+                  trnColorText: _l10nAvail
+                      ? widget.localization!.fullyTransparentLabel
+                      : LeitmotifLocalizations.of(context).fullyTransprentLabel,
                 ),
               ],
             ),
@@ -359,7 +384,7 @@ class _ValIndicator extends StatelessWidget {
 }
 
 /// A widget allowing to set a specific color channel value based on the
-/// boundaries of each channel (0-255/);
+/// boundaries of each channel (0-255);
 class _ColorSlider extends StatelessWidget {
   /// Creates a [_ColorSlider].
   const _ColorSlider({
