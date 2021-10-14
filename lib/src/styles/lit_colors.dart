@@ -29,6 +29,7 @@ class LitColors {
   static const Color grey150 = const Color(0xFFDEDEDE);
   static const Color grey200 = const Color(0xFFC7C7C7);
   static const Color grey300 = const Color(0xFFD1CDCD);
+  static const Color grey350 = const Color(0xFF757575);
   static const Color grey400 = const Color(0xFF686868);
   static const Color grey500 = const Color(0xFF444444);
   static const Color grey600 = const Color(0xFF1D2027);

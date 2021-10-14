@@ -455,8 +455,8 @@ class __ExampleScreenState extends State<_ExampleScreen> {
                         vertical: 32.0,
                       ),
                       child: LitUserIcon(
-                        username: String.fromCharCode(_userIconChar.toInt()),
-                        primaryColor: colorPickerBtnColor,
+                        name: String.fromCharCode(_userIconChar.toInt()),
+                        color: colorPickerBtnColor,
                         onPressed: () => {
                           showDialog(
                             context: context,

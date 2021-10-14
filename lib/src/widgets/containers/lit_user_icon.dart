@@ -4,55 +4,40 @@ import 'package:leitmotif/styles.dart';
 import 'package:leitmotif/text.dart';
 import 'package:leitmotif/utility.dart';
 
-/// A widget displaying an username on a colored background.
+/// A Leitmotif `container` widget displaying a stylized username on a
+/// decorated background.
 ///
 /// The username will be converted into an acronym to keep the displayed text
 /// as short as possible. The username is split on each space character.
 class LitUserIcon extends StatefulWidget {
-  /// Creates a [LitUserIcon].
-  const LitUserIcon({
-    Key? key,
-    this.size = 96.0,
-    this.primaryColor = Colors.white,
-    this.contrastColor = Colors.white,
-    this.username = "Some One",
-    this.boxShadow = LitBoxShadows.md,
-    this.borderRadius = const BorderRadius.all(
-      const Radius.circular(38.0),
-    ),
-    this.fontSize = 34.0,
-    this.onPressed,
-    this.margin = const EdgeInsets.symmetric(
-      horizontal: 8.0,
-    ),
-  }) : super(key: key);
-
   /// The size which accounts for both, width and height.
   final double size;
 
   /// The primary color used to generate the gradient background.
-  final Color primaryColor;
+  final Color color;
 
   /// The contrasting color used to generate the gradient background.
-  final Color contrastColor;
+  final Color accentColor;
 
   /// The displayed username, whose text is converted into an acronym.
-  final String username;
+  final String name;
 
   /// The container's box shadow.
   final List<BoxShadow> boxShadow;
 
-  /// The container's border radius.
-  final BorderRadius borderRadius;
-
   /// Called once the container has been pressed.
   final void Function()? onPressed;
 
-  /// The text font size.
-  final double fontSize;
-
-  /// The margin surrounding the text.
-  final EdgeInsets margin;
+  /// Creates a [LitUserIcon].
+  const LitUserIcon({
+    Key? key,
+    this.size = 96.0,
+    this.color = Colors.white,
+    this.accentColor = Colors.white,
+    required this.name,
+    this.boxShadow = LitBoxShadows.md,
+    this.onPressed,
+  }) : super(key: key);
 
   @override
   __UserIconState createState() => __UserIconState();
@@ -60,24 +45,18 @@ class LitUserIcon extends StatefulWidget {
 
 class __UserIconState extends State<LitUserIcon> {
   /// Returns a stylized user color.
-  Color get _primaryColor {
-    return widget.primaryColor.desat(0.75);
+  Color get _color {
+    return widget.color.desat(0.75);
   }
 
-  /// Returns a [Color] to contrast with the [_primaryColor].
-  Color get _contrastColor {
-    return widget.contrastColor;
-  }
-
-//TODO refactor
   /// Returns the initials of the user derived by the username.
-  String get _usernameInitials {
+  String get _initials {
     String initals = "";
-    List<String> names = widget.username.split(" ");
-
+    List<String> names = widget.name.split(" ");
+    bool exceeded = initals.length < 3;
     // Add the first character of each substring (name elements).
     for (String nameElement in names) {
-      if (initals.length < 3) {
+      if (exceeded) {
         initals = initals +
             // If there is only one element and the element's length
             //  does not exceed three characters, adopt the whole element's
@@ -95,39 +74,30 @@ class __UserIconState extends State<LitUserIcon> {
   /// Returns either a dark or a light themed text color based on the contrast
   /// ratio.
   Color get _textColor {
-    // return _primaryColor.computeLuminance() >= 0.5
-    //     ? Color(0xFF757575)
-    //     : Colors.white;
     Color light = Colors.white;
-    Color dark = Color(0xFF757575);
-    return _primaryColor.applyColorByContrast(light, dark);
+    Color dark = LitColors.grey350;
+
+    return _color.applyColorByContrast(light, dark);
   }
 
-  List<BoxShadow> get _boxShadow {
-    if (widget.size > 96.0) {
-      return LitBoxShadows.lg;
-    }
-    if (widget.size > 42.0) {
-      return LitBoxShadows.md;
-    }
-    return LitBoxShadows.sm;
-  }
-
+  /// Returns the font size in relation to the provided size.
   double get _fontSize {
     return widget.size / 3.75;
   }
 
+  /// Returns the margin in relation to the provided size.
   EdgeInsets get _margin {
     return EdgeInsets.all(widget.size / 5);
   }
 
+  /// Returns the border radius in relation to the provided size.
   BorderRadius get _borderRadius {
     return BorderRadius.all(
       Radius.circular(widget.size / 2.5),
     );
   }
 
-  /// Calls the provided [widget.onToggleViewMode] callback.
+  /// Calls the provided [widget.onPressed] callback.
   void _onTap() {
     if (widget.onPressed != null) {
       widget.onPressed!();
@@ -159,7 +129,7 @@ class __UserIconState extends State<LitUserIcon> {
               gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
-                colors: [Colors.white, _primaryColor],
+                colors: [Colors.white, _color],
               ),
               borderRadius: _borderRadius,
             ),
@@ -167,7 +137,7 @@ class __UserIconState extends State<LitUserIcon> {
               child: Padding(
                 padding: _margin,
                 child: ClippedText(
-                  _usernameInitials,
+                  _initials,
                   style: LitSansSerifStyles.h5.copyWith(
                     fontSize: _fontSize,
                     color: _textColor,
