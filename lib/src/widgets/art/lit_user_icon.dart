@@ -4,7 +4,7 @@ import 'package:leitmotif/styles.dart';
 import 'package:leitmotif/text.dart';
 import 'package:leitmotif/utility.dart';
 
-/// A Leitmotif `container` widget displaying a stylized username on a
+/// A Leitmotif `art` widget displaying a stylized username on a
 /// decorated background.
 ///
 /// The username will be converted into an acronym to keep the displayed text
