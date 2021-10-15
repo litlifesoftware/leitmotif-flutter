@@ -44,6 +44,8 @@ class LitCreditsScreen extends StatefulWidget {
 class _LitCreditsScreenState extends State<LitCreditsScreen>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
+  late LitTweenController _tweenController;
+  late ScrollController _scrollController;
 
   /// States whether the custom localizations are available.
   bool get _l10nAvail {
@@ -52,11 +54,13 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
 
   @override
   void initState() {
-    super.initState();
+    _scrollController = ScrollController();
     _animationController = AnimationController(
       vsync: this,
       duration: widget.animationDuration,
     )..forward();
+    _tweenController = LitTweenController(_animationController);
+    super.initState();
   }
 
   @override
@@ -68,7 +72,8 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
   @override
   Widget build(BuildContext context) {
     return LitScaffold(
-      appBar: LitAppBar(
+      appBar: FixedOnScrollTitledAppbar(
+        scrollController: _scrollController,
         title: _l10nAvail
             ? widget.localization!.title
             : LeitmotifLocalizations.of(context).creditsLabel,
@@ -93,6 +98,8 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
                     builder: (_context, _) {
                       return _AnimatedContent(
                         animationController: _animationController,
+                        tweenController: _tweenController,
+                        scrollController: _scrollController,
                         appDescription: widget.appDescription,
                         appName: widget.appName,
                         art: widget.art,
@@ -101,6 +108,8 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
                     },
                     child: _AnimatedContent(
                       animationController: _animationController,
+                      tweenController: _tweenController,
+                      scrollController: _scrollController,
                       appDescription: widget.appDescription,
                       appName: widget.appName,
                       art: widget.art,
@@ -120,6 +129,8 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
 /// The [LitCreditsScreen]'s animated content.
 class _AnimatedContent extends StatelessWidget {
   final AnimationController animationController;
+  final LitTweenController tweenController;
+  final ScrollController scrollController;
   final List<CreditData> credits;
   final String appName;
   final String? appDescription;
@@ -127,6 +138,8 @@ class _AnimatedContent extends StatelessWidget {
   const _AnimatedContent({
     Key? key,
     required this.animationController,
+    required this.tweenController,
+    required this.scrollController,
     required this.credits,
     required this.appName,
     required this.appDescription,
@@ -149,6 +162,7 @@ class _AnimatedContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return LitScrollbar(
       child: ScrollableColumn(
+        controller: scrollController,
         padding: const EdgeInsets.symmetric(
           vertical: 48.0,
           horizontal: 16.0,
@@ -180,6 +194,7 @@ class _AnimatedContent extends StatelessWidget {
           _CreditList(
             credits: credits,
             animationController: animationController,
+            tweenController: tweenController,
             opacity: _opacity,
           ),
         ],
@@ -244,18 +259,16 @@ class _Title extends StatelessWidget {
 /// A widget displaying a list of credit items.
 class _CreditList extends StatelessWidget {
   final AnimationController animationController;
+  final LitTweenController tweenController;
   final List<CreditData> credits;
   final double opacity;
   const _CreditList({
     Key? key,
     required this.animationController,
+    required this.tweenController,
     required this.credits,
     required this.opacity,
   }) : super(key: key);
-
-  double get _aniVal {
-    return animationController.value;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -263,17 +276,15 @@ class _CreditList extends StatelessWidget {
       builder: (context) {
         List<Widget> items = [];
         for (int i = 0; i < credits.length; i++) {
-          double tranVal = 100 / credits.length * i;
-
           items.add(
             AnimatedOpacity(
               duration: animationController.duration!,
               opacity: opacity,
               child: Transform(
-                transform: Matrix4.translationValues(
-                  0,
-                  (-tranVal + tranVal * _aniVal),
-                  0,
+                transform: tweenController.listItemTransform(
+                  i,
+                  credits.length,
+                  y: 150.0,
                 ),
                 child: _CreditItem(
                   credit: credits[i],
@@ -282,7 +293,6 @@ class _CreditList extends StatelessWidget {
             ),
           );
         }
-
         return Column(
           children: items,
         );
