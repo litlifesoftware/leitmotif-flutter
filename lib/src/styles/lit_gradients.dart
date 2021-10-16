@@ -29,8 +29,8 @@ class LitGradients {
     begin: Alignment.topRight,
     end: Alignment.bottomLeft,
     colors: const [
-      LitColors.mediumGrey,
-      LitColors.darkBlue,
+      LitColors.green500,
+      LitColors.grey600,
     ],
   );
 
@@ -38,8 +38,8 @@ class LitGradients {
     begin: Alignment.topRight,
     end: Alignment.bottomLeft,
     colors: const [
-      LitColors.lightGrey,
-      LitColors.lightPink,
+      LitColors.grey200,
+      LitColors.red200,
     ],
   );
 }

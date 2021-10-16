@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A screen widgets displayed a static loading indicator.
+/// A Leitmotif `screen` widget displaying a fullscreen loading indicator.
 ///
-/// On some fetch-events, dynamic loading indicators are not always recommended.
-/// For instance, a short initialization process on a app startup does not allow
-/// to display a long-lasting animation.
+/// Suitable for major fetching or loading processes.
 class LitStaticLoadingScreen extends StatelessWidget {
-  /// Creates a [LoadingScreen].
+  /// The background's decoration.
+  final BoxDecoration decoration;
+
+  /// The screen's child element.
+  final Widget child;
+
+  /// Creates a [LitStaticLoadingScreen].
   const LitStaticLoadingScreen({
+    this.decoration = const BoxDecoration(
+      gradient: LitGradients.dark,
+    ),
     this.child = const LitInfoIcon(),
     Key? key,
   }) : super(key: key);
-
-  /// The screen's child element. This should optimally be a art widget.
-  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -22,16 +26,7 @@ class LitStaticLoadingScreen extends StatelessWidget {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: const [
-              LitColors.mediumGrey,
-              LitColors.darkBlue,
-            ],
-          ),
-        ),
+        decoration: decoration,
         child: Center(
           child: child,
         ),
