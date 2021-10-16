@@ -2,84 +2,65 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A screen [Widget] displaying package license details.
-///
-/// The provided [packageName] will be displayed alongside its [LicenseEntry]s
-/// which will enable the package to display multiple licenses if necessary.
-class ApplicationLicenseDetailsScreen extends StatefulWidget {
-  final bool darkMode;
+/// A Leitmotif `screen` displaying the provided package's licenses.
+class ApplicationLicenseDetailsScreen extends StatelessWidget {
+  /// The package's name.
   final String packageName;
+
+  /// All licenses associated to the package.
   final List<LicenseEntry> licenseEntries;
-  final TextStyle? licenseTextStyle;
+
+  /// The screen padding.
+  final EdgeInsets padding;
 
   /// Creates an [ApplicationLicenseDetailsScreen].
-  ///
-  /// Define the [darkMode] value for an alternative color scheme.
-  /// Define the [licenseTextStyle] value to alter the default [TextStyle].
   const ApplicationLicenseDetailsScreen({
     Key? key,
-    this.darkMode = false,
     required this.packageName,
     required this.licenseEntries,
-    this.licenseTextStyle,
+    this.padding = const EdgeInsets.symmetric(
+      horizontal: 16.0,
+      vertical: 16.0,
+    ),
   }) : super(key: key);
-
-  @override
-  _ApplicationLicenseDetailsScreenState createState() =>
-      _ApplicationLicenseDetailsScreenState();
-}
-
-class _ApplicationLicenseDetailsScreenState
-    extends State<ApplicationLicenseDetailsScreen> {
-  /// Returns a [List] of [Text] [Widgets]s containing the license
-  /// paragraphs.
-  List<Text> _buildLicenseText(LicenseEntry entry) {
-    List<Text> textList = [];
-    for (LicenseParagraph paragraph in entry.paragraphs) {
-      textList.add(
-        Text(
-          paragraph.text,
-          style: widget.licenseTextStyle ??
-              LitTextStyles.monospace.copyWith(
-                fontSize: 18.0,
-                color: widget.darkMode ? Colors.white : LitColors.mediumGrey,
-              ),
-        ),
-      );
-    }
-    return textList;
-  }
 
   @override
   Widget build(BuildContext context) {
     return LitScaffold(
-      backgroundColor: widget.darkMode ? LitColors.darkBlue : Colors.white,
-      appBar: LitBlurredAppBar(
-        darkMode: widget.darkMode,
-        title: "${widget.packageName}",
-        textStyle: LitTextStyles.sansSerif,
+      backgroundColor: Colors.white,
+      appBar: LitAppBar(
+        title: packageName,
       ),
-      body: ListView.builder(
-        padding: EdgeInsets.only(
-          /// Regarding that the scaffold has no safe area applied due to
-          /// the blurred app bar
-          top: LitBlurredAppBar.height + 16.0,
-          bottom: 16.0,
-          right: 32.0,
-          left: 32.0,
+      body: LitScrollbar(
+        child: ListView.builder(
+          padding: padding,
+          physics: BouncingScrollPhysics(),
+          itemCount: licenseEntries.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 8.0,
+              ),
+              child: Builder(
+                builder: (context) {
+                  List<Text> children = [];
+                  for (LicenseParagraph paragraph
+                      in licenseEntries[index].paragraphs) {
+                    children.add(
+                      Text(
+                        paragraph.text,
+                        style: LitMonospaceStyles.body2,
+                      ),
+                    );
+                  }
+                  return Column(
+                    children: children,
+                  );
+                },
+              ),
+            );
+          },
         ),
-        physics: BouncingScrollPhysics(),
-        itemCount: widget.licenseEntries.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 8.0,
-            ),
-            child: Column(
-              children: _buildLicenseText(widget.licenseEntries[index]),
-            ),
-          );
-        },
       ),
     );
   }
