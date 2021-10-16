@@ -1,30 +1,22 @@
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A screen [Widget] to display all packages registered in the application.
+/// A Leitmotif `screen` widget displaying all packages registered in the
+/// application.
 ///
-/// The packages are displayed in a [ListView] and are sorted by their name
-/// in alpha-nummeric order. To display the license text, the user needs to
-/// navigate to the details view by tapping on one of the list items.
+/// Allows to navigate to a detail screen to view the package's license.
 class ApplicationLicensesScreen extends StatefulWidget {
-  final bool darkMode;
-  final String title;
+  /// The screen's title.
+  ///
+  /// Defaults to the localized screen title.
+  final String? title;
   final Duration animationDuration;
 
   /// Creates an [ApplicationLicensesScreen].
-  ///
-  /// * [darkMode] states whether to apply the dark mode specific styling.
-  ///
-  /// * [title] is the title displayed on the app bar.
-  ///
-  /// * [animationDuration] is the duration the initial animation should have.
   const ApplicationLicensesScreen({
     Key? key,
-    this.darkMode = false,
-    this.title = "Open Source Licenses",
+    this.title,
     this.animationDuration = const Duration(
       milliseconds: 450,
     ),
@@ -37,124 +29,87 @@ class ApplicationLicensesScreen extends StatefulWidget {
 
 class _ApplicationLicensesScreenState extends State<ApplicationLicensesScreen>
     with TickerProviderStateMixin {
-  late AnimationController animationController;
-  late ApplicationLicensesController licensesController;
+  late AnimationController _animationController;
+  late LitTweenController _tweenController;
+  late ApplicationLicensesController _licensesController;
+  final ScrollController _scrollController = ScrollController();
 
-  /// Calculates a tween [Animation] based on the iterated listview index and
-  /// the total list length possible (defined by the [PackageLicenses]).
-  Animation _calcTweenAnimation(int index, PackageLicenses licenses) {
-    return Tween<double>(
-            begin: 1 - (index / licenses.packages.length), end: 1.0)
-        .animate(animationController);
-  }
-
-  /// Returns a [Matrix4], which a tween animation has been applied on.
-  Matrix4 _transform(int index, PackageLicenses licenses) {
-    return Matrix4.translationValues(
-        -300 + (300 * _calcTweenAnimation(index, licenses).value as double),
-        0,
-        0);
-  }
-
-  void _onPackageListItemPressed(
-      AsyncSnapshot<PackageLicenses> packageLicencesSnapshot, int index) {
+  /// Navigates to the [ApplicationLicenseDetailsScreen].
+  void _showDetailScreen(PackageLicenseBundle packageLicenseBundle, int index) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
           final List<int> bindings =
-              licensesController.getPackageLicenseContracts(
-                  packageLicencesSnapshot.data!.packageLicenseJunctions,
-                  packageLicencesSnapshot.data!.packages.elementAt(index))!;
+              _licensesController.getPackageLicenseContracts(
+            packageLicenseBundle.packageLicenseJunctions,
+            packageLicenseBundle.packages.elementAt(index),
+          )!;
 
           return ApplicationLicenseDetailsScreen(
-            darkMode: widget.darkMode,
-            packageName:
-                packageLicencesSnapshot.data!.packages.elementAt(index),
-            licenseEntries: licensesController.getLicenseEntries(
-                bindings, packageLicencesSnapshot.data!.licenses),
+            packageName: packageLicenseBundle.packages.elementAt(index),
+            licenseEntries: _licensesController.getLicenseEntries(
+              bindings,
+              packageLicenseBundle.licenses,
+            ),
           );
         },
       ),
     );
   }
 
-  String _getPackageListItemLabel(
-      AsyncSnapshot<PackageLicenses> packageLicencesSnapshot, int index) {
-    return "${packageLicencesSnapshot.data!.packages.elementAt(index)}";
-  }
-
   @override
   void initState() {
-    super.initState();
-    licensesController = ApplicationLicensesController();
-    animationController = AnimationController(
+    _licensesController = ApplicationLicensesController();
+    _animationController = AnimationController(
       vsync: this,
       duration: widget.animationDuration,
     );
+    _tweenController = LitTweenController(_animationController);
+    super.initState();
   }
 
   @override
   void dispose() {
-    animationController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return LitScaffold(
-      backgroundColor: widget.darkMode ? LitColors.darkBlue : Colors.white,
-      appBar: LitBlurredAppBar(
-        title: widget.title,
-        darkMode: widget.darkMode,
+      backgroundColor: Colors.white,
+      appBar: FixedOnScrollTitledAppbar(
+        scrollController: _scrollController,
+        title: widget.title ?? LeitmotifLocalizations.of(context).licensesLabel,
       ),
       body: FutureBuilder(
-        future: licensesController.licenses,
+        future: _licensesController.licenses,
         builder: (BuildContext context,
-            AsyncSnapshot<PackageLicenses> packageLicencesSnapshot) {
-          return packageLicencesSnapshot.hasData
+            AsyncSnapshot<PackageLicenseBundle> bundleSnap) {
+          return bundleSnap.hasData
               ? AnimatedBuilder(
-                  animation: animationController,
+                  animation: _animationController,
                   builder: (context, child) {
-                    animationController.forward();
-
-                    return ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(
-                        // Regarding the blurred app bar height, which has no
-                        // safe area applied on the scaffold.
-                        top: LitBlurredAppBar.height + 16.0,
-                        bottom: 16.0,
-                      ),
-                      itemCount: packageLicencesSnapshot.data!.packages.length,
-                      itemBuilder: (context, index) {
-                        return Transform(
-                          transform: _transform(
-                            index,
-                            packageLicencesSnapshot.data!,
-                          ),
-                          child: AnimatedOpacity(
-                            opacity: (_calcTweenAnimation(
-                                    index, packageLicencesSnapshot.data!)
-                                .value),
-                            duration: animationController.duration!,
-                            child: _PackageListItem(
-                              darkMode: widget.darkMode,
-                              label: _getPackageListItemLabel(
-                                packageLicencesSnapshot,
-                                index,
-                              ),
-                              onPressed: () => _onPackageListItemPressed(
-                                packageLicencesSnapshot,
-                                index,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+                    // Only play the animation once fetching has been completed.
+                    _animationController.forward();
+                    return _AnimatedContent(
+                      animationController: _animationController,
+                      packageLicenseBundle: bundleSnap.data!,
+                      onShowDetailScreen: _showDetailScreen,
+                      scrollController: _scrollController,
+                      tweenController: _tweenController,
                     );
-                  })
-              : _LoadingIndicator(
-                  darkMode: widget.darkMode,
+                  },
+                  child: _AnimatedContent(
+                    animationController: _animationController,
+                    packageLicenseBundle: bundleSnap.data!,
+                    onShowDetailScreen: _showDetailScreen,
+                    scrollController: _scrollController,
+                    tweenController: _tweenController,
+                  ),
+                )
+              : Center(
+                  child: JugglingLoadingIndicator(),
                 );
         },
       ),
@@ -162,90 +117,100 @@ class _ApplicationLicensesScreenState extends State<ApplicationLicensesScreen>
   }
 }
 
-/// A package list item widget, whose styling is dependend on the provided
-/// [darkMode] value.
-class _PackageListItem extends StatefulWidget {
+/// The [ApplicationLicensesScreen]'s animated list view.
+class _AnimatedContent extends StatelessWidget {
+  final AnimationController animationController;
+  final LitTweenController tweenController;
+  final ScrollController scrollController;
+  final PackageLicenseBundle packageLicenseBundle;
+  final void Function(PackageLicenseBundle bundle, int index)
+      onShowDetailScreen;
+  const _AnimatedContent({
+    Key? key,
+    required this.animationController,
+    required this.tweenController,
+    required this.scrollController,
+    required this.packageLicenseBundle,
+    required this.onShowDetailScreen,
+  }) : super(key: key);
+
+  /// Returns a specific package name using the provided package bundle and
+  /// its index.
+  String _getPackageListItemLabelAt(int index) {
+    return packageLicenseBundle.packages.elementAt(index);
+  }
+
+  /// Returns the currently animated opacity.
+  double get _opacity {
+    return 0.5 + 0.5 * animationController.value;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LitScrollbar(
+      scrollController: scrollController,
+      child: ListView.builder(
+        controller: scrollController,
+        physics: BouncingScrollPhysics(),
+        padding: EdgeInsets.symmetric(vertical: 16.0),
+        itemCount: packageLicenseBundle.packages.length,
+        itemBuilder: (context, index) {
+          return Transform(
+            transform: tweenController.listItemTransform(
+              index,
+              packageLicenseBundle.licenses.length,
+              x: 300.0,
+            ),
+            child: AnimatedOpacity(
+              opacity: _opacity,
+              duration: animationController.duration!,
+              child: _PackageListItem(
+                label: _getPackageListItemLabelAt(index),
+                onPressed: () => onShowDetailScreen(
+                  packageLicenseBundle,
+                  index,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// A list view item allowing to navigate to the package's detail screen.
+class _PackageListItem extends StatelessWidget {
   final String label;
-  final bool darkMode;
+  final EdgeInsets padding;
   final void Function() onPressed;
 
   /// Creates a [_PackageListItem].
   const _PackageListItem({
     Key? key,
     required this.label,
-    required this.darkMode,
+    this.padding = const EdgeInsets.symmetric(
+      horizontal: 16.0,
+      vertical: 8.0,
+    ),
     required this.onPressed,
   }) : super(key: key);
 
   @override
-  __PackageListItemState createState() => __PackageListItemState();
-}
-
-class __PackageListItemState extends State<_PackageListItem> {
-  @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 8.0,
-        horizontal: 16.0,
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(
-          12.0,
-        ),
-        onTap: widget.onPressed,
+      padding: padding,
+      child: LitPushedThroughButton(
         child: Container(
-          height: 52.0,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            color: widget.darkMode ? LitColors.mediumGrey : Colors.white,
-            borderRadius: BorderRadius.circular(
-              12.0,
+          height: 42.0,
+          child: Center(
+            child: Text(
+              label,
+              style: LitSansSerifStyles.body2,
             ),
-            boxShadow: [
-              BoxShadow(
-                color: widget.darkMode ? Colors.black38 : Colors.black38,
-                blurRadius: widget.darkMode ? 10.0 : 15.0,
-                offset: Offset(-2.0, -2.0),
-                spreadRadius: 2.0,
-              ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Center(
-                child: Text(
-              widget.label,
-              style: LitTextStyles.sansSerif.copyWith(
-                color: widget.darkMode ? Colors.white : LitColors.mediumGrey,
-              ),
-            )),
           ),
         ),
-      ),
-    );
-  }
-}
-
-/// A loading indicator, whose styling is dependend on the [darkMode] value.
-class _LoadingIndicator extends StatelessWidget {
-  final bool darkMode;
-  const _LoadingIndicator({
-    Key? key,
-    required this.darkMode,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        height: 50.0,
-        width: 50.0,
-        child: JugglingLoadingIndicator(
-          indicatorColor: darkMode ? Colors.white : LitColors.mediumGrey,
-          backgroundColor: darkMode ? LitColors.mediumGrey : Colors.white,
-          shadowOpacity: darkMode ? 0.1 : 0.25,
-        ),
+        onPressed: onPressed,
       ),
     );
   }

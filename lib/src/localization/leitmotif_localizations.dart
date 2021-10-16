@@ -73,6 +73,8 @@ class LeitmotifLocalizations {
               "anyone. Your age will not be shared.",
       _Keys.creditsLabel: 'Credits',
       _Keys.fullyTransparentLabel: 'Color is fully transparent',
+      _Keys.licensesLabel: 'Licenses',
+      _Keys.backLabel: 'Zurück',
     },
     // 'German' localization
     'de': const {
@@ -119,6 +121,8 @@ class LeitmotifLocalizations {
               "Dein Alter wird nicht geteilt.",
       _Keys.creditsLabel: 'Mitwirkende',
       _Keys.fullyTransparentLabel: 'Diese Farbe ist vollständig transparent',
+      _Keys.licensesLabel: 'Lizenzen',
+      _Keys.backLabel: 'Zurück',
     },
   };
 
@@ -276,6 +280,14 @@ class LeitmotifLocalizations {
   String get fullyTransprentLabel {
     return _localizedValues[locale.languageCode]![_Keys.fullyTransparentLabel]!;
   }
+
+  String get licensesLabel {
+    return _localizedValues[locale.languageCode]![_Keys.licensesLabel]!;
+  }
+
+  String get backLabel {
+    return _localizedValues[locale.languageCode]![_Keys.backLabel]!;
+  }
 }
 
 /// A Leitmotif delegate class initializing the [LeitmotifLocalizations].
@@ -307,11 +319,11 @@ class LeitmotifLocalizationsDelegate
 class _Keys {
   static const String submitLabel = 'submitLabel';
   static const String applyLabel = 'applyLabel';
-
   static const String cancelLabel = 'cancelLabel';
   static const String startLabel = 'startLabel';
   static const String selectLabel = 'selectLabel';
   static const String resetLabel = 'resetLabel';
+  static const String backLabel = 'backLabel';
   static const String dateInputLabel = 'dateInputLabel';
   static const String colorInputLabel = 'colorInputLabel';
   static const String ageInputLabel = 'ageInputLabel';
@@ -346,4 +358,5 @@ class _Keys {
       'verifyAgeScreenDescriptionBody';
   static const String creditsLabel = 'creditsLabel';
   static const String fullyTransparentLabel = 'fullyTransprentLabel';
+  static const String licensesLabel = 'licensesLabel';
 }
