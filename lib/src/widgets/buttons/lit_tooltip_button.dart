@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A Container which will show a tooltip while being long pressing. The
-/// provided [child] will wrapped inside the Container.
+/// A Leitmotif `button` widget.
 ///
-/// As tooltip the provided [text] is shown.
+/// Displays a tooltip in front of the provided button ([child]) to display
+/// hints or additional information.
 class LitTooltipContainer extends StatefulWidget {
+  /// The button's background color.
   final Color? backgroundColor;
+
+  /// The child button.
   final Widget child;
+
+  /// The tooltip text.
   final String text;
-  final double borderRadius;
+
+  /// The button border radius.
+  final BorderRadius borderRadius;
+
+  /// The padding.
   final EdgeInsets padding;
 
   /// Creates a [LitTooltipContainer].
@@ -18,7 +27,7 @@ class LitTooltipContainer extends StatefulWidget {
     required this.backgroundColor,
     required this.child,
     required this.text,
-    this.borderRadius = 22.0,
+    this.borderRadius = const BorderRadius.all(Radius.circular(16.0)),
     this.padding = const EdgeInsets.symmetric(
       vertical: 8.0,
       horizontal: 16.0,
@@ -32,12 +41,37 @@ class _LitTooltipContainerState extends State<LitTooltipContainer>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
 
+  /// Handles the long press `start` action.
   void handleLongPressStart(LongPressStartDetails details) {
     _animationController.forward(from: 0.0);
   }
 
+  /// Handles the long press `end` action.
   void handleLongPressEnd(LongPressEndDetails details) {
     _animationController.reverse(from: 1.0);
+  }
+
+  /// Returns an animated box shadow.
+  List<BoxShadow> get _animatedBoxShadow {
+    return [
+      BoxShadow(
+        spreadRadius: 2.0 * _animationController.value,
+        blurRadius: 8.0 * _animationController.value,
+        offset: Offset(
+          2 * -_animationController.value,
+          2 * -_animationController.value,
+        ),
+        color: Colors.black.withOpacity(
+          (_animationController.value) * 0.6,
+        ),
+      )
+    ];
+  }
+
+  /// Returns an animated color.
+  Color get _animatedColor {
+    return Color.lerp(
+        widget.backgroundColor, Colors.black12, _animationController.value)!;
   }
 
   @override
@@ -57,82 +91,124 @@ class _LitTooltipContainerState extends State<LitTooltipContainer>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
+    return GestureDetector(
+      onLongPressEnd: handleLongPressEnd,
+      onLongPressStart: handleLongPressStart,
+      child: AnimatedBuilder(
         animation: _animationController,
         builder: (BuildContext context, Widget? child) {
-          return Stack(
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: GestureDetector(
-                  onLongPressEnd: handleLongPressEnd,
-                  onLongPressStart: handleLongPressStart,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(widget.borderRadius),
-                      boxShadow: [
-                        BoxShadow(
-                            spreadRadius: 2.0 * _animationController.value,
-                            blurRadius: 24.0 * _animationController.value,
-                            offset: Offset(2 * -_animationController.value,
-                                2 * -_animationController.value),
-                            color: Colors.black.withOpacity(
-                                (_animationController.value) * 0.6))
-                      ],
-                      color: Color.lerp(widget.backgroundColor, Colors.black12,
-                          _animationController.value),
-                    ),
-                    child: Padding(
-                      padding: widget.padding,
-                      child: widget.child,
-                    ),
-                  ),
+          return _AnimatedContent(
+            animatedBoxShadow: _animatedBoxShadow,
+            animatedColor: _animatedColor,
+            animationController: _animationController,
+            backgroundColor: widget.backgroundColor!,
+            borderRadius: widget.borderRadius,
+            child: widget.child,
+            padding: widget.padding,
+            text: widget.text,
+          );
+        },
+        child: _AnimatedContent(
+          animatedBoxShadow: _animatedBoxShadow,
+          animatedColor: _animatedColor,
+          animationController: _animationController,
+          backgroundColor: widget.backgroundColor!,
+          borderRadius: widget.borderRadius,
+          child: widget.child,
+          padding: widget.padding,
+          text: widget.text,
+        ),
+      ),
+    );
+  }
+}
+
+/// The [LitTooltipContainer]'s animated content.
+class _AnimatedContent extends StatelessWidget {
+  final AnimationController animationController;
+  final String text;
+  final Widget child;
+  final BorderRadius borderRadius;
+  final EdgeInsets padding;
+  final Color backgroundColor;
+  final Color animatedColor;
+  final List<BoxShadow> animatedBoxShadow;
+  const _AnimatedContent({
+    Key? key,
+    required this.animationController,
+    required this.text,
+    required this.child,
+    required this.borderRadius,
+    required this.padding,
+    required this.backgroundColor,
+    required this.animatedColor,
+    required this.animatedBoxShadow,
+  }) : super(key: key);
+
+  /// The button's inner padding.
+  static const EdgeInsets _margin = const EdgeInsets.symmetric(
+    vertical: 2.0,
+    horizontal: 4.0,
+  );
+
+  /// The button's background color.
+  Color get _backgroundColor {
+    return Color.lerp(
+      backgroundColor,
+      Colors.white24,
+      1.0,
+    )!;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Align(
+          alignment: Alignment.center,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: borderRadius,
+              boxShadow: animatedBoxShadow,
+              color: animatedColor,
+            ),
+            child: Padding(
+              padding: padding,
+              child: child,
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: AnimatedOpacity(
+            duration: animationController.duration!,
+            opacity: animationController.value,
+            child: BluredBackgroundContainer(
+              blurRadius: 4.0,
+              borderRadius: borderRadius,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: _backgroundColor,
+                  borderRadius: borderRadius,
                 ),
-              ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: AnimatedOpacity(
-                  duration: _animationController.duration!,
-                  opacity: _animationController.value,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 4.0,
-                      horizontal: 8.0,
-                    ),
-                    child: BluredBackgroundContainer(
-                      blurRadius: 4.0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Color.lerp(
-                            widget.backgroundColor,
-                            Colors.white24,
-                            1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 4.0, horizontal: 8.0),
-                          child: Text(
-                            widget.text,
-                            style: LitTextStyles.sansSerif.copyWith(
-                              fontSize: 12.0,
-                              color: Color.lerp(
-                                widget.backgroundColor,
-                                Colors.white70,
-                                1.0,
-                              ),
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
+                child: Padding(
+                  padding: _margin,
+                  child: ClippedText(
+                    text.toUpperCase(),
+                    style: LitSansSerifStyles.overline.copyWith(
+                      color: Color.lerp(
+                        backgroundColor,
+                        Colors.white70,
+                        1.0,
                       ),
                     ),
                   ),
                 ),
-              )
-            ],
-          );
-        });
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
