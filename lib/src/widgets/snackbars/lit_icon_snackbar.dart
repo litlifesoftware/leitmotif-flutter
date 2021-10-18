@@ -16,7 +16,7 @@ class LitIconSnackbar extends StatelessWidget implements LitSnackbar {
 
   final Alignment alignment;
   final EdgeInsets padding;
-  final EdgeInsets margin;
+  //final EdgeInsets margin;
   final double width;
 
   /// Creates a [LitIconSnackbar] widget.
@@ -32,7 +32,7 @@ class LitIconSnackbar extends StatelessWidget implements LitSnackbar {
     this.iconBackgroundColor = Colors.white,
     this.alignment = Alignment.topRight,
     this.padding = LitSnackbar.defaultPadding,
-    this.margin = const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+    //this.margin = const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
     this.width = LitSnackbar.defaultWidth,
   }) : super(key: key);
   @override

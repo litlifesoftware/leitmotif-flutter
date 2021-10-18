@@ -28,8 +28,8 @@ abstract class LitSnackbar extends Widget {
 
   /// The default paddding.
   static const EdgeInsets defaultPadding = const EdgeInsets.symmetric(
-    vertical: 16.0,
-    horizontal: 16.0,
+    vertical: 8.0,
+    horizontal: 8.0,
   );
 
   /// [LitSnackbar]s have a box shadow by default.

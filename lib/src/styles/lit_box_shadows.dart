@@ -28,7 +28,7 @@ class LitBoxShadows {
       offset: Offset(-3.0, 3.0),
       blurRadius: 4.0,
       color: Colors.black38,
-      spreadRadius: -2.0,
+      spreadRadius: -1.0,
     )
   ];
 

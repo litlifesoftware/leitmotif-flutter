@@ -192,7 +192,6 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 32.0),
                           child: LitPushedThroughButton(
-                            borderRadius: 16.0,
                             margin: const EdgeInsets.symmetric(
                               vertical: 8.0,
                               horizontal: 30.0,

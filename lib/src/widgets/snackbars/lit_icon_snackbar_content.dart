@@ -22,7 +22,7 @@ class LitIconSnackbarContent extends StatelessWidget {
     required this.textStyle,
     this.title,
     required this.text,
-    this.margin = const EdgeInsets.all(8.0),
+    this.margin = const EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
   }) : super(key: key);
 
   @override

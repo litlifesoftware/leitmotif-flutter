@@ -28,7 +28,7 @@ class LitLockIcon extends StatefulWidget {
   const LitLockIcon({
     Key? key,
     this.size = 48.0,
-    this.color = LitColors.darkOliveGreen,
+    this.color = LitColors.grey350,
     this.animationDuration = const Duration(milliseconds: 550),
   }) : super(key: key);
 
