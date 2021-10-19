@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(LeitmotifExample());
@@ -27,7 +28,9 @@ class _LeitmotifExampleState extends State<LeitmotifExample> {
       title: 'Leitmotif',
       localizationsDelegates: const [
         LeitmotifLocalizationsDelegate(),
-        DefaultMaterialLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
         Locale('en', ''),
@@ -69,23 +72,24 @@ class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return LitTabView(
-      hideNavigationBar: shouldHideNavigationBar,
+      //hideNavigationBar: shouldHideNavigationBar,
       tabs: [
         LitNavigableTab(
-          tabData: LitBottomNavigationTabData(
-            icon: LitIcons.home,
-            iconSelected: LitIcons.home_alt,
-            index: 0,
-          ),
+          tabData: LitBottomNavigationBarItemData(
+              icon: LitIcons.home_alt,
+              iconAlt: LitIcons.home,
+              index: 0,
+              title: "home"),
           screen: _ExampleScreen(
             onHideBottomNavigation: toggleShouldHideNavigationBar,
           ),
         ),
         LitNavigableTab(
-          tabData: LitBottomNavigationTabData(
+          tabData: LitBottomNavigationBarItemData(
             icon: LitIcons.gear,
-            iconSelected: LitIcons.gear_solid,
+            iconAlt: LitIcons.gear_solid,
             index: 1,
+            title: "fonts",
           ),
           screen: _ExampleScreenTwo(),
         )
@@ -315,7 +319,7 @@ class __ExampleScreenState extends State<_ExampleScreen> {
           LitIconSnackbar(
             snackBarController: _solidSnackbarController,
             title: "Title",
-            text: "Snackbar!",
+            text: "This is an informational text to inform the user!",
             iconData: LitIcons.info,
           ),
           LitIconSnackbar(
@@ -1021,9 +1025,10 @@ class _LitCreditsScreenImplementation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitCreditsScreen(
-      darkMode: darkMode,
-      appTitle: "Leitmotif",
+      appName: "Leitmotif",
       art: _Art(large: false),
+      appDescription:
+          "Flutter Package implementing the Leitmotif Design Languages",
       credits: [
         CreditData(
           role: "Made by",

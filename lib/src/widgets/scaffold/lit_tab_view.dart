@@ -21,19 +21,10 @@ class LitTabView extends StatefulWidget {
     Key? key,
     required this.tabs,
     this.resizeToAvoidBottomInset = false,
-    this.hideNavigationBar = false,
-    this.animationDuration =
-        LitBottomNavigationBarDefaultStyling.animationDuration,
-    this.barBlurRadius = LitBottomNavigationBarDefaultStyling.blurRadius,
-    this.barBackgroundColor =
-        LitBottomNavigationBarDefaultStyling.backgroundColor,
-    this.tabItemBackgroundColor =
-        LitBottomNavigationBarDefaultStyling.tabItemBackgroundColor,
-    this.tabItemBackgroundColorSelected =
-        LitBottomNavigationBarDefaultStyling.tabItemBackgroundColorSelected,
-    this.tabItemColor = LitBottomNavigationBarDefaultStyling.tabItemColor,
-    this.tabItemColorSelected =
-        LitBottomNavigationBarDefaultStyling.tabItemColorSelected,
+    // this.hideNavigationBar = false,
+    this.animationDuration = LitBottomNavigation.defaultAnimationDuration,
+    this.barBlurRadius = LitBottomNavigation.defaultBlurRadius,
+    this.barBackgroundColor = LitBottomNavigation.defaultBackgroundColor,
     this.initialTabIndex = 0,
     this.transitionListener,
   }) : super(key: key);
@@ -46,7 +37,7 @@ class LitTabView extends StatefulWidget {
 
   /// States whether to hide the navigation bar, if any widget should occupy
   /// its space temporarily (e.g. when expanding a panel).
-  final bool hideNavigationBar;
+  // final bool hideNavigationBar;
 
   /// States how long each animation cycle should last.
   final Duration animationDuration;
@@ -56,18 +47,6 @@ class LitTabView extends StatefulWidget {
 
   /// The navigation bar's background color.
   final Color barBackgroundColor;
-
-  /// The background color of the currently selected tab item.
-  final Color tabItemBackgroundColorSelected;
-
-  /// The background color of each unselected tab item.
-  final Color tabItemBackgroundColor;
-
-  /// The color of the currently selected tab item.
-  final Color tabItemColor;
-
-  /// The color of each unselected tab item.
-  final Color tabItemColorSelected;
 
   /// The initial tab index (defaults to `0`)
   final int initialTabIndex;
@@ -87,7 +66,7 @@ class _LitTabViewState extends State<LitTabView> {
   List<Widget> _tabs = [];
 
   /// All tab data objects providing the meta data for the tabs.
-  List<LitBottomNavigationTabData> _tabData = [];
+  List<LitBottomNavigationBarItemData> _tabData = [];
 
   /// Sets the state to change the currently displayed tab.
   void _setTabIndex(int value) {
@@ -100,7 +79,7 @@ class _LitTabViewState extends State<LitTabView> {
   }
 
   /// Separetes the provided [LitNavigableTab] into individual [Widget] and
-  /// [LitBottomNavigationTabData] lists.
+  /// [LitBottomNavigationBarItemData] lists.
   void bindWidgetsAndData() {
     for (LitNavigableTab item in widget.tabs) {
       _tabs.add(item.screen);
@@ -126,17 +105,11 @@ class _LitTabViewState extends State<LitTabView> {
               _tabs[tabIndex],
               LitBottomNavigation(
                 selectedTabIndex: tabIndex,
-                onTabSelect: _setTabIndex,
+                onChangeTab: _setTabIndex,
                 tabs: _tabData,
-                hide: widget.hideNavigationBar,
                 animationDuration: widget.animationDuration,
                 backgroundColor: widget.barBackgroundColor,
                 blurRadius: widget.barBlurRadius,
-                tabItemColor: widget.tabItemColor,
-                tabItemColorSelected: widget.tabItemColorSelected,
-                tabItemBackgroundColor: widget.tabItemBackgroundColor,
-                tabItemBackgroundColorSelected:
-                    widget.tabItemBackgroundColorSelected,
               )
             ],
           );
@@ -149,7 +122,7 @@ class _LitTabViewState extends State<LitTabView> {
 /// A model class combining the [Widget] view layer and it's meta data object.
 class LitNavigableTab {
   /// The meta data objects for the tab.
-  final LitBottomNavigationTabData tabData;
+  final LitBottomNavigationBarItemData tabData;
 
   /// The screen tab.
   final Widget screen;

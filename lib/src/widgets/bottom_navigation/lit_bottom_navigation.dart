@@ -1,107 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A bottom navigation bar allowing to switch between a list of tabs, which are displayed
-/// on the parent component.
+/// A Leitmotif `bottom_navigation` widget displaying a bottom navigation bar
+/// allowing to switch between different screen views.
 ///
-/// The parent should hold a list of navigatable screen widgets. The parent's [selectedTabIndex]
-/// state value should determine which of the screen widgets should be displayed at the moment.
-/// Only one widgets will be displayed at once by displaying the list item whose index value
-/// matches with the current [selectedTabIndex].
+/// The tab-switching logic and the state-management should be handled on the
+/// parent widget, as the [LitBottomNavigation] does not track its current
+/// state.
 class LitBottomNavigation extends StatefulWidget {
-  /// Creates a [LitBottomNavigation].
-  ///
-  /// {@tool snippet}
-  /// The [LitBottomNavigation]'s tabs need to match the parent's widget list to avoid index errors and
-  /// to reliably display the currently selected widget based on its meta data [LitBottomNavigationTabData].
-  ///
-  /// First where needs to be a tab widget list on the parent widget:
-  /// ```dart
-  /// final List<Widget> _tabs = [
-  ///   HomeScreen(),
-  ///   ProfileScreen(),
-  /// ];
-  /// ```
-  ///
-  /// And there needs to be a list of tab data objects:
-  /// ```dart
-  ///    final List<LitBottomNavigationTabData> _tabData = [
-  ///   LitBottomNavigationTabData(
-  ///     index: 0,
-  ///     icon: LitIcons.home,
-  ///     iconSelected: LitIcons.home_alt,
-  ///   ),
-  ///   LitBottomNavigationTabData(
-  ///     index: 1,
-  ///     icon: LitIcons.person,
-  ///     iconSelected: LitIcons.person_solid,
-  ///   ),
-  /// ];
-  /// ```
-  ///
-  /// Now the list of tab data objects can be linked to the respective screen
-  /// widget. Use a wrapping [Stack] to stack the navigation on top of your
-  /// currently selected screen widget:
-  /// ```dart
-  /// return Scaffold(
-  ///    body: Builder(
-  ///      builder: (context) {
-  ///        return Stack(
-  ///          children: [
-  ///            _tabs[tabIndex],
-  ///            LitBottomNavigation(
-  ///              selectedTabIndex: tabIndex,
-  ///              onTabSelect: _setTabIndex,
-  ///              tabs: _tabData,
-  ///            )
-  ///          ],
-  ///        );
-  ///      },
-  ///    ),
-  ///  );
-  /// ```
-  ///
-  /// {@end-tool}
-  const LitBottomNavigation({
-    Key? key,
-    this.hide = true,
-    required this.selectedTabIndex,
-    required this.onTabSelect,
-    this.landscapeWidthFactor = 0.65,
-    required this.tabs,
-    this.padding = LitBottomNavigationBarDefaultStyling.padding,
-    this.height = LitBottomNavigationBarDefaultStyling.height,
-    this.animationDuration =
-        LitBottomNavigationBarDefaultStyling.animationDuration,
-    this.blurRadius = LitBottomNavigationBarDefaultStyling.blurRadius,
-    this.backgroundColor = LitBottomNavigationBarDefaultStyling.backgroundColor,
-    this.tabItemBackgroundColorSelected =
-        LitBottomNavigationBarDefaultStyling.tabItemBackgroundColorSelected,
-    this.tabItemBackgroundColor =
-        LitBottomNavigationBarDefaultStyling.tabItemBackgroundColor,
-    this.tabItemColor = LitBottomNavigationBarDefaultStyling.tabItemColor,
-    this.tabItemColorSelected =
-        LitBottomNavigationBarDefaultStyling.tabItemColorSelected,
-  }) : super(key: key);
-
-  /// States whether to hide the bottom navigation.
-  ///
-  /// Hiding the bar could be used in order to avoid overlapping of widgets
-  /// displayed in front of the bottom navigation (such as panels).
-  final bool hide;
-
-  /// The currently displayed widget's index value.
+  /// The currently selected screen's index .
   final int selectedTabIndex;
 
-  /// The setter method to set the new tab index value on the parent widget.
-  final void Function(int) onTabSelect;
+  /// A setter method to handle a tab-change.
+  final void Function(int index) onChangeTab;
 
-  /// The relative width the bar the landscape mode.
-  final double landscapeWidthFactor;
-
-  /// The meta data of the navigatable tabs. These will have to match with the parent's widget
-  /// list in order to avoid index-based errors.
-  final List<LitBottomNavigationTabData> tabs;
+  /// The tab items the navigation bar should be displaying.
+  final List<LitBottomNavigationBarItemData> tabs;
 
   /// The padding surrounding the navigation bar.
   final EdgeInsets padding;
@@ -118,47 +32,47 @@ class LitBottomNavigation extends StatefulWidget {
   /// The navigation bar's background color.
   final Color backgroundColor;
 
-  /// The background color of the currently selected tab item.
-  final Color tabItemBackgroundColorSelected;
+  /// Creates a [LitBottomNavigation].
+  const LitBottomNavigation({
+    Key? key,
+    required this.selectedTabIndex,
+    required this.onChangeTab,
+    required this.tabs,
+    this.padding = defaultPadding,
+    this.height = defaultHeight,
+    this.animationDuration = defaultAnimationDuration,
+    this.blurRadius = defaultBlurRadius,
+    this.backgroundColor = defaultBackgroundColor,
+  }) : super(key: key);
+  static const defaultPadding = const EdgeInsets.all(0);
+  static const defaultHeight = 72.0;
+  static const defaultAnimationDuration = const Duration(milliseconds: 110);
+  static const defaultBlurRadius = 4.0;
+  static const defaultBackgroundColor = const Color(0x82e7e7E7);
 
-  /// The background color of each unselected tab item.
-  final Color tabItemBackgroundColor;
-
-  /// The color of the currently selected tab item.
-  final Color tabItemColor;
-
-  /// The color of each unselected tab item.
-  final Color tabItemColorSelected;
   @override
   _LitBottomNavigationState createState() => _LitBottomNavigationState();
 }
 
 class _LitBottomNavigationState extends State<LitBottomNavigation>
     with TickerProviderStateMixin {
+  /// Controller to animate the tab change transition.
   late AnimationController _animationController;
 
-  /// Switches the currently selected tab using the provided index value.
-  void switchTab(int value) {
-    widget.onTabSelect(value);
+  /// Changes the currently selected tab by setting the state using the
+  /// provided index value.
+  void _changeTab(int value) {
+    widget.onChangeTab(value);
     if (_animationController.isCompleted) {
       _animationController.reverse().then(
-            (value) => _animationController.forward(),
+            (_) => _animationController.forward(),
           );
     }
   }
 
-  /// Returns the vertical transform value applied by the animation.
-  double get _transformY {
-    return widget.height * 2;
-  }
-
-  double get _animatedTransform {
-    return widget.hide
-        ? _transformY
-        : _transformY - (_transformY * _animationController.value);
-  }
-
-  bool getIsSelected(LitBottomNavigationTabData data) {
+  /// Evaluates whether the provided [data] is assigned to the currently
+  /// selected tab.
+  bool checkIsSelected(LitBottomNavigationBarItemData data) {
     return widget.selectedTabIndex == data.index;
   }
 
@@ -183,71 +97,47 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, _) {
-        return Transform(
-          transform: Matrix4.translationValues(
-            0,
-            _animatedTransform,
-            0,
-          ),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  child: Padding(
-                    padding: widget.padding,
-                    child: LitConstrainedSizedBox(
-                      landscapeWidthFactor: 0.55,
-                      child: BluredBackgroundContainer(
-                        blurRadius: widget.blurRadius,
-                        borderRadius: BorderRadius.circular(15.0),
-                        child: Container(
-                          height: widget.height,
-                          decoration: BoxDecoration(
-                            color: widget.backgroundColor,
-                          ),
-                          child: Builder(
-                            builder: (context) {
-                              final List<Widget> children = [];
-                              widget.tabs.forEach(
-                                (LitBottomNavigationTabData data) {
-                                  children.add(
-                                    _BottomNavigationItem(
-                                      data: data,
-                                      selected: getIsSelected(data),
-                                      setSelectedTab: switchTab,
-                                      animationController: _animationController,
-                                      tabItemBackgroundColor:
-                                          widget.tabItemBackgroundColor,
-                                      tabItemBackgroundColorSelected:
-                                          widget.tabItemBackgroundColorSelected,
-                                      tabItemColor: widget.tabItemColor,
-                                      tabItemColorSelected:
-                                          widget.tabItemColorSelected,
-                                    ),
-                                  );
-                                },
-                              );
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 8.0,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: children,
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: SizedBox(
+            child: Padding(
+              padding: widget.padding,
+              child: BluredBackgroundContainer(
+                blurRadius: widget.blurRadius,
+                child: Container(
+                  height: widget.height,
+                  decoration: BoxDecoration(
+                    color: widget.backgroundColor,
+                  ),
+                  child: Builder(
+                    builder: (context) {
+                      final List<Widget> children = [];
+                      widget.tabs.forEach(
+                        (LitBottomNavigationBarItemData data) {
+                          children.add(
+                            _BarItem(
+                              data: data,
+                              isSelected: checkIsSelected(data),
+                              onChangeTab: _changeTab,
+                              animationController: _animationController,
+                              tabBackgroundColor: data.tabBackgroundColor,
+                              tabBackgroundColorAlt: data.tabBackgroundColorAlt,
+                              tabColor: data.tabColor,
+                              tabColorAlt: data.tabColorAlt,
+                            ),
+                          );
+                        },
+                      );
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: children,
+                      );
+                    },
                   ),
                 ),
-              );
-            },
+              ),
+            ),
           ),
         );
       },
@@ -255,125 +145,125 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
   }
 }
 
-/// The navigation item which will create a view model for the provided data
-/// instance.
-class _BottomNavigationItem extends StatefulWidget {
-  final LitBottomNavigationTabData data;
-  final bool selected;
-  final void Function(int) setSelectedTab;
+/// An individual tab item on the bottom navigation bar.
+class _BarItem extends StatelessWidget {
+  final LitBottomNavigationBarItemData data;
+  final bool isSelected;
+  final void Function(int) onChangeTab;
   final AnimationController animationController;
-  final Color tabItemBackgroundColorSelected;
-  final Color tabItemBackgroundColor;
-  final Color tabItemColor;
-  final Color tabItemColorSelected;
-
-  const _BottomNavigationItem({
+  final Color tabBackgroundColorAlt;
+  final Color tabBackgroundColor;
+  final Color tabColor;
+  final Color tabColorAlt;
+  final BorderRadius borderRadius;
+  const _BarItem({
     Key? key,
     required this.data,
-    required this.selected,
-    required this.setSelectedTab,
+    required this.isSelected,
+    required this.onChangeTab,
     required this.animationController,
-    required this.tabItemBackgroundColorSelected,
-    required this.tabItemBackgroundColor,
-    required this.tabItemColor,
-    required this.tabItemColorSelected,
+    required this.tabBackgroundColorAlt,
+    required this.tabBackgroundColor,
+    required this.tabColor,
+    required this.tabColorAlt,
+    this.borderRadius = const BorderRadius.all(
+      Radius.circular(18.0),
+    ),
   }) : super(key: key);
 
-  @override
-  __BottomNavigationItemState createState() => __BottomNavigationItemState();
-}
-
-class __BottomNavigationItemState extends State<_BottomNavigationItem> {
+  /// Returns the background color depending on the current state..
   Color get _backgroundColor {
-    return widget.selected
-        ? widget.tabItemBackgroundColorSelected
-        : widget.tabItemBackgroundColor;
+    return isSelected ? tabBackgroundColorAlt : Colors.transparent;
   }
 
-  Color get _iconColor {
-    return widget.selected ? widget.tabItemColorSelected : widget.tabItemColor;
+  /// Returns the color depending on the current state.
+  Color get _color {
+    return isSelected ? tabColorAlt : tabColor;
   }
 
+  /// Returns the icon depending on the current state.
   IconData get _icon {
-    return widget.selected ? widget.data.iconSelected : widget.data.icon;
+    return isSelected ? data.iconAlt : data.icon;
   }
 
+  /// Returns the padding depending on the current state.
+  EdgeInsets get _padding {
+    return isSelected
+        ? EdgeInsets.symmetric(
+            horizontal: 22.0,
+            vertical: 8.0,
+          )
+        : EdgeInsets.symmetric(
+            horizontal: 16.0,
+            vertical: 4.0,
+          );
+  }
+
+  /// Returns the icon size depending on the current state.
+  double get _iconSize {
+    return (animationController.value * (isSelected ? 16.0 : 18.0));
+  }
+
+  /// Returns the box shadow depending on the current state.
   List<BoxShadow> get _boxShadow {
-    return widget.selected
-        ? [
-            BoxShadow(
-              blurRadius: 6.0,
-              color: Colors.black38,
-              offset: Offset(-2, 2),
-              spreadRadius: -1.0,
-            )
-          ]
-        : [];
+    return isSelected ? LitBoxShadows.sm : [];
+  }
+
+  /// Returns an animated opacity.
+  double get _opacity {
+    return 0.25 + (0.75 * animationController.value);
+  }
+
+  /// Handles the `change` event.
+  ///
+  /// Executes the callback, only if the tab is not currently selected.
+  void _onTap() {
+    if (!isSelected) onChangeTab(data.index);
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: widget.animationController,
+      animation: animationController,
       builder: (context, _) {
         return AnimatedOpacity(
-          opacity: 0.5 + (0.5 * widget.animationController.value),
-          duration: widget.animationController.duration!,
-          child: InkWell(
-            onTap: widget.selected
-                ? () {}
-                : () {
-                    widget.setSelectedTab(widget.data.index);
-                  },
-            child: Stack(
+          opacity: _opacity,
+          duration: animationController.duration!,
+          child: CleanInkWell(
+            onTap: _onTap,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    color: _backgroundColor,
-                    boxShadow: _boxShadow,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0,
-                      vertical: 8.0,
+                Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: borderRadius,
+                        color: _backgroundColor,
+                        boxShadow: _boxShadow,
+                      ),
+                      child: Padding(
+                        padding: _padding,
+                        child: Icon(
+                          _icon,
+                          color: _color,
+                          size: _iconSize,
+                        ),
+                      ),
                     ),
-                    child: Icon(
-                      _icon,
-                      color: _iconColor,
-                      size: (widget.animationController.value * 22.0),
-                    ),
-                  ),
+                    isSelected
+                        ? _BarItemSelectedIndicator(
+                            animationController: animationController,
+                          )
+                        : SizedBox(),
+                  ],
                 ),
-                widget.selected
-                    ? Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8.0,
-                          horizontal: 8.0,
-                        ),
-                        child: Transform(
-                          transform: Matrix4.translationValues(
-                            0,
-                            25.0 - (25.0 * widget.animationController.value),
-                            0,
-                          ),
-                          child: Container(
-                            height: 4 + (4 * widget.animationController.value),
-                            width: 4 + (4 * widget.animationController.value),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(
-                                  2 + (2 * widget.animationController.value),
-                                ),
-                              ),
-                              color: Color.lerp(
-                                Colors.white,
-                                LitColors.lightPink,
-                                widget.animationController.value,
-                              ),
-                            ),
-                          ),
-                        ),
+                data.title != null
+                    ? _BarItemTitle(
+                        isSelected: isSelected,
+                        tabColor: tabColor,
+                        tabColorAlt: tabColorAlt,
+                        title: data.title!,
                       )
                     : SizedBox(),
               ],
@@ -385,41 +275,153 @@ class __BottomNavigationItemState extends State<_BottomNavigationItem> {
   }
 }
 
-/// The meta data of each tab inside the [LitBottomNavigation].
-///
-/// Provide an index value, a selected and an unselected icon. Either of them are displayed
-/// depending on the current 'is selected' state.
-class LitBottomNavigationTabData {
-  final int index;
-  final IconData icon;
-  final IconData iconSelected;
+/// A widget allowing to display a tab title on a [_BarItem].
+class _BarItemTitle extends StatelessWidget {
+  final bool isSelected;
+  final String title;
+  final Color tabColor;
+  final Color tabColorAlt;
+  const _BarItemTitle({
+    Key? key,
+    required this.isSelected,
+    required this.title,
+    required this.tabColor,
+    required this.tabColorAlt,
+  }) : super(key: key);
 
-  /// Creates a [LitBottomNavigationTabData] to be used on the [LitBottomNavigation].
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: isSelected ? 2.0 : 2.0,
+      ),
+      child: Text(
+        title.capitalize(),
+        style: LitSansSerifStyles.caption.copyWith(
+          color: isSelected ? tabColorAlt : tabColor,
+          fontWeight: isSelected
+              ? FontWeight.bold
+              : LitSansSerifStyles.caption.fontWeight,
+        ),
+      ),
+    );
+  }
+}
+
+/// A widget allowing to display a `selected` indicator on a [_BarItem].
+class _BarItemSelectedIndicator extends StatelessWidget {
+  final AnimationController animationController;
+  final EdgeInsets padding;
+  final double size;
+  const _BarItemSelectedIndicator({
+    Key? key,
+    required this.animationController,
+    this.padding = const EdgeInsets.symmetric(
+      vertical: 6.0,
+      horizontal: 10.0,
+    ),
+    this.size = 4,
+  }) : super(key: key);
+
+  /// Returns an animated transform matrix.
+  Matrix4 get _transform {
+    final y = 25.0 - (25.0 * animationController.value);
+    return Matrix4.translationValues(
+      0,
+      y,
+      0,
+    );
+  }
+
+  /// Returns an animated border radius.
+  BorderRadius get _borderRadius {
+    return BorderRadius.all(
+      Radius.circular(
+        size / 2 + (size / 2 * animationController.value),
+      ),
+    );
+  }
+
+  /// Returns an animated height.
+  double get _height {
+    return size + (size * animationController.value);
+  }
+
+  /// Returns an animated width.
+  double get _width {
+    return size + (size * animationController.value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: padding,
+      child: Transform(
+        transform: _transform,
+        child: Container(
+          height: _height,
+          width: _width,
+          decoration: BoxDecoration(
+            borderRadius: _borderRadius,
+            color: Color.lerp(
+              Colors.white,
+              LitColors.red400,
+              animationController.value,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A Leitmotif `model` class describing meta data required to build a tab item
+/// on a bottom navigation bar.
+class LitBottomNavigationBarItemData {
+  /// The tab's index.
+  final int index;
+
+  /// The icon in `unselected` state.
+  final IconData icon;
+
+  /// The icon in `selected` state.
+  final IconData iconAlt;
+
+  /// The tab's title.
+  final String? title;
+
+  /// The background color of the currently selected tab item.
+  final Color tabBackgroundColorAlt;
+
+  /// The background color of each unselected tab item.
+  final Color tabBackgroundColor;
+
+  /// The color of the currently selected tab item.
+  final Color tabColor;
+
+  /// The color of each unselected tab item.
+  final Color tabColorAlt;
+
+  /// Creates a [LitBottomNavigationBarItemData].
   ///
   /// * [index] is the index value of the tab.
   ///
-  /// * [icon] is the icon displayed as long as the tab has not been selected.
+  /// * [icon] is the icon in `unselected` state.
   ///
-  /// * [iconSelected] is the icon displayed once the tab has been selected.
-  const LitBottomNavigationTabData({
+  /// * [iconAlt] is the icon in `selected` state.
+  const LitBottomNavigationBarItemData({
     required this.index,
     required this.icon,
-    required this.iconSelected,
+    required this.iconAlt,
+    this.title,
+    this.tabBackgroundColorAlt = defaultBackgroundColorAlt,
+    this.tabBackgroundColor = defaultBackgroundColor,
+    this.tabColor = defaultColor,
+    this.tabColorAlt = defaultColorAlt,
   });
-}
 
-/// The default styling of [LitBottomNavigation].
-class LitBottomNavigationBarDefaultStyling {
-  static const padding = const EdgeInsets.symmetric(
-    vertical: 8.0,
-    horizontal: 8.0,
-  );
-  static const height = 56.0;
-  static const animationDuration = const Duration(milliseconds: 150);
-  static const blurRadius = 3.0;
-  static const backgroundColor = const Color(0x82C7C7C7);
-  static const tabItemBackgroundColorSelected = LitColors.mediumGrey;
-  static const tabItemBackgroundColor = const Color(0x7fb7b7b7);
-  static const tabItemColor = LitColors.mediumGrey;
-  static const tabItemColorSelected = Colors.white;
+  static const defaultBackgroundColorAlt = Colors.white;
+  static const defaultBackgroundColor = LitColors.transparent;
+  static const defaultColor = LitColors.grey350;
+  static const defaultColorAlt = LitColors.grey500;
 }

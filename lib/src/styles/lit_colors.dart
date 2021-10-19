@@ -22,8 +22,11 @@ class LitColors {
   static const Color mediumOliveGreen = green500;
   static const Color darkOliveGreen = green600;
 
-  ///
-  ///
+  //
+  //
+  //
+  static const Color transparent = const Color(0x00FFFFFF);
+
   static const Color grey50 = const Color(0xFFFDFDFD);
   static const Color grey100 = const Color(0xFFf4f4f7);
   static const Color grey150 = const Color(0xFFDEDEDE);
@@ -50,6 +53,4 @@ class LitColors {
 
   static const Color blue300 = const Color(0xFF97BFCA);
   static const Color blue400 = const Color(0xFF59E3C3);
-
-  ///
 }
