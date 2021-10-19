@@ -336,6 +336,9 @@ class __ExampleScreenState extends State<_ExampleScreen> {
           ),
         ],
         settingsPanel: LitSettingsPanel(
+          padding: const EdgeInsets.only(
+            bottom: LitBottomNavigation.defaultHeight,
+          ),
           controller: _settingsPanelController,
           title: "Settings",
           darkMode: darkMode,

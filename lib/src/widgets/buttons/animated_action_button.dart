@@ -23,7 +23,7 @@ class AnimatedActionButton extends StatefulWidget
     this.backgroundColor = Colors.white,
     required this.onPressed,
     this.padding = const EdgeInsets.symmetric(
-      vertical: 64.0,
+      vertical: LitBottomNavigation.defaultHeight + 8.0,
       horizontal: 32.0,
     ),
     this.margin = const EdgeInsets.symmetric(horizontal: 4.0, vertical: 0.0),

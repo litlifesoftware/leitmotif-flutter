@@ -127,8 +127,8 @@ class _CollapseOnScrollActionButtonState
       animation: _colorAnimation,
       builder: (context, _) {
         return Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: isPortraitMode(MediaQuery.of(context).size) ? 82.0 : 24.0,
+          padding: const EdgeInsets.symmetric(
+            vertical: LitBottomNavigation.defaultHeight + 8.0,
             horizontal: 24.0,
           ),
           child: Align(
