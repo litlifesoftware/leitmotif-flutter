@@ -1,44 +1,70 @@
 import 'package:flutter/material.dart';
+import 'package:leitmotif/containers.dart';
 import 'package:leitmotif/styles.dart';
 
-/// A button which will be animated on pressing it.
-///
-/// The button will scale down and up while it is being pressed to give visual
-/// feedback while the user interacts with it. The animation will make the button
-/// look like it is going back and forth on the screen.
+/// A Leitmotif `buttons` widget displaying an interactive button, which will
+/// be animated while being pressed.
 class LitPushedThroughButton extends StatefulWidget {
+  /// The button's child.
   final Widget child;
+
+  /// The button's background color.
   final Color backgroundColor;
+
+  /// The button's accent color.
   final Color accentColor;
-  final void Function() onPressed;
-  final double borderRadius;
+
+  /// The button's border radius.
+  final BorderRadius borderRadius;
+
+  /// The button's external padding.
   final EdgeInsets padding;
+
+  /// The button's internal margin.
   final EdgeInsets margin;
+
+  /// The button's box shadow.
   final List<BoxShadow> boxShadow;
+
+  /// The duration each animation cycle will last.
   final Duration animationDuration;
+
+  /// States whether to disable the button.
+  ///
+  /// If so, the button is semi-transparent and the `onPressed` has no effect.
   final bool disabled;
+
+  /// States whether to constrain the button.
+  ///
+  /// If the button is not constrained, it's width will fill the entire space
+  /// available.
   final bool constrained;
 
-  /// Create a [PushedThroughButton] [Widget].
+  /// Handles the button's `onPressed` action.
+  final void Function() onPressed;
+
+  /// Create a [LitPushedThroughButton].
   const LitPushedThroughButton({
     Key? key,
     required this.child,
-    this.backgroundColor = Colors.white,
-    this.accentColor = LitColors.lightGrey,
-    required this.onPressed,
-    this.borderRadius = 15.0,
-    this.padding = const EdgeInsets.all(0.0),
-    this.margin = const EdgeInsets.symmetric(
-      vertical: 8.0,
-      horizontal: 14.0,
-    ),
-    this.boxShadow = LitBoxShadows.lg,
-    this.animationDuration = const Duration(
-      milliseconds: 400,
-    ),
+    this.backgroundColor = LitColors.grey100,
+    this.accentColor = Colors.white,
+    this.borderRadius = defaultBorderRadius,
+    this.padding = defaultPadding,
+    this.margin = defaultMargin,
+    this.boxShadow = LitBoxShadows.md,
+    this.animationDuration = defaultDuration,
     this.disabled = false,
     this.constrained = true,
+    required this.onPressed,
   }) : super(key: key);
+
+  static const defaultDuration = const Duration(milliseconds: 120);
+  static const defaultPadding = const EdgeInsets.all(0.0);
+  static const defaultMargin =
+      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14.0);
+  static const defaultBorderRadius =
+      const BorderRadius.all(const Radius.circular(16.0));
 
   @override
   _LitPushedThroughButtonState createState() => _LitPushedThroughButtonState();
@@ -47,56 +73,51 @@ class LitPushedThroughButton extends StatefulWidget {
 class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
     with TickerProviderStateMixin {
   /// States whether or not the button is currently pressed.
-  /// It will not be pressed by default.
-  late bool _isPressed;
+  bool _isPressed = false;
 
   /// The [AnimationController] responsible for the button animation.
   late AnimationController _animationController;
 
-  /// Handles the actions once the button is pressed down by the user.
-  ///
-  /// Set the state to indicate the button is pressed, animate it and
-  /// execute the actual callback [Function] provided.
-  void _onTapDown(PointerDownEvent details) {
+  /// Handles the `onPressed` action by playing the animation and executing the
+  /// provided callback method.
+  void _onPressed() {
     if (!widget.disabled) {
       try {
         setState(() {
           _isPressed = true;
         });
-        _animationController.forward(from: 0);
+        _animationController
+            .forward(from: 0)
+            .then(
+              (value) => _animationController.reverse(),
+            )
+            .then(
+              (value) => setState(
+                () {
+                  _isPressed = false;
+                },
+              ),
+            );
       } catch (e) {
-        _isPressed = true;
+        _isPressed = false;
       }
       widget.onPressed();
     }
   }
 
-  /// Handles the actions once the button is pressed up by the user.
-  ///
-  /// Set the state to indicate the button is not pressed and play the
-  /// animation in reverse.
-  void _onTapUp(PointerUpEvent details) {
-    if (!widget.disabled) {
-      try {
-        setState(() {
-          _isPressed = false;
-        });
-        _animationController.reverse(from: 1);
-      } catch (e) {}
-    }
-  }
-
   @override
   void initState() {
+    _animationController = AnimationController(
+      duration: widget.animationDuration,
+      vsync: this,
+    );
     super.initState();
-    _isPressed = false;
-    _animationController =
-        AnimationController(duration: widget.animationDuration, vsync: this);
   }
 
   @override
   void dispose() {
     _animationController.dispose();
+
     super.dispose();
   }
 
@@ -112,50 +133,113 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
                 ),
           child: Padding(
             padding: widget.padding,
-            child: Listener(
-              onPointerDown: _onTapDown,
-              onPointerUp: _onTapUp,
+            child: CleanInkWell(
+              onTap: _onPressed,
               child: AnimatedBuilder(
                 animation: _animationController,
                 builder: (context, child) {
-                  return Transform.scale(
-                    scale: (1 - (_animationController.value * 0.050)),
-                    child: Opacity(
-                      opacity: widget.disabled ? 0.2 : 1.0,
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 150),
-                        padding: widget.margin,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(widget.borderRadius),
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: _isPressed
-                                ? [
-                                    Color.lerp(widget.backgroundColor,
-                                        widget.accentColor, 0.35)!,
-                                    Color.lerp(widget.backgroundColor,
-                                        widget.accentColor, 0.45)!,
-                                    Color.lerp(widget.backgroundColor,
-                                        widget.accentColor, 0.55)!,
-                                    widget.backgroundColor,
-                                  ]
-                                : [widget.accentColor, widget.backgroundColor],
-                            //stops: [0.0, 0.3, 0.6, 1.0],
-                          ),
-                          boxShadow: widget.boxShadow,
-                        ),
-                        child: widget.child,
-                      ),
-                    ),
+                  return _AnimatedButtonContent(
+                    accentColor: widget.accentColor,
+                    animationController: _animationController,
+                    backgroundColor: widget.backgroundColor,
+                    borderRadius: widget.borderRadius,
+                    boxShadow: widget.boxShadow,
+                    disabled: widget.disabled,
+                    isPressed: _isPressed,
+                    child: widget.child,
+                    margin: widget.margin,
+                    duration: widget.animationDuration,
                   );
                 },
+                child: _AnimatedButtonContent(
+                  accentColor: widget.accentColor,
+                  animationController: _animationController,
+                  backgroundColor: widget.backgroundColor,
+                  borderRadius: widget.borderRadius,
+                  boxShadow: widget.boxShadow,
+                  disabled: widget.disabled,
+                  isPressed: _isPressed,
+                  child: widget.child,
+                  margin: widget.margin,
+                  duration: widget.animationDuration,
+                ),
               ),
             ),
           ),
         );
       },
+    );
+  }
+}
+
+/// The [LitPushedThroughButton]'s animated content.
+class _AnimatedButtonContent extends StatelessWidget {
+  final AnimationController animationController;
+  final bool disabled;
+  final bool isPressed;
+  final Color accentColor;
+  final Color backgroundColor;
+  final List<BoxShadow> boxShadow;
+  final EdgeInsets margin;
+  final BorderRadius borderRadius;
+  final Widget child;
+  final Duration duration;
+  const _AnimatedButtonContent({
+    Key? key,
+    required this.animationController,
+    required this.disabled,
+    required this.isPressed,
+    required this.accentColor,
+    required this.backgroundColor,
+    required this.boxShadow,
+    required this.margin,
+    required this.borderRadius,
+    required this.child,
+    required this.duration,
+  }) : super(key: key);
+
+  /// The animated scale.
+  double get _scale {
+    return (1 - (animationController.value * 0.050));
+  }
+
+  /// The animated opacity.
+  double get _opacity {
+    return disabled ? 0.2 : 1.0;
+  }
+
+  /// The animated colors.
+  List<Color> get _animatedColors {
+    return [
+      Color.lerp(backgroundColor, accentColor, 0.35)!,
+      Color.lerp(backgroundColor, accentColor, 0.45)!,
+      Color.lerp(backgroundColor, accentColor, 0.55)!,
+      backgroundColor,
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.scale(
+      scale: _scale,
+      child: Opacity(
+        opacity: _opacity,
+        child: AnimatedContainer(
+          duration: duration,
+          padding: margin,
+          decoration: BoxDecoration(
+            borderRadius: borderRadius,
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors:
+                  isPressed ? _animatedColors : [accentColor, backgroundColor],
+            ),
+            boxShadow: boxShadow,
+          ),
+          child: child,
+        ),
+      ),
     );
   }
 }
