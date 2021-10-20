@@ -1,58 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-class LitBackButtonDefaultStyling {
-  static const double height = 50.0;
-  static const double width = 48.0;
-  static const Color iconColor = Colors.white;
-  static const Color backgroundColor = LitColors.lightGrey;
-  static const IconData icon = LitIcons.arrow_left_solid;
-  static const double iconSize = 14.0;
-  static const EdgeInsets padding = const EdgeInsets.symmetric(
-    horizontal: 8.0,
-    vertical: 4.0,
-  );
-}
-
+/// A Leitmotif `button` widget allowing to navigate one level back.
+///
+/// The navigation can be overriden using the [onPressed] method to specify custom
+/// navigation.
 class LitBackButton extends StatefulWidget {
+  /// The button's height.
   final double height;
+
+  /// The button's width.
   final double width;
+
+  /// The button background color.
   final Color backgroundColor;
+
+  /// The button's icon color.
   final Color iconColor;
-  final IconData icon;
+
+  /// The icon's size.
   final double iconSize;
-  final EdgeInsets padding;
+
+  /// States whether navigating back should be allowed.
+  ///
+  /// This will prevent discarding unsaved changes.
   final bool shouldNavigateBack;
+
+  /// Handles the actions once the button is pressed while navigating back
+  /// should not be allowed.
   final void Function()? onInvalidNavigation;
-  final void Function()? onTap;
+
+  /// Handles the `onPressed` action.
+  final void Function()? onPressed;
   const LitBackButton({
     Key? key,
-    this.height = LitBackButtonDefaultStyling.height,
-    this.width = LitBackButtonDefaultStyling.width,
-    this.backgroundColor = LitBackButtonDefaultStyling.backgroundColor,
-    this.iconColor = LitBackButtonDefaultStyling.iconColor,
-    this.icon = LitBackButtonDefaultStyling.icon,
-    this.iconSize = LitBackButtonDefaultStyling.iconSize,
-    this.padding = LitBackButtonDefaultStyling.padding,
+    this.height = defaultHeight,
+    this.width = defaultWidth,
+    this.backgroundColor = defaultBackgroundColor,
+    this.iconColor = defaultIconColor,
+    this.iconSize = defaultIconSize,
     this.shouldNavigateBack = true,
     this.onInvalidNavigation,
-    this.onTap,
+    this.onPressed,
   }) : super(key: key);
+
+  static const double defaultHeight = 28.0;
+  static const double defaultWidth = 48.0;
+  static const double defaultIconSize = 14.0;
+  static const Color defaultBackgroundColor = LitColors.grey400;
+  static const Color defaultIconColor = Colors.white;
+  static const IconData icon = LitIcons.arrow_left_solid;
 
   @override
   _LitBackButtonState createState() => _LitBackButtonState();
 }
 
 class _LitBackButtonState extends State<LitBackButton> {
+  /// Handles the `onPressed` action.
   void _onTap() {
     // If a callback was provided, execute it.
-    if (widget.onTap != null) {
-      widget.onTap!();
+    if (widget.onPressed != null) {
+      widget.onPressed!();
       // Otherwise navigate back by default.
     } else {
       if (Navigator.canPop(context)) {
         if (widget.shouldNavigateBack) {
-          Navigator.of(context).pop();
+          Future.delayed(
+            Duration(
+              milliseconds: 120,
+            ),
+          ).then(
+            (_) => Navigator.of(context).pop(),
+          );
         } else {
           if (widget.onInvalidNavigation != null) {
             widget.onInvalidNavigation!();
@@ -64,33 +83,25 @@ class _LitBackButtonState extends State<LitBackButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: widget.padding,
-      child: InkWell(
-        splashColor: Colors.transparent,
-        focusColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        hoverColor: Colors.transparent,
-        onTap: _onTap,
-        child: SizedBox(
-          height: widget.height,
-          width: widget.width,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: LitTooltipContainer(
-              backgroundColor: widget.backgroundColor,
-              text: MaterialLocalizations.of(context).backButtonTooltip,
-              child: FittedBox(
-                alignment: Alignment.center,
-                child: Icon(
-                  widget.icon,
-                  size: widget.iconSize,
-                  color: widget.iconColor,
-                ),
-              ),
+    return SizedBox(
+      height: widget.height,
+      width: widget.width,
+      child: LitPushedThroughButton(
+        boxShadow: LitBoxShadows.sm,
+        backgroundColor: widget.backgroundColor,
+        accentColor: widget.backgroundColor,
+        child: Align(
+          alignment: Alignment.center,
+          child: FittedBox(
+            alignment: Alignment.center,
+            child: Icon(
+              LitBackButton.icon,
+              size: widget.iconSize,
+              color: widget.iconColor,
             ),
           ),
         ),
+        onPressed: _onTap,
       ),
     );
   }
