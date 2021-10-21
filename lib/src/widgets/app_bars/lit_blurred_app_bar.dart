@@ -1,80 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A [CustomAppBar] which will blur all content underneath.
-///
-/// This effect requires the content to be placed without any additional
-/// [Padding] on the [LitScaffold]. Note that this will force the content
-/// to be on the same vertical level as the [LitBlurredAppBar]. Therefore
-/// [ListView]s displayed on the [LitScaffold] should be provided adjusted
-/// with [Padding] on them.
+/// A Leitmotif `app_bars` widget displaying a app bar, whose background is
+/// blurred. This allows to apply a visual effect on top of the currently
+/// displayed screen's content.
 class LitBlurredAppBar extends StatelessWidget implements CustomAppBar {
-  final String title;
-  final TextStyle textStyle;
-  final bool darkMode;
+  /// The app bar's height.
+  final double height;
 
-  /// The app bar height is depending on the abstract [CustomAppBar] height.
-  static final height = CustomAppBar.height;
+  /// The background's blur radius.
+  final double blurRadius;
+
+  /// The app bar's title.
+  final String title;
+
+  /// The app bar's title style.
+  final TextStyle textStyle;
 
   /// Creates a [LitBlurredAppBar].
-  ///
-  /// Define the [textStyle] value for a custom [TextStyle].
-  ///
-  /// Define the [darkMode] value for a different color scheme.
   const LitBlurredAppBar({
     Key? key,
+    this.height = CustomAppBar.height,
+    this.blurRadius = 4.0,
     required this.title,
-    this.textStyle = LitSansSerifStyles.body2,
-    this.darkMode = false,
+    this.textStyle = CustomAppBar.textStyle,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.topCenter,
-      child: Stack(
-        children: [
-          BluredBackgroundContainer(
-            blurRadius: 5.0,
-            child: Container(
-              height: height,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: darkMode
-                    ? Colors.black.withOpacity(0.2)
-                    : LitColors.mediumGrey.withOpacity(0.1),
-              ),
-              child: SafeArea(
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                    child: ClippedText(
-                      "$title",
-                      style: textStyle.copyWith(
-                        color: darkMode ? Colors.white : LitColors.mediumGrey,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+      child: BluredBackgroundContainer(
+        blurRadius: blurRadius,
+        child: Container(
+          height: height,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: LitColors.semiTransparent,
+          ),
+          child: LitAppBarContent(
+            backButtonBackgroundColor: LitBackButton.defaultBackgroundColor,
+            backButtonIconColor: LitBackButton.defaultIconColor,
+            margin: CustomAppBar.margin,
+            child: LitAppBarTitleLabel(
+              title: title,
+              style: textStyle,
             ),
           ),
-          Navigator.canPop(context)
-              ? Container(
-                  height: height,
-                  width: MediaQuery.of(context).size.width,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: SafeArea(
-                        child: LitBackButton(
-                      backgroundColor:
-                          darkMode ? Colors.black : LitColors.lightGrey,
-                      iconColor:
-                          darkMode ? LitColors.mediumGrey : Colors.white60,
-                    )),
-                  ),
-                )
-              : SizedBox()
-        ],
+        ),
       ),
     );
   }

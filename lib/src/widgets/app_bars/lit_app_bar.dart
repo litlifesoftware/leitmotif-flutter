@@ -1,95 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
+import 'package:leitmotif/src/widgets/app_bars/lit_app_bar_title_label.dart';
 
-/// The default [CustomAppBar] implementetion.
+/// A Leitmotif `app_bars` widget displaying an app bar on top of a screen.
 ///
-/// The background [Color] will depend on the provided [darkMode] value.
+/// Provides the default implementation of Leitmotif's [CustomAppBar].
 class LitAppBar extends StatelessWidget implements CustomAppBar {
+  /// The app bar's title.
+  ///
+  /// Indicates the screen's title.
   final String title;
-  final TextStyle textStyle;
-  final List<BoxShadow> boxShadow;
-  final Color backgroundColor;
-  final bool elevated;
-  final Color backButtonBackgroundColor;
-  final Color backButtonIconColor;
 
-  /// States whether to align the title to the right if there will be a back
-  /// button displayed on the left. This will increase the space the title can
-  /// occupy to avoid a clipped title.
-  final bool alignRight;
+  /// The title's text style.
+  final TextStyle textStyle;
+
+  /// The shadow decoration.
+  final List<BoxShadow> boxShadow;
+
+  /// The bar's background color.
+  final Color backgroundColor;
+
+  /// The back button's background color.
+  final Color backButtonBackgroundColor;
+
+  /// The back button's icon color.
+  final Color backButtonIconColor;
 
   /// The app bar height is depending on the abstract [CustomAppBar] height.
   static final double height = CustomAppBar.height;
 
+  /// The bar's internal margin.
+  static final EdgeInsets margin = CustomAppBar.margin;
+
   /// Creates a [LitAppBar].
-  ///
-  /// * [alignRight] whether to align the title to the right if there will be a
-  /// back button displayed on the left. This will increase the space the title
-  /// can occupy to avoid a clipped title.
   const LitAppBar({
     Key? key,
     required this.title,
-    this.textStyle = LitSansSerifStyles.subtitle2,
-    this.elevated = false,
-    this.boxShadow = const [
-      BoxShadow(
-        blurRadius: 12.0,
-        color: Colors.black26,
-        offset: Offset(0, 4),
-        spreadRadius: 1.0,
-      )
-    ],
+    this.textStyle = CustomAppBar.textStyle,
+    this.boxShadow = CustomAppBar.boxShadow,
     this.backgroundColor = Colors.white,
-    this.backButtonBackgroundColor =
-        LitBackButtonDefaultStyling.backgroundColor,
-    this.backButtonIconColor = LitBackButtonDefaultStyling.iconColor,
-    this.alignRight = false,
+    this.backButtonBackgroundColor = LitBackButton.defaultBackgroundColor,
+    this.backButtonIconColor = LitBackButton.defaultIconColor,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.topCenter,
-      child: Stack(
-        children: [
-          Container(
-            height: height,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                color: backgroundColor, boxShadow: elevated ? [] : boxShadow),
-            child: SafeArea(
-              child: Align(
-                alignment: Navigator.canPop(context) && alignRight
-                    ? Alignment.centerRight
-                    : Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                  child: ClippedText(
-                    "$title",
-                    textAlign: Navigator.canPop(context) && alignRight
-                        ? TextAlign.center
-                        : TextAlign.end,
-                    style: textStyle,
-                  ),
-                ),
-              ),
+      child: Container(
+        height: height,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          boxShadow: boxShadow,
+        ),
+        child: SafeArea(
+          child: LitAppBarContent(
+            backButtonBackgroundColor: backButtonBackgroundColor,
+            backButtonIconColor: backButtonIconColor,
+            margin: margin,
+            child: LitAppBarTitleLabel(
+              title: title,
+              style: textStyle,
             ),
           ),
-          Navigator.canPop(context)
-              ? Container(
-                  height: height,
-                  width: MediaQuery.of(context).size.width,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: SafeArea(
-                      child: LitBackButton(
-                        backgroundColor: backButtonBackgroundColor,
-                        iconColor: backButtonIconColor,
-                      ),
-                    ),
-                  ),
-                )
-              : SizedBox()
-        ],
+        ),
       ),
     );
   }

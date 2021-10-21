@@ -1,60 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A [CustomAppBar] widget displaying an app bar.
+/// A Leitmotif `app_bars` widget allowing to display an app bar, which will
+/// only appear once the corresponding scroll view has been scrolled.
 ///
-/// Only if the corresponding [ScrollController] property registers a scroll action,
-/// the app bar will be shown by playing its animation forward. If the scroll offset is
-/// below the threshold (scroll up), the app bar will be animated in reverse, therefore
-/// removing it from the visible area.
+/// This will increase the total view initially available to the scroll view
+/// while preserving the option to navigate back when scrolled down.
 class FixedOnScrollAppbar extends StatefulWidget implements CustomAppBar {
-  /// The [ScrollController]'s scroll offset will state whether to animate the app bar.
+  /// The controller attached to a scroll view.
   final ScrollController? scrollController;
 
-  /// The offset required to trigger the app bar to appear. It defaults to 50.0.
-  final double maxScrollOffset;
+  /// The scroll offset required to trigger the app bar to appear.
+  final double requiredOffset;
 
-  /// The background color of the app bar. It defaults to [Colors.white].
+  /// The app bar's background color.
   final Color backgroundColor;
+
+  /// The app bar's box shadow.
   final List<BoxShadow> boxShadow;
 
-  /// The height of the app bar. It defaults to [CustomAppBar.height].
+  /// The app bar's total height.
   final double height;
-  final Widget child;
-  final EdgeInsets padding;
 
+  /// The app bar's child.
+  final Widget child;
+
+  /// The app bar's margin.
+  final EdgeInsets margin;
+
+  /// The back button's background color.
   final Color backButtonBackgroundColor;
+
+  /// The back button's icon color.
   final Color backButtonIconColor;
-  // TODO
+
+  /// States whether navigating back should be allowed.
   final bool shouldNavigateBack;
 
-  // TODO
-  final bool displayBackButton;
+  /// Handles the action once the back button is being pressed while navigation
+  /// should not be allowed.
   final void Function()? onInvalidNavigation;
 
-  /// Creates a [FixedOnScrollAppbar] widget.
-  /// The [ScrollController] is required in order to register a scroll change.
+  /// Creates a [FixOnScrollAppbar].
   const FixedOnScrollAppbar({
     Key? key,
     required this.scrollController,
-    this.maxScrollOffset = 50.0,
-    this.backgroundColor = Colors.white,
-    this.boxShadow = const [
-      BoxShadow(
-        color: Colors.black26,
-        blurRadius: 12.0,
-        offset: Offset(0, 2),
-        spreadRadius: 1.0,
-      )
-    ],
-    this.height = CustomAppBar.height,
     required this.child,
-    this.padding = const EdgeInsets.symmetric(horizontal: 8.0),
-    this.backButtonBackgroundColor =
-        LitBackButtonDefaultStyling.backgroundColor,
-    this.backButtonIconColor = LitBackButtonDefaultStyling.iconColor,
-    this.displayBackButton = true,
-    this.shouldNavigateBack = true,
+    this.requiredOffset = CustomAppBar.requiredOffset,
+    this.backgroundColor = Colors.white,
+    this.boxShadow = CustomAppBar.boxShadow,
+    this.height = CustomAppBar.height,
+    this.margin = CustomAppBar.margin,
+    this.backButtonBackgroundColor = LitBackButton.defaultBackgroundColor,
+    this.backButtonIconColor = LitBackButton.defaultIconColor,
+    this.shouldNavigateBack = LitBackButton.defaultShouldNavigateBack,
     this.onInvalidNavigation,
   }) : super(key: key);
 
@@ -64,6 +63,7 @@ class FixedOnScrollAppbar extends StatefulWidget implements CustomAppBar {
 
 class _FixedOnScrollAppbarState extends State<FixedOnScrollAppbar>
     with TickerProviderStateMixin {
+  /// Handles the `on scroll` animation.
   late AnimationOnScrollController _animationOnScrollController;
 
   @override
@@ -71,7 +71,7 @@ class _FixedOnScrollAppbarState extends State<FixedOnScrollAppbar>
     super.initState();
     _animationOnScrollController = AnimationOnScrollController(
       scrollController: widget.scrollController,
-      requiredScrollOffset: 16.0,
+      requiredScrollOffset: widget.requiredOffset,
       direction: AnimationDirection.forward,
       vsync: this,
     );
@@ -83,6 +83,17 @@ class _FixedOnScrollAppbarState extends State<FixedOnScrollAppbar>
     super.dispose();
   }
 
+  /// Returns the current animation value.
+  double get _animationValue {
+    return _animationOnScrollController.animationController.value;
+  }
+
+  /// Returns an animated transform matrix.
+  Matrix4 get _transform {
+    final y = -widget.height + (widget.height * _animationValue);
+    return Matrix4.translationValues(0, y, 0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -90,14 +101,9 @@ class _FixedOnScrollAppbarState extends State<FixedOnScrollAppbar>
       builder: (context, _) {
         return AnimatedOpacity(
           duration: _animationOnScrollController.animationController.duration!,
-          opacity: _animationOnScrollController.animationController.value,
+          opacity: _animationValue,
           child: Transform(
-            transform: Matrix4.translationValues(
-                0,
-                -widget.height +
-                    (widget.height *
-                        _animationOnScrollController.animationController.value),
-                0),
+            transform: _transform,
             child: Container(
               height: widget.height,
               width: MediaQuery.of(context).size.width,
@@ -105,24 +111,12 @@ class _FixedOnScrollAppbarState extends State<FixedOnScrollAppbar>
                 color: widget.backgroundColor,
                 boxShadow: widget.boxShadow,
               ),
-              padding: widget.padding,
-              child: (Navigator.canPop(context) && widget.displayBackButton)
-                  ? Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          LitBackButton(
-                            backgroundColor: widget.backButtonBackgroundColor,
-                            iconColor: widget.backButtonIconColor,
-                            shouldNavigateBack: widget.shouldNavigateBack,
-                            onInvalidNavigation: widget.onInvalidNavigation,
-                          ),
-                          widget.child,
-                        ],
-                      ),
-                    )
-                  : widget.child,
+              child: LitAppBarContent(
+                backButtonBackgroundColor: widget.backButtonBackgroundColor,
+                backButtonIconColor: widget.backButtonIconColor,
+                margin: widget.margin,
+                child: widget.child,
+              ),
             ),
           ),
         );

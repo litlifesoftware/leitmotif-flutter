@@ -2,135 +2,80 @@ import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 import 'package:leitmotif/src/widgets/app_bars/fixed_on_scroll_appbar.dart';
 
-/// A [CustomAppBar] widget displaying an app bar.
+/// A Leitmotif `app_bars` widget allowing to display an app bar, which will
+/// only appear once the corresponding scroll view has been scrolled.
 ///
-/// Only if the corresponding [ScrollController] property registers a scroll action,
-/// the app bar will be shown by playing its animation forward. If the scroll offset is
-/// below the threshold (scroll up), the app bar will be animated in reverse, therefore
-/// removing it from the visible area.
-class FixedOnScrollTitledAppbar extends StatefulWidget implements CustomAppBar {
-  /// The [ScrollController]'s scroll offset will state whether to animate the app bar.
+/// The app bar content will display a string labeling the current screen.
+class FixedOnScrollTitledAppbar extends StatelessWidget
+    implements CustomAppBar {
+  /// The controller attached to a scroll view.
   final ScrollController? scrollController;
 
-  /// The offset required to trigger the app bar to appear. It defaults to 50.0.
-  final double maxScrollOffset;
+  /// The scroll offset required to trigger the app bar to appear.
+  final double requiredOffset;
 
-  /// The background color of the app bar. It defaults to [Colors.white].
+  /// The app bar's background color.
   final Color backgroundColor;
+
+  /// The app bar's box shadow.
   final List<BoxShadow> boxShadow;
 
-  /// The height of the app bar. It defaults to [CustomAppBar.height].
+  /// The app bar's total height.
   final double height;
-  final String title;
-  final EdgeInsets padding;
 
-  final Color backButtonBackgroundColor;
-  final Color backButtonIconColor;
+  /// The app bar's title.
+  final String title;
 
   final TextStyle textStyle;
 
-  //TODO
+  /// The app bar's margin.
+  final EdgeInsets margin;
+
+  /// The back button's background color.
+  final Color backButtonBackgroundColor;
+
+  /// The back button's icon color.
+  final Color backButtonIconColor;
+
+  /// States whether navigating back should be allowed.
   final bool shouldNavigateBack;
 
-  // TODO
-  final bool displayBackButton;
+  /// Handles the action once the back button is being pressed while navigation
+  /// should not be allowed.
   final void Function()? onInvalidNavigation;
 
-  /// Creates a [FixedOnScrollTitledAppbar] widget.
-  /// The [ScrollController] is required in order to register a scroll change.
+  /// Creates a [FixedOnScrollTitledAppbar].
   const FixedOnScrollTitledAppbar({
     Key? key,
     required this.scrollController,
-    this.maxScrollOffset = 50.0,
-    this.backgroundColor = Colors.white,
-    this.boxShadow = const [
-      BoxShadow(
-        color: Colors.black26,
-        blurRadius: 12.0,
-        offset: Offset(0, 2),
-        spreadRadius: 1.0,
-      )
-    ],
-    this.height = CustomAppBar.height,
     required this.title,
-    this.padding = const EdgeInsets.symmetric(horizontal: 8.0),
-    this.backButtonBackgroundColor =
-        LitBackButtonDefaultStyling.backgroundColor,
-    this.backButtonIconColor = LitBackButtonDefaultStyling.iconColor,
-    this.textStyle = LitSansSerifStyles.subtitle2,
-    this.shouldNavigateBack = true,
-    this.displayBackButton = true,
+    this.requiredOffset = CustomAppBar.requiredOffset,
+    this.backgroundColor = Colors.white,
+    this.boxShadow = CustomAppBar.boxShadow,
+    this.height = CustomAppBar.height,
+    this.textStyle = CustomAppBar.textStyle,
+    this.margin = CustomAppBar.margin,
+    this.backButtonBackgroundColor = LitBackButton.defaultBackgroundColor,
+    this.backButtonIconColor = LitBackButton.defaultIconColor,
+    this.shouldNavigateBack = LitBackButton.defaultShouldNavigateBack,
     this.onInvalidNavigation,
   }) : super(key: key);
 
   @override
-  _FixedOnScrollTitledAppbarState createState() =>
-      _FixedOnScrollTitledAppbarState();
-}
-
-class _FixedOnScrollTitledAppbarState extends State<FixedOnScrollTitledAppbar>
-    with TickerProviderStateMixin {
-  late AnimationOnScrollController _animationOnScrollController;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationOnScrollController = AnimationOnScrollController(
-      scrollController: widget.scrollController,
-      requiredScrollOffset: 16.0,
-      direction: AnimationDirection.forward,
-      vsync: this,
-    );
-  }
-
-  @override
-  void dispose() {
-    _animationOnScrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return FixedOnScrollAppbar(
-      scrollController: widget.scrollController,
-      backButtonBackgroundColor: widget.backButtonBackgroundColor,
-      backButtonIconColor: widget.backButtonIconColor,
-      backgroundColor: widget.backgroundColor,
-      boxShadow: widget.boxShadow,
-      height: widget.height,
-      maxScrollOffset: widget.maxScrollOffset,
-      onInvalidNavigation: widget.onInvalidNavigation,
-      padding: widget.padding,
-      shouldNavigateBack: widget.shouldNavigateBack,
-      displayBackButton: widget.displayBackButton,
-      child: _Title(title: widget.title, style: widget.textStyle),
-    );
-  }
-}
-
-class _Title extends StatelessWidget {
-  final String title;
-  final TextStyle style;
-  const _Title({
-    Key? key,
-    required this.title,
-    required this.style,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 2,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Align(
-          alignment: Alignment.centerRight,
-          child: ClippedText(
-            title,
-            textAlign: TextAlign.center,
-            style: style,
-          ),
-        ),
+      scrollController: scrollController,
+      backButtonBackgroundColor: backButtonBackgroundColor,
+      backButtonIconColor: backButtonIconColor,
+      backgroundColor: backgroundColor,
+      boxShadow: boxShadow,
+      height: height,
+      onInvalidNavigation: onInvalidNavigation,
+      margin: margin,
+      shouldNavigateBack: shouldNavigateBack,
+      child: LitAppBarTitleLabel(
+        style: textStyle,
+        title: title,
       ),
     );
   }
