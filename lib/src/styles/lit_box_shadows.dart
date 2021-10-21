@@ -68,4 +68,13 @@ class LitBoxShadows {
       blurRadius: 4.0,
     )
   ];
+
+  static const List<BoxShadow> appBar = const [
+    BoxShadow(
+      blurRadius: 8.0,
+      color: Colors.black26,
+      offset: Offset(0, 4.0),
+      spreadRadius: 1.0,
+    )
+  ];
 }

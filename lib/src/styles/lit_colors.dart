@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 /// A collection of [Color] objects implementing the `Leitmotif` color palette.
 class LitColors {
-  //TODO: REMOVE
   static const Color lightRed = red400;
   static const Color midRed = red600;
   static const Color darkRed = red700;
@@ -22,10 +21,8 @@ class LitColors {
   static const Color mediumOliveGreen = green500;
   static const Color darkOliveGreen = green600;
 
-  //
-  //
-  //
   static const Color transparent = const Color(0x00FFFFFF);
+  static const Color semiTransparent = const Color(0x82e7e7E7);
 
   static const Color grey50 = const Color(0xFFFDFDFD);
   static const Color grey100 = const Color(0xFFf4f4f7);
