@@ -39,7 +39,7 @@ class LitBackButton extends StatefulWidget {
     this.backgroundColor = defaultBackgroundColor,
     this.iconColor = defaultIconColor,
     this.iconSize = defaultIconSize,
-    this.shouldNavigateBack = true,
+    this.shouldNavigateBack = defaultShouldNavigateBack,
     this.onInvalidNavigation,
     this.onPressed,
   }) : super(key: key);
@@ -50,6 +50,7 @@ class LitBackButton extends StatefulWidget {
   static const Color defaultBackgroundColor = LitColors.grey400;
   static const Color defaultIconColor = Colors.white;
   static const IconData icon = LitIcons.arrow_left_solid;
+  static const bool defaultShouldNavigateBack = true;
 
   @override
   _LitBackButtonState createState() => _LitBackButtonState();
@@ -65,11 +66,7 @@ class _LitBackButtonState extends State<LitBackButton> {
     } else {
       if (Navigator.canPop(context)) {
         if (widget.shouldNavigateBack) {
-          Future.delayed(
-            Duration(
-              milliseconds: 120,
-            ),
-          ).then(
+          Future.delayed(LitPushedThroughButton.defaultDuration).then(
             (_) => Navigator.of(context).pop(),
           );
         } else {
