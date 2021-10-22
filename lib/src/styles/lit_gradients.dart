@@ -42,4 +42,15 @@ class LitGradients {
       LitColors.red200,
     ],
   );
+
+  /// A semi transparent radial gradient used as indicator decoration on
+  /// the bottom navigation.
+  static const RadialGradient navigationBackdrop = RadialGradient(
+    radius: 0.75,
+    colors: const [
+      LitColors.semiTransparent,
+      LitColors.red600_40,
+      LitColors.transparent,
+    ],
+  );
 }

@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/bottom_navigation.dart';
 
-/// A screen widget allowing to navigate the provided tab widgets inside an
-/// surrounding tab view.
+/// A Leitmotif `scaffold` widget displaying a bottom navigation view wrapping
+/// the provided [tabs].
 ///
-/// It implements the [LitBottomNavigation] as a view layer and the required
-/// logic for tracking the state and the for navigating between the tabs.
-/// The tab wiew will ignore the any overlapping widgets when using a keyboard
-/// by disabling the [Scaffold.resizeToAvoidBottomInset]. To reenable the
-/// resize when using a keyboard, set the [resizeToAvoidBottomInset] to `true`.
+/// It tracks the current navigation state and transitioning through the tabs.
+/// The view will ignore any overlapping widgets when using a keyboard
+/// by disabling the [Scaffold.resizeToAvoidBottomInset]. To reenable
+/// this option, set the [resizeToAvoidBottomInset] to `true`.
 ///
 /// Accoring to Material Design's guidelines (https://material.io/components/),
 /// bottom app bars should be able to overlap when using the keyboard.
-///
 class LitTabView extends StatefulWidget {
   /// Creates a [LitTabView].
-  ///
-  /// * [tabs] are the widget and data objects the view should display.
   const LitTabView({
     Key? key,
     required this.tabs,
     this.resizeToAvoidBottomInset = false,
-    // this.hideNavigationBar = false,
     this.animationDuration = LitBottomNavigation.defaultAnimationDuration,
     this.barBlurRadius = LitBottomNavigation.defaultBlurRadius,
     this.barBackgroundColor = LitBottomNavigation.defaultBackgroundColor,
@@ -34,10 +29,6 @@ class LitTabView extends StatefulWidget {
 
   /// States whether to resize the tab view widgets when using a keyboard.
   final bool resizeToAvoidBottomInset;
-
-  /// States whether to hide the navigation bar, if any widget should occupy
-  /// its space temporarily (e.g. when expanding a panel).
-  // final bool hideNavigationBar;
 
   /// States how long each animation cycle should last.
   final Duration animationDuration;

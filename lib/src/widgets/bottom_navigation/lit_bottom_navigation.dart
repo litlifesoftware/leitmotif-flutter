@@ -48,7 +48,7 @@ class LitBottomNavigation extends StatefulWidget {
   static const defaultHeight = 72.0;
   static const defaultAnimationDuration = const Duration(milliseconds: 110);
   static const defaultBlurRadius = 4.0;
-  static const defaultBackgroundColor = const Color(0x82e7e7E7);
+  static const defaultBackgroundColor = LitColors.semiTransparent;
 
   @override
   _LitBottomNavigationState createState() => _LitBottomNavigationState();
@@ -61,7 +61,7 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
 
   /// Changes the currently selected tab by setting the state using the
   /// provided index value.
-  void _changeTab(int value) {
+  void _handleOnChange(int value) {
     widget.onChangeTab(value);
     if (_animationController.isCompleted) {
       _animationController.reverse().then(
@@ -94,15 +94,20 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animationController,
-      builder: (context, _) {
-        return Align(
-          alignment: Alignment.bottomCenter,
-          child: SizedBox(
-            child: Padding(
-              padding: widget.padding,
-              child: BluredBackgroundContainer(
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: SizedBox(
+        child: Padding(
+          padding: widget.padding,
+          child: Stack(
+            children: [
+              _SelectedItemBackdropContainer(
+                animationController: _animationController,
+                checkIsSelected: checkIsSelected,
+                height: widget.height,
+                tabs: widget.tabs,
+              ),
+              BluredBackgroundContainer(
                 blurRadius: widget.blurRadius,
                 child: Container(
                   height: widget.height,
@@ -115,15 +120,11 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
                       widget.tabs.forEach(
                         (LitBottomNavigationBarItemData data) {
                           children.add(
-                            _BarItem(
+                            LitBottomNavigationItem(
                               data: data,
                               isSelected: checkIsSelected(data),
-                              onChangeTab: _changeTab,
+                              onChange: _handleOnChange,
                               animationController: _animationController,
-                              tabBackgroundColor: data.tabBackgroundColor,
-                              tabBackgroundColorAlt: data.tabBackgroundColorAlt,
-                              tabColor: data.tabColor,
-                              tabColorAlt: data.tabColorAlt,
                             ),
                           );
                         },
@@ -137,238 +138,104 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        );
-      },
-    );
-  }
-}
-
-/// An individual tab item on the bottom navigation bar.
-class _BarItem extends StatelessWidget {
-  final LitBottomNavigationBarItemData data;
-  final bool isSelected;
-  final void Function(int) onChangeTab;
-  final AnimationController animationController;
-  final Color tabBackgroundColorAlt;
-  final Color tabBackgroundColor;
-  final Color tabColor;
-  final Color tabColorAlt;
-  final BorderRadius borderRadius;
-  const _BarItem({
-    Key? key,
-    required this.data,
-    required this.isSelected,
-    required this.onChangeTab,
-    required this.animationController,
-    required this.tabBackgroundColorAlt,
-    required this.tabBackgroundColor,
-    required this.tabColor,
-    required this.tabColorAlt,
-    this.borderRadius = const BorderRadius.all(
-      Radius.circular(18.0),
-    ),
-  }) : super(key: key);
-
-  /// Returns the background color depending on the current state..
-  Color get _backgroundColor {
-    return isSelected ? tabBackgroundColorAlt : Colors.transparent;
-  }
-
-  /// Returns the color depending on the current state.
-  Color get _color {
-    return isSelected ? tabColorAlt : tabColor;
-  }
-
-  /// Returns the icon depending on the current state.
-  IconData get _icon {
-    return isSelected ? data.iconAlt : data.icon;
-  }
-
-  /// Returns the padding depending on the current state.
-  EdgeInsets get _padding {
-    return isSelected
-        ? EdgeInsets.symmetric(
-            horizontal: 22.0,
-            vertical: 8.0,
-          )
-        : EdgeInsets.symmetric(
-            horizontal: 16.0,
-            vertical: 4.0,
-          );
-  }
-
-  /// Returns the icon size depending on the current state.
-  double get _iconSize {
-    return (animationController.value * (isSelected ? 16.0 : 18.0));
-  }
-
-  /// Returns the box shadow depending on the current state.
-  List<BoxShadow> get _boxShadow {
-    return isSelected ? LitBoxShadows.sm : [];
-  }
-
-  /// Returns an animated opacity.
-  double get _opacity {
-    return 0.25 + (0.75 * animationController.value);
-  }
-
-  /// Handles the `change` event.
-  ///
-  /// Executes the callback, only if the tab is not currently selected.
-  void _onTap() {
-    if (!isSelected) onChangeTab(data.index);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: animationController,
-      builder: (context, _) {
-        return AnimatedOpacity(
-          opacity: _opacity,
-          duration: animationController.duration!,
-          child: CleanInkWell(
-            onTap: _onTap,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: borderRadius,
-                        color: _backgroundColor,
-                        boxShadow: _boxShadow,
-                      ),
-                      child: Padding(
-                        padding: _padding,
-                        child: Icon(
-                          _icon,
-                          color: _color,
-                          size: _iconSize,
-                        ),
-                      ),
-                    ),
-                    isSelected
-                        ? _BarItemSelectedIndicator(
-                            animationController: animationController,
-                          )
-                        : SizedBox(),
-                  ],
-                ),
-                data.title != null
-                    ? _BarItemTitle(
-                        isSelected: isSelected,
-                        tabColor: tabColor,
-                        tabColorAlt: tabColorAlt,
-                        title: data.title!,
-                      )
-                    : SizedBox(),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-/// A widget allowing to display a tab title on a [_BarItem].
-class _BarItemTitle extends StatelessWidget {
-  final bool isSelected;
-  final String title;
-  final Color tabColor;
-  final Color tabColorAlt;
-  const _BarItemTitle({
-    Key? key,
-    required this.isSelected,
-    required this.title,
-    required this.tabColor,
-    required this.tabColorAlt,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: isSelected ? 2.0 : 2.0,
-      ),
-      child: Text(
-        title.capitalize(),
-        style: LitSansSerifStyles.caption.copyWith(
-          color: isSelected ? tabColorAlt : tabColor,
-          fontWeight: isSelected
-              ? FontWeight.bold
-              : LitSansSerifStyles.caption.fontWeight,
         ),
       ),
     );
   }
 }
 
-/// A widget allowing to display a `selected` indicator on a [_BarItem].
-class _BarItemSelectedIndicator extends StatelessWidget {
+/// A backdrop decoration indicated which tab item is currently selected.
+class _SelectedItemBackdropContainer extends StatelessWidget {
   final AnimationController animationController;
-  final EdgeInsets padding;
-  final double size;
-  const _BarItemSelectedIndicator({
+  final List<LitBottomNavigationBarItemData> tabs;
+  final double height;
+  final bool Function(LitBottomNavigationBarItemData) checkIsSelected;
+  const _SelectedItemBackdropContainer({
     Key? key,
     required this.animationController,
-    this.padding = const EdgeInsets.symmetric(
-      vertical: 6.0,
-      horizontal: 10.0,
-    ),
-    this.size = 4,
+    required this.tabs,
+    required this.height,
+    required this.checkIsSelected,
   }) : super(key: key);
 
-  /// Returns an animated transform matrix.
-  Matrix4 get _transform {
-    final y = 25.0 - (25.0 * animationController.value);
-    return Matrix4.translationValues(
-      0,
-      y,
-      0,
-    );
-  }
-
-  /// Returns an animated border radius.
-  BorderRadius get _borderRadius {
-    return BorderRadius.all(
-      Radius.circular(
-        size / 2 + (size / 2 * animationController.value),
-      ),
-    );
-  }
-
-  /// Returns an animated height.
-  double get _height {
-    return size + (size * animationController.value);
-  }
-
-  /// Returns an animated width.
-  double get _width {
-    return size + (size * animationController.value);
-  }
+  final double _width = 58.0;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: padding,
-      child: Transform(
-        transform: _transform,
-        child: Container(
-          height: _height,
-          width: _width,
-          decoration: BoxDecoration(
-            borderRadius: _borderRadius,
-            color: Color.lerp(
-              Colors.white,
-              LitColors.red400,
-              animationController.value,
-            ),
-          ),
+    return Container(
+      height: height,
+      width: MediaQuery.of(context).size.width,
+      child: Builder(
+        builder: (context) {
+          List<Widget> children = [];
+          for (LitBottomNavigationBarItemData tab in tabs) {
+            if (checkIsSelected(tab)) {
+              children.add(
+                AnimatedBuilder(
+                  animation: animationController,
+                  builder: (context, _) {
+                    return _BackdropItem(
+                      animationController: animationController,
+                      height: height,
+                      width: _width,
+                    );
+                  },
+                  child: _BackdropItem(
+                    animationController: animationController,
+                    height: height,
+                    width: _width,
+                  ),
+                ),
+              );
+            } else {
+              children.add(
+                SizedBox(
+                  height: height,
+                  width: _width,
+                ),
+              );
+            }
+          }
+
+          return Stack(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: children,
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// An individual backdrop item displaying a radial gradient decoration.
+class _BackdropItem extends StatelessWidget {
+  final AnimationController animationController;
+  final double height;
+  final double width;
+  const _BackdropItem({
+    Key? key,
+    required this.animationController,
+    required this.height,
+    required this.width,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedOpacity(
+      opacity: animationController.value,
+      duration: animationController.duration!,
+      child: Container(
+        height: height / 1.5,
+        width: width,
+        decoration: BoxDecoration(
+          gradient: LitGradients.navigationBackdrop,
         ),
       ),
     );
@@ -403,12 +270,6 @@ class LitBottomNavigationBarItemData {
   final Color tabColorAlt;
 
   /// Creates a [LitBottomNavigationBarItemData].
-  ///
-  /// * [index] is the index value of the tab.
-  ///
-  /// * [icon] is the icon in `unselected` state.
-  ///
-  /// * [iconAlt] is the icon in `selected` state.
   const LitBottomNavigationBarItemData({
     required this.index,
     required this.icon,
