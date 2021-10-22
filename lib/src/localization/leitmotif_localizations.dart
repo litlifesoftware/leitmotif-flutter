@@ -74,7 +74,8 @@ class LeitmotifLocalizations {
       _Keys.creditsLabel: 'Credits',
       _Keys.fullyTransparentLabel: 'Color is fully transparent',
       _Keys.licensesLabel: 'Licenses',
-      _Keys.backLabel: 'Zurück',
+      _Keys.backLabel: 'Back',
+      _Keys.notificationLabel: 'Notification',
     },
     // 'German' localization
     'de': const {
@@ -109,8 +110,8 @@ class LeitmotifLocalizations {
       _Keys.december: 'Dezember',
       _Keys.yourAgeLabel: 'Dein Alter',
       _Keys.invalidInputBody: 'Bitte überprüfe deine Eingabe.',
-      _Keys.verifyAgeScreenSuccessTitle: 'Age confirmed',
-      _Keys.verifyAgeScreenSuccessSubtitle: 'Your age has been confirmed',
+      _Keys.verifyAgeScreenSuccessTitle: 'Alter bestätigt',
+      _Keys.verifyAgeScreenSuccessSubtitle: 'Dein Alter wurde bestätigt',
       _Keys.verifyAgeScreenSuccessBody:
           'Vielen Dank für die Altersbestätigung. Viel Vergnügen!',
       _Keys.verifyAgeScreenDescriptionBody:
@@ -123,6 +124,7 @@ class LeitmotifLocalizations {
       _Keys.fullyTransparentLabel: 'Diese Farbe ist vollständig transparent',
       _Keys.licensesLabel: 'Lizenzen',
       _Keys.backLabel: 'Zurück',
+      _Keys.notificationLabel: 'Benachrichtigung',
     },
   };
 
@@ -288,6 +290,10 @@ class LeitmotifLocalizations {
   String get backLabel {
     return _localizedValues[locale.languageCode]![_Keys.backLabel]!;
   }
+
+  String get notificationLabel {
+    return _localizedValues[locale.languageCode]![_Keys.notificationLabel]!;
+  }
 }
 
 /// A Leitmotif delegate class initializing the [LeitmotifLocalizations].
@@ -359,4 +365,5 @@ class _Keys {
   static const String creditsLabel = 'creditsLabel';
   static const String fullyTransparentLabel = 'fullyTransprentLabel';
   static const String licensesLabel = 'licensesLabel';
+  static const String notificationLabel = 'notificationLabel';
 }
