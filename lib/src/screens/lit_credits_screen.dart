@@ -77,7 +77,6 @@ class _LitCreditsScreenState extends State<LitCreditsScreen>
         title: _l10nAvail
             ? widget.localization!.title
             : LeitmotifLocalizations.of(context).creditsLabel,
-        backButtonIconColor: LitBackButtonDefaultStyling.iconColor,
       ),
       body: Stack(
         alignment: Alignment.center,
@@ -284,10 +283,11 @@ class _CreditList extends StatelessWidget {
                 transform: tweenController.listItemTransform(
                   i,
                   credits.length,
-                  y: 150.0,
+                  y: 75.0,
                 ),
                 child: _CreditItem(
                   credit: credits[i],
+                  animationController: animationController,
                 ),
               ),
             ),
@@ -303,54 +303,60 @@ class _CreditList extends StatelessWidget {
 
 /// A widget displaying the role and names of the provided [CreditData].
 class _CreditItem extends StatelessWidget {
+  final AnimationController animationController;
   final CreditData credit;
 
   const _CreditItem({
     Key? key,
+    required this.animationController,
     required this.credit,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: Column(
-        children: [
-          Text(
-            credit.role,
-            textAlign: TextAlign.center,
-            style: LitSansSerifStyles.body2.copyWith(
-              color: LitColors.grey350,
+    return AnimatedOpacity(
+      opacity: animationController.value,
+      duration: animationController.duration!,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Column(
+          children: [
+            Text(
+              credit.role,
+              textAlign: TextAlign.center,
+              style: LitSansSerifStyles.body2.copyWith(
+                color: LitColors.grey350,
+              ),
             ),
-          ),
-          SizedBox(
-            height: 4.0,
-          ),
-          Builder(
-            builder: (context) {
-              List<Widget> _nameItems = [];
-              for (String name in credit.names) {
-                _nameItems.add(
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 4.0,
-                    ),
-                    child: Text(
-                      name,
-                      textAlign: TextAlign.center,
-                      style: LitSansSerifStyles.h5.copyWith(
-                        color: LitColors.grey400,
+            SizedBox(
+              height: 4.0,
+            ),
+            Builder(
+              builder: (context) {
+                List<Widget> _nameItems = [];
+                for (String name in credit.names) {
+                  _nameItems.add(
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 4.0,
+                      ),
+                      child: Text(
+                        name,
+                        textAlign: TextAlign.center,
+                        style: LitSansSerifStyles.h5.copyWith(
+                          color: LitColors.grey400,
+                        ),
                       ),
                     ),
-                  ),
+                  );
+                }
+                return Column(
+                  children: _nameItems,
                 );
-              }
-              return Column(
-                children: _nameItems,
-              );
-            },
-          )
-        ],
+              },
+            )
+          ],
+        ),
       ),
     );
   }
