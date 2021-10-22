@@ -15,7 +15,7 @@ class LitBottomNavigation extends StatefulWidget {
   final void Function(int index) onChangeTab;
 
   /// The tab items the navigation bar should be displaying.
-  final List<LitBottomNavigationBarItemData> tabs;
+  final List<LitBottomNavigationItemData> tabs;
 
   /// The padding surrounding the navigation bar.
   final EdgeInsets padding;
@@ -72,7 +72,7 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
 
   /// Evaluates whether the provided [data] is assigned to the currently
   /// selected tab.
-  bool checkIsSelected(LitBottomNavigationBarItemData data) {
+  bool checkIsSelected(LitBottomNavigationItemData data) {
     return widget.selectedTabIndex == data.index;
   }
 
@@ -118,7 +118,7 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
                     builder: (context) {
                       final List<Widget> children = [];
                       widget.tabs.forEach(
-                        (LitBottomNavigationBarItemData data) {
+                        (LitBottomNavigationItemData data) {
                           children.add(
                             LitBottomNavigationItem(
                               data: data,
@@ -149,9 +149,9 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
 /// A backdrop decoration indicated which tab item is currently selected.
 class _SelectedItemBackdropContainer extends StatelessWidget {
   final AnimationController animationController;
-  final List<LitBottomNavigationBarItemData> tabs;
+  final List<LitBottomNavigationItemData> tabs;
   final double height;
-  final bool Function(LitBottomNavigationBarItemData) checkIsSelected;
+  final bool Function(LitBottomNavigationItemData) checkIsSelected;
   const _SelectedItemBackdropContainer({
     Key? key,
     required this.animationController,
@@ -170,7 +170,7 @@ class _SelectedItemBackdropContainer extends StatelessWidget {
       child: Builder(
         builder: (context) {
           List<Widget> children = [];
-          for (LitBottomNavigationBarItemData tab in tabs) {
+          for (LitBottomNavigationItemData tab in tabs) {
             if (checkIsSelected(tab)) {
               children.add(
                 AnimatedBuilder(
@@ -240,49 +240,4 @@ class _BackdropItem extends StatelessWidget {
       ),
     );
   }
-}
-
-/// A Leitmotif `model` class describing meta data required to build a tab item
-/// on a bottom navigation bar.
-class LitBottomNavigationBarItemData {
-  /// The tab's index.
-  final int index;
-
-  /// The icon in `unselected` state.
-  final IconData icon;
-
-  /// The icon in `selected` state.
-  final IconData iconAlt;
-
-  /// The tab's title.
-  final String? title;
-
-  /// The background color of the currently selected tab item.
-  final Color tabBackgroundColorAlt;
-
-  /// The background color of each unselected tab item.
-  final Color tabBackgroundColor;
-
-  /// The color of the currently selected tab item.
-  final Color tabColor;
-
-  /// The color of each unselected tab item.
-  final Color tabColorAlt;
-
-  /// Creates a [LitBottomNavigationBarItemData].
-  const LitBottomNavigationBarItemData({
-    required this.index,
-    required this.icon,
-    required this.iconAlt,
-    this.title,
-    this.tabBackgroundColorAlt = defaultBackgroundColorAlt,
-    this.tabBackgroundColor = defaultBackgroundColor,
-    this.tabColor = defaultColor,
-    this.tabColorAlt = defaultColorAlt,
-  });
-
-  static const defaultBackgroundColorAlt = Colors.white;
-  static const defaultBackgroundColor = LitColors.transparent;
-  static const defaultColor = LitColors.grey350;
-  static const defaultColorAlt = LitColors.grey500;
 }

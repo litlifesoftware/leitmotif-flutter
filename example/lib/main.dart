@@ -75,7 +75,7 @@ class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
       //hideNavigationBar: shouldHideNavigationBar,
       tabs: [
         LitNavigableTab(
-          tabData: LitBottomNavigationBarItemData(
+          tabData: LitBottomNavigationItemData(
               icon: LitIcons.home_alt,
               iconAlt: LitIcons.home,
               index: 0,
@@ -85,15 +85,145 @@ class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
           ),
         ),
         LitNavigableTab(
-          tabData: LitBottomNavigationBarItemData(
-            icon: LitIcons.gear,
-            iconAlt: LitIcons.gear_solid,
+          tabData: LitBottomNavigationItemData(
+            icon: Icons.font_download,
+            iconAlt: Icons.font_download_off_outlined,
             index: 1,
-            title: "fonts",
+            title: "Sans",
           ),
           screen: _ExampleScreenTwo(),
-        )
+        ),
+        LitNavigableTab(
+          tabData: LitBottomNavigationItemData(
+            icon: Icons.font_download,
+            iconAlt: Icons.font_download_off_outlined,
+            index: 2,
+            title: "Serif",
+          ),
+          screen: _ExampleScreenThree(),
+        ),
       ],
+    );
+  }
+}
+
+class _ExampleScreenThree extends StatelessWidget {
+  const _ExampleScreenThree({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        child: ScrollableColumn(
+          padding: const EdgeInsets.symmetric(
+            vertical: 32.0,
+            horizontal: 16.0,
+          ),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Text(
+                "Serif",
+                style: LitSerifStyles.h4,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H1",
+                style: LitSerifStyles.h1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H2",
+                style: LitSerifStyles.h2,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H3",
+                style: LitSerifStyles.h3,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H4",
+                style: LitSerifStyles.h4,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H5",
+                style: LitSerifStyles.h5,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H6",
+                style: LitSerifStyles.h6,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Subtitle 2",
+                style: LitSerifStyles.subtitle2,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Subtitle 1",
+                style: LitSerifStyles.subtitle1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Body 1",
+                style: LitSerifStyles.body1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Body 2",
+                style: LitSerifStyles.body2,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "BUTTON",
+                style: LitSerifStyles.button,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Caption",
+                style: LitSerifStyles.caption,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "OVERLINE",
+                style: LitSerifStyles.overline,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -241,6 +371,7 @@ class __ExampleScreenState extends State<_ExampleScreen> {
   DateTime? dayOfBirth;
   Color colorPickerBtnColor = Colors.white;
   double _userIconChar = 65;
+  bool _showSlider = true;
   void showSolidSnackbar() {
     _solidSnackbarController.showSnackBar();
   }
@@ -259,6 +390,12 @@ class __ExampleScreenState extends State<_ExampleScreen> {
 
   Color get buttonColor {
     return darkMode ? LitColors.mediumGrey : Colors.white;
+  }
+
+  void setShowSlider(bool value) {
+    setState(() {
+      _showSlider = value;
+    });
   }
 
   void _addNotification() {
@@ -479,10 +616,21 @@ class __ExampleScreenState extends State<_ExampleScreen> {
                         },
                       ),
                     ),
-                    _LitSliderImpl(
-                      userIconChar: _userIconChar,
-                      onChangeSlider: _onChangeSlider,
-                    ),
+                    // LitSettingCard(
+                    //   value: _showSlider,
+                    //   title: "Show Slider",
+                    //   description: "Show a slider to modify the icon above",
+                    //   padding: const EdgeInsets.all(16.0),
+                    //   onChanged: (value) {
+                    //     setShowSlider(value);
+                    //   },
+                    // ),
+                    _showSlider
+                        ? _LitSliderImpl(
+                            userIconChar: _userIconChar,
+                            onChangeSlider: _onChangeSlider,
+                          )
+                        : SizedBox(),
                     _ButtonList(
                       darkMode: darkMode,
                       addNotification: _addNotification,

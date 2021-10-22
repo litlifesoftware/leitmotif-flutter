@@ -8,7 +8,7 @@ class LitBottomNavigationItem extends StatelessWidget {
   final AnimationController animationController;
 
   /// The data providing the item's styling.
-  final LitBottomNavigationBarItemData data;
+  final LitBottomNavigationItemData data;
 
   /// States whether the item is currently selected.
   final bool isSelected;
@@ -128,7 +128,7 @@ class LitBottomNavigationItem extends StatelessWidget {
 /// The [LitBottomNavigationItem]'s animated content.
 class _AnimatedContent extends StatelessWidget {
   final AnimationController animationController;
-  final LitBottomNavigationBarItemData data;
+  final LitBottomNavigationItemData data;
   final bool isSelected;
   final double height;
   final IconData icon;
@@ -214,7 +214,7 @@ class _AnimatedContent extends StatelessWidget {
 /// A widget allowing to display a tab title on a [LitBottomNavigationItem].
 class _Title extends StatelessWidget {
   final bool isSelected;
-  final LitBottomNavigationBarItemData data;
+  final LitBottomNavigationItemData data;
 
   const _Title({
     Key? key,

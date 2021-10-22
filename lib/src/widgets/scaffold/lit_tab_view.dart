@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/bottom_navigation.dart';
+import 'package:leitmotif/models.dart';
 
 /// A Leitmotif `scaffold` widget displaying a bottom navigation view wrapping
 /// the provided [tabs].
@@ -57,7 +58,7 @@ class _LitTabViewState extends State<LitTabView> {
   List<Widget> _tabs = [];
 
   /// All tab data objects providing the meta data for the tabs.
-  List<LitBottomNavigationBarItemData> _tabData = [];
+  List<LitBottomNavigationItemData> _tabData = [];
 
   /// Sets the state to change the currently displayed tab.
   void _setTabIndex(int value) {
@@ -69,8 +70,8 @@ class _LitTabViewState extends State<LitTabView> {
     }
   }
 
-  /// Separetes the provided [LitNavigableTab] into individual [Widget] and
-  /// [LitBottomNavigationBarItemData] lists.
+  /// Separetes the provided [LitNavigableTab] into individual widgets and
+  /// data object lists.
   void bindWidgetsAndData() {
     for (LitNavigableTab item in widget.tabs) {
       _tabs.add(item.screen);
@@ -108,16 +109,4 @@ class _LitTabViewState extends State<LitTabView> {
       ),
     );
   }
-}
-
-/// A model class combining the [Widget] view layer and it's meta data object.
-class LitNavigableTab {
-  /// The meta data objects for the tab.
-  final LitBottomNavigationBarItemData tabData;
-
-  /// The screen tab.
-  final Widget screen;
-
-  /// Creates a [LitNavigableTab]
-  const LitNavigableTab({required this.tabData, required this.screen});
 }
