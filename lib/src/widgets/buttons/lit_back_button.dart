@@ -44,13 +44,14 @@ class LitBackButton extends StatefulWidget {
     this.onPressed,
   }) : super(key: key);
 
-  static const double defaultHeight = 28.0;
-  static const double defaultWidth = 48.0;
-  static const double defaultIconSize = 14.0;
+  static const double defaultHeight = 32.0;
+  static const double defaultWidth = 54.0;
+  static const double defaultIconSize = 16.0;
   static const Color defaultBackgroundColor = LitColors.grey400;
   static const Color defaultIconColor = Colors.white;
   static const IconData icon = LitIcons.arrow_left_solid;
   static const bool defaultShouldNavigateBack = true;
+  static const List<BoxShadow> boxShadow = LitBoxShadows.sm;
 
   @override
   _LitBackButtonState createState() => _LitBackButtonState();
@@ -84,7 +85,7 @@ class _LitBackButtonState extends State<LitBackButton> {
       height: widget.height,
       width: widget.width,
       child: LitPushedThroughButton(
-        boxShadow: LitBoxShadows.sm,
+        boxShadow: LitBackButton.boxShadow,
         backgroundColor: widget.backgroundColor,
         accentColor: widget.backgroundColor,
         child: Align(
