@@ -65,7 +65,9 @@ class LitBottomNavigationItem extends StatelessWidget {
 
   /// Returns the icon size depending on the current state.
   double get _iconSize {
-    return (animationController.value * (isSelected ? 16.0 : 18.0));
+    final double animatedSize = (animationController.value * 16.0);
+    final double staticSize = 18.0;
+    return isSelected ? animatedSize : staticSize;
   }
 
   /// Returns the box shadow depending on the current state.
@@ -75,7 +77,7 @@ class LitBottomNavigationItem extends StatelessWidget {
 
   /// Returns an animated opacity.
   double get _opacity {
-    return 0.25 + (0.75 * animationController.value);
+    return 0.65 + (0.35 * animationController.value);
   }
 
   /// Handles the `change` event.

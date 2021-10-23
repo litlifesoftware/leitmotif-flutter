@@ -62,12 +62,12 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
   /// Changes the currently selected tab by setting the state using the
   /// provided index value.
   void _handleOnChange(int value) {
-    widget.onChangeTab(value);
-    if (_animationController.isCompleted) {
-      _animationController.reverse().then(
-            (_) => _animationController.forward(),
-          );
-    }
+    _animationController.reverse(from: 1.0).then(
+      (_) {
+        widget.onChangeTab(value);
+        _animationController.forward(from: 0.0);
+      },
+    );
   }
 
   /// Evaluates whether the provided [data] is assigned to the currently
