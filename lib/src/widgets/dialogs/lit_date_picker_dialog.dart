@@ -80,12 +80,10 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog> {
   }
 
   /// Sets the [selectedDate] value using by provided value..
-
   void _setDate(DateTime? date) {
     setState(() {
       selectedDate = date;
     });
-    // print(date.toIso8601String());
   }
 
   /// Handles the `submit date` action by triggering the parent's callback.

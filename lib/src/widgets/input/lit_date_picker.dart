@@ -156,6 +156,8 @@ class LitDatePicker extends StatefulWidget {
 }
 
 class _LitDatePickerState extends State<LitDatePicker> {
+  late LitCalendarController _controller = LitCalendarController();
+
   /// States which view is currently displayed.
   LitCalendarViews _currentView = LitCalendarViews.day;
 
@@ -170,6 +172,8 @@ class _LitDatePickerState extends State<LitDatePicker> {
   late List<String> _monthNames;
 
   void _initState() {
+    _controller = LitCalendarController();
+
     if (widget.defaultDate != null) {
       _templateDate = DateTime(
         widget.defaultDate!.year,
@@ -184,13 +188,15 @@ class _LitDatePickerState extends State<LitDatePicker> {
       final now = DateTime.now();
       _templateDate = DateTime(now.year, now.month);
     }
-    _getCalendar();
+    _renewSeqentialDates();
   }
 
+  /// Creates an abbreviated day of week label.
   String _abbrDayOfWeek(String label, {int length = 2}) {
     return label.substring(0, length);
   }
 
+  /// Initializes the localization.
   void _initLocalization() {
     _weekDays = [
       _abbrDayOfWeek(widget.localization.dayOfWeek1),
@@ -217,24 +223,29 @@ class _LitDatePickerState extends State<LitDatePicker> {
     ];
   }
 
+  /// Selects a view mode.
   void _selectViewMode(LitCalendarViews view) {
     setState(() {
       _currentView = view;
     });
   }
 
+  /// Selects the `year` view.
   void _selectYearView() {
     _selectViewMode(LitCalendarViews.year);
   }
 
+  /// Selects the `month` view.
   void _selectMonthView() {
     _selectViewMode(LitCalendarViews.month);
   }
 
+  /// Selects the `date` view.
   void _selectDateView() {
     _selectViewMode(LitCalendarViews.day);
   }
 
+  /// Handles the `next year` action on the `year` view.
   void _onNextYears() {
     setState(() {
       _medianYear =
@@ -242,6 +253,7 @@ class _LitDatePickerState extends State<LitDatePicker> {
     });
   }
 
+  /// Handles the `previous year` action on the `year` view.
   void _onPreviousYears() {
     setState(() {
       _medianYear =
@@ -249,7 +261,7 @@ class _LitDatePickerState extends State<LitDatePicker> {
     });
   }
 
-  // get next month calendar
+  /// Handles the `next month` action on the `date` view
   void _getNextMonth() {
     setState(() {
       if (_templateDate.month == 12) {
@@ -257,11 +269,11 @@ class _LitDatePickerState extends State<LitDatePicker> {
       } else {
         _templateDate = DateTime(_templateDate.year, _templateDate.month + 1);
       }
-      _getCalendar();
+      _renewSeqentialDates();
     });
   }
 
-  // get previous month calendar
+  /// Handles the `previous month` action on the `date` view
   void _getPrevMonth() {
     setState(() {
       if (_templateDate.month == 1) {
@@ -269,13 +281,14 @@ class _LitDatePickerState extends State<LitDatePicker> {
       } else {
         _templateDate = DateTime(_templateDate.year, _templateDate.month - 1);
       }
-      _getCalendar();
+      _renewSeqentialDates();
     });
   }
 
-  // get calendar for current month
-  void _getCalendar() {
-    _sequentialDates = LitCalendarController().getCalendarDates(
+  /// Creates a new [_sequentialDates] list based on the current
+  /// [_templateDate].
+  void _renewSeqentialDates() {
+    _sequentialDates = _controller.getCalendarDates(
       _templateDate.month,
       _templateDate.year,
       firstDayOfWeek: widget.invertFirstDayOfWeek
@@ -284,6 +297,7 @@ class _LitDatePickerState extends State<LitDatePicker> {
     );
   }
 
+  /// Unselects the currently selected date.
   void _unselectDates() {
     setState(() {
       _selectedDate = null;
@@ -291,6 +305,7 @@ class _LitDatePickerState extends State<LitDatePicker> {
     });
   }
 
+  /// Selects the provided [calendarDate].
   void _onSelect(LitCalendarDate calendarDate) {
     if (_selectedDate != calendarDate.date) {
       if (calendarDate.nextMonth) {
@@ -323,7 +338,7 @@ class _LitDatePickerState extends State<LitDatePicker> {
           switch (_currentView) {
             // Dates view
             case LitCalendarViews.day:
-              return _DatesGridView(
+              return _DateGridView(
                 child: _CalendarGridBuilder(
                   sequentialDates: _sequentialDates,
                   selectedDateTime: _selectedDate,
@@ -344,21 +359,21 @@ class _LitDatePickerState extends State<LitDatePicker> {
                 templateDate: _templateDate,
                 onSelect: (index) {
                   _templateDate = DateTime(_templateDate.year, index + 1);
-                  _getCalendar();
+                  _renewSeqentialDates();
                   _selectDateView();
                 },
                 onChangeViewMode: _selectYearView,
               );
             // Year view
             case LitCalendarViews.year:
-              return _YearsGridView(
+              return _YearGridView(
                 localization: widget.localization,
                 medianYear: _medianYear ?? _templateDate.year,
                 onNext: _onNextYears,
                 onPrevious: _onPreviousYears,
                 onSelect: (thisYear) {
                   _templateDate = DateTime(thisYear, _templateDate.month);
-                  _getCalendar();
+                  _renewSeqentialDates();
                   _selectMonthView();
                 },
                 templateDate: _templateDate,
@@ -376,7 +391,7 @@ class _LitDatePickerState extends State<LitDatePicker> {
   }
 }
 
-class _DatesGridView extends StatelessWidget {
+class _DateGridView extends StatelessWidget {
   final List<String> monthLabels;
   final DateTime templateDate;
   final Widget child;
@@ -384,7 +399,7 @@ class _DatesGridView extends StatelessWidget {
   final void Function() onPressedNext;
   final void Function() onChangeViewMode;
 
-  const _DatesGridView({
+  const _DateGridView({
     Key? key,
     required this.monthLabels,
     required this.templateDate,
@@ -715,16 +730,15 @@ class _CalendarWeekdayHeader extends StatelessWidget {
   }
 }
 
-class _YearsGridView extends StatelessWidget {
+class _YearGridView extends StatelessWidget {
   final LitDatePickerLocalization localization;
   final int medianYear;
   final DateTime templateDate;
-  final EdgeInsets padding;
   final void Function() onNext;
   final void Function() onPrevious;
   final void Function(int thisYear) onSelect;
   final void Function() onChangeViewMode;
-  const _YearsGridView({
+  const _YearGridView({
     Key? key,
     required this.localization,
     required this.medianYear,
@@ -733,11 +747,12 @@ class _YearsGridView extends StatelessWidget {
     required this.onSelect,
     required this.templateDate,
     required this.onChangeViewMode,
-    this.padding = const EdgeInsets.symmetric(
-      vertical: 8.0,
-      horizontal: 8.0,
-    ),
   }) : super(key: key);
+
+  static const EdgeInsets padding = const EdgeInsets.symmetric(
+    vertical: 8.0,
+    horizontal: 8.0,
+  );
 
   bool _isSelected(year) {
     return (year == templateDate.year);
