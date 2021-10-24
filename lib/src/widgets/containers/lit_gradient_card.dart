@@ -61,7 +61,7 @@ class LitGradientCard extends StatelessWidget {
     this.end = Alignment.bottomLeft,
     this.colors = const [
       Colors.white,
-      const Color(0xFFE4E4E4),
+      LitColors.grey50,
     ],
     this.child,
   }) : super(key: key);

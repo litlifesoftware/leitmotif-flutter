@@ -4,6 +4,17 @@ import 'package:leitmotif/styles.dart';
 /// A collection of [LinearGradient] that can be used as decoration.
 
 class LitGradients {
+  /// A very light grey gradient.
+  static const LinearGradient verylightGreyGradient = const LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    stops: [0.65, 1.00],
+    colors: [
+      LitColors.grey150,
+      LitColors.white,
+    ],
+  );
+
   /// A light grey gradient.
   static const LinearGradient lightGreyGradient = const LinearGradient(
     begin: Alignment.bottomLeft,
@@ -25,7 +36,8 @@ class LitGradients {
     ],
   );
 
-  static const LinearGradient dark = LinearGradient(
+  /// A dark green linear gradient.
+  static const LinearGradient darkGreen = LinearGradient(
     begin: Alignment.topRight,
     end: Alignment.bottomLeft,
     colors: const [
@@ -34,6 +46,17 @@ class LitGradients {
     ],
   );
 
+  /// A dark red linear gradient.
+  static const LinearGradient darkRed = LinearGradient(
+    begin: Alignment.topRight,
+    end: Alignment.bottomLeft,
+    colors: const [
+      LitColors.red400,
+      LitColors.grey600,
+    ],
+  );
+
+  /// A grey to pink linear gradient.
   static const LinearGradient pinkWhite = LinearGradient(
     begin: Alignment.topRight,
     end: Alignment.bottomLeft,

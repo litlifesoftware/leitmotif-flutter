@@ -24,12 +24,15 @@ class LitColors {
   static const Color transparent = const Color(0x00FFFFFF);
   static const Color semiTransparent = const Color(0x82e7e7E7);
 
+  static const Color white = const Color(0xFFFFFFFF);
+
   static const Color grey50 = const Color(0xFFFDFDFD);
   static const Color grey100 = const Color(0xFFf4f4f7);
   static const Color grey150 = const Color(0xFFDEDEDE);
   static const Color grey200 = const Color(0xFFC7C7C7);
   static const Color grey300 = const Color(0xFFD1CDCD);
   static const Color grey350 = const Color(0xFF757575);
+  static const Color grey380 = const Color(0xFF959595);
   static const Color grey400 = const Color(0xFF686868);
   static const Color grey500 = const Color(0xFF444444);
   static const Color grey600 = const Color(0xFF1D2027);

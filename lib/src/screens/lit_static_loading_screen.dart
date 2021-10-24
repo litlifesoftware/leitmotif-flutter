@@ -14,7 +14,7 @@ class LitStaticLoadingScreen extends StatelessWidget {
   /// Creates a [LitStaticLoadingScreen].
   const LitStaticLoadingScreen({
     this.decoration = const BoxDecoration(
-      gradient: LitGradients.dark,
+      gradient: LitGradients.greyGradient,
     ),
     this.child = const LitInfoIcon(),
     Key? key,
