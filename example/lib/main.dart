@@ -616,15 +616,16 @@ class __ExampleScreenState extends State<_ExampleScreen> {
                         },
                       ),
                     ),
-                    // LitSettingCard(
-                    //   value: _showSlider,
-                    //   title: "Show Slider",
-                    //   description: "Show a slider to modify the icon above",
-                    //   padding: const EdgeInsets.all(16.0),
-                    //   onChanged: (value) {
-                    //     setShowSlider(value);
-                    //   },
-                    // ),
+                    LitSettingCard(
+                      value: _showSlider,
+                      title: "Show Slider",
+                      description:
+                          "Show a slider to modify the icon above Show a slider to ",
+                      padding: const EdgeInsets.all(16.0),
+                      onChanged: (value) {
+                        setShowSlider(value);
+                      },
+                    ),
                     _showSlider
                         ? _LitSliderImpl(
                             userIconChar: _userIconChar,

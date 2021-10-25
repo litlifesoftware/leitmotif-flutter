@@ -76,6 +76,8 @@ class LeitmotifLocalizations {
       _Keys.licensesLabel: 'Licenses',
       _Keys.backLabel: 'Back',
       _Keys.notificationLabel: 'Notification',
+      _Keys.advancedSettingsLabel: 'Advanced Settings',
+      _Keys.settingsLabel: 'Settings',
     },
     // 'German' localization
     'de': const {
@@ -115,16 +117,18 @@ class LeitmotifLocalizations {
       _Keys.verifyAgeScreenSuccessBody:
           'Vielen Dank für die Altersbestätigung. Viel Vergnügen!',
       _Keys.verifyAgeScreenDescriptionBody:
-          "Dein Alter hilft uns Funktionen dieser App zu gewährleisten" +
+          "Dein Alter hilft uns Funktionen dieser App zu gewährleisten." +
               " " +
               "Diese App wird keine Daten weitergeben." +
               " " +
-              "Dein Alter wird nicht geteilt.",
+              "Dein Alter wird geteilt.",
       _Keys.creditsLabel: 'Mitwirkende',
       _Keys.fullyTransparentLabel: 'Diese Farbe ist vollständig transparent',
       _Keys.licensesLabel: 'Lizenzen',
       _Keys.backLabel: 'Zurück',
       _Keys.notificationLabel: 'Benachrichtigung',
+      _Keys.advancedSettingsLabel: 'Erweiterte Einstellungen',
+      _Keys.settingsLabel: 'Einstellungen',
     },
   };
 
@@ -294,6 +298,14 @@ class LeitmotifLocalizations {
   String get notificationLabel {
     return _localizedValues[locale.languageCode]![_Keys.notificationLabel]!;
   }
+
+  String get advancedSettingsLabel {
+    return _localizedValues[locale.languageCode]![_Keys.advancedSettingsLabel]!;
+  }
+
+  String get settingsLabel {
+    return _localizedValues[locale.languageCode]![_Keys.settingsLabel]!;
+  }
 }
 
 /// A Leitmotif delegate class initializing the [LeitmotifLocalizations].
@@ -366,4 +378,6 @@ class _Keys {
   static const String fullyTransparentLabel = 'fullyTransprentLabel';
   static const String licensesLabel = 'licensesLabel';
   static const String notificationLabel = 'notificationLabel';
+  static const String advancedSettingsLabel = 'advancedSettingsLabel';
+  static const String settingsLabel = 'settingsLabel';
 }
