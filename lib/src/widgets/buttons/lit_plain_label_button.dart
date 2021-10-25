@@ -1,25 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
+/// A Leitmotif `buttons` widget allowing to trigger the provided [onPressed]
+/// callback when being pressed.
 class LitPlainLabelButton extends StatefulWidget {
+  /// The button's label.
   final String label;
-  final void Function() onPressed;
-  final Color accentColor;
-  final Color color;
-  final double fontSize;
-  final TextAlign textAlign;
+
+  /// States whether to disable the button's functionality.
   final bool disabled;
+
+  /// The button label's text style.
+  final TextStyle textStyle;
+
+  /// The label's alignment.
+  final TextAlign textAlign;
+
+  /// The label's font size.
+  ///
+  /// This will override the provided [textStyle]'s font size.
+  final double fontSize;
+
+  /// The label's text color.
+  ///
+  /// This will override the provided [textStyle]'s color.
+  final Color color;
+
+  /// The accent color.
+  final Color accentColor;
+
+  /// The outer padding.
+  final EdgeInsets padding;
+
+  /// The animation duration.
   final Duration animationDuration;
+
+  /// Handles the `onPressed` action of this button.
+  final void Function() onPressed;
+
+  /// Creates a [LitPlainLabelButton].
   const LitPlainLabelButton({
     Key? key,
     required this.label,
     required this.onPressed,
+    this.fontSize = 16.0,
+    this.textStyle = LitSansSerifStyles.button,
+    this.color = LitColors.grey380,
     this.accentColor = Colors.white,
-    this.color = const Color(0xFFb5b5b5),
-    this.fontSize = 17.0,
     this.textAlign = TextAlign.center,
     this.disabled = false,
-    this.animationDuration = const Duration(milliseconds: 400),
+    this.padding = const EdgeInsets.only(
+      top: 8.0,
+      bottom: 8.0,
+    ),
+    this.animationDuration = const Duration(milliseconds: 180),
   }) : super(key: key);
 
   @override
@@ -28,22 +62,21 @@ class LitPlainLabelButton extends StatefulWidget {
 
 class _LitPlainLabelButtonState extends State<LitPlainLabelButton>
     with TickerProviderStateMixin {
+  /// Controls the button animation.
   late AnimationController _animationController;
 
-  void _onPressedDown(TapDownDetails details) {
-    _animationController.reverse();
-  }
-
-  void _onPressedUp(TapUpDetails details) {
-    _animationController.forward();
-  }
-
+  /// Handles the `onPressed` action and executes the provided callback.
   void _onPressed() {
     if (!widget.disabled) {
-      _animationController
-          .reverse()
-          .then((value) => _animationController.forward());
-      widget.onPressed();
+      _animationController.reverse().then(
+        (_) {
+          _animationController.forward();
+        },
+      ).then(
+        (_) {
+          widget.onPressed();
+        },
+      );
     }
   }
 
@@ -57,6 +90,17 @@ class _LitPlainLabelButtonState extends State<LitPlainLabelButton>
     _animationController.forward();
   }
 
+  TextStyle get _style {
+    return widget.textStyle.copyWith(
+      fontSize: widget.fontSize,
+      color: Color.lerp(
+        widget.accentColor,
+        widget.color,
+        _animationController.value,
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _animationController.dispose();
@@ -65,26 +109,17 @@ class _LitPlainLabelButtonState extends State<LitPlainLabelButton>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return CleanInkWell(
       onTap: _onPressed,
-      onTapDown: _onPressedDown,
-      onTapUp: _onPressedUp,
       child: Padding(
-        padding: const EdgeInsets.only(
-          top: 8.0,
-          bottom: 8.0,
-        ),
+        padding: widget.padding,
         child: AnimatedBuilder(
           animation: _animationController,
           builder: (context, _) {
             return ClippedText(
-              widget.label,
+              widget.label.toUpperCase(),
               textAlign: widget.textAlign,
-              style: LitTextStyles.sansSerif.copyWith(
-                fontSize: widget.fontSize,
-                color: Color.lerp(widget.accentColor, widget.color,
-                    _animationController.value),
-              ),
+              style: _style,
             );
           },
         ),
