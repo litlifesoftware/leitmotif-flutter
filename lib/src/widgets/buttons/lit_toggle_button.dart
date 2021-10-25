@@ -1,16 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:leitmotif/containers.dart';
+import 'package:leitmotif/styles.dart';
 
+/// A Leitmotif `buttons` widget displaying a toggle button which can have two
+/// states (`enabled` and `disabled`).
+///
+/// It's value should be toggled on the parent widget using the [onChanged]
+/// callback.
 class LitToggleButton extends StatefulWidget {
-  final void Function(bool) toggleCallback;
-  final bool toggledValue;
-  final Color activeColor;
-  final Color inactiveColor;
+  /// The current value.
+  final bool value;
+
+  /// The thumb size.
+  final double size;
+
+  /// The background's `enabled` color.
+  final Color colorEnabled;
+
+  /// The background's `disabled` color.
+  final Color colorDisabled;
+
+  /// The animation duration.
+  final Duration animationDuration;
+
+  /// The callback setting the parent's state.
+  final void Function(bool) onChanged;
+
+  /// Creates a [LitToggleButton].
   const LitToggleButton({
     Key? key,
-    required this.toggleCallback,
-    required this.toggledValue,
-    required this.activeColor,
-    required this.inactiveColor,
+    required this.onChanged,
+    required this.value,
+    this.size = 28.0,
+    this.colorEnabled = LitColors.red200,
+    this.colorDisabled = LitColors.green200,
+    this.animationDuration = const Duration(milliseconds: 100),
   }) : super(key: key);
 
   @override
@@ -19,76 +43,148 @@ class LitToggleButton extends StatefulWidget {
 
 class _LitToggleButtonState extends State<LitToggleButton>
     with TickerProviderStateMixin {
+  late bool _enabled;
   late AnimationController animationController;
 
-  @override
-  void initState() {
-    super.initState();
-    animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 200),
+  /// Handles the `onPressed` action.
+  ///
+  /// Animates the button state transition and executes the provided callback.
+  void onPressed() {
+    if (_enabled) {
+      animationController.reverse();
+    } else {
+      animationController.forward();
+    }
+    widget.onChanged(!_enabled);
+    setState(() {
+      _enabled = !_enabled;
+    });
+  }
+
+  /// Returns an animated transform matrix.
+  Matrix4 get _transform {
+    final x = widget.size * animationController.value;
+    return Matrix4.translationValues(x, 0, 0);
+  }
+
+  /// Returns an animated color lerp.
+  Color get _color {
+    return Color.lerp(
+      widget.colorEnabled,
+      widget.colorDisabled,
+      animationController.value,
+    )!;
+  }
+
+  /// Returns an animated opacity.
+  double get _opacity {
+    return animationController.isAnimating
+        ? 0.25 + 0.75 * animationController.value
+        : 1.0;
+  }
+
+  /// Returns a 50% border radius.
+  BorderRadius get _borderRadius {
+    return BorderRadius.all(
+      Radius.circular(
+        widget.size / 2,
+      ),
     );
   }
 
   @override
+  void initState() {
+    super.initState();
+    _enabled = widget.value;
+    animationController = AnimationController(
+      vsync: this,
+      duration: widget.animationDuration,
+    );
+    if (widget.value) {
+      animationController.forward();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(25.0),
-      onTap: () {
-        if (!animationController.isAnimating) {
-          widget.toggledValue
-              ? animationController
-                  .reverse()
-                  .then((value) => widget.toggleCallback(!widget.toggledValue))
-              : animationController
-                  .forward()
-                  .then((value) => widget.toggleCallback(!widget.toggledValue));
-        }
+    return AnimatedBuilder(
+      animation: animationController,
+      builder: (context, snapshot) {
+        return _AnimatedContent(
+          animationController: animationController,
+          borderRadius: _borderRadius,
+          color: _color,
+          onPressed: onPressed,
+          opacity: _opacity,
+          size: widget.size,
+          transform: _transform,
+        );
       },
-      child: AnimatedBuilder(
-          animation: animationController,
-          builder: (BuildContext context, Widget? child) {
-            return Container(
-              width: 60,
-              height: 30,
-              child: Stack(
-                alignment: Alignment.centerLeft,
-                children: [
-                  AspectRatio(
-                    aspectRatio: 2.0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color.lerp(widget.inactiveColor,
-                            widget.activeColor, animationController.value),
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                    ),
+      child: _AnimatedContent(
+        animationController: animationController,
+        borderRadius: _borderRadius,
+        color: _color,
+        onPressed: onPressed,
+        opacity: _opacity,
+        size: widget.size,
+        transform: _transform,
+      ),
+    );
+  }
+}
+
+/// The [LitToggleButton]'s animated content.
+class _AnimatedContent extends StatelessWidget {
+  final AnimationController animationController;
+  final double size;
+  final double opacity;
+  final Matrix4 transform;
+  final Color color;
+  final BorderRadius borderRadius;
+  final void Function() onPressed;
+  const _AnimatedContent({
+    Key? key,
+    required this.animationController,
+    required this.size,
+    required this.opacity,
+    required this.transform,
+    required this.color,
+    required this.borderRadius,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CleanInkWell(
+      onTap: onPressed,
+      child: Container(
+        height: size,
+        width: size * 2,
+        decoration: BoxDecoration(
+          borderRadius: borderRadius,
+          color: color,
+        ),
+        child: Row(
+          children: [
+            Transform(
+              transform: transform,
+              child: AnimatedOpacity(
+                opacity: opacity,
+                duration: animationController.duration!,
+                child: Container(
+                  height: size,
+                  width: size,
+                  decoration: BoxDecoration(
+                    borderRadius: borderRadius,
+                    boxShadow: LitBoxShadows.sm,
+                    color: LitColors.grey50,
                   ),
-                  AspectRatio(
-                    aspectRatio: 1.0,
-                    child: Transform(
-                      transform: Matrix4.translationValues(
-                          (animationController.value) * 30, 0, 0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black54,
-                              offset: Offset(-2, -2),
-                              blurRadius: 15.0,
-                              spreadRadius: 2,
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(25.0),
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
+                ),
               ),
-            );
-          }),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
