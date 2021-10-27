@@ -17,16 +17,16 @@ class LitBottomNavigationItemData {
   final String? title;
 
   /// The background color of the currently selected tab item.
-  final Color tabBackgroundColorAlt;
+  final Color? tabBackgroundColorAlt;
 
   /// The background color of each unselected tab item.
-  final Color tabBackgroundColor;
+  final Color? tabBackgroundColor;
 
   /// The color of the currently selected tab item.
-  final Color tabColor;
+  final Color? tabColor;
 
   /// The color of each unselected tab item.
-  final Color tabColorAlt;
+  final Color? tabColorAlt;
 
   /// Creates a [LitBottomNavigationItemData].
   const LitBottomNavigationItemData({
@@ -34,10 +34,10 @@ class LitBottomNavigationItemData {
     required this.icon,
     required this.iconAlt,
     this.title,
-    this.tabBackgroundColorAlt = defaultBackgroundColorAlt,
-    this.tabBackgroundColor = defaultBackgroundColor,
-    this.tabColor = defaultColor,
-    this.tabColorAlt = defaultColorAlt,
+    this.tabBackgroundColorAlt,
+    this.tabBackgroundColor,
+    this.tabColor,
+    this.tabColorAlt,
   });
 
   static const defaultBackgroundColorAlt = Colors.white;

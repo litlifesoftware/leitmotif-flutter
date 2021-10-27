@@ -22,6 +22,9 @@ class LitBottomNavigationItem extends StatelessWidget {
   /// Handles the `change` action.
   final void Function(int) onChange;
 
+  /// States whether to apply a dark theme.
+  final bool dark;
+
   /// Creates a [LitBottomNavigationItem].
   const LitBottomNavigationItem({
     Key? key,
@@ -29,6 +32,7 @@ class LitBottomNavigationItem extends StatelessWidget {
     required this.isSelected,
     required this.onChange,
     required this.animationController,
+    required this.dark,
     this.borderRadius = const BorderRadius.all(
       Radius.circular(18.0),
     ),
@@ -37,12 +41,44 @@ class LitBottomNavigationItem extends StatelessWidget {
 
   /// Returns the background color depending on the current state..
   Color get _backgroundColor {
-    return isSelected ? data.tabBackgroundColorAlt : Colors.transparent;
+    if (isSelected) {
+      if (data.tabBackgroundColorAlt != null) {
+        return data.tabBackgroundColorAlt!;
+      } else {
+        if (dark) {
+          return Colors.black;
+        } else {
+          return LitBottomNavigationItemData.defaultBackgroundColorAlt;
+        }
+      }
+    } else {
+      return Colors.transparent;
+    }
   }
 
   /// Returns the color depending on the current state.
   Color get _color {
-    return isSelected ? data.tabColorAlt : data.tabColor;
+    if (isSelected) {
+      if (data.tabColorAlt != null) {
+        return data.tabColorAlt!;
+      } else {
+        if (dark) {
+          return Colors.white;
+        } else {
+          return LitBottomNavigationItemData.defaultColorAlt;
+        }
+      }
+    } else {
+      if (data.tabColor != null) {
+        return data.tabColor!;
+      } else {
+        if (dark) {
+          return Colors.grey;
+        } else {
+          return LitBottomNavigationItemData.defaultColor;
+        }
+      }
+    }
   }
 
   /// Returns the icon depending on the current state.
@@ -203,6 +239,7 @@ class _AnimatedContent extends StatelessWidget {
                   ? _Title(
                       isSelected: isSelected,
                       data: data,
+                      color: color,
                     )
                   : SizedBox(),
             ],
@@ -216,11 +253,13 @@ class _AnimatedContent extends StatelessWidget {
 /// A widget allowing to display a tab title on a [LitBottomNavigationItem].
 class _Title extends StatelessWidget {
   final bool isSelected;
+  final Color color;
   final LitBottomNavigationItemData data;
 
   const _Title({
     Key? key,
     required this.isSelected,
+    required this.color,
     required this.data,
   }) : super(key: key);
 
@@ -233,7 +272,7 @@ class _Title extends StatelessWidget {
       child: Text(
         data.title!.capitalize(),
         style: LitSansSerifStyles.caption.copyWith(
-          color: isSelected ? data.tabColorAlt : data.tabColor,
+          color: color,
           fontWeight: isSelected
               ? FontWeight.bold
               : LitSansSerifStyles.caption.fontWeight,

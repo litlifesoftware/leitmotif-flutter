@@ -30,7 +30,10 @@ class LitBottomNavigation extends StatefulWidget {
   final double blurRadius;
 
   /// The navigation bar's background color.
-  final Color backgroundColor;
+  final Color? backgroundColor;
+
+  /// States whether to apply a dark theme.
+  final bool dark;
 
   /// Creates a [LitBottomNavigation].
   const LitBottomNavigation({
@@ -42,13 +45,15 @@ class LitBottomNavigation extends StatefulWidget {
     this.height = defaultHeight,
     this.animationDuration = defaultAnimationDuration,
     this.blurRadius = defaultBlurRadius,
-    this.backgroundColor = defaultBackgroundColor,
+    this.backgroundColor,
+    this.dark = false,
   }) : super(key: key);
   static const defaultPadding = const EdgeInsets.all(0);
   static const defaultHeight = 72.0;
   static const defaultAnimationDuration = const Duration(milliseconds: 110);
   static const defaultBlurRadius = 4.0;
   static const defaultBackgroundColor = LitColors.semiTransparent;
+  static const defaultBackgroundColorDark = Color(0xc8000000);
 
   @override
   _LitBottomNavigationState createState() => _LitBottomNavigationState();
@@ -112,7 +117,11 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
                 child: Container(
                   height: widget.height,
                   decoration: BoxDecoration(
-                    color: widget.backgroundColor,
+                    color: widget.backgroundColor != null
+                        ? widget.backgroundColor
+                        : widget.dark
+                            ? LitBottomNavigation.defaultBackgroundColorDark
+                            : LitBottomNavigation.defaultBackgroundColor,
                   ),
                   child: Builder(
                     builder: (context) {
@@ -125,6 +134,7 @@ class _LitBottomNavigationState extends State<LitBottomNavigation>
                               isSelected: checkIsSelected(data),
                               onChange: _handleOnChange,
                               animationController: _animationController,
+                              dark: widget.dark,
                             ),
                           );
                         },

@@ -20,9 +20,10 @@ class LitTabView extends StatefulWidget {
     this.resizeToAvoidBottomInset = false,
     this.animationDuration = LitBottomNavigation.defaultAnimationDuration,
     this.barBlurRadius = LitBottomNavigation.defaultBlurRadius,
-    this.barBackgroundColor = LitBottomNavigation.defaultBackgroundColor,
+    this.barBackgroundColor,
     this.initialTabIndex = 0,
     this.transitionListener,
+    this.dark = false,
   }) : super(key: key);
 
   /// The tabs the tab view should display.
@@ -38,10 +39,13 @@ class LitTabView extends StatefulWidget {
   final double barBlurRadius;
 
   /// The navigation bar's background color.
-  final Color barBackgroundColor;
+  final Color? barBackgroundColor;
 
   /// The initial tab index (defaults to `0`)
   final int initialTabIndex;
+
+  /// States whether to apply a dark theme on the bottom navigation bar.
+  final bool dark;
 
   /// Called whenever the tab has been transitioned.
   final void Function(int index)? transitionListener;
@@ -102,6 +106,7 @@ class _LitTabViewState extends State<LitTabView> {
                 animationDuration: widget.animationDuration,
                 backgroundColor: widget.barBackgroundColor,
                 blurRadius: widget.barBlurRadius,
+                dark: widget.dark,
               )
             ],
           );
