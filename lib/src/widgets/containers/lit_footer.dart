@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-class LitFooterDefaultStyling {
-  static const List<Color> colorsLight = const [
-    const Color(0xFFD9D9D9),
-    Colors.white,
-  ];
-  static const List<Color> colorsDark = const [
-    LitColors.darkBlue,
-    Colors.black,
-  ];
-}
-
+/// A Leitmotif `containers` widget allowing to display the provided [child]
+/// on a decorated container aligned on the bottom of the screen.
 class LitFooter extends StatelessWidget {
+  /// The footer's title.
   final String title;
+
+  /// The child widget.
   final Widget child;
-  final List<Color> gradientColors;
+
+  /// The gradient decoration.
+  final Gradient gradientDecoration;
+
+  /// Creates a [LitFooter].
   const LitFooter({
     Key? key,
-    this.title = "Footer",
+    required this.title,
     required this.child,
-    this.gradientColors = LitFooterDefaultStyling.colorsLight,
+    this.gradientDecoration = defaultGradientDecoration,
   }) : super(key: key);
+
+  static const defaultGradientDecoration = LitGradients.verylightGreyGradient;
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -32,11 +32,7 @@ class LitFooter extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: gradientColors,
-            ),
+            gradient: gradientDecoration,
           ),
           width: MediaQuery.of(context).size.width,
           child: Padding(
@@ -60,9 +56,7 @@ class LitFooter extends StatelessWidget {
                       child: ClippedText(
                         title,
                         textAlign: TextAlign.end,
-                        style: LitSansSerifStyles.h6.copyWith(
-                          color: HexColor('#878787'),
-                        ),
+                        style: LitSansSerifStyles.h5,
                       ),
                     ),
                   ),

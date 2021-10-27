@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/buttons.dart';
 import 'package:leitmotif/containers.dart';
+import 'package:leitmotif/localization.dart';
 
 /// A widget displaying a List of minimalist buttons on a [LitFooter].
 ///
@@ -8,26 +9,26 @@ import 'package:leitmotif/containers.dart';
 /// minimalist settings section.
 class LitSettingsFooter extends StatelessWidget {
   /// The footer's title. Defaults to `Settings`.
-  final String title;
+  final String? title;
 
   /// A list of buttons to create interactive options.
   final List<LitPlainLabelButton> children;
 
   /// A list of colors applied on the background's gradient.
-  final List<Color> gradientColors;
+  final Gradient gradientDecoration;
 
   /// Creates a [LitSettingsFooter].
   const LitSettingsFooter({
     Key? key,
-    this.title = "Settings",
+    this.title,
     required this.children,
-    this.gradientColors = LitFooterDefaultStyling.colorsLight,
+    this.gradientDecoration = LitFooter.defaultGradientDecoration,
   }) : super(key: key);
 
   Widget build(BuildContext context) {
     return LitFooter(
-      title: title,
-      gradientColors: gradientColors,
+      title: title ?? LeitmotifLocalizations.of(context).settingsLabel,
+      gradientDecoration: gradientDecoration,
       child: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
