@@ -17,7 +17,7 @@ class LitColors {
   static const Color mediumGrey = grey400;
   static const Color darkGrey = grey500;
   static const Color darkBeige = red500;
-  static const Color beigeGrey = red100;
+  static const Color beigeGrey = red50;
   static const Color mediumOliveGreen = green500;
   static const Color darkOliveGreen = green600;
 
@@ -25,9 +25,10 @@ class LitColors {
   static const Color semiTransparent = const Color(0x82e7e7E7);
 
   static const Color white = const Color(0xFFFFFFFF);
-
   static const Color grey50 = const Color(0xFFFDFDFD);
+  static const Color grey80 = const Color(0xFFF7F7F7);
   static const Color grey100 = const Color(0xFFf4f4f7);
+  static const Color grey120 = const Color(0xFFE9E9E9);
   static const Color grey150 = const Color(0xFFDEDEDE);
   static const Color grey200 = const Color(0xFFC7C7C7);
   static const Color grey300 = const Color(0xFFD1CDCD);
@@ -35,9 +36,13 @@ class LitColors {
   static const Color grey380 = const Color(0xFF959595);
   static const Color grey400 = const Color(0xFF686868);
   static const Color grey500 = const Color(0xFF444444);
+  static const Color grey550 = const Color(0xFF3E3E3E);
   static const Color grey600 = const Color(0xFF1D2027);
+  static const Color black = const Color(0xFF000000);
 
-  static const Color red100 = const Color(0xFFBAB3AF);
+  static const Color red50 = const Color(0xFFBAB3AF);
+  static const Color red70 = const Color(0xFFB7ACBF);
+  static const Color red150 = const Color(0xFFFCE4E4);
   static const Color red200 = const Color(0xFFE3C3C4);
   static const Color red400 = const Color(0xFFD4ABB6);
   static const Color red500 = const Color(0xFFB3958C);

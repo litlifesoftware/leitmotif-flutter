@@ -10,7 +10,7 @@ class LitGradients {
     end: Alignment.bottomCenter,
     stops: [0.65, 1.00],
     colors: [
-      LitColors.grey150,
+      LitColors.grey80,
       LitColors.white,
     ],
   );
@@ -31,8 +31,8 @@ class LitGradients {
     begin: Alignment.topRight,
     end: Alignment.bottomLeft,
     colors: const [
-      LitColors.grey50,
-      LitColors.grey150,
+      LitColors.white,
+      LitColors.grey120,
     ],
   );
 
@@ -53,6 +53,26 @@ class LitGradients {
     colors: const [
       LitColors.red400,
       LitColors.grey600,
+    ],
+  );
+
+  /// A black linear gradient.
+  static const LinearGradient black = LinearGradient(
+    begin: Alignment.topRight,
+    end: Alignment.bottomLeft,
+    colors: const [
+      Color(0xFF3E3E3E),
+      LitColors.black,
+    ],
+  );
+
+  /// A pink to beige gradient.
+  static const LinearGradient pinkBeige = LinearGradient(
+    begin: Alignment.topRight,
+    end: Alignment.bottomLeft,
+    colors: [
+      LitColors.red150,
+      LitColors.red70,
     ],
   );
 
