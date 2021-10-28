@@ -58,9 +58,6 @@ class _LitTabViewState extends State<LitTabView> {
   /// The currently user selected tab stated as its index value.
   late int tabIndex;
 
-  /// All available tab screen [Widget] objects that can be navigated.
-  List<Widget> _tabs = [];
-
   /// All tab data objects providing the meta data for the tabs.
   List<LitBottomNavigationItemData> _tabData = [];
 
@@ -76,17 +73,21 @@ class _LitTabViewState extends State<LitTabView> {
 
   /// Separetes the provided [LitNavigableTab] into individual widgets and
   /// data object lists.
-  void bindWidgetsAndData() {
+  void bindData() {
     for (LitNavigableTab item in widget.tabs) {
-      _tabs.add(item.screen);
       _tabData.add(item.tabData);
     }
+  }
+
+  /// Returns the currently selected view.
+  Widget get _selectedTabView {
+    return widget.tabs[tabIndex].screen;
   }
 
   @override
   void initState() {
     tabIndex = widget.initialTabIndex;
-    bindWidgetsAndData();
+    bindData();
     super.initState();
   }
 
@@ -98,7 +99,7 @@ class _LitTabViewState extends State<LitTabView> {
         builder: (context) {
           return Stack(
             children: [
-              _tabs[tabIndex],
+              _selectedTabView,
               LitBottomNavigation(
                 selectedTabIndex: tabIndex,
                 onChangeTab: _setTabIndex,
