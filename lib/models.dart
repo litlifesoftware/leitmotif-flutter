@@ -9,3 +9,5 @@ export 'src/model/lit_bottom_navigation_item_data.dart';
 export 'src/model/lit_calendar.dart';
 export 'src/model/lit_navigatable_tab.dart';
 export 'src/model/lit_notification_data.dart';
+export 'src/model/text_field_data.dart';
+export 'src/model/text_page_content.dart';
