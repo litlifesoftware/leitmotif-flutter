@@ -60,7 +60,12 @@ class LeitmotifLocalizations {
       _Keys.november: 'November',
       _Keys.december: 'December',
       _Keys.yourAgeLabel: 'Your Age',
+      _Keys.invalidInputLabel: 'Invalid Input',
       _Keys.invalidInputBody: 'Please check your input.',
+      _Keys.invalidInputExtendedBody:
+          'Some of your inputted values are not valid. Please check your input.' +
+              '' +
+              'Please check your input.',
       _Keys.verifyAgeScreenSuccessTitle: 'Age confirmed',
       _Keys.verifyAgeScreenSuccessSubtitle: 'Your age has been confirmed',
       _Keys.verifyAgeScreenSuccessBody:
@@ -78,6 +83,10 @@ class LeitmotifLocalizations {
       _Keys.notificationLabel: 'Notification',
       _Keys.advancedSettingsLabel: 'Advanced Settings',
       _Keys.settingsLabel: 'Settings',
+      _Keys.nextLabel: 'Next',
+      _Keys.onboardingLabel: 'Onboarding',
+      _Keys.dismissLabel: 'Dismiss',
+      _Keys.signUpLabel: 'Sign Up',
     },
     // 'German' localization
     'de': const {
@@ -111,7 +120,12 @@ class LeitmotifLocalizations {
       _Keys.november: 'November',
       _Keys.december: 'Dezember',
       _Keys.yourAgeLabel: 'Dein Alter',
+      _Keys.invalidInputLabel: 'Fehlerhafte Eingaben',
       _Keys.invalidInputBody: 'Bitte überprüfe deine Eingabe.',
+      _Keys.invalidInputExtendedBody:
+          'Einige deiner eingegebenen Werte sind fehlerhaft.' +
+              ' ' +
+              'Bitte überprüfe deine Eingabe.',
       _Keys.verifyAgeScreenSuccessTitle: 'Alter bestätigt',
       _Keys.verifyAgeScreenSuccessSubtitle: 'Dein Alter wurde bestätigt',
       _Keys.verifyAgeScreenSuccessBody:
@@ -129,6 +143,10 @@ class LeitmotifLocalizations {
       _Keys.notificationLabel: 'Benachrichtigung',
       _Keys.advancedSettingsLabel: 'Erweiterte Einstellungen',
       _Keys.settingsLabel: 'Einstellungen',
+      _Keys.nextLabel: 'Nächste',
+      _Keys.onboardingLabel: 'Start',
+      _Keys.dismissLabel: 'Ausblenden',
+      _Keys.signUpLabel: 'Registrieren',
     },
   };
 
@@ -255,8 +273,17 @@ class LeitmotifLocalizations {
     return _localizedValues[locale.languageCode]![_Keys.yourAgeLabel]!;
   }
 
+  String get invalidInputLabel {
+    return _localizedValues[locale.languageCode]![_Keys.invalidInputLabel]!;
+  }
+
   String get invalidInputBody {
     return _localizedValues[locale.languageCode]![_Keys.invalidInputBody]!;
+  }
+
+  String get invalidInputExtendedBody {
+    return _localizedValues[locale.languageCode]![
+        _Keys.invalidInputExtendedBody]!;
   }
 
   String get verifyAgeScreenSuccessTitle {
@@ -305,6 +332,22 @@ class LeitmotifLocalizations {
 
   String get settingsLabel {
     return _localizedValues[locale.languageCode]![_Keys.settingsLabel]!;
+  }
+
+  String get nextLabel {
+    return _localizedValues[locale.languageCode]![_Keys.nextLabel]!;
+  }
+
+  String get onboardingLabel {
+    return _localizedValues[locale.languageCode]![_Keys.onboardingLabel]!;
+  }
+
+  String get dismissLabel {
+    return _localizedValues[locale.languageCode]![_Keys.dismissLabel]!;
+  }
+
+  String get signUpLabel {
+    return _localizedValues[locale.languageCode]![_Keys.signUpLabel]!;
   }
 }
 
@@ -366,7 +409,9 @@ class _Keys {
   static const String november = 'november';
   static const String december = 'december';
   static const String yourAgeLabel = 'yourAgeLabel';
+  static const String invalidInputLabel = 'invalidInputLabel';
   static const String invalidInputBody = 'invalidInputBody';
+  static const String invalidInputExtendedBody = 'invalidInputExtendedBody';
   static const String verifyAgeScreenSuccessTitle =
       'verifyAgeScreenSuccessTitle';
   static const String verifyAgeScreenSuccessSubtitle =
@@ -380,4 +425,8 @@ class _Keys {
   static const String notificationLabel = 'notificationLabel';
   static const String advancedSettingsLabel = 'advancedSettingsLabel';
   static const String settingsLabel = 'settingsLabel';
+  static const String nextLabel = 'nextLabel';
+  static const String onboardingLabel = 'onboardingLabel';
+  static const String dismissLabel = 'dismissLabel';
+  static const String signUpLabel = 'signUpLabel';
 }
