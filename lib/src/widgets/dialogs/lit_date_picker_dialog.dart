@@ -133,11 +133,13 @@ class _LitDatePickerDialogState extends State<LitDatePickerDialog> {
       ),
       actionButtons: [
         DialogActionButton(
-          onPressed: _onSubmitDate,
-          label: widget.localization != null
-              ? widget.localization!.submitLabel
-              : LeitmotifLocalizations.of(context).submitLabel,
-          disabled: _invalidDate,
+          data: ActionButtonData(
+            onPressed: _onSubmitDate,
+            title: widget.localization != null
+                ? widget.localization!.submitLabel
+                : LeitmotifLocalizations.of(context).submitLabel,
+            disabled: _invalidDate,
+          ),
         )
       ],
     );

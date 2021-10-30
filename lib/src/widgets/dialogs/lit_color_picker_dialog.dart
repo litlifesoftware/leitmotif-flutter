@@ -171,21 +171,25 @@ class _LitColorPickerDialogState extends State<LitColorPickerDialog>
           : LeitmotifLocalizations.of(context).colorInputLabel,
       actionButtons: [
         DialogActionButton(
-          accentColor: LitColors.mediumGrey,
-          backgroundColor: LitColors.mediumGrey,
-          style: LitSansSerifStyles.button.copyWith(
-            color: Colors.white,
+          data: ActionButtonData(
+            accentColor: LitColors.mediumGrey,
+            backgroundColor: LitColors.mediumGrey,
+            style: LitSansSerifStyles.button.copyWith(
+              color: Colors.white,
+            ),
+            onPressed: _onReset,
+            title: _l10nAvail
+                ? widget.localization!.resetLabel
+                : LeitmotifLocalizations.of(context).resetLabel,
           ),
-          onPressed: _onReset,
-          label: _l10nAvail
-              ? widget.localization!.resetLabel
-              : LeitmotifLocalizations.of(context).resetLabel,
         ),
         DialogActionButton(
-          onPressed: _handleOnApply,
-          label: _l10nAvail
-              ? widget.localization!.applyLabel
-              : LeitmotifLocalizations.of(context).applyLabel,
+          data: ActionButtonData(
+            onPressed: _handleOnApply,
+            title: _l10nAvail
+                ? widget.localization!.applyLabel
+                : LeitmotifLocalizations.of(context).applyLabel,
+          ),
         )
       ],
       margin: widget.margin,

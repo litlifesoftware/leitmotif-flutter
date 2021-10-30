@@ -1,43 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:leitmotif/buttons.dart';
-import 'package:leitmotif/dialogs.dart';
-import 'package:leitmotif/styles.dart';
-import 'package:leitmotif/text.dart';
+import 'package:leitmotif/leitmotif.dart';
 
-/// A button widget primarily designed to be used on the [LitTitledDialog] as
-/// a [LitTitledDialog.actionButtons] item.
-///
-/// It does provide a less customizable [LitPushedThroughButton] basis to
-/// match the [LitTitledDialog]'s styling.
+/// A Leitmotif `button` widget primarily designed to be used on dialog widget
+/// to trigger an action.
 class DialogActionButton extends StatelessWidget {
-  final String label;
+  /// The button's data required to build the widget.
+  final ActionButtonData data;
+
+  /// The button's outter padding.
   final EdgeInsets padding;
-  final Color accentColor;
-  final Color backgroundColor;
-  final TextStyle style;
-  final bool disabled;
-  final void Function() onPressed;
 
   /// Creates a [DialogActionButton].
-  ///
-  /// * [label] is the button's label.
-  ///
-  /// * [padding] is the button's outer padding.
-  ///
-  /// * [accentColor] is the gradient's accent color.
-  ///
-  /// * [backgroundColor] is the gradient's primary color.
   const DialogActionButton({
     Key? key,
-    required this.label,
-    this.padding = const EdgeInsets.symmetric(
-      horizontal: 8.0,
-    ),
-    this.accentColor = Colors.white,
-    this.backgroundColor = Colors.white,
-    this.style = LitSansSerifStyles.button,
-    this.disabled = false,
-    required this.onPressed,
+    required this.data,
+    this.padding = LitEdgeInsets.buttonSM,
   }) : super(key: key);
 
   @override
@@ -45,15 +22,15 @@ class DialogActionButton extends StatelessWidget {
     return Padding(
       padding: padding,
       child: LitPushedThroughButton(
-        onPressed: onPressed,
-        disabled: disabled,
-        accentColor: accentColor,
-        backgroundColor: backgroundColor,
+        onPressed: data.onPressed,
+        disabled: data.disabled,
+        accentColor: data.accentColor,
+        backgroundColor: data.backgroundColor,
         child: ClippedText(
-          label,
+          data.title,
           upperCase: true,
           textAlign: TextAlign.center,
-          style: style,
+          style: data.style,
         ),
       ),
     );

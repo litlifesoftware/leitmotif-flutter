@@ -100,10 +100,12 @@ class _InvalidInputDialogState extends State<InvalidInputDialog>
       ),
       actionButtons: [
         DialogActionButton(
-          label: _l10nAvail
-              ? widget.localization!.dismissLabel
-              : LeitmotifLocalizations.of(context).dismissLabel,
-          onPressed: _onDismiss,
+          data: ActionButtonData(
+            title: _l10nAvail
+                ? widget.localization!.dismissLabel
+                : LeitmotifLocalizations.of(context).dismissLabel,
+            onPressed: _onDismiss,
+          ),
         ),
       ],
     );

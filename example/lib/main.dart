@@ -1264,12 +1264,16 @@ class _LitTitledDialogImpl extends StatelessWidget {
       titleText: "A dialog",
       actionButtons: [
         DialogActionButton(
-          onPressed: () {},
-          label: "Action Button Label 1",
+          data: ActionButtonData(
+            onPressed: () {},
+            title: "Action Button Label 1",
+          ),
         ),
         DialogActionButton(
-          onPressed: () {},
-          label: "Action Button Label 2",
+          data: ActionButtonData(
+            onPressed: () {},
+            title: "Action Button Label 2",
+          ),
         )
       ],
     );

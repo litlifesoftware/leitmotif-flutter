@@ -150,14 +150,18 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
       ),
       actionButtons: [
         DialogActionButton(
-          label: widget.localizationData.cancelButtonLabel,
-          onPressed: _onCancel,
-          accentColor: LitColors.lightGrey,
-          backgroundColor: LitColors.lightGrey,
+          data: ActionButtonData(
+            title: widget.localizationData.cancelButtonLabel,
+            onPressed: _onCancel,
+            accentColor: LitColors.lightGrey,
+            backgroundColor: LitColors.lightGrey,
+          ),
         ),
         DialogActionButton(
-          label: widget.localizationData.discardButtonLabel,
-          onPressed: widget.onDiscard,
+          data: ActionButtonData(
+            title: widget.localizationData.discardButtonLabel,
+            onPressed: widget.onDiscard,
+          ),
         ),
       ],
     );
