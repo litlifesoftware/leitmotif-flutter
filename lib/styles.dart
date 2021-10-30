@@ -4,6 +4,7 @@
 library styles;
 
 export 'src/styles/lit_animation_durations.dart';
+export 'src/styles/lit_border_radius.dart';
 export 'src/styles/lit_box_shadows.dart';
 export 'src/styles/lit_colors.dart';
 export 'src/styles/lit_edge_insets.dart';
