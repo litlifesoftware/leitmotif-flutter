@@ -1,25 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:leitmotif/utility.dart';
+import 'package:leitmotif/leitmotif.dart';
 
-/// A widget visually seperating two similar looking widget.
-///
-/// The divider can be used on list views or columns in horizontal alignment or
-/// on rows in vertical alignment.
+//TODO: Move to `art`
+/// A Flutter `art` widget displaying a colored divider to seperate
+///  similar-looking widgets.
 class LitDivider extends StatelessWidget {
-  final EdgeInsets padding;
+  /// The divider's thickness.
+  final double thickness;
 
+  /// The divider's color.
+  final Color color;
+
+  /// The container's margin.
+  final EdgeInsets margin;
+
+  /// Creates a [LitDivider].
   const LitDivider({
     Key? key,
-    this.padding = const EdgeInsets.symmetric(vertical: 16.0),
+    this.thickness = 2.0,
+    this.color = LitColors.grey300,
+    this.margin = LitEdgeInsets.spacingY,
   }) : super(key: key);
+
+  /// Returns a 50% border radius.
+  BorderRadius get _borderRadius =>
+      BorderRadius.all(Radius.circular(thickness / 2));
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding,
+      padding: margin,
       child: Container(
-        height: 2.0,
+        height: thickness,
         decoration: BoxDecoration(
-          color: HexColor('#C9C9C9'),
+          color: color,
+          borderRadius: _borderRadius,
         ),
       ),
     );
