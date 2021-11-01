@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A Flutter widget displaying information and allowing the user to pick an
-/// action to respond to the given information.
+/// A Leitmotif container widget displaying the provided [child] on an
+/// elevated card.
+///
+/// Allows the user to interact with the card using action buttons displayed on
+/// the bottom of the card.
 class LitTitledActionCard extends StatelessWidget {
   /// The card's title.
-  final String title;
+  final String? title;
 
   /// The card's subtitle. None displayed if none provided.
   final String? subtitle;
@@ -19,19 +22,15 @@ class LitTitledActionCard extends StatelessWidget {
   /// The card's child widget.
   final Widget child;
 
-  /// The action button's data. Action buttons are displayed on the bottom of
-  /// the card.
+  /// The action button's data.
   final List<ActionButtonData>? actionButtonData;
 
   /// Creates a [LitTitledActionCard].
   const LitTitledActionCard({
     Key? key,
-    required this.title,
+    this.title,
     this.subtitle,
-    this.margin = const EdgeInsets.symmetric(
-      vertical: 16.0,
-      horizontal: 16.0,
-    ),
+    this.margin = LitEdgeInsets.card,
     this.backgroundColors = const [Colors.white, Colors.white],
     this.child = const SizedBox(),
     this.actionButtonData,
@@ -50,14 +49,15 @@ class LitTitledActionCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    LitCardTitle(title: title, subtitle: subtitle),
+                    LitCardTitle(
+                      title: title,
+                      subtitle: subtitle,
+                    ),
                     child,
-                    actionButtonData != null
-                        ? _ButtonBuilder(
-                            actionButtonData: actionButtonData,
-                            constraints: constraints,
-                          )
-                        : SizedBox(),
+                    _ButtonBuilder(
+                      data: actionButtonData,
+                      constraints: constraints,
+                    )
                   ],
                 ),
               ),
@@ -69,39 +69,41 @@ class LitTitledActionCard extends StatelessWidget {
   }
 }
 
+/// A builder widget allowing to build a row of buttons on the
+/// [LitTitledActionCard]'s bottom.
 class _ButtonBuilder extends StatelessWidget {
-  final List<ActionButtonData>? actionButtonData;
+  final List<ActionButtonData>? data;
   final BoxConstraints constraints;
   final EdgeInsets margin;
   const _ButtonBuilder({
     Key? key,
-    required this.actionButtonData,
-    this.margin = const EdgeInsets.only(top: 16.0),
+    required this.data,
+    this.margin = LitEdgeInsets.spacingTop,
     required this.constraints,
   }) : super(key: key);
-
+  bool get _buttonsEnabled => data != null;
   @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
         List<Widget> children = [];
-        for (ActionButtonData actionButton in actionButtonData!) {
-          children.add(
-            SizedBox(
-              width: constraints.maxWidth,
-              child: LitPushedThroughButton(
-                backgroundColor: actionButton.backgroundColor ?? Colors.white,
-                accentColor: actionButton.accentColor ?? LitColors.lightGrey,
-                child: Text(
-                  actionButton.title.toUpperCase(),
-                  style: LitSansSerifStyles.button,
-                  textAlign: TextAlign.center,
+        if (_buttonsEnabled)
+          for (ActionButtonData item in data!)
+            children.add(
+              SizedBox(
+                width: constraints.maxWidth,
+                child: LitPushedThroughButton(
+                  backgroundColor: item.backgroundColor,
+                  accentColor: item.accentColor,
+                  child: Text(
+                    item.title.toUpperCase(),
+                    style: LitSansSerifStyles.button,
+                    textAlign: TextAlign.center,
+                  ),
+                  onPressed: item.onPressed,
                 ),
-                onPressed: actionButton.onPressed,
               ),
-            ),
-          );
-        }
+            );
         return Padding(
           padding: margin,
           child: Column(

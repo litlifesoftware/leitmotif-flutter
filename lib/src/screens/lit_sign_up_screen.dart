@@ -2,41 +2,58 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
+/// The [LitSignUpScreen]'s `Localization`.
+///
+/// Contains the localized strings used on the screen.
+class LitSignUpScreenLocalization {
+  final String title;
+  final String submitLabel;
+
+  /// Creates a [LitSignUpScreenLocalization].
+  const LitSignUpScreenLocalization({
+    required this.title,
+    required this.submitLabel,
+  });
+}
+
 /// A screen widget allowing the user to submit his core data.
 ///
 /// The mutation of the user edited text on the text fields are handled by
 /// `onChange` methods found on the provided [LitTextField] instances.
 class LitSignUpScreen extends StatefulWidget {
-  /// The displayed title of the screen.
-  final String title;
-
-  /// The text displayed on the submit button.
-  final String onSubmitButtonText;
+  final LitSignUpScreenLocalization? localization;
 
   /// A [List] of [LitTextField]s used for handling the user input.
-  final List<LitTextField> inputFields;
+  ///
+  /// The field data objects provide callbacks to set the parent's state and
+  /// to receive the user input.
+  final List<TextFieldData> data;
 
-  /// The duration of the background animation.
-  final Duration backgroundAnimationDuration;
+  /// States whether the user input has passed the validation. If not, the
+  /// `onSubmit` callback is not executed.
+  ///
+  /// Validation must be performed on the parent state.
+  final bool? inputValid;
 
-  /// The duration of the appear animation.
-  final Duration appearAnimationDuration;
-
-  /// The callback to handle the submit action.
+  /// Handles the `submit` action.
+  ///
+  /// Additional input validation should be handled on the callback function.
   final void Function() onSubmit;
 
   /// Creates a [LitSignUpScreen].
-  ///
-  /// Provide localized string values to be displayed on the screen.
   const LitSignUpScreen({
     Key? key,
-    this.title = 'Sign up',
-    this.onSubmitButtonText = 'Submit',
-    this.inputFields = const [],
-    this.backgroundAnimationDuration = const Duration(milliseconds: 3000),
-    this.appearAnimationDuration = const Duration(milliseconds: 310),
+    this.localization,
+    this.data = const [],
+    this.inputValid,
     required this.onSubmit,
   }) : super(key: key);
+
+  /// The duration of the background animation.
+  static const Duration bgAnimationDuration = const Duration(
+    milliseconds: 3000,
+  );
+
   @override
   _LitSignUpScreenState createState() => _LitSignUpScreenState();
 }
@@ -44,175 +61,74 @@ class LitSignUpScreen extends StatefulWidget {
 class _LitSignUpScreenState extends State<LitSignUpScreen>
     with TickerProviderStateMixin {
   /// The background animation.
-  late AnimationController _backgroundArtAnimation;
+  late AnimationController _animationControllerBg;
 
-  /// The appear animation.
-  late AnimationController _appearAnimation;
+  // /// The appear animation.
+  // late AnimationController _animationControllerShort;
 
-  /// Unfocuses the currently focused text field.
-  void _unfocus() {
-    FocusScope.of(context).unfocus();
-  }
+  /// Evaluates whether localizations are provided.
+  bool get _l10nAvail => widget.localization != null;
 
-  /// Returns the background art's transformation which will be depended on the
-  /// current animation value.
-  Matrix4 get _backgroundArtTransform {
-    final double x = 1.02 - ((1.02 - 0.95) * _backgroundArtAnimation.value);
-    final double y = 1.02 - ((1.02 - 0.95) * _backgroundArtAnimation.value);
-    final Matrix4 transformMatrix = Matrix4.translationValues(
-      0.0 + (50.0 * _backgroundArtAnimation.value),
-      -230.0 + (-10 * _backgroundArtAnimation.value),
-      0.0,
+  /// Handles the `submit` action.
+  void _onSubmit() {
+    Future.delayed(LitAnimationDurations.button).then(
+      (_) {
+        widget.onSubmit();
+      },
     );
-    return Matrix4.identity()
-      ..scale(x, y)
-      ..add(transformMatrix);
   }
 
   @override
   void initState() {
     super.initState();
-    _backgroundArtAnimation = AnimationController(
+    _animationControllerBg = AnimationController(
       vsync: this,
-      duration: widget.backgroundAnimationDuration,
-    );
-    _appearAnimation = AnimationController(
-      vsync: this,
-      duration: widget.appearAnimationDuration,
-    );
-    _backgroundArtAnimation.repeat(reverse: true);
-    _appearAnimation.forward();
+      duration: LitSignUpScreen.bgAnimationDuration,
+    )..repeat(reverse: true);
   }
 
   @override
   void dispose() {
-    _backgroundArtAnimation.dispose();
+    _animationControllerBg.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return LitScaffold(
+      appBar: LitAppBar(
+        title: _l10nAvail
+            ? widget.localization!.title
+            : LeitmotifLocalizations.of(context).signUpLabel,
+      ),
       body: SafeArea(
         child: Stack(
           alignment: Alignment.center,
           children: [
-            InkWell(
-              focusColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              onTap: _unfocus,
-              child: LitAnimatedGradientBackground(),
-            ),
-            AnimatedBuilder(
-              animation: _appearAnimation,
-              builder: (context, _) {
-                return AnimatedOpacity(
-                  duration: _appearAnimation.duration!,
-                  opacity: 0.2 + (0.8 * _appearAnimation.value),
-                  child: Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: AnimatedBuilder(
-                          animation: _backgroundArtAnimation,
-                          builder: (context, _) {
-                            return Transform.rotate(
-                              angle: (pi / 180) *
-                                  (-15 + (-5 * _backgroundArtAnimation.value)),
-                              child: Transform(
-                                transform: _backgroundArtTransform,
-                                child: SizedBox(
-                                  height: 300.0,
-                                  width: 500.0,
-                                  child: LitGradientCard(
-                                    begin: Alignment.bottomRight,
-                                    end: Alignment.bottomLeft,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 12.0,
-                                        color: Colors.black12,
-                                        offset: Offset(
-                                          _backgroundArtAnimation.value * -8,
-                                          _backgroundArtAnimation.value * 2,
-                                        ),
-                                        spreadRadius:
-                                            _backgroundArtAnimation.value * 3.0,
-                                      ),
-                                    ],
-                                    borderRadius: const BorderRadius.only(
-                                      bottomRight: Radius.circular(
-                                        120.0,
-                                      ),
-                                      bottomLeft: Radius.circular(
-                                        120.0,
-                                      ),
-                                      topLeft: Radius.circular(
-                                        120.0,
-                                      ),
-                                      topRight: Radius.circular(
-                                        120.0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+            LitAnimatedGradientBackground(),
+            Stack(
+              children: [
+                _AnimatedGeometry(
+                  animationController: _animationControllerBg,
+                ),
+                ScrollableColumn(
+                  children: [
+                    SizedBox(
+                      height: _AnimatedGeometry.height / 2.5,
+                    ),
+                    Center(
+                      child: _Form(
+                        // animation: _animationControllerShort,
+                        data: widget.data,
+                        l10nAvail: _l10nAvail,
+                        localization: widget.localization,
+                        inputValid: widget.inputValid,
+                        onSubmit: _onSubmit,
                       ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 40.0,
-                            vertical: 30.0,
-                          ),
-                          child: Container(
-                            height: 220.0,
-                            width: 220.0,
-                            child: ClippedText(
-                              widget.title,
-                              maxLines: 3,
-                              style: LitTextStyles.sansSerif.copyWith(
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.w700,
-                                  color: HexColor('#979797'),
-                                  letterSpacing: 0.25),
-                            ),
-                          ),
-                        ),
-                      ),
-                      _SignUpForm(
-                        animation: _appearAnimation,
-                        inputFields: widget.inputFields,
-                        onUnfocus: _unfocus,
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 32.0),
-                          child: LitPushedThroughButton(
-                            margin: const EdgeInsets.symmetric(
-                              vertical: 8.0,
-                              horizontal: 30.0,
-                            ),
-                            child: Text(
-                              widget.onSubmitButtonText.toUpperCase(),
-                              style: LitTextStyles.sansSerif.copyWith(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w800,
-                                color: HexColor('#8A8A8A'),
-                                letterSpacing: 0.8,
-                              ),
-                            ),
-                            onPressed: widget.onSubmit,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
@@ -221,69 +137,99 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
   }
 }
 
-class _SignUpForm extends StatefulWidget {
-  final Animation animation;
-  final List<LitTextField> inputFields;
-  final void Function() onUnfocus;
-  const _SignUpForm({
+/// A animated geometry displayed on the [LitSignUpScreen].
+class _AnimatedGeometry extends StatelessWidget {
+  final AnimationController animationController;
+
+  const _AnimatedGeometry({
     Key? key,
-    required this.animation,
-    required this.inputFields,
-    required this.onUnfocus,
+    required this.animationController,
   }) : super(key: key);
-  @override
-  __SignUpFormState createState() => __SignUpFormState();
-}
 
-class __SignUpFormState extends State<_SignUpForm> {
-  Matrix4 get _transform {
-    final double dx = (-30.0 + (30.0 * widget.animation.value));
-    final double dy = 0;
-    final double dz = 0;
-
-    return Matrix4.translationValues(dx, dy, dz);
+  /// Returns the background art's transformation which will be depended on the
+  /// current animation value.
+  Matrix4 get _backgroundArtTransform {
+    final double x = 1.0 - ((1.0 - 0.90) * animationController.value);
+    final double y = 1.0 - ((1.0 - 0.90) * animationController.value);
+    final Matrix4 transformMatrix = Matrix4.translationValues(
+      0.0 + (60.0 * animationController.value),
+      -height + (-10 * animationController.value),
+      0.0,
+    );
+    return Matrix4.identity()
+      ..scale(x, y)
+      ..add(transformMatrix);
   }
+
+  double get _angle => (pi / 180) * (-15 + (-5 * animationController.value));
+
+  static const height = 300.0;
+  static const width = 500.0;
+  static const borderRadius = const BorderRadius.all(
+    Radius.circular(
+      120.0,
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.only(
-          left: 30.0,
-          right: 30.0,
-          top: 100.0,
-          bottom: 80.0,
-        ),
-        physics: BouncingScrollPhysics(),
-        child: InkWell(
-          onTap: widget.onUnfocus,
-          child: Transform(
-            transform: _transform,
-            child: LitGradientCard(
-              borderRadius: BorderRadius.all(Radius.circular(24.0)),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 30.0,
-                  //horizontal: 15.0,
-                ),
-                child: Builder(
-                  builder: (context) {
-                    final List<Widget> children = [];
-                    for (LitTextField input in widget.inputFields) {
-                      children.add(input);
-                      if (children.length < widget.inputFields.length) {
-                        children.add(LitDivider());
-                      }
-                    }
-                    return Column(
-                      children: children,
-                    );
-                  },
+    return Align(
+      alignment: Alignment.topLeft,
+      child: AnimatedBuilder(
+        animation: animationController,
+        builder: (context, _) {
+          return Transform.rotate(
+            angle: _angle,
+            child: Transform(
+              transform: _backgroundArtTransform,
+              child: BluredBackgroundContainer(
+                blurRadius: 2.0,
+                child: SizedBox(
+                  height: height,
+                  width: width,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white60,
+                      borderRadius: borderRadius,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// The sign up form containing text input elements.
+class _Form extends StatelessWidget {
+  final LitSignUpScreenLocalization? localization;
+  final bool l10nAvail;
+  final List<TextFieldData> data;
+  final bool? inputValid;
+  final void Function() onSubmit;
+  const _Form({
+    Key? key,
+    required this.localization,
+    required this.l10nAvail,
+    required this.data,
+    required this.inputValid,
+    required this.onSubmit,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.center,
+      child: LitForm(
+        submitLabel: l10nAvail
+            ? localization!.title
+            : LeitmotifLocalizations.of(context).submitLabel,
+        data: data,
+        inputValid: inputValid,
+        onSubmit: onSubmit,
       ),
     );
   }

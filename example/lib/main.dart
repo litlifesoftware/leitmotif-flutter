@@ -62,6 +62,7 @@ class ExampleHomeScreen extends StatefulWidget {
 
 class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
   bool shouldHideNavigationBar = false;
+  bool dark = false;
 
   void toggleShouldHideNavigationBar() {
     setState(() {
@@ -71,17 +72,25 @@ class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("dark parent " + dark.toString());
     return LitTabView(
-      //hideNavigationBar: shouldHideNavigationBar,
+      dark: dark,
       tabs: [
         LitNavigableTab(
           tabData: LitBottomNavigationItemData(
-              icon: LitIcons.home_alt,
-              iconAlt: LitIcons.home,
-              index: 0,
-              title: "home"),
+            icon: LitIcons.home_alt,
+            iconAlt: LitIcons.home,
+            index: 0,
+            title: "home",
+          ),
           screen: _ExampleScreen(
             onHideBottomNavigation: toggleShouldHideNavigationBar,
+            dark: dark,
+            onToggleDark: (value) {
+              setState(() {
+                dark = !dark;
+              });
+            },
           ),
         ),
         LitNavigableTab(
@@ -350,9 +359,13 @@ class _ExampleScreenTwo extends StatelessWidget {
 }
 
 class _ExampleScreen extends StatefulWidget {
+  final bool dark;
+  final void Function(bool) onToggleDark;
   final void Function() onHideBottomNavigation;
   const _ExampleScreen({
     Key? key,
+    required this.dark,
+    required this.onToggleDark,
     required this.onHideBottomNavigation,
   }) : super(key: key);
 
@@ -367,11 +380,11 @@ class __ExampleScreenState extends State<_ExampleScreen> {
   late LitSnackbarController _transparentSnackbarController;
   late LitNotificationController _notificationController;
   late ScrollController _scrollController;
-  late bool darkMode;
   DateTime? dayOfBirth;
   Color colorPickerBtnColor = Colors.white;
   double _userIconChar = 65;
   bool _showSlider = true;
+  late bool _dark;
   void showSolidSnackbar() {
     _solidSnackbarController.showSnackBar();
   }
@@ -385,11 +398,11 @@ class __ExampleScreenState extends State<_ExampleScreen> {
   }
 
   Color get buttonTextColor {
-    return darkMode ? Colors.white : LitColors.mediumGrey;
+    return _dark ? Colors.white : LitColors.mediumGrey;
   }
 
   Color get buttonColor {
-    return darkMode ? LitColors.mediumGrey : Colors.white;
+    return _dark ? LitColors.mediumGrey : Colors.white;
   }
 
   void setShowSlider(bool value) {
@@ -433,8 +446,8 @@ class __ExampleScreenState extends State<_ExampleScreen> {
     _transparentSnackbarController = LitSnackbarController();
     _notificationController = LitNotificationController();
     _scrollController = ScrollController();
-    darkMode = false;
     dayOfBirth = null;
+    _dark = widget.dark;
   }
 
   @override
@@ -442,14 +455,14 @@ class __ExampleScreenState extends State<_ExampleScreen> {
     return LitNotificationContainer(
       controller: _notificationController,
       child: LitScaffold(
-        backgroundColor: darkMode ? LitColors.darkBlue : Colors.white,
+        backgroundColor: _dark ? LitColors.darkBlue : Colors.white,
         appBar: FixedOnScrollTitledAppbar(
           shouldNavigateBack: false,
           title: "Leitmotif",
-          backgroundColor: darkMode ? Colors.black : Colors.white,
+          backgroundColor: _dark ? Colors.black : Colors.white,
           scrollController: _scrollController,
           textStyle: LitTextStyles.sansSerif.copyWith(
-            color: darkMode ? Colors.white : LitColors.mediumGrey,
+            color: _dark ? Colors.white : LitColors.mediumGrey,
           ),
         ),
         snackbars: [
@@ -478,83 +491,18 @@ class __ExampleScreenState extends State<_ExampleScreen> {
           ),
           controller: _settingsPanelController,
           title: "Settings",
-          darkMode: darkMode,
+          darkMode: _dark,
           settingsTiles: [
             LitSettingsPanelTile(
-              onValueToggled: (toggledValue) {
+              onValueToggled: (value) {
                 setState(() {
-                  darkMode = toggledValue;
+                  _dark = !_dark;
                 });
+                widget.onToggleDark(!_dark);
               },
-              darkMode: darkMode,
-              enabled: darkMode,
-              optionName: "Dark mode",
-              iconData: LitIcons.moon_with_stars_solid,
-            ),
-            LitSettingsPanelTile(
-              onValueToggled: (toggledValue) {
-                setState(() {
-                  darkMode = toggledValue;
-                });
-              },
-              darkMode: darkMode,
-              enabled: darkMode,
-              optionName: "Dark mode",
-              iconData: LitIcons.moon_with_stars_solid,
-            ),
-            LitSettingsPanelTile(
-              onValueToggled: (toggledValue) {
-                setState(() {
-                  darkMode = toggledValue;
-                });
-              },
-              darkMode: darkMode,
-              enabled: darkMode,
-              optionName: "Dark mode",
-              iconData: LitIcons.moon_with_stars_solid,
-            ),
-            LitSettingsPanelTile(
-              onValueToggled: (toggledValue) {
-                setState(() {
-                  darkMode = toggledValue;
-                });
-              },
-              darkMode: darkMode,
-              enabled: darkMode,
-              optionName: "Dark mode",
-              iconData: LitIcons.moon_with_stars_solid,
-            ),
-            LitSettingsPanelTile(
-              onValueToggled: (toggledValue) {
-                setState(() {
-                  darkMode = toggledValue;
-                });
-              },
-              darkMode: darkMode,
-              enabled: darkMode,
-              optionName: "Dark mode",
-              iconData: LitIcons.moon_with_stars_solid,
-            ),
-            LitSettingsPanelTile(
-              onValueToggled: (toggledValue) {
-                setState(() {
-                  darkMode = toggledValue;
-                });
-              },
-              darkMode: darkMode,
-              enabled: darkMode,
-              optionName: "Dark mode",
-              iconData: LitIcons.moon_with_stars_solid,
-            ),
-            LitSettingsPanelTile(
-              onValueToggled: (toggledValue) {
-                setState(() {
-                  darkMode = toggledValue;
-                });
-              },
-              darkMode: darkMode,
-              enabled: darkMode,
-              optionName: "Dark mode",
+              darkMode: _dark,
+              enabled: _dark,
+              optionName: "Dark Theme",
               iconData: LitIcons.moon_with_stars_solid,
             ),
           ],
@@ -633,7 +581,7 @@ class __ExampleScreenState extends State<_ExampleScreen> {
                           )
                         : SizedBox(),
                     _ButtonList(
-                      darkMode: darkMode,
+                      darkMode: _dark,
                       addNotification: _addNotification,
                       buttonColor: buttonColor,
                       buttonTextColor: buttonTextColor,
@@ -1090,7 +1038,6 @@ class _LitOnboardingScreenImplementation extends StatelessWidget {
   Widget build(BuildContext context) {
     return LitOnboardingScreen(
       art: _Art(large: false),
-      title: "Onboading",
       textItems: const [
         TextPageContent(
           subtitle: "Subtitle",
@@ -1103,7 +1050,7 @@ class _LitOnboardingScreenImplementation extends StatelessWidget {
           text: "Second Text Item",
         ),
       ],
-      onExit: () => LitRouteController(context).navigateBack(),
+      onDismiss: () => LitRouteController(context).navigateBack(),
     );
   }
 }
@@ -1135,31 +1082,69 @@ class _LitPrivacyScreenImplementation extends StatelessWidget {
   }
 }
 
-class _LitSignupScreenImplementation extends StatelessWidget {
+class _LitSignupScreenImplementation extends StatefulWidget {
   const _LitSignupScreenImplementation({Key? key})
       : super(
           key: key,
         );
 
   @override
+  State<_LitSignupScreenImplementation> createState() =>
+      _LitSignupScreenImplementationState();
+}
+
+class _LitSignupScreenImplementationState
+    extends State<_LitSignupScreenImplementation> {
+  String username = "";
+  String pw = "";
+  String pwConf = "";
+
+  @override
   Widget build(BuildContext context) {
     return LitSignUpScreen(
+      inputValid: LitInputValidator.validateUsername(username) &&
+          pw.isNotEmpty &&
+          pwConf == pw,
       onSubmit: () {
-        LitRouteController(context).pop();
+        LitRouteController(context).navigateBack();
       },
-      inputFields: [
-        LitTextField(
+      data: [
+        TextFieldData(
           label: "Username",
           icon: LitIcons.person_solid,
-          onChange: (value) {
-            print("Hello, $value");
+          onChange: (val) {
+            setState(() {
+              username = val;
+            });
+          },
+          invalidHint: "Your username contains invalid characters or is empty.",
+          onValidate: (val) {
+            return LitInputValidator.validateUsername(val);
           },
         ),
-        LitTextField(
-          label: "Username",
-          icon: LitIcons.person_solid,
-          onChange: (value) {
-            print("Hello, $value");
+        TextFieldData(
+            label: "Password",
+            obscureText: true,
+            icon: Icons.lock,
+            onChange: (val) {
+              setState(() {
+                pw = val;
+              });
+            },
+            onValidate: (val) {
+              return val.isNotEmpty;
+            }),
+        TextFieldData(
+          label: "Confirm",
+          obscureText: true,
+          icon: Icons.lock,
+          onChange: (val) {
+            setState(() {
+              pwConf = val;
+            });
+          },
+          onValidate: (val) {
+            return val == pw;
           },
         ),
       ],
