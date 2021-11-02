@@ -53,7 +53,7 @@ class LitPlainLabelButton extends StatefulWidget {
       top: 8.0,
       bottom: 8.0,
     ),
-    this.animationDuration = const Duration(milliseconds: 180),
+    this.animationDuration = LitAnimationDurations.button,
   }) : super(key: key);
 
   @override

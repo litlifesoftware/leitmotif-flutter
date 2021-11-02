@@ -8,6 +8,7 @@ class LitTransformAnimatedButton extends StatefulWidget {
   final Color backgroundColor;
   final double verticalTransform;
   final double horizontalTransform;
+  final Duration animationDuration;
 
   /// Creates a [TransformAnimationButton].
   ///
@@ -21,6 +22,7 @@ class LitTransformAnimatedButton extends StatefulWidget {
     required this.backgroundColor,
     required this.verticalTransform,
     required this.horizontalTransform,
+    this.animationDuration = LitAnimationDurations.buttonRepeat,
   }) : super(key: key);
   @override
   _LitTransformAnimatedButtonState createState() =>
@@ -29,48 +31,53 @@ class LitTransformAnimatedButton extends StatefulWidget {
 
 class _LitTransformAnimatedButtonState extends State<LitTransformAnimatedButton>
     with TickerProviderStateMixin {
-  late AnimationController _buttonAnimationController;
+  late AnimationController _animationContr;
 
-  @override
-  void initState() {
-    super.initState();
-    _buttonAnimationController = AnimationController(
-      vsync: this,
-      duration: Duration(
-        milliseconds: 1000,
-      ),
-    );
-    _buttonAnimationController.repeat(
-      reverse: true,
+  /// Returns an animated transform matrix.
+  Matrix4 get _transform {
+    final x = 1 - _animationContr.value * widget.horizontalTransform;
+    final y = 1 - _animationContr.value * widget.verticalTransform;
+    return Matrix4.translationValues(
+      x,
+      y,
+      0,
     );
   }
 
   @override
+  void initState() {
+    super.initState();
+    _animationContr = AnimationController(
+      vsync: this,
+      duration: widget.animationDuration,
+    )..repeat(
+        reverse: true,
+      );
+  }
+
+  @override
   void dispose() {
-    _buttonAnimationController.dispose();
+    _animationContr.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: _buttonAnimationController,
+      animation: _animationContr,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minWidth: 64.0),
+        child: LitPushedThroughButton(
+          child: widget.child,
+          onPressed: widget.onTap,
+          backgroundColor: widget.backgroundColor,
+          accentColor: widget.backgroundColor,
+        ),
+      ),
       builder: (context, child) {
         return Transform(
-          transform: Matrix4.translationValues(
-            1 - _buttonAnimationController.value * widget.horizontalTransform,
-            1 - _buttonAnimationController.value * widget.verticalTransform,
-            0,
-          ),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minWidth: 64.0),
-            child: LitPushedThroughButton(
-              child: widget.child,
-              onPressed: widget.onTap,
-              backgroundColor: widget.backgroundColor,
-              accentColor: widget.backgroundColor,
-            ),
-          ),
+          transform: _transform,
+          child: child,
         );
       },
     );

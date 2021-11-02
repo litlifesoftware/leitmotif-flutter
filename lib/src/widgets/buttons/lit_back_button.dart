@@ -67,7 +67,8 @@ class _LitBackButtonState extends State<LitBackButton> {
     } else {
       if (Navigator.canPop(context)) {
         if (widget.shouldNavigateBack) {
-          Future.delayed(LitPushedThroughButton.defaultDuration).then(
+          // Await the back button's animation.
+          Future.delayed(LitAnimationDurations.button).then(
             (_) => Navigator.of(context).pop(),
           );
         } else {

@@ -34,7 +34,7 @@ class LitToggleButton extends StatefulWidget {
     this.size = 28.0,
     this.colorEnabled = LitColors.red200,
     this.colorDisabled = LitColors.green200,
-    this.animationDuration = const Duration(milliseconds: 100),
+    this.animationDuration = LitAnimationDurations.button,
   }) : super(key: key);
 
   @override
@@ -68,29 +68,19 @@ class _LitToggleButtonState extends State<LitToggleButton>
   }
 
   /// Returns an animated color lerp.
-  Color get _color {
-    return Color.lerp(
-      widget.colorEnabled,
-      widget.colorDisabled,
-      animationController.value,
-    )!;
-  }
+  Color get _color => Color.lerp(
+      widget.colorEnabled, widget.colorDisabled, animationController.value)!;
 
   /// Returns an animated opacity.
-  double get _opacity {
-    return animationController.isAnimating
-        ? 0.25 + 0.75 * animationController.value
-        : 1.0;
-  }
+  ///
+  /// Creates a motion blur effect.
+  double get _opacity => (animationController.isAnimating)
+      ? (0.25 + 0.75 * animationController.value)
+      : 1.0;
 
   /// Returns a 50% border radius.
-  BorderRadius get _borderRadius {
-    return BorderRadius.all(
-      Radius.circular(
-        widget.size / 2,
-      ),
-    );
-  }
+  BorderRadius get _borderRadius =>
+      BorderRadius.all(Radius.circular(widget.size / 2));
 
   @override
   void initState() {
@@ -100,90 +90,68 @@ class _LitToggleButtonState extends State<LitToggleButton>
       vsync: this,
       duration: widget.animationDuration,
     );
-    if (widget.value) {
-      animationController.forward();
-    }
+    if (widget.value) animationController.forward();
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: animationController,
-      builder: (context, snapshot) {
-        return _AnimatedContent(
-          animationController: animationController,
-          borderRadius: _borderRadius,
-          color: _color,
-          onPressed: onPressed,
-          opacity: _opacity,
-          size: widget.size,
-          transform: _transform,
+      child: _Thumb(
+        borderRadius: _borderRadius,
+        size: widget.size,
+      ),
+      builder: (context, child) {
+        return CleanInkWell(
+          onTap: onPressed,
+          child: Container(
+            height: widget.size,
+            width: widget.size * 2,
+            decoration: BoxDecoration(
+              borderRadius: _borderRadius,
+              color: _color,
+            ),
+            child: Row(
+              children: [
+                Transform(
+                  transform: _transform,
+                  child: AnimatedOpacity(
+                    opacity: _opacity,
+                    duration: animationController.duration!,
+                    child: child,
+                  ),
+                ),
+              ],
+            ),
+          ),
         );
       },
-      child: _AnimatedContent(
-        animationController: animationController,
-        borderRadius: _borderRadius,
-        color: _color,
-        onPressed: onPressed,
-        opacity: _opacity,
-        size: widget.size,
-        transform: _transform,
-      ),
     );
   }
 }
 
-/// The [LitToggleButton]'s animated content.
-class _AnimatedContent extends StatelessWidget {
-  final AnimationController animationController;
+/// The [LitToggleButton]'s thumb.
+class _Thumb extends StatelessWidget {
   final double size;
-  final double opacity;
-  final Matrix4 transform;
-  final Color color;
   final BorderRadius borderRadius;
-  final void Function() onPressed;
-  const _AnimatedContent({
+  const _Thumb({
     Key? key,
-    required this.animationController,
     required this.size,
-    required this.opacity,
-    required this.transform,
-    required this.color,
     required this.borderRadius,
-    required this.onPressed,
   }) : super(key: key);
+
+  static const color = LitColors.grey50;
+  static const boxShadow = LitBoxShadows.sm;
 
   @override
   Widget build(BuildContext context) {
-    return CleanInkWell(
-      onTap: onPressed,
-      child: Container(
-        height: size,
-        width: size * 2,
-        decoration: BoxDecoration(
-          borderRadius: borderRadius,
-          color: color,
-        ),
-        child: Row(
-          children: [
-            Transform(
-              transform: transform,
-              child: AnimatedOpacity(
-                opacity: opacity,
-                duration: animationController.duration!,
-                child: Container(
-                  height: size,
-                  width: size,
-                  decoration: BoxDecoration(
-                    borderRadius: borderRadius,
-                    boxShadow: LitBoxShadows.sm,
-                    color: LitColors.grey50,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+    return Container(
+      height: size,
+      width: size,
+      decoration: BoxDecoration(
+        borderRadius: borderRadius,
+        boxShadow: boxShadow,
+        color: color,
       ),
     );
   }

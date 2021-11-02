@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// TODO: Replace with `LitPushedThroughButton`.
 class LitPushedButton extends StatefulWidget {
   final void Function() onPressed;
   final Widget child;
