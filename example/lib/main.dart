@@ -26,6 +26,7 @@ class _LeitmotifExampleState extends State<LeitmotifExample> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Leitmotif',
+      theme: ThemeData(textTheme: LitSansSerifStyles.theme),
       localizationsDelegates: const [
         LeitmotifLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
@@ -257,98 +258,98 @@ class _ExampleScreenTwo extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Text(
                 "Sans Serif",
-                style: LitSansSerifStyles.h4,
+                style: Theme.of(context).textTheme.headline4,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "H1",
-                style: LitSansSerifStyles.h1,
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "H2",
-                style: LitSansSerifStyles.h2,
+                style: Theme.of(context).textTheme.headline2,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "H3",
-                style: LitSansSerifStyles.h3,
+                style: Theme.of(context).textTheme.headline3,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "H4",
-                style: LitSansSerifStyles.h4,
+                style: Theme.of(context).textTheme.headline4,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "H5",
-                style: LitSansSerifStyles.h5,
+                style: Theme.of(context).textTheme.headline5,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "H6",
-                style: LitSansSerifStyles.h6,
+                style: Theme.of(context).textTheme.headline6,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "Subtitle 2",
-                style: LitSansSerifStyles.subtitle2,
+                style: Theme.of(context).textTheme.subtitle2,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "Subtitle 1",
-                style: LitSansSerifStyles.subtitle1,
+                style: Theme.of(context).textTheme.subtitle1,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "Body 1",
-                style: LitSansSerifStyles.body1,
+                style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "Body 2",
-                style: LitSansSerifStyles.body2,
+                style: Theme.of(context).textTheme.bodyText2,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "BUTTON",
-                style: LitSansSerifStyles.button,
+                style: Theme.of(context).textTheme.button,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "Caption",
-                style: LitSansSerifStyles.caption,
+                style: Theme.of(context).textTheme.caption,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 "OVERLINE",
-                style: LitSansSerifStyles.overline,
+                style: Theme.of(context).textTheme.overline,
               ),
             ),
           ],

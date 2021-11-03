@@ -40,7 +40,7 @@ class LitMonospaceStyles {
   /// letterSpacing: 0.5,
   /// ```
   ///
-  static const TextStyle overline = const TextStyle(
+  static const overline = const TextStyle(
     color: defaultColor,
     fontFamily: _montserrat,
     package: _package,
@@ -56,7 +56,7 @@ class LitMonospaceStyles {
   /// fontWeight: FontWeight.w400,
   /// ```
   ///
-  static const TextStyle caption = const TextStyle(
+  static const caption = const TextStyle(
     color: defaultColor,
     fontFamily: _montserrat,
     package: _package,
@@ -72,7 +72,7 @@ class LitMonospaceStyles {
   /// letterSpacing: 0.8,
   /// ```
   ///
-  static const TextStyle button = const TextStyle(
+  static const button = const TextStyle(
     color: defaultColor,
     fontFamily: _montserrat,
     package: _package,
@@ -87,7 +87,7 @@ class LitMonospaceStyles {
   /// fontWeight: FontWeight.w500,
   /// ```
   ///
-  static const TextStyle body2 = const TextStyle(
+  static const body2 = const TextStyle(
     color: defaultColor,
     fontFamily: _montserrat,
     package: _package,
@@ -102,7 +102,7 @@ class LitMonospaceStyles {
   /// letterSpacing: 0.65,
   /// ```
   ///
-  static const TextStyle body1 = const TextStyle(
+  static const body1 = const TextStyle(
     color: defaultColor,
     fontFamily: _montserrat,
     package: _package,
@@ -118,7 +118,7 @@ class LitMonospaceStyles {
   /// letterSpacing: 0.1,
   /// ```
   ///
-  static const TextStyle subtitle2 = const TextStyle(
+  static const subtitle2 = const TextStyle(
     color: defaultColor,
     fontFamily: _montserrat,
     package: _package,
@@ -134,7 +134,7 @@ class LitMonospaceStyles {
   /// letterSpacing: 0.2,
   /// ```
   ///
-  static const TextStyle subtitle1 = const TextStyle(
+  static const subtitle1 = const TextStyle(
     color: defaultColor,
     fontFamily: _montserrat,
     package: _package,
@@ -150,7 +150,7 @@ class LitMonospaceStyles {
   /// letterSpacing: 0.65,
   /// ```
   ///
-  static const TextStyle h6 = const TextStyle(
+  static const h6 = const TextStyle(
     color: defaultColor,
     fontFamily: _montserrat,
     package: _package,
@@ -166,7 +166,7 @@ class LitMonospaceStyles {
   /// letterSpacing: 0.65,
   /// ```
   ///
-  static const TextStyle h5 = const TextStyle(
+  static const h5 = const TextStyle(
     color: defaultColor,
     fontFamily: _montserrat,
     package: _package,
@@ -182,7 +182,7 @@ class LitMonospaceStyles {
   /// letterSpacing: 1.5,
   /// ```
   ///
-  static const TextStyle h4 = const TextStyle(
+  static const h4 = const TextStyle(
     package: _package,
     color: defaultColor,
     fontFamily: _montserrat,
@@ -198,7 +198,7 @@ class LitMonospaceStyles {
   /// letterSpacing: 0.0,
   /// ```
   ///
-  static const TextStyle h3 = const TextStyle(
+  static const h3 = const TextStyle(
     package: _package,
     color: defaultColor,
     fontFamily: _montserrat,
@@ -214,7 +214,7 @@ class LitMonospaceStyles {
   /// letterSpacing: -0.5,
   /// ```
   ///
-  static const TextStyle h2 = const TextStyle(
+  static const h2 = const TextStyle(
     package: _package,
     color: defaultColor,
     fontFamily: _montserrat,
@@ -230,12 +230,29 @@ class LitMonospaceStyles {
   /// letterSpacing: -1.0,
   /// ```
   ///
-  static const TextStyle h1 = const TextStyle(
+  static const h1 = const TextStyle(
     package: _package,
     color: defaultColor,
     fontFamily: _montserrat,
     fontSize: 92.0,
     fontWeight: FontWeight.w400,
     letterSpacing: -1.0,
+  );
+
+  /// A `TextTheme` based on the [LitMonospaceStyles].
+  static const theme = const TextTheme(
+    bodyText1: body1,
+    bodyText2: body2,
+    button: button,
+    caption: caption,
+    headline1: h1,
+    headline2: h2,
+    headline3: h3,
+    headline4: h4,
+    headline5: h5,
+    headline6: h6,
+    overline: overline,
+    subtitle1: subtitle1,
+    subtitle2: subtitle2,
   );
 }
