@@ -7,6 +7,21 @@ import 'package:leitmotif/leitmotif.dart';
 /// The texts are displayed on a page view while a lock icon is illustrating
 /// the screen's purpose.
 class LitPrivacyDisclaimerScreen extends StatelessWidget {
+  /// THe 'next' button's label.
+  final String nextButtonLabel;
+
+  /// The 'confirm' button's label.
+  final String confirmButtonLabel;
+
+  /// The text items describing the apps
+  final List<TextPageContent> textItems;
+
+  /// The screen's background decoration.
+  final BoxDecoration backgroundDecoration;
+
+  /// Handles the actions once the 'confirm' button has been pressed.
+  final void Function() onConfirm;
+
   /// Creates a [LitPrivacyDisclaimerScreen].
   const LitPrivacyDisclaimerScreen({
     Key? key,
@@ -26,24 +41,9 @@ class LitPrivacyDisclaimerScreen extends StatelessWidget {
     ],
     required this.onConfirm,
     this.backgroundDecoration = const BoxDecoration(
-      gradient: LitGradients.greyGradient,
+      gradient: LitGradients.pinkWhite,
     ),
   }) : super(key: key);
-
-  /// THe 'next' button's label.
-  final String nextButtonLabel;
-
-  /// The 'confirm' button's label.
-  final String confirmButtonLabel;
-
-  /// The text items describing the apps
-  final List<TextPageContent> textItems;
-
-  /// The screen's background decoration.
-  final BoxDecoration backgroundDecoration;
-
-  /// Handles the actions once the 'confirm' button has been pressed.
-  final void Function() onConfirm;
 
   @override
   Widget build(BuildContext context) {
@@ -53,17 +53,21 @@ class LitPrivacyDisclaimerScreen extends StatelessWidget {
           Container(
             decoration: backgroundDecoration,
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: LitTextPageView(
-              middleLayer: _Art(),
-              textItems: textItems,
-              padding: const EdgeInsets.only(
-                top: 152.0,
-                bottom: 64.0,
+          ScrollableColumn(
+            children: [
+              SizedBox(height: 32.0),
+              _Art(),
+              SizedBox(height: 32.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: LitTextPageView(
+                  //middleLayer: ,
+                  textItems: textItems,
+
+                  nextButtonLabel: nextButtonLabel,
+                ),
               ),
-              nextButtonLabel: nextButtonLabel,
-            ),
+            ],
           ),
           AnimatedActionButton(
             onPressed: onConfirm,
@@ -102,9 +106,10 @@ class _Art extends StatelessWidget {
       height: 128.0,
       width: 128.0,
       child: LitGradientCard(
+        colors: [Colors.white, LitColors.lightGrey],
         borderRadius: BorderRadius.all(
           Radius.circular(
-            32.0,
+            128.0 / 2.5,
           ),
         ),
         child: Center(

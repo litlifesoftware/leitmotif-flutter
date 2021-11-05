@@ -1,6 +1,11 @@
 /// A Leitmotif `styles` class containing animation durations for various
 /// use cases.
 class LitAnimationDurations {
+  /// The default appear animation duration.
+  static const appearAnimation = const Duration(
+    milliseconds: 500,
+  );
+
   /// The default animation duration on the dialog's appear animation.
   static const dialogContentAppear = const Duration(
     milliseconds: 100,

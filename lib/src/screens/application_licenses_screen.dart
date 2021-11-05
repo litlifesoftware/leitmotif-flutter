@@ -35,24 +35,22 @@ class _ApplicationLicensesScreenState extends State<ApplicationLicensesScreen>
   final ScrollController _scrollController = ScrollController();
 
   /// Navigates to the [ApplicationLicenseDetailsScreen].
-  void _showDetailScreen(PackageLicenseBundle packageLicenseBundle, int index) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) {
-          final List<int> bindings =
-              _licensesController.getPackageLicenseContracts(
-            packageLicenseBundle.packageLicenseJunctions,
-            packageLicenseBundle.packages.elementAt(index),
-          )!;
+  void _showDetailScreen(
+    PackageLicenseBundle packageLicenseBundle,
+    int index,
+  ) {
+    final List<int> bindings = _licensesController.getPackageLicenseContracts(
+      packageLicenseBundle.packageLicenseJunctions,
+      packageLicenseBundle.packages.elementAt(index),
+    )!;
 
-          return ApplicationLicenseDetailsScreen(
-            packageName: packageLicenseBundle.packages.elementAt(index),
-            licenseEntries: _licensesController.getLicenseEntries(
-              bindings,
-              packageLicenseBundle.licenses,
-            ),
-          );
-        },
+    LitRouteController(context).pushMaterialWidget(
+      ApplicationLicenseDetailsScreen(
+        packageName: packageLicenseBundle.packages.elementAt(index),
+        licenseEntries: _licensesController.getLicenseEntries(
+          bindings,
+          packageLicenseBundle.licenses,
+        ),
       ),
     );
   }
@@ -123,8 +121,10 @@ class _AnimatedContent extends StatelessWidget {
   final LitTweenController tweenController;
   final ScrollController scrollController;
   final PackageLicenseBundle packageLicenseBundle;
-  final void Function(PackageLicenseBundle bundle, int index)
-      onShowDetailScreen;
+  final void Function(
+    PackageLicenseBundle bundle,
+    int index,
+  ) onShowDetailScreen;
   const _AnimatedContent({
     Key? key,
     required this.animationController,
@@ -145,6 +145,9 @@ class _AnimatedContent extends StatelessWidget {
     return 0.5 + 0.5 * animationController.value;
   }
 
+  /// The horizontal transform.
+  static const double _x = 300.0;
+
   @override
   Widget build(BuildContext context) {
     return LitScrollbar(
@@ -159,7 +162,7 @@ class _AnimatedContent extends StatelessWidget {
             transform: tweenController.listItemTransform(
               index,
               packageLicenseBundle.licenses.length,
-              x: 300.0,
+              x: _x,
             ),
             child: AnimatedOpacity(
               opacity: _opacity,
@@ -184,8 +187,6 @@ class _PackageListItem extends StatelessWidget {
   final String label;
   final EdgeInsets padding;
   final void Function() onPressed;
-
-  /// Creates a [_PackageListItem].
   const _PackageListItem({
     Key? key,
     required this.label,

@@ -1,46 +1,83 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-class LitOnboardingScreen extends StatefulWidget {
+/// The [LitOnboardingScreen]'s `Localization`.
+///
+/// Contains the localized strings used on the screen.
+class LitOnboardingScreenLocalization {
   final String title;
-  final String nextButtonLabel;
+  final String nextLabel;
+
+  /// Creates a [LitOnboardingScreenLocalization].
+  const LitOnboardingScreenLocalization({
+    required this.title,
+    required this.nextLabel,
+  });
+}
+
+/// A Leitmotif `screen` widget allowing to display text items to explaing the
+/// use of a app.
+class LitOnboardingScreen extends StatefulWidget {
+  /// The localization applied.
+  ///
+  /// If none provided, the default [LeitmotifLocalizations] are used.
+  final LitOnboardingScreenLocalization? localization;
+
+  /// The app's art.
   final Widget art;
+
+  /// The text items explaining the app.
   final List<TextPageContent> textItems;
+
+  /// The screen's background decoration.
   final BoxDecoration backgroundDecoration;
-  final Duration animationDuration;
-  final EdgeInsets cardPadding;
-  final void Function() onExit;
+
+  /// Handles the `dismiss` action.
+  ///
+  /// This could either be navigating back or navigating to a new screen.
+  final void Function() onDismiss;
+
+  /// Creates a [LitOnboardingScreen].
   const LitOnboardingScreen({
     Key? key,
-    this.title = "Onboading",
-    this.nextButtonLabel = "Next",
-    this.art = const SizedBox(),
     required this.textItems,
+    this.localization,
+    this.art = const SizedBox(),
     this.backgroundDecoration = const BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topRight,
-        end: Alignment.bottomLeft,
-        colors: [
-          const Color(0xFFc6c6c6),
-          const Color(0xFFC18F8F),
-        ],
-      ),
+      gradient: LitGradients.pinkWhite,
     ),
-    this.animationDuration = const Duration(milliseconds: 120),
-    this.cardPadding = const EdgeInsets.only(
-      top: 128.0,
-      bottom: 64.0,
-    ),
-    required this.onExit,
+    required this.onDismiss,
   }) : super(key: key);
 
   @override
   _LitOnboardingScreenState createState() => _LitOnboardingScreenState();
 }
 
-class _LitOnboardingScreenState extends State<LitOnboardingScreen>
-    with TickerProviderStateMixin {
+class _LitOnboardingScreenState extends State<LitOnboardingScreen> {
   late ScrollController _scrollController;
+
+  /// Evaluates whether localizations are provided.
+  bool get _l10nAvail {
+    return widget.localization != null;
+  }
+
+  /// Handles the `dismiss` action.
+  void _onDismiss() {
+    Future.delayed(AnimatedActionButton.defaultAnimationDuration).then(
+      (_) {
+        widget.onDismiss();
+      },
+    );
+  }
+
+  static const EdgeInsets _pageViewPadding = const EdgeInsets.symmetric(
+    horizontal: 16.0,
+    vertical: 16.0,
+  );
+
+  double get _spacingTop {
+    return _pageViewPadding.vertical * 2;
+  }
 
   @override
   void initState() {
@@ -59,31 +96,54 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen>
     return LitScaffold(
       appBar: FixedOnScrollTitledAppbar(
         scrollController: _scrollController,
-        title: widget.title,
+        title: _l10nAvail
+            ? widget.localization!.title
+            : LeitmotifLocalizations.of(context).onboardingLabel,
       ),
       body: Stack(
         children: [
           Container(
             decoration: widget.backgroundDecoration,
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: LitTextPageView(
-              middleLayer: widget.art,
-              textItems: widget.textItems,
-              padding: widget.cardPadding,
-              animationDuration: widget.animationDuration,
-              nextButtonLabel: widget.nextButtonLabel,
-            ),
+          ScrollableColumn(
+            controller: _scrollController,
+            children: [
+              SizedBox(
+                height: _spacingTop,
+              ),
+              widget.art,
+              LitTextPageView(
+                textItems: widget.textItems,
+                padding: _pageViewPadding,
+                nextButtonLabel:
+                    _l10nAvail ? widget.localization!.nextLabel : null,
+              ),
+            ],
           ),
           AnimatedActionButton(
-            onPressed: widget.onExit,
-            alignment: Alignment.bottomLeft,
-            child: Icon(
-              LitIcons.times,
-              color: LitColors.mediumGrey,
-              size: 16.0,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  LitIcons.times,
+                  size: 11.0,
+                  color: LitSansSerifStyles.defaultColor,
+                ),
+                SizedBox(
+                  width: 4.0,
+                ),
+                Text(
+                  (_l10nAvail
+                          ? widget.localization!.title
+                          : LeitmotifLocalizations.of(context).dismissLabel)
+                      .toUpperCase(),
+                  style: LitSansSerifStyles.button,
+                ),
+              ],
             ),
+            onPressed: _onDismiss,
           ),
         ],
       ),

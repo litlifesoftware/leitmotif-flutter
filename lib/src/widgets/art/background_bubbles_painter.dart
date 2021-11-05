@@ -16,7 +16,7 @@ class BackgroundBubblesPainter extends CustomPainter {
   /// overall bubbles' size by passing a custom value.
   const BackgroundBubblesPainter({
     required this.animationController,
-    this.baseBubbleSize = 59.0,
+    this.baseBubbleSize = 64.0,
   });
 
   /// Returns a transformed [Offset] required to draw the bubbles using a
