@@ -1,62 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A screen widget to display the provided privacy policy text and to enable the user
-/// to agree the privacy policy.
-class LitPrivacyPolicyScreen extends StatefulWidget {
-  /// The screen's title.
+/// The [LitPrivacyPolicyScreen]'s `Localization`.
+///
+/// Contains the localized strings used on the screen.
+class LitPrivacyPolicyScreenLocalization {
   final String title;
+  final String subtitle;
+  final String privateLabel;
+  final String offlineLabel;
+  final String agreeLabel;
 
-  /// The privacy policy text.
-  final String privacyText;
+  /// Creates a [LitPrivacyPolicyScreenLocalization].
+  const LitPrivacyPolicyScreenLocalization({
+    required this.title,
+    required this.subtitle,
+    required this.privateLabel,
+    required this.offlineLabel,
+    required this.agreeLabel,
+  });
+}
+
+/// A Leitmotif `screens` widget allowing to display the app's privacy policy
+/// while providing additonal tags to overview the body text.
+class LitPrivacyPolicyScreen extends StatefulWidget {
+  final LitPrivacyPolicyScreenLocalization? localization;
+
+  /// The privacy policy policy body text.
+  final String privacyBody;
 
   /// The art to display e.g. the app logo.
   final Widget? art;
-
-  /// The 'agree' label.
-  final String agreeLabel;
 
   /// The callback to be executed once the user accepts the privacy policy.
   final void Function() onAgreeCallback;
 
   /// The attributes of the provided texts.
-  final List<PrivacyTag> privacyTags;
+  ///
+  /// If none provided, the default `private` and `offline` tags are applied.
+  /// To disable the tags, provide an empty array.
+  final List<PrivacyTagData>? tags;
 
   /// The background's decoration.
   final BoxDecoration backgroundDecoration;
 
   /// Creates a [LitPrivacyPolicyScreen].
-  ///
-  /// * [title] defines the displayed title text.
-  ///
-  /// * [privacyText] defines the diplayed privacy text.
-  ///
-  /// * [art] the art to display e.g. the app logo.
-  ///
-  /// * [agreeLabel] is the text that should be displayed as button label.
-  ///
-  /// * [onAgreeCallback] is called once the 'agree' button is pressed.
-  ///
-  /// * [privacyTags] are displayed on the top to state the policies key statements.
-  ///
-  /// * [backgroundDecoration] sets the decoration of the background layer.
   const LitPrivacyPolicyScreen({
     Key? key,
-    this.title = "Privacy",
-    required this.privacyText,
+    this.localization,
+    required this.privacyBody,
     this.art,
-    this.agreeLabel = "Agree",
     required this.onAgreeCallback,
-    this.privacyTags = const [],
+    this.tags,
     this.backgroundDecoration = const BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topRight,
-        end: Alignment.bottomLeft,
-        colors: const [
-          Colors.white,
-          LitColors.lightGrey,
-        ],
-      ),
+      gradient: LitGradients.greyGradient,
     ),
   }) : super(key: key);
 
@@ -69,6 +66,15 @@ class _LitPrivacyPolicyScreenState extends State<LitPrivacyPolicyScreen>
   /// [ScrollController] to animate link an animation to the user's scroll input.
   late ScrollController _scrollController;
 
+  /// Evaluates whether localizations are provided.
+  bool get _l10nAvail => widget.localization != null;
+
+  void _onAgree() {
+    Future.delayed(LitAnimationDurations.button).then(
+      (_) => widget.onAgreeCallback(),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -80,203 +86,90 @@ class _LitPrivacyPolicyScreenState extends State<LitPrivacyPolicyScreen>
     return LitScaffold(
       appBar: FixedOnScrollTitledAppbar(
         scrollController: _scrollController,
-        title: widget.title,
+        title: _l10nAvail
+            ? widget.localization!.title
+            : LeitmotifLocalizations.of(context).privacyPolicyLabel,
       ),
-      body: SafeArea(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: widget.backgroundDecoration,
-          child: LitScrollbar(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height - 128.0,
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: widget.backgroundDecoration,
+        child: LitScrollbar(
+          child: ScrollableColumn(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            controller: _scrollController,
+            children: [
+              LitScreenTitle(
+                margin: LitEdgeInsets.screen,
+                title: _l10nAvail
+                    ? widget.localization!.title
+                    : LeitmotifLocalizations.of(context).privacyPolicyLabel,
+                subtitle: _l10nAvail
+                    ? widget.localization!.subtitle
+                    : LeitmotifLocalizations.of(context).privacyLabel,
               ),
-              child: SingleChildScrollView(
-                controller: _scrollController,
-                physics: BouncingScrollPhysics(),
+              Padding(
                 padding: EdgeInsets.only(
-                  top: 16.0,
-                  bottom: 32.0,
+                  bottom: LitEdgeInsets.screen.bottom,
+                  left: LitEdgeInsets.screen.left,
+                  right: LitEdgeInsets.screen.right,
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    LitConstrainedSizedBox(
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: widget.art != const SizedBox()
-                                ? MainAxisAlignment.spaceBetween
-                                : MainAxisAlignment.center,
-                            children: [
-                              widget.art != null
-                                  ? Container(
-                                      child: SizedBox(
-                                        width: constraints.maxWidth * 0.35,
-                                        height: constraints.maxWidth * 0.35,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(16.0),
-                                          child: FittedBox(
-                                            fit: BoxFit.scaleDown,
-                                            child: widget.art,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : SizedBox(),
-                              widget.privacyTags.length > 0
-                                  ? SizedBox(
-                                      width: constraints.maxWidth * 0.65,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 8.0,
-                                          right: 16.0,
-                                          top: 16.0,
-                                          bottom: 16.0,
-                                        ),
-                                        child: Align(
-                                          alignment: Alignment.topCenter,
-                                          child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 16.0),
-                                              child: Builder(
-                                                builder:
-                                                    (BuildContext context) {
-                                                  final List<Widget> children =
-                                                      [];
-                                                  for (final tag
-                                                      in widget.privacyTags) {
-                                                    children.add(
-                                                      _PrivacyTagLabel(
-                                                        favorable:
-                                                            tag.isConform,
-                                                        labelText:
-                                                            "${tag.text}",
-                                                      ),
-                                                    );
-                                                  }
-                                                  return Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: children,
-                                                  );
-                                                },
-                                              )),
-                                        ),
-                                      ))
-                                  : SizedBox(),
-                            ],
+                child: widget.tags != null
+                    ? Builder(
+                        builder: (context) {
+                          List<Widget> items = [];
+                          for (PrivacyTagData tag in widget.tags!) {
+                            items.add(
+                              _PrivacyTagLabel(
+                                condition: tag.isConform,
+                                label: tag.text,
+                              ),
+                            );
+                          }
+                          return Column(
+                            children: items,
                           );
                         },
+                      )
+                    : Column(
+                        children: [
+                          _PrivacyTagLabel(
+                            condition: true,
+                            label:
+                                LeitmotifLocalizations.of(context).privateLabel,
+                          ),
+                          _PrivacyTagLabel(
+                            condition: true,
+                            label:
+                                LeitmotifLocalizations.of(context).offlineLabel,
+                          ),
+                        ],
                       ),
-                    ),
-                    _PrivacyTextCard(
-                      title: widget.title,
-                      privacyText: widget.privacyText,
-                    ),
-                    _AgreeButton(
-                      label: widget.agreeLabel,
-                      onPressed: widget.onAgreeCallback,
-                    ),
-                  ],
-                ),
               ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _AgreeButton extends StatelessWidget {
-  final String label;
-  final void Function() onPressed;
-
-  const _AgreeButton({
-    Key? key,
-    required this.label,
-    required this.onPressed,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: LitGradientButton(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(
-            15.0,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: ScaledDownText(
-            label,
-            upperCase: true,
-            style: LitSansSerifStyles.button,
-          ),
-        ),
-        onPressed: onPressed,
-      ),
-    );
-  }
-}
-
-/// A widget to display the provided [privacyText] on a card background.
-class _PrivacyTextCard extends StatelessWidget {
-  final String title;
-  final String privacyText;
-
-  /// Creates a [_PrivacyTextCard] widget.
-  const _PrivacyTextCard({
-    Key? key,
-    required this.title,
-    required this.privacyText,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return LitElevatedCard(
-      padding: const EdgeInsets.symmetric(
-        vertical: 8.0,
-        horizontal: 16.0,
-      ),
-      margin: const EdgeInsets.symmetric(
-        vertical: 8.0,
-        horizontal: 8.0,
-      ),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          minHeight: 384.0,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 8.0,
-            horizontal: 16.0,
-          ),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8.0,
-                  ),
-                  child: ClippedText(
-                    title,
-                    textAlign: TextAlign.left,
-                    style: LitTextStyles.sansSerifHeader,
-                  ),
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: LitEdgeInsets.screen.bottom,
+                  left: LitEdgeInsets.screen.left,
+                  right: LitEdgeInsets.screen.right,
                 ),
-              ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  privacyText,
-                  style: LitSansSerifStyles.body2,
+                child: Center(
+                  child: LitTitledActionCard(
+                    child: Text(
+                      widget.privacyBody,
+                      style: LitSansSerifStyles.body2,
+                    ),
+                    actionButtonData: [
+                      ActionButtonData(
+                        title: _l10nAvail
+                            ? widget.localization!.agreeLabel
+                            : LeitmotifLocalizations.of(context).agreeLabel,
+                        onPressed: _onAgree,
+                        backgroundColor: LitColors.red150,
+                        accentColor: LitColors.red150,
+                      ),
+                    ],
+                  ),
                 ),
               )
             ],
@@ -290,55 +183,60 @@ class _PrivacyTextCard extends StatelessWidget {
 /// A widget to display an individual attribute of the privacy text to provide
 /// a short summary.
 class _PrivacyTagLabel extends StatelessWidget {
-  final String labelText;
+  final String label;
 
   /// States whether or not the attribute favours the user's privacy.
-  final bool favorable;
+  final bool condition;
   const _PrivacyTagLabel({
     Key? key,
-    required this.labelText,
-    required this.favorable,
+    required this.label,
+    required this.condition,
   }) : super(key: key);
+
+  static const double iconContainerSize = 32.0;
+
   @override
   Widget build(BuildContext context) {
-    return LitElevatedCard(
-      padding: const EdgeInsets.symmetric(
-        vertical: 8.0,
-      ),
-      margin: const EdgeInsets.symmetric(
-        vertical: 4.0,
-        horizontal: 16.0,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ClippedText(
-            "$labelText",
-            upperCase: true,
-            style: LitSansSerifStyles.overline,
-          ),
-          Icon(
-            favorable ? LitIcons.check : LitIcons.times,
-            size: 16.0,
-            color: favorable ? HexColor('#B1C6AF') : HexColor('#C4AEBC'),
-          ),
-        ],
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: LayoutBuilder(builder: (context, constraints) {
+        return Row(
+          children: [
+            SizedBox(
+              width: constraints.maxWidth - iconContainerSize,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  right: LitEdgeInsets.card.right,
+                ),
+                child: Text(
+                  label.capitalize(),
+                  style: LitSansSerifStyles.h6.copyWith(
+                    color: LitColors.grey300,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: iconContainerSize,
+              width: iconContainerSize,
+              decoration: BoxDecoration(
+                color: Color(0xFFECFFE9),
+                boxShadow: LitBoxShadows.sm,
+                borderRadius: BorderRadius.circular(
+                  12.0,
+                ),
+              ),
+              child: Center(
+                child: Icon(
+                  LitIcons.check,
+                  size: 13.0,
+                  color: Color(0xFF616161),
+                ),
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
-}
-
-/// An model class to provide structured data display on
-/// the [LitPrivacyPolicyScreen].
-class PrivacyTag {
-  final String text;
-  final bool isConform;
-
-  /// Creates a [PrivacyTag].
-  ///
-  /// The attribute values are displayed on the [LitPrivacyPolicyScreen].
-  const PrivacyTag({
-    required this.text,
-    required this.isConform,
-  });
 }

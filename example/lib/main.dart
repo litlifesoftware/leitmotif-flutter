@@ -26,6 +26,7 @@ class _LeitmotifExampleState extends State<LeitmotifExample> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Leitmotif',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(textTheme: LitSansSerifStyles.theme),
       localizationsDelegates: const [
         LeitmotifLocalizationsDelegate(),
@@ -801,7 +802,7 @@ class _ButtonList extends StatelessWidget {
                     return LitAboutDialog(
                       title: "About",
                       appName: "Leitmotif Example",
-                      art: _Art(large: false),
+                      art: _Art(),
                       infoDescription: LEITMOTIF_DESCR,
                     );
                   },
@@ -1038,7 +1039,7 @@ class _LitOnboardingScreenImplementation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitOnboardingScreen(
-      art: _Art(large: false),
+      art: _Art(),
       textItems: const [
         TextPageContent(
           subtitle: "Subtitle",
@@ -1062,15 +1063,15 @@ class _LitPrivacyScreenImplementation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LitPrivacyPolicyScreen(
-      privacyTags: [
-        PrivacyTag(isConform: true, text: "Private"),
-        PrivacyTag(
+      tags: [
+        PrivacyTagData(isConform: true, text: "Private"),
+        PrivacyTagData(
           text: "Offline",
           isConform: true,
         ),
       ],
-      art: _Art(large: false),
-      privacyText: LEITMOTIF_DESCR +
+      art: _Art(),
+      privacyBody: LEITMOTIF_DESCR +
           LEITMOTIF_DESCR +
           LEITMOTIF_DESCR +
           LEITMOTIF_DESCR +
@@ -1164,9 +1165,9 @@ class _LitCreditsScreenImplementation extends StatelessWidget {
   Widget build(BuildContext context) {
     return LitCreditsScreen(
       appName: "Leitmotif",
-      art: _Art(large: false),
+      art: _Art(),
       appDescription:
-          "Flutter Package implementing the Leitmotif Design Languages",
+          "Flutter Package implementing the Leitmotif Design Language",
       credits: [
         CreditData(
           role: "Made by",
@@ -1201,36 +1202,16 @@ class _LitCreditsScreenImplementation extends StatelessWidget {
 }
 
 class _Art extends StatelessWidget {
-  final bool large;
   const _Art({
     Key? key,
-    required this.large,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: SizedBox(
-          width: large ? 200.0 : 100.0,
-          height: large ? 200.0 : 100.0,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(
-                const Radius.circular(25.0),
-              ),
-              color: const Color(0xFFC4C4C4),
-            ),
-            child: Center(
-              child: Text(
-                "Provide art",
-                textAlign: TextAlign.center,
-                style: LitSansSerifStyles.body2,
-              ),
-            ),
-          ),
-        ),
+    return Image(
+      image: AssetImage(
+        "assets/images/Logo.png",
+        package: "leitmotif",
       ),
     );
   }

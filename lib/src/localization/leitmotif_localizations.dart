@@ -87,6 +87,11 @@ class LeitmotifLocalizations {
       _Keys.onboardingLabel: 'Onboarding',
       _Keys.dismissLabel: 'Dismiss',
       _Keys.signUpLabel: 'Sign Up',
+      _Keys.privacyPolicyLabel: 'Privacy Policy',
+      _Keys.privacyLabel: 'Privacy',
+      _Keys.privateLabel: 'Private',
+      _Keys.offlineLabel: 'Offline',
+      _Keys.agreeLabel: 'Agree',
     },
     // 'German' localization
     'de': const {
@@ -147,6 +152,11 @@ class LeitmotifLocalizations {
       _Keys.onboardingLabel: 'Start',
       _Keys.dismissLabel: 'Ausblenden',
       _Keys.signUpLabel: 'Registrieren',
+      _Keys.privacyPolicyLabel: 'Datenschutzrichtlinien',
+      _Keys.privacyLabel: 'Privatsphäre',
+      _Keys.privateLabel: 'Vertraulich',
+      _Keys.offlineLabel: 'Offline',
+      _Keys.agreeLabel: 'Akzeptieren',
     },
   };
 
@@ -349,6 +359,26 @@ class LeitmotifLocalizations {
   String get signUpLabel {
     return _localizedValues[locale.languageCode]![_Keys.signUpLabel]!;
   }
+
+  String get privacyPolicyLabel {
+    return _localizedValues[locale.languageCode]![_Keys.privacyPolicyLabel]!;
+  }
+
+  String get privacyLabel {
+    return _localizedValues[locale.languageCode]![_Keys.privacyLabel]!;
+  }
+
+  String get privateLabel {
+    return _localizedValues[locale.languageCode]![_Keys.privateLabel]!;
+  }
+
+  String get offlineLabel {
+    return _localizedValues[locale.languageCode]![_Keys.offlineLabel]!;
+  }
+
+  String get agreeLabel {
+    return _localizedValues[locale.languageCode]![_Keys.agreeLabel]!;
+  }
 }
 
 /// A Leitmotif delegate class initializing the [LeitmotifLocalizations].
@@ -429,4 +459,9 @@ class _Keys {
   static const String onboardingLabel = 'onboardingLabel';
   static const String dismissLabel = 'dismissLabel';
   static const String signUpLabel = 'signUpLabel';
+  static const String privacyPolicyLabel = 'privacyPolicyLabel';
+  static const String privacyLabel = 'privacyLabel';
+  static const String privateLabel = 'privateLabel';
+  static const String offlineLabel = 'offlineLabel';
+  static const String agreeLabel = 'agreeLabel';
 }
