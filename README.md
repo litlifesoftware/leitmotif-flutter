@@ -1,4 +1,4 @@
-![Leitmotif](assets/images/Leitmotif_Banner_2021.jpg "Leitmotif")
+![Leitmotif](assets/images/GitHub_Banner.png "Leitmotif")
 
 > [![leitmotif][leitmotif_badge_pub]][leitmotif] [![pub points][leitmotif_badge_pub_points]][leitmotif_pub_points]
 
@@ -24,13 +24,36 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Screenshots
 
-| Example HomeScreen | LitSettingsPanel   |
+| Example App        | Snackbar           |
 | ------------------ | ------------------ |
 | ![1][screenshot_1] | ![2][screenshot_2] |
 
-| LitIconSnackbar    | LitOnboardingScreen |
-| ------------------ | ------------------- |
-| ![3][screenshot_3] | ![4][screenshot_4]  |
+| Date Picker        | Licence Screen     |
+| ------------------ | ------------------ |
+| ![3][screenshot_3] | ![4][screenshot_4] |
+
+## Localizations
+
+Leitmotif's widgets are currently localized in `English` and `German`.
+To use Leitmotif's default localizations in your Flutter app make sure to utilize the `LeitmotifLocalizationsDelegate` on your`MaterialApp`.
+Some widgets also require the `GlobalMaterialLocalizations.delegate`, `GlobalWidgetsLocalizations.delegate` and `GlobalCupertinoLocalizations.delegate`.
+
+```dart
+    return MaterialApp(
+      title: 'Leitmotif',
+      localizationsDelegates: const [
+        LeitmotifLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', ''),
+        Locale('de', ''),
+      ],
+      home: ExampleHomeScreen(),
+    );
+```
 
 ## Icons
 
@@ -52,27 +75,30 @@ Leitmotif uses the following Dart dependencies in order to implement certain
 features and functionality:
 
 - [package_info](https://pub.dev/packages/package_info) - [License](https://github.com/flutter/plugins/blob/master/LICENSE) (Used to detect the platform and version details)
-- [intl](https://pub.dev/packages/intl) - [License](https://pub.dev/packages/intl/license) (Used to implement localizations)
+- [intl](https://pub.dev/packages/intl) - [License](https://pub.dev/packages/intl/license) (Used to access the device's locale)
+- [flutter_localizations](https://pub.dev/packages/flutter_localizations) - [License](https://github.com/flutter/plugins/blob/master/LICENSE) (Used to implement default localizations)
 - [dartdoc](https://pub.dev/packages/dartdoc) - [License](https://pub.dev/packages/dartdoc/license) (Used to create the documentation)
 
 ## Credits
 
 Leitmotif is made possible thanks to the Flutter Project. It utilizes the serif font
-[Merriweather](https://fonts.google.com/specimen/Merriweather?query=merri&preview.text=LitLifeSoftware%20was%20here...&preview.text_type=custom) (designed by Sorkin Type), the sans serif font [Montserrat](https://fonts.google.com/specimen/Montserrat?query=montserrat&preview.text=LitLifeSoftware%20was%20here...&preview.text_type=custom) (designed by Julieta Ulanovsky, Sol Matas, Juan Pablo del Peral, Jacques Le Bailly) and the monospace font [VT323](https://fonts.google.com/specimen/VT323?query=VT323&preview.text=LitLifeSoftware%20was%20here...&preview.text_type=custom) (designed by Peter Hull).
+[Merriweather](https://fonts.google.com/specimen/Merriweather?query=merri&preview.text=LitLifeSoftware%20was%20here...&preview.text_type=custom), the sans serif font [Montserrat](https://fonts.google.com/specimen/Montserrat?query=montserrat&preview.text=LitLifeSoftware%20was%20here...&preview.text_type=custom) and the monospace font [CourierPrime](https://github.com/quoteunquoteapps/CourierPrime).
 
 ## License
 
-All the fonts in the `src/fonts` folder are licensed under the **Open Font License**.
+All the fonts in the `assets/fonts` folder are licensed under the **SIL OPEN FONT LICENSE**.
 
-All the icons in the `src/fonts/Icons` folder are distributed under the **CC-BY** license.
+All the icons in the `assets/icons` folder are distributed under the **CC-BY** license.
+
+All the images and screenshots in the `assets/images` folder are distributed under the **CC-BY** license.
 
 Everything else in this repository including the source code is distributed under the
 **BSD 3-Clause** license as specified in the `LICENSE` file.
 
-[screenshot_1]: assets/images/Leitmotif_Screenshot_1.jpg
-[screenshot_2]: assets/images/Leitmotif_Screenshot_2.jpg
-[screenshot_3]: assets/images/Leitmotif_Screenshot_3.jpg
-[screenshot_4]: assets/images/Leitmotif_Screenshot_4.jpg
+[screenshot_1]: assets/images/Screenshot_1.png
+[screenshot_2]: assets/images/Screenshot_2.png
+[screenshot_3]: assets/images/Screenshot_3.png
+[screenshot_4]: assets/images/Screenshot_4.png
 [leitmotif]: https://pub.dev/packages/leitmotif
 [leitmotif_pub_points]: https://pub.dev/packages/leitmotif/score
 [leitmotif_badge_pub]: https://img.shields.io/pub/v/leitmotif.svg

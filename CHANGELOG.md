@@ -1,3 +1,13 @@
+## 2.0.0
+
+- Implement `LeitmotifLocalizations` to provide localized strings by default.
+- Add `LitSettingCard` to toggle values.
+- Relabel `LitColors` using utility labels.
+- Replace the `VT323` monospace font with `CourierPrime`
+- Implement updated design and API on several screens and widgets.
+- Refactor several libraries.
+- Remove deprecated widgets.
+
 ## 1.4.3
 
 - Add `formatAsLocalizedDateTime` on `LocalizedDateTime` extension.
