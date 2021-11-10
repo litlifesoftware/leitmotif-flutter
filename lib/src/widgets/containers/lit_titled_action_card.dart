@@ -97,7 +97,7 @@ class _ButtonBuilder extends StatelessWidget {
                   accentColor: item.accentColor,
                   child: Text(
                     item.title.toUpperCase(),
-                    style: LitSansSerifStyles.button,
+                    style: item.style,
                     textAlign: TextAlign.center,
                   ),
                   onPressed: item.onPressed,
