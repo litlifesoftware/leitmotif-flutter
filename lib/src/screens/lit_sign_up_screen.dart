@@ -118,7 +118,6 @@ class _LitSignUpScreenState extends State<LitSignUpScreen>
                     ),
                     Center(
                       child: _Form(
-                        // animation: _animationControllerShort,
                         data: widget.data,
                         l10nAvail: _l10nAvail,
                         localization: widget.localization,

@@ -105,7 +105,7 @@ class _ButtonBuilder extends StatelessWidget {
               ),
             );
         return Padding(
-          padding: margin,
+          padding: children.length > 0 ? margin : LitEdgeInsets.none,
           child: Column(
             children: children,
           ),

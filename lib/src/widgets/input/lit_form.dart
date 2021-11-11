@@ -26,7 +26,7 @@ class LitForm extends StatefulWidget {
     Key? key,
     required this.submitLabel,
     required this.data,
-    this.margin = const EdgeInsets.all(16.0),
+    this.margin = LitEdgeInsets.card,
     this.inputValid,
     required this.onSubmit,
   }) : super(key: key);

@@ -16,6 +16,11 @@ class LitAnimationDurations {
     milliseconds: 120,
   );
 
+  /// The default animation duration on buttons.
+  static const medium = const Duration(
+    milliseconds: 300,
+  );
+
   /// The default animation duration on repeated button animations.
   static const buttonRepeat = const Duration(
     milliseconds: 1000,

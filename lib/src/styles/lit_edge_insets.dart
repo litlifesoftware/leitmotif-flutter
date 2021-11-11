@@ -18,6 +18,12 @@ class LitEdgeInsets {
   );
 
   /// The default margin/padding applied on card widgets.
+  static const allS = const EdgeInsets.symmetric(
+    vertical: 16.0,
+    horizontal: 16.0,
+  );
+
+  /// The default margin/padding applied on card widgets.
   static const card = const EdgeInsets.symmetric(
     vertical: 16.0,
     horizontal: 16.0,

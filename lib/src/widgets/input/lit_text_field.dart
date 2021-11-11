@@ -21,16 +21,9 @@ class LitTextField extends StatefulWidget {
   const LitTextField({
     Key? key,
     required this.data,
-    this.borderRadius = const BorderRadius.all(
-      Radius.circular(
-        16.0,
-      ),
-    ),
-    this.margin = const EdgeInsets.symmetric(
-      vertical: 8.0,
-      horizontal: 16.0,
-    ),
-    this.animationDuration = const Duration(milliseconds: 300),
+    this.borderRadius = LitBorderRadius.button,
+    this.margin = LitEdgeInsets.button,
+    this.animationDuration = LitAnimationDurations.button,
   }) : super(key: key);
 
   @override
