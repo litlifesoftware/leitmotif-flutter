@@ -7,11 +7,13 @@ import 'package:leitmotif/leitmotif.dart';
 class LitOnboardingScreenLocalization {
   final String title;
   final String nextLabel;
+  final String dismissLabel;
 
   /// Creates a [LitOnboardingScreenLocalization].
   const LitOnboardingScreenLocalization({
     required this.title,
     required this.nextLabel,
+    required this.dismissLabel,
   });
 }
 
@@ -122,7 +124,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen> {
           ),
           AnimatedActionButton(
             child: Row(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -136,7 +138,7 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen> {
                 ),
                 Text(
                   (_l10nAvail
-                          ? widget.localization!.title
+                          ? widget.localization!.dismissLabel
                           : LeitmotifLocalizations.of(context).dismissLabel)
                       .toUpperCase(),
                   style: LitSansSerifStyles.button,
