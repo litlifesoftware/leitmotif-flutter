@@ -92,6 +92,7 @@ class LeitmotifLocalizations {
       _Keys.privateLabel: 'Private',
       _Keys.offlineLabel: 'Offline',
       _Keys.agreeLabel: 'Agree',
+      _Keys.deleteLabel: 'Delete',
     },
     // 'German' localization
     'de': const {
@@ -157,6 +158,7 @@ class LeitmotifLocalizations {
       _Keys.privateLabel: 'Vertraulich',
       _Keys.offlineLabel: 'Offline',
       _Keys.agreeLabel: 'Akzeptieren',
+      _Keys.deleteLabel: 'Entfernen',
     },
   };
 
@@ -379,6 +381,10 @@ class LeitmotifLocalizations {
   String get agreeLabel {
     return _localizedValues[locale.languageCode]![_Keys.agreeLabel]!;
   }
+
+  String get deleteLabel {
+    return _localizedValues[locale.languageCode]![_Keys.deleteLabel]!;
+  }
 }
 
 /// A Leitmotif delegate class initializing the [LeitmotifLocalizations].
@@ -464,4 +470,5 @@ class _Keys {
   static const String privateLabel = 'privateLabel';
   static const String offlineLabel = 'offlineLabel';
   static const String agreeLabel = 'agreeLabel';
+  static const String deleteLabel = 'deleteLabel';
 }

@@ -46,6 +46,8 @@ class LitColors {
   static const Color red200 = const Color(0xFFE3C3C4);
   static const Color red400 = const Color(0xFFD4ABB6);
   static const Color red500 = const Color(0xFFB3958C);
+  static const Color red550 = const Color(0xFFef93a1);
+  static const Color red580 = const Color(0xFFef93a1);
   static const Color red600 = const Color(0xFFD66171);
   static const Color red600_40 = const Color(0x66D66171);
   static const Color red700 = const Color(0xFFEE3D6D);
