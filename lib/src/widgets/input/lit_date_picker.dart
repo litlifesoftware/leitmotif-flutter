@@ -427,7 +427,7 @@ class _DateGridView extends StatelessWidget {
           children: [
             // prev month button
             LitNavigationButton(
-              mode: LitCalendarNavigationMode.previous,
+              mode: LitLinearNavigationMode.previous,
               onPressed: onPressedPrevious,
             ),
             // month and year
@@ -463,7 +463,7 @@ class _DateGridView extends StatelessWidget {
             ),
             // next month button
             LitNavigationButton(
-              mode: LitCalendarNavigationMode.next,
+              mode: LitLinearNavigationMode.next,
               onPressed: onPressedNext,
             ),
           ],
@@ -766,7 +766,7 @@ class _YearGridView extends StatelessWidget {
         Row(
           children: [
             LitNavigationButton(
-              mode: LitCalendarNavigationMode.previous,
+              mode: LitLinearNavigationMode.previous,
               onPressed: onPrevious,
             ),
             Expanded(
@@ -799,7 +799,7 @@ class _YearGridView extends StatelessWidget {
               ),
             ),
             LitNavigationButton(
-              mode: LitCalendarNavigationMode.next,
+              mode: LitLinearNavigationMode.next,
               onPressed: onNext,
             ),
           ],

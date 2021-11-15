@@ -4,7 +4,7 @@ import 'package:leitmotif/leitmotif.dart';
 /// A Leitmotif `button` widget allowing to either navigate back or forth on a
 /// calendar view.
 class LitNavigationButton extends StatelessWidget {
-  final LitCalendarNavigationMode mode;
+  final LitLinearNavigationMode mode;
   final EdgeInsets padding;
   final Color backgroundAccentColor;
   final void Function() onPressed;
@@ -21,19 +21,6 @@ class LitNavigationButton extends StatelessWidget {
     required this.onPressed,
   }) : super(key: key);
 
-  /// Returns an icon according to the provided [LitCalendarNavigationMode]
-  /// value.
-  IconData get _icon {
-    switch (mode) {
-      case LitCalendarNavigationMode.next:
-        return LitIcons.chevron_right_solid;
-      case LitCalendarNavigationMode.previous:
-        return LitIcons.chevron_left_solid;
-      default:
-        return LitIcons.chevron_right;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return LitPushedThroughButton(
@@ -43,14 +30,8 @@ class LitNavigationButton extends StatelessWidget {
       onPressed: onPressed,
       child: FittedBox(
         fit: BoxFit.scaleDown,
-        child: Icon(
-          _icon,
-          size: 14.0,
-          color: LitSansSerifStyles.defaultColor,
-        ),
+        child: LitNavigationButton(mode: mode, onPressed: onPressed),
       ),
     );
   }
 }
-
-enum LitCalendarNavigationMode { next, previous }
