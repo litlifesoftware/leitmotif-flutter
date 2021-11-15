@@ -5,8 +5,9 @@ library art;
 
 export 'src/widgets/art/background_bubbles_painter.dart';
 export 'src/widgets/art/exclamation_rectangle.dart';
+export 'src/widgets/art/linear_navigation_icon.dart';
+export 'src/widgets/art/lit_info_icon.dart';
 export 'src/widgets/art/lit_life_blurred_background_logo.dart';
 export 'src/widgets/art/lit_life_smiley_image.dart';
 export 'src/widgets/art/lit_lock_icon.dart';
-export 'src/widgets/art/lit_info_icon.dart';
 export 'src/widgets/art/lit_user_icon.dart';
