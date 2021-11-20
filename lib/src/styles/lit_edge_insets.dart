@@ -44,6 +44,9 @@ class LitEdgeInsets {
   /// The default margin/padding to add spacing on the top of widgets.
   static const spacingTop = const EdgeInsets.only(top: 16.0);
 
+  /// The default margin/padding to add spacing on the bottom of widgets.
+  static const spacingBottom = const EdgeInsets.only(bottom: 16.0);
+
   /// The default margin/padding to add spacing on the top and bottom widgets.
   static const spacingY = const EdgeInsets.symmetric(vertical: 16.0);
 }

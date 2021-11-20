@@ -87,23 +87,32 @@ class _ButtonBuilder extends StatelessWidget {
     return Builder(
       builder: (context) {
         List<Widget> children = [];
-        if (_buttonsEnabled)
-          for (ActionButtonData item in data!)
+        if (_buttonsEnabled) {
+          for (int i = 0; i < data!.length; i++) {
+            final item = data![i];
+            final isLastItem = i != data!.length - 1;
             children.add(
               SizedBox(
                 width: constraints.maxWidth,
-                child: LitPushedThroughButton(
-                  backgroundColor: item.backgroundColor,
-                  accentColor: item.accentColor,
-                  child: Text(
-                    item.title.toUpperCase(),
-                    style: item.style,
-                    textAlign: TextAlign.center,
+                child: Padding(
+                  padding: isLastItem
+                      ? LitEdgeInsets.spacingBottom
+                      : LitEdgeInsets.none,
+                  child: LitPushedThroughButton(
+                    backgroundColor: item.backgroundColor,
+                    accentColor: item.accentColor,
+                    child: Text(
+                      item.title.toUpperCase(),
+                      style: item.style,
+                      textAlign: TextAlign.center,
+                    ),
+                    onPressed: item.onPressed,
                   ),
-                  onPressed: item.onPressed,
                 ),
               ),
             );
+          }
+        }
         return Padding(
           padding: children.length > 0 ? margin : LitEdgeInsets.none,
           child: Column(
