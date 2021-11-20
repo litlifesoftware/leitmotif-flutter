@@ -30,7 +30,9 @@ class LitNavigationButton extends StatelessWidget {
       onPressed: onPressed,
       child: FittedBox(
         fit: BoxFit.scaleDown,
-        child: LitNavigationButton(mode: mode, onPressed: onPressed),
+        child: LinearNavigationIcon(
+          mode: mode,
+        ),
       ),
     );
   }
