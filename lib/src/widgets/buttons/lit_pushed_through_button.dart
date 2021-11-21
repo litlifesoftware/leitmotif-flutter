@@ -47,16 +47,16 @@ class LitPushedThroughButton extends StatefulWidget {
   const LitPushedThroughButton({
     Key? key,
     required this.child,
-    this.backgroundColor = LitColors.grey100,
-    this.accentColor = Colors.white,
-    this.borderRadius = LitBorderRadius.button,
-    this.padding = LitEdgeInsets.none,
-    this.margin = LitEdgeInsets.button,
-    this.boxShadow = LitBoxShadows.md,
-    this.animationDuration = LitAnimationDurations.button,
-    this.disabled = false,
-    this.constrained = true,
     required this.onPressed,
+    this.accentColor = Colors.white,
+    this.animationDuration = LitAnimationDurations.button,
+    this.backgroundColor = LitColors.grey100,
+    this.borderRadius = LitBorderRadius.button,
+    this.boxShadow = LitBoxShadows.md,
+    this.constrained = true,
+    this.disabled = false,
+    this.margin = LitEdgeInsets.button,
+    this.padding = LitEdgeInsets.none,
   }) : super(key: key);
 
   @override
@@ -147,10 +147,10 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
                 ),
           child: Padding(
             padding: widget.padding,
-            child: CleanInkWell(
-              onTap: _onPressed,
-              child: AnimatedBuilder(
-                animation: _animationController,
+            child: AnimatedBuilder(
+              animation: _animationController,
+              child: CleanInkWell(
+                onTap: _onPressed,
                 child: Container(
                   padding: widget.margin,
                   decoration: BoxDecoration(
@@ -164,17 +164,17 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
                   ),
                   child: widget.child,
                 ),
-                builder: (context, child) {
-                  return Transform.scale(
-                    scale: _scale,
-                    child: AnimatedOpacity(
-                      duration: widget.animationDuration,
-                      opacity: _opacity,
-                      child: child,
-                    ),
-                  );
-                },
               ),
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: _scale,
+                  child: AnimatedOpacity(
+                    child: child,
+                    duration: widget.animationDuration,
+                    opacity: _opacity,
+                  ),
+                );
+              },
             ),
           ),
         );
