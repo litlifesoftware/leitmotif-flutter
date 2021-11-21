@@ -339,18 +339,16 @@ class _LitDatePickerState extends State<LitDatePicker> {
             // Dates view
             case LitCalendarViews.day:
               return _DateGridView(
-                child: _CalendarGridBuilder(
-                  sequentialDates: _sequentialDates,
-                  selectedDateTime: _selectedDate,
-                  weekDays: _weekDays,
-                  invertFirstDayOfWeek: widget.invertFirstDayOfWeek,
-                  onSelect: _onSelect,
-                ),
+                invertFirstDayOfWeek: widget.invertFirstDayOfWeek,
                 monthLabels: _monthNames,
+                onChangeViewMode: _selectMonthView,
                 onPressedNext: _getNextMonth,
                 onPressedPrevious: _getPrevMonth,
-                onChangeViewMode: _selectMonthView,
+                onSelect: _onSelect,
+                selectedDate: _selectedDate,
+                sequentialDates: _sequentialDates,
                 templateDate: _templateDate,
+                weekDays: _weekDays,
               );
             // Month view
             case LitCalendarViews.month:
@@ -391,22 +389,31 @@ class _LitDatePickerState extends State<LitDatePicker> {
   }
 }
 
+/// The date picker's date view displaying a grid of all days of a calendar
+/// month.
 class _DateGridView extends StatelessWidget {
-  final List<String> monthLabels;
   final DateTime templateDate;
-  final Widget child;
-  final void Function() onPressedPrevious;
-  final void Function() onPressedNext;
+  final DateTime? selectedDate;
+  final List<LitCalendarDate> sequentialDates;
+  final List<String> monthLabels;
+  final List<String> weekDays;
+  final bool invertFirstDayOfWeek;
   final void Function() onChangeViewMode;
-
+  final void Function() onPressedNext;
+  final void Function() onPressedPrevious;
+  final void Function(LitCalendarDate) onSelect;
   const _DateGridView({
     Key? key,
+    required this.invertFirstDayOfWeek,
     required this.monthLabels,
-    required this.templateDate,
-    required this.child,
-    required this.onPressedPrevious,
-    required this.onPressedNext,
     required this.onChangeViewMode,
+    required this.onPressedNext,
+    required this.onPressedPrevious,
+    required this.onSelect,
+    required this.selectedDate,
+    required this.sequentialDates,
+    required this.templateDate,
+    required this.weekDays,
   }) : super(key: key);
 
   String get _monthLabel {
@@ -419,8 +426,6 @@ class _DateGridView extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         SizedBox(height: 8.0),
-
-        // header
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -430,7 +435,7 @@ class _DateGridView extends StatelessWidget {
               mode: LitLinearNavigationMode.previous,
               onPressed: onPressedPrevious,
             ),
-            // month and year
+
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -469,13 +474,20 @@ class _DateGridView extends StatelessWidget {
           ],
         ),
         SizedBox(height: 4.0),
-        child,
+        _CalendarGridBuilder(
+          invertFirstDayOfWeek: invertFirstDayOfWeek,
+          onSelect: onSelect,
+          selectedDateTime: selectedDate,
+          sequentialDates: sequentialDates,
+          weekDays: weekDays,
+        ),
         SizedBox(height: 4.0),
       ],
     );
   }
 }
 
+/// The date picker's month view displaying all months of a calendar year.
 class _MonthListView extends StatelessWidget {
   final DateTime templateDate;
   final List<String> monthNames;
@@ -588,9 +600,13 @@ class _CalendarGridBuilder extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         if (index < 7)
-          return _CalendarWeekdayHeader(
-            label: _getHeaderLabelAt(index),
+          return Center(
+            child: Text(
+              _getHeaderLabelAt(index),
+              style: LitSansSerifStyles.caption,
+            ),
           );
+
         return LayoutBuilder(
           builder: (context, constraints) {
             return _CalendarGridItem(
@@ -712,48 +728,34 @@ class _CalendarGridItem extends StatelessWidget {
   }
 }
 
-class _CalendarWeekdayHeader extends StatelessWidget {
-  final String label;
-  const _CalendarWeekdayHeader({
-    Key? key,
-    required this.label,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        label,
-        style: LitSansSerifStyles.caption,
-      ),
-    );
-  }
-}
-
+/// The date picker's year view displaying a grid of multiple years for easier
+/// access.
 class _YearGridView extends StatelessWidget {
+  final DateTime templateDate;
   final LitDatePickerLocalization localization;
   final int medianYear;
-  final DateTime templateDate;
+  final void Function() onChangeViewMode;
   final void Function() onNext;
   final void Function() onPrevious;
   final void Function(int thisYear) onSelect;
-  final void Function() onChangeViewMode;
   const _YearGridView({
     Key? key,
     required this.localization,
     required this.medianYear,
+    required this.onChangeViewMode,
     required this.onNext,
     required this.onPrevious,
     required this.onSelect,
     required this.templateDate,
-    required this.onChangeViewMode,
   }) : super(key: key);
 
+  /// The grid's outer padding.
   static const EdgeInsets padding = const EdgeInsets.symmetric(
     vertical: 8.0,
     horizontal: 8.0,
   );
 
+  /// States whether the year displayed on the grid is currently selected.
   bool _isSelected(year) {
     return (year == templateDate.year);
   }

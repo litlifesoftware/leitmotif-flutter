@@ -88,7 +88,6 @@ class _LitVerifyAgeScreenState extends State<LitVerifyAgeScreen> {
   void _onSubmit() {
     LitRouteController(context).showDialogWidget(
       LitDatePickerDialog(
-        //localization: widget.localization.datePickerDialogLocalization,
         onSubmit: (date) {
           setState(() {
             _dateOfBirth = date;
