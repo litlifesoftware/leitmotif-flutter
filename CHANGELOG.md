@@ -1,3 +1,9 @@
+## 2.0.1
+
+- Add `LitDeleteButton`, a red-themed button to delete content.
+- Fix stack overflow previously occuring on the `LitNavigationButton`.
+- Standardize spacings on several widgets.
+
 ## 2.0.0
 
 - Implement `LeitmotifLocalizations` to provide localized strings by default.
