@@ -114,6 +114,8 @@ class _FixedOnScrollAppbarState extends State<FixedOnScrollAppbar>
               child: LitAppBarContent(
                 backButtonBackgroundColor: widget.backButtonBackgroundColor,
                 backButtonIconColor: widget.backButtonIconColor,
+                onInvalidNavigation: widget.onInvalidNavigation,
+                shouldNavigateBack: widget.shouldNavigateBack,
                 margin: widget.margin,
                 child: widget.child,
               ),
