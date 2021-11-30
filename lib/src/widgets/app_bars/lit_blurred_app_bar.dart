@@ -17,6 +17,12 @@ class LitBlurredAppBar extends StatelessWidget implements CustomAppBar {
   /// The app bar's title style.
   final TextStyle textStyle;
 
+  /// States whether to allow to navigate back.
+  final bool shouldNavigateBack;
+
+  /// Handles the action once navigating back has been denied.
+  final void Function()? onInvalidNavigation;
+
   /// Creates a [LitBlurredAppBar].
   const LitBlurredAppBar({
     Key? key,
@@ -24,6 +30,8 @@ class LitBlurredAppBar extends StatelessWidget implements CustomAppBar {
     this.blurRadius = 4.0,
     required this.title,
     this.textStyle = CustomAppBar.textStyle,
+    this.shouldNavigateBack = LitBackButton.defaultShouldNavigateBack,
+    this.onInvalidNavigation,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -41,6 +49,8 @@ class LitBlurredAppBar extends StatelessWidget implements CustomAppBar {
             backButtonBackgroundColor: LitBackButton.defaultBackgroundColor,
             backButtonIconColor: LitBackButton.defaultIconColor,
             margin: CustomAppBar.margin,
+            onInvalidNavigation: onInvalidNavigation,
+            shouldNavigateBack: shouldNavigateBack,
             child: LitAppBarTitleLabel(
               title: title,
               style: textStyle,

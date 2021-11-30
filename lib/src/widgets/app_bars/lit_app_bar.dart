@@ -32,6 +32,12 @@ class LitAppBar extends StatelessWidget implements CustomAppBar {
   /// The bar's internal margin.
   static final EdgeInsets margin = CustomAppBar.margin;
 
+  /// States whether to allow to navigate back.
+  final bool shouldNavigateBack;
+
+  /// Handles the action once navigating back has been denied.
+  final void Function()? onInvalidNavigation;
+
   /// Creates a [LitAppBar].
   const LitAppBar({
     Key? key,
@@ -41,6 +47,8 @@ class LitAppBar extends StatelessWidget implements CustomAppBar {
     this.backgroundColor = Colors.white,
     this.backButtonBackgroundColor = LitBackButton.defaultBackgroundColor,
     this.backButtonIconColor = LitBackButton.defaultIconColor,
+    this.shouldNavigateBack = LitBackButton.defaultShouldNavigateBack,
+    this.onInvalidNavigation,
   }) : super(key: key);
 
   @override
@@ -59,6 +67,8 @@ class LitAppBar extends StatelessWidget implements CustomAppBar {
             backButtonBackgroundColor: backButtonBackgroundColor,
             backButtonIconColor: backButtonIconColor,
             margin: margin,
+            onInvalidNavigation: onInvalidNavigation,
+            shouldNavigateBack: shouldNavigateBack,
             child: LitAppBarTitleLabel(
               title: title,
               style: textStyle,
