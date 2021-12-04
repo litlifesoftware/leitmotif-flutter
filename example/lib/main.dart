@@ -815,6 +815,27 @@ class _ButtonList extends StatelessWidget {
             child: LitRoundedElevatedButton(
               color: buttonColor,
               child: ClippedText(
+                "Show Confirm Delete Dialog",
+                upperCase: true,
+                style: LitSansSerifStyles.button.copyWith(
+                  color: buttonTextColor,
+                ),
+              ),
+              onPressed: () => {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return ConfirmDeleteDialog(onDelete: () => {});
+                  },
+                )
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: LitRoundedElevatedButton(
+              color: buttonColor,
+              child: ClippedText(
                 "Show LitTitledDialog",
                 upperCase: true,
                 style: LitSansSerifStyles.button.copyWith(
