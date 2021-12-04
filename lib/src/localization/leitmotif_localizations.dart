@@ -63,8 +63,10 @@ class LeitmotifLocalizations {
       _Keys.invalidInputLabel: 'Invalid Input',
       _Keys.invalidInputBody: 'Please check your input.',
       _Keys.invalidInputExtendedBody:
-          'Some of your inputted values are not valid. Please check your input.' +
-              '' +
+          'Some of your inputted values are not valid.'
+              ' '
+              'Please check your input.'
+              ''
               'Please check your input.',
       _Keys.verifyAgeScreenSuccessTitle: 'Age confirmed',
       _Keys.verifyAgeScreenSuccessSubtitle: 'Your age has been confirmed',
@@ -93,6 +95,11 @@ class LeitmotifLocalizations {
       _Keys.offlineLabel: 'Offline',
       _Keys.agreeLabel: 'Agree',
       _Keys.deleteLabel: 'Delete',
+      _Keys.deleteDescriptionBodyText:
+          'By deleting this object, it will no longer be available.',
+      _Keys.deleteObjectTitle: 'Delete Object',
+      _Keys.confirmDeleteTitle: 'Confirm Delete',
+      _Keys.deleteObjectPrompt: 'Do you want to delete this object?',
     },
     // 'German' localization
     'de': const {
@@ -159,6 +166,13 @@ class LeitmotifLocalizations {
       _Keys.offlineLabel: 'Offline',
       _Keys.agreeLabel: 'Akzeptieren',
       _Keys.deleteLabel: 'Entfernen',
+      _Keys.deleteDescriptionBodyText:
+          'Nach dem Löschen dieses Objekts, wird es nicht länger'
+              ' '
+              'verfügbar sein.',
+      _Keys.deleteObjectTitle: 'Objekt löschen',
+      _Keys.confirmDeleteTitle: 'Löschen bestätigen',
+      _Keys.deleteObjectPrompt: 'Möchtest du dieses Objekt löschen?',
     },
   };
 
@@ -385,6 +399,23 @@ class LeitmotifLocalizations {
   String get deleteLabel {
     return _localizedValues[locale.languageCode]![_Keys.deleteLabel]!;
   }
+
+  String get deleteObjectDescriptionText {
+    return _localizedValues[locale.languageCode]![
+        _Keys.deleteDescriptionBodyText]!;
+  }
+
+  String get deleteObjectTitle {
+    return _localizedValues[locale.languageCode]![_Keys.deleteObjectTitle]!;
+  }
+
+  String get confirmDeleteTitle {
+    return _localizedValues[locale.languageCode]![_Keys.confirmDeleteTitle]!;
+  }
+
+  String get deleteObjectPrompt {
+    return _localizedValues[locale.languageCode]![_Keys.deleteObjectPrompt]!;
+  }
 }
 
 /// A Leitmotif delegate class initializing the [LeitmotifLocalizations].
@@ -471,4 +502,8 @@ class _Keys {
   static const String offlineLabel = 'offlineLabel';
   static const String agreeLabel = 'agreeLabel';
   static const String deleteLabel = 'deleteLabel';
+  static const String deleteDescriptionBodyText = 'deleteDescriptionBodyText';
+  static const String deleteObjectTitle = 'deleteObjectTitle';
+  static const String confirmDeleteTitle = 'confirmDeleteTitle';
+  static const String deleteObjectPrompt = 'deleteObjectPrompt';
 }

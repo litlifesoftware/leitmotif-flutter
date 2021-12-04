@@ -13,11 +13,17 @@ class LitDeleteButton extends StatelessWidget {
     required this.onPressed,
   }) : super(key: key);
 
+  /// The button's accent color.
+  static const accentColor = LitColors.red400;
+
+  /// The button's background color.
+  static const backgroundColor = LitColors.red200;
+
   @override
   Widget build(BuildContext context) {
     return LitPushedThroughButton(
-      accentColor: LitColors.red400,
-      backgroundColor: LitColors.red200,
+      accentColor: accentColor,
+      backgroundColor: backgroundColor,
       child: ClippedText(
         LeitmotifLocalizations.of(context).deleteLabel.toUpperCase(),
         style: LitSansSerifStyles.button.copyWith(

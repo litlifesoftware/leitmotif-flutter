@@ -4,6 +4,7 @@
 library dialogs;
 
 export 'src/widgets/dialogs/discard_draft_dialog.dart';
+export 'src/widgets/dialogs/confirm_delete_dialog.dart';
 export 'src/widgets/dialogs/invalid_input_dialog.dart';
 export 'src/widgets/dialogs/lit_about_dialog.dart';
 export 'src/widgets/dialogs/lit_color_picker_dialog.dart';
