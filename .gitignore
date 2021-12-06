@@ -29,6 +29,9 @@
 .pub-cache/
 .pub/
 build/
+# Pubspec lock files should not be commited to version control on packages.
+# See https://dart.dev/guides/libraries/private-files for more details.
+pubspec.lock
 
 # Android related
 **/android/**/gradle-wrapper.jar
