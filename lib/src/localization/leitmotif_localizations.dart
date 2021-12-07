@@ -1,7 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart' show SynchronousFuture;
+import 'package:leitmotif/leitmotif.dart';
 
 /// A Leitmotif `localization` class enabling localized values on dialog and
 /// screen widgets.
@@ -22,6 +20,10 @@ class LeitmotifLocalizations {
         context, LeitmotifLocalizations)!;
   }
 
+  /// Returns the [LeitmotifLocalizations]' delegate.
+  static const LeitmotifLocalizationsDelegate delegate =
+      LeitmotifLocalizationsDelegate();
+
   /// A list of localized labels, titles and body text elements.
   ///
   /// Currently implemented and supported languages:
@@ -29,481 +31,307 @@ class LeitmotifLocalizations {
   /// * `German`
   static const _localizedValues = <String, Map<String, String>>{
     // 'English' localization
-    'en': const {
-      _Keys.submitLabel: 'Submit',
-      _Keys.applyLabel: 'Apply',
-      _Keys.cancelLabel: 'Cancel',
-      _Keys.startLabel: 'Start',
-      _Keys.selectLabel: 'Select',
-      _Keys.resetLabel: 'Reset',
-      _Keys.dateInputLabel: 'Enter Date',
-      _Keys.colorInputLabel: 'Enter Color',
-      _Keys.ageInputLabel: 'Enter your Age',
-      _Keys.ageRequiredLabel: 'This app does need your age',
-      _Keys.dayOfWeek1: 'Monday',
-      _Keys.dayOfWeek2: 'Tuesday',
-      _Keys.dayOfWeek3: 'Wednesday',
-      _Keys.dayOfWeek4: 'Thursday',
-      _Keys.dayOfWeek5: 'Friday',
-      _Keys.dayOfWeek6: 'Saturday',
-      _Keys.dayOfWeek7: 'Sunday',
-      _Keys.january: 'January',
-      _Keys.february: 'February',
-      _Keys.march: 'March',
-      _Keys.april: 'April',
-      _Keys.may: 'May',
-      _Keys.june: 'June',
-      _Keys.july: 'July',
-      _Keys.august: 'August',
-      _Keys.september: 'September',
-      _Keys.october: 'October',
-      _Keys.november: 'November',
-      _Keys.december: 'December',
-      _Keys.yourAgeLabel: 'Your Age',
-      _Keys.invalidInputLabel: 'Invalid Input',
-      _Keys.invalidInputBody: 'Please check your input.',
-      _Keys.invalidInputExtendedBody:
-          'Some of your inputted values are not valid.'
-              ' '
-              'Please check your input.'
-              ''
-              'Please check your input.',
-      _Keys.verifyAgeScreenSuccessTitle: 'Age confirmed',
-      _Keys.verifyAgeScreenSuccessSubtitle: 'Your age has been confirmed',
-      _Keys.verifyAgeScreenSuccessBody:
-          'Thank you for verifying your age. Have a good time!',
-      _Keys.verifyAgeScreenDescriptionBody:
-          "Your date of birth helps us to enable certain functions" +
-              " " +
-              "on this app. We won't send any data to" +
-              " " +
-              "anyone. Your age will not be shared.",
-      _Keys.creditsLabel: 'Credits',
-      _Keys.fullyTransparentLabel: 'Color is fully transparent',
-      _Keys.licensesLabel: 'Licenses',
-      _Keys.backLabel: 'Back',
-      _Keys.notificationLabel: 'Notification',
-      _Keys.advancedSettingsLabel: 'Advanced Settings',
-      _Keys.settingsLabel: 'Settings',
-      _Keys.nextLabel: 'Next',
-      _Keys.onboardingLabel: 'Onboarding',
-      _Keys.dismissLabel: 'Dismiss',
-      _Keys.signUpLabel: 'Sign Up',
-      _Keys.privacyPolicyLabel: 'Privacy Policy',
-      _Keys.privacyLabel: 'Privacy',
-      _Keys.privateLabel: 'Private',
-      _Keys.offlineLabel: 'Offline',
-      _Keys.agreeLabel: 'Agree',
-      _Keys.deleteLabel: 'Delete',
-      _Keys.deleteDescriptionBodyText:
-          'By deleting this object, it will no longer be available.',
-      _Keys.deleteObjectTitle: 'Delete Object',
-      _Keys.confirmDeleteTitle: 'Confirm Delete',
-      _Keys.deleteObjectPrompt: 'Do you want to delete this object?',
-    },
+    LeitmotifLocalizationsEn.languageCode: LeitmotifLocalizationsEn.values,
     // 'German' localization
-    'de': const {
-      _Keys.submitLabel: 'Bestätigen',
-      _Keys.applyLabel: 'Anwenden',
-      _Keys.cancelLabel: 'Abbrechen',
-      _Keys.startLabel: 'Start',
-      _Keys.selectLabel: 'Auswählen',
-      _Keys.resetLabel: 'Zurücksetzen',
-      _Keys.dateInputLabel: 'Datum eingeben',
-      _Keys.colorInputLabel: 'Enter Color',
-      _Keys.ageInputLabel: 'Gib dein Alter ein',
-      _Keys.ageRequiredLabel: 'Diese App benötigt dein Alter',
-      _Keys.dayOfWeek1: 'Montag',
-      _Keys.dayOfWeek2: 'Dienstag',
-      _Keys.dayOfWeek3: 'Mittwoch',
-      _Keys.dayOfWeek4: 'Donnerstag',
-      _Keys.dayOfWeek5: 'Freitag',
-      _Keys.dayOfWeek6: 'Samstag',
-      _Keys.dayOfWeek7: 'Sonntag',
-      _Keys.january: 'Januar',
-      _Keys.february: 'Februar',
-      _Keys.march: 'März',
-      _Keys.april: 'April',
-      _Keys.may: 'Mai',
-      _Keys.june: 'Juni',
-      _Keys.july: 'Juli',
-      _Keys.august: 'August',
-      _Keys.september: 'September',
-      _Keys.october: 'Oktober',
-      _Keys.november: 'November',
-      _Keys.december: 'Dezember',
-      _Keys.yourAgeLabel: 'Dein Alter',
-      _Keys.invalidInputLabel: 'Fehlerhafte Eingaben',
-      _Keys.invalidInputBody: 'Bitte überprüfe deine Eingabe.',
-      _Keys.invalidInputExtendedBody:
-          'Einige deiner eingegebenen Werte sind fehlerhaft.' +
-              ' ' +
-              'Bitte überprüfe deine Eingabe.',
-      _Keys.verifyAgeScreenSuccessTitle: 'Alter bestätigt',
-      _Keys.verifyAgeScreenSuccessSubtitle: 'Dein Alter wurde bestätigt',
-      _Keys.verifyAgeScreenSuccessBody:
-          'Vielen Dank für die Altersbestätigung. Viel Vergnügen!',
-      _Keys.verifyAgeScreenDescriptionBody:
-          "Dein Alter hilft uns Funktionen dieser App zu gewährleisten." +
-              " " +
-              "Diese App wird keine Daten weitergeben." +
-              " " +
-              "Dein Alter wird geteilt.",
-      _Keys.creditsLabel: 'Mitwirkende',
-      _Keys.fullyTransparentLabel: 'Diese Farbe ist vollständig transparent',
-      _Keys.licensesLabel: 'Lizenzen',
-      _Keys.backLabel: 'Zurück',
-      _Keys.notificationLabel: 'Benachrichtigung',
-      _Keys.advancedSettingsLabel: 'Erweiterte Einstellungen',
-      _Keys.settingsLabel: 'Einstellungen',
-      _Keys.nextLabel: 'Nächste',
-      _Keys.onboardingLabel: 'Start',
-      _Keys.dismissLabel: 'Ausblenden',
-      _Keys.signUpLabel: 'Registrieren',
-      _Keys.privacyPolicyLabel: 'Datenschutzrichtlinien',
-      _Keys.privacyLabel: 'Privatsphäre',
-      _Keys.privateLabel: 'Vertraulich',
-      _Keys.offlineLabel: 'Offline',
-      _Keys.agreeLabel: 'Akzeptieren',
-      _Keys.deleteLabel: 'Entfernen',
-      _Keys.deleteDescriptionBodyText:
-          'Nach dem Löschen dieses Objekts, wird es nicht länger'
-              ' '
-              'verfügbar sein.',
-      _Keys.deleteObjectTitle: 'Objekt löschen',
-      _Keys.confirmDeleteTitle: 'Löschen bestätigen',
-      _Keys.deleteObjectPrompt: 'Möchtest du dieses Objekt löschen?',
-    },
+    LeitmotifLocalizationsDe.languageCode: LeitmotifLocalizationsDe.values,
   };
 
   /// Returns the currently implemented languages as their two-letter code.
   static List<String> languages() => _localizedValues.keys.toList();
 
+  /// Returns the localized value based on the provided [localizationKey]
+  /// implemented on the corresponding localization class.
+  String localizeValue(String localizationKey) {
+    return _localizedValues[locale.languageCode]![localizationKey]!;
+  }
+
   String get submitLabel {
-    return _localizedValues[locale.languageCode]![_Keys.submitLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.submitLabel]!;
   }
 
   String get applyLabel {
-    return _localizedValues[locale.languageCode]![_Keys.applyLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.applyLabel]!;
   }
 
   String get cancelLabel {
-    return _localizedValues[locale.languageCode]![_Keys.cancelLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.cancelLabel]!;
   }
 
   String get resetLabel {
-    return _localizedValues[locale.languageCode]![_Keys.resetLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.resetLabel]!;
   }
 
   String get dateInputLabel {
-    return _localizedValues[locale.languageCode]![_Keys.dateInputLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.dateInputLabel]!;
   }
 
   String get colorInputLabel {
-    return _localizedValues[locale.languageCode]![_Keys.colorInputLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.colorInputLabel]!;
   }
 
   String get ageInputLabel {
-    return _localizedValues[locale.languageCode]![_Keys.ageInputLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.ageInputLabel]!;
   }
 
   String get ageRequiredLabel {
-    return _localizedValues[locale.languageCode]![_Keys.ageRequiredLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.ageRequiredLabel]!;
   }
 
   String get startLabel {
-    return _localizedValues[locale.languageCode]![_Keys.startLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.startLabel]!;
   }
 
   String get selectLabel {
-    return _localizedValues[locale.languageCode]![_Keys.selectLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.selectLabel]!;
   }
 
   String get dayOfWeek1 {
-    return _localizedValues[locale.languageCode]![_Keys.dayOfWeek1]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.dayOfWeek1]!;
   }
 
   String get dayOfWeek2 {
-    return _localizedValues[locale.languageCode]![_Keys.dayOfWeek2]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.dayOfWeek2]!;
   }
 
   String get dayOfWeek3 {
-    return _localizedValues[locale.languageCode]![_Keys.dayOfWeek3]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.dayOfWeek3]!;
   }
 
   String get dayOfWeek4 {
-    return _localizedValues[locale.languageCode]![_Keys.dayOfWeek4]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.dayOfWeek4]!;
   }
 
   String get dayOfWeek5 {
-    return _localizedValues[locale.languageCode]![_Keys.dayOfWeek5]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.dayOfWeek5]!;
   }
 
   String get dayOfWeek6 {
-    return _localizedValues[locale.languageCode]![_Keys.dayOfWeek6]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.dayOfWeek6]!;
   }
 
   String get dayOfWeek7 {
-    return _localizedValues[locale.languageCode]![_Keys.dayOfWeek7]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.dayOfWeek7]!;
   }
 
   String get january {
-    return _localizedValues[locale.languageCode]![_Keys.january]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.january]!;
   }
 
   String get february {
-    return _localizedValues[locale.languageCode]![_Keys.february]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.february]!;
   }
 
   String get march {
-    return _localizedValues[locale.languageCode]![_Keys.march]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.march]!;
   }
 
   String get april {
-    return _localizedValues[locale.languageCode]![_Keys.april]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.april]!;
   }
 
   String get may {
-    return _localizedValues[locale.languageCode]![_Keys.may]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.may]!;
   }
 
   String get june {
-    return _localizedValues[locale.languageCode]![_Keys.june]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.june]!;
   }
 
   String get july {
-    return _localizedValues[locale.languageCode]![_Keys.july]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.july]!;
   }
 
   String get august {
-    return _localizedValues[locale.languageCode]![_Keys.august]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.august]!;
   }
 
   String get september {
-    return _localizedValues[locale.languageCode]![_Keys.september]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.september]!;
   }
 
   String get october {
-    return _localizedValues[locale.languageCode]![_Keys.october]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.october]!;
   }
 
   String get november {
-    return _localizedValues[locale.languageCode]![_Keys.november]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.november]!;
   }
 
   String get december {
-    return _localizedValues[locale.languageCode]![_Keys.december]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.december]!;
   }
 
   String get yourAgeLabel {
-    return _localizedValues[locale.languageCode]![_Keys.yourAgeLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.yourAgeLabel]!;
   }
 
   String get invalidInputLabel {
-    return _localizedValues[locale.languageCode]![_Keys.invalidInputLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.invalidInputLabel]!;
   }
 
   String get invalidInputBody {
-    return _localizedValues[locale.languageCode]![_Keys.invalidInputBody]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.invalidInputBody]!;
   }
 
   String get invalidInputExtendedBody {
     return _localizedValues[locale.languageCode]![
-        _Keys.invalidInputExtendedBody]!;
+        LeitmotifLocalizationsKeys.invalidInputExtendedBody]!;
   }
 
   String get verifyAgeScreenSuccessTitle {
     return _localizedValues[locale.languageCode]![
-        _Keys.verifyAgeScreenSuccessTitle]!;
+        LeitmotifLocalizationsKeys.verifyAgeScreenSuccessTitle]!;
   }
 
   String get verifyAgeScreenSuccessSubtitle {
     return _localizedValues[locale.languageCode]![
-        _Keys.verifyAgeScreenSuccessSubtitle]!;
+        LeitmotifLocalizationsKeys.verifyAgeScreenSuccessSubtitle]!;
   }
 
   String get verifyAgeScreenSuccessBody {
     return _localizedValues[locale.languageCode]![
-        _Keys.verifyAgeScreenSuccessBody]!;
+        LeitmotifLocalizationsKeys.verifyAgeScreenSuccessBody]!;
   }
 
   String get verifyAgeScreenDescriptionBody {
     return _localizedValues[locale.languageCode]![
-        _Keys.verifyAgeScreenDescriptionBody]!;
+        LeitmotifLocalizationsKeys.verifyAgeScreenDescriptionBody]!;
   }
 
   String get creditsLabel {
-    return _localizedValues[locale.languageCode]![_Keys.creditsLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.creditsLabel]!;
   }
 
   String get fullyTransprentLabel {
-    return _localizedValues[locale.languageCode]![_Keys.fullyTransparentLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.fullyTransparentLabel]!;
   }
 
   String get licensesLabel {
-    return _localizedValues[locale.languageCode]![_Keys.licensesLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.licensesLabel]!;
   }
 
   String get backLabel {
-    return _localizedValues[locale.languageCode]![_Keys.backLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.backLabel]!;
   }
 
   String get notificationLabel {
-    return _localizedValues[locale.languageCode]![_Keys.notificationLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.notificationLabel]!;
   }
 
   String get advancedSettingsLabel {
-    return _localizedValues[locale.languageCode]![_Keys.advancedSettingsLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.advancedSettingsLabel]!;
   }
 
   String get settingsLabel {
-    return _localizedValues[locale.languageCode]![_Keys.settingsLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.settingsLabel]!;
   }
 
   String get nextLabel {
-    return _localizedValues[locale.languageCode]![_Keys.nextLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.nextLabel]!;
   }
 
   String get onboardingLabel {
-    return _localizedValues[locale.languageCode]![_Keys.onboardingLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.onboardingLabel]!;
   }
 
   String get dismissLabel {
-    return _localizedValues[locale.languageCode]![_Keys.dismissLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.dismissLabel]!;
   }
 
   String get signUpLabel {
-    return _localizedValues[locale.languageCode]![_Keys.signUpLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.signUpLabel]!;
   }
 
   String get privacyPolicyLabel {
-    return _localizedValues[locale.languageCode]![_Keys.privacyPolicyLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.privacyPolicyLabel]!;
   }
 
   String get privacyLabel {
-    return _localizedValues[locale.languageCode]![_Keys.privacyLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.privacyLabel]!;
   }
 
   String get privateLabel {
-    return _localizedValues[locale.languageCode]![_Keys.privateLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.privateLabel]!;
   }
 
   String get offlineLabel {
-    return _localizedValues[locale.languageCode]![_Keys.offlineLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.offlineLabel]!;
   }
 
   String get agreeLabel {
-    return _localizedValues[locale.languageCode]![_Keys.agreeLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.agreeLabel]!;
   }
 
   String get deleteLabel {
-    return _localizedValues[locale.languageCode]![_Keys.deleteLabel]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.deleteLabel]!;
   }
 
   String get deleteObjectDescriptionText {
     return _localizedValues[locale.languageCode]![
-        _Keys.deleteDescriptionBodyText]!;
+        LeitmotifLocalizationsKeys.deleteDescriptionBodyText]!;
   }
 
   String get deleteObjectTitle {
-    return _localizedValues[locale.languageCode]![_Keys.deleteObjectTitle]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.deleteObjectTitle]!;
   }
 
   String get confirmDeleteTitle {
-    return _localizedValues[locale.languageCode]![_Keys.confirmDeleteTitle]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.confirmDeleteTitle]!;
   }
 
   String get deleteObjectPrompt {
-    return _localizedValues[locale.languageCode]![_Keys.deleteObjectPrompt]!;
+    return _localizedValues[locale.languageCode]![
+        LeitmotifLocalizationsKeys.deleteObjectPrompt]!;
   }
-}
-
-/// A Leitmotif delegate class initializing the [LeitmotifLocalizations].
-class LeitmotifLocalizationsDelegate
-    extends LocalizationsDelegate<LeitmotifLocalizations> {
-  const LeitmotifLocalizationsDelegate();
-
-  @override
-  bool isSupported(Locale locale) =>
-      LeitmotifLocalizations.languages().contains(locale.languageCode);
-
-  @override
-  Future<LeitmotifLocalizations> load(Locale locale) {
-    // Returning a SynchronousFuture here because an async "load" operation
-    // isn't needed to produce an instance of LeitmotifLocalizations.
-    return SynchronousFuture<LeitmotifLocalizations>(
-      LeitmotifLocalizations(locale),
-    );
-  }
-
-  @override
-  bool shouldReload(LeitmotifLocalizationsDelegate old) => false;
-}
-
-/// Contains all keys that map to a localized value.
-///
-/// The keys on the localization map are accessed using it's corresponding
-/// [_Keys] property to enforce integrity.
-class _Keys {
-  static const String submitLabel = 'submitLabel';
-  static const String applyLabel = 'applyLabel';
-  static const String cancelLabel = 'cancelLabel';
-  static const String startLabel = 'startLabel';
-  static const String selectLabel = 'selectLabel';
-  static const String resetLabel = 'resetLabel';
-  static const String backLabel = 'backLabel';
-  static const String dateInputLabel = 'dateInputLabel';
-  static const String colorInputLabel = 'colorInputLabel';
-  static const String ageInputLabel = 'ageInputLabel';
-  static const String ageRequiredLabel = 'ageRequiredLabel';
-  static const String dayOfWeek1 = 'dayOfWeek1';
-  static const String dayOfWeek2 = 'dayOfWeek2';
-  static const String dayOfWeek3 = 'dayOfWeek3';
-  static const String dayOfWeek4 = 'dayOfWeek4';
-  static const String dayOfWeek5 = 'dayOfWeek5';
-  static const String dayOfWeek6 = 'dayOfWeek6';
-  static const String dayOfWeek7 = 'dayOfWeek7';
-  static const String january = 'january';
-  static const String february = 'february';
-  static const String march = 'march';
-  static const String april = 'april';
-  static const String may = 'may';
-  static const String june = 'june';
-  static const String july = 'july';
-  static const String august = 'august';
-  static const String september = 'september';
-  static const String october = 'october';
-  static const String november = 'november';
-  static const String december = 'december';
-  static const String yourAgeLabel = 'yourAgeLabel';
-  static const String invalidInputLabel = 'invalidInputLabel';
-  static const String invalidInputBody = 'invalidInputBody';
-  static const String invalidInputExtendedBody = 'invalidInputExtendedBody';
-  static const String verifyAgeScreenSuccessTitle =
-      'verifyAgeScreenSuccessTitle';
-  static const String verifyAgeScreenSuccessSubtitle =
-      'verifyAgeScreenSuccessSubtitle';
-  static const String verifyAgeScreenSuccessBody = 'verifyAgeScreenSuccessBody';
-  static const String verifyAgeScreenDescriptionBody =
-      'verifyAgeScreenDescriptionBody';
-  static const String creditsLabel = 'creditsLabel';
-  static const String fullyTransparentLabel = 'fullyTransprentLabel';
-  static const String licensesLabel = 'licensesLabel';
-  static const String notificationLabel = 'notificationLabel';
-  static const String advancedSettingsLabel = 'advancedSettingsLabel';
-  static const String settingsLabel = 'settingsLabel';
-  static const String nextLabel = 'nextLabel';
-  static const String onboardingLabel = 'onboardingLabel';
-  static const String dismissLabel = 'dismissLabel';
-  static const String signUpLabel = 'signUpLabel';
-  static const String privacyPolicyLabel = 'privacyPolicyLabel';
-  static const String privacyLabel = 'privacyLabel';
-  static const String privateLabel = 'privateLabel';
-  static const String offlineLabel = 'offlineLabel';
-  static const String agreeLabel = 'agreeLabel';
-  static const String deleteLabel = 'deleteLabel';
-  static const String deleteDescriptionBodyText = 'deleteDescriptionBodyText';
-  static const String deleteObjectTitle = 'deleteObjectTitle';
-  static const String confirmDeleteTitle = 'confirmDeleteTitle';
-  static const String deleteObjectPrompt = 'deleteObjectPrompt';
 }
