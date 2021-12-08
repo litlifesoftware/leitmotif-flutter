@@ -36,302 +36,246 @@ class LeitmotifLocalizations {
     LeitmotifLocalizationsDe.languageCode: LeitmotifLocalizationsDe.values,
   };
 
-  /// Returns the currently implemented languages as their two-letter code.
+  /// Returns the currently implemented languages as their two-letter codes.
   static List<String> languages() => _localizedValues.keys.toList();
 
-  /// Returns the localized value based on the provided [localizationKey]
-  /// implemented on the corresponding localization class.
+  /// Returns the localized value based on the provided [localizationKey].
   String localizeValue(String localizationKey) {
     return _localizedValues[locale.languageCode]![localizationKey]!;
   }
 
   String get submitLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.submitLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.submitLabel);
   }
 
   String get applyLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.applyLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.applyLabel);
   }
 
   String get cancelLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.cancelLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.cancelLabel);
   }
 
   String get resetLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.resetLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.resetLabel);
   }
 
   String get dateInputLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.dateInputLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.dateInputLabel);
   }
 
   String get colorInputLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.colorInputLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.colorInputLabel);
   }
 
   String get ageInputLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.ageInputLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.ageInputLabel);
   }
 
   String get ageRequiredLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.ageRequiredLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.ageRequiredLabel);
   }
 
   String get startLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.startLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.startLabel);
   }
 
   String get selectLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.selectLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.selectLabel);
   }
 
   String get dayOfWeek1 {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.dayOfWeek1]!;
+    return localizeValue(LeitmotifLocalizationsKeys.dayOfWeek1);
   }
 
   String get dayOfWeek2 {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.dayOfWeek2]!;
+    return localizeValue(LeitmotifLocalizationsKeys.dayOfWeek2);
   }
 
   String get dayOfWeek3 {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.dayOfWeek3]!;
+    return localizeValue(LeitmotifLocalizationsKeys.dayOfWeek3);
   }
 
   String get dayOfWeek4 {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.dayOfWeek4]!;
+    return localizeValue(LeitmotifLocalizationsKeys.dayOfWeek4);
   }
 
   String get dayOfWeek5 {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.dayOfWeek5]!;
+    return localizeValue(LeitmotifLocalizationsKeys.dayOfWeek5);
   }
 
   String get dayOfWeek6 {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.dayOfWeek6]!;
+    return localizeValue(LeitmotifLocalizationsKeys.dayOfWeek6);
   }
 
   String get dayOfWeek7 {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.dayOfWeek7]!;
+    return localizeValue(LeitmotifLocalizationsKeys.dayOfWeek7);
   }
 
   String get january {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.january]!;
+    return localizeValue(LeitmotifLocalizationsKeys.january);
   }
 
   String get february {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.february]!;
+    return localizeValue(LeitmotifLocalizationsKeys.february);
   }
 
   String get march {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.march]!;
+    return localizeValue(LeitmotifLocalizationsKeys.march);
   }
 
   String get april {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.april]!;
+    return localizeValue(LeitmotifLocalizationsKeys.april);
   }
 
   String get may {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.may]!;
+    return localizeValue(LeitmotifLocalizationsKeys.may);
   }
 
   String get june {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.june]!;
+    return localizeValue(LeitmotifLocalizationsKeys.june);
   }
 
   String get july {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.july]!;
+    return localizeValue(LeitmotifLocalizationsKeys.july);
   }
 
   String get august {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.august]!;
+    return localizeValue(LeitmotifLocalizationsKeys.august);
   }
 
   String get september {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.september]!;
+    return localizeValue(LeitmotifLocalizationsKeys.september);
   }
 
   String get october {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.october]!;
+    return localizeValue(LeitmotifLocalizationsKeys.october);
   }
 
   String get november {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.november]!;
+    return localizeValue(LeitmotifLocalizationsKeys.november);
   }
 
   String get december {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.december]!;
+    return localizeValue(LeitmotifLocalizationsKeys.december);
   }
 
   String get yourAgeLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.yourAgeLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.yourAgeLabel);
   }
 
   String get invalidInputLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.invalidInputLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.invalidInputLabel);
   }
 
   String get invalidInputBody {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.invalidInputBody]!;
+    return localizeValue(LeitmotifLocalizationsKeys.invalidInputBody);
   }
 
   String get invalidInputExtendedBody {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.invalidInputExtendedBody]!;
+    return localizeValue(LeitmotifLocalizationsKeys.invalidInputExtendedBody);
   }
 
   String get verifyAgeScreenSuccessTitle {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.verifyAgeScreenSuccessTitle]!;
+    return localizeValue(
+        LeitmotifLocalizationsKeys.verifyAgeScreenSuccessTitle);
   }
 
   String get verifyAgeScreenSuccessSubtitle {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.verifyAgeScreenSuccessSubtitle]!;
+    return localizeValue(
+        LeitmotifLocalizationsKeys.verifyAgeScreenSuccessSubtitle);
   }
 
   String get verifyAgeScreenSuccessBody {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.verifyAgeScreenSuccessBody]!;
+    return localizeValue(LeitmotifLocalizationsKeys.verifyAgeScreenSuccessBody);
   }
 
   String get verifyAgeScreenDescriptionBody {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.verifyAgeScreenDescriptionBody]!;
+    return localizeValue(
+        LeitmotifLocalizationsKeys.verifyAgeScreenDescriptionBody);
   }
 
   String get creditsLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.creditsLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.creditsLabel);
   }
 
   String get fullyTransprentLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.fullyTransparentLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.fullyTransparentLabel);
   }
 
   String get licensesLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.licensesLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.licensesLabel);
   }
 
   String get backLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.backLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.backLabel);
   }
 
   String get notificationLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.notificationLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.notificationLabel);
   }
 
   String get advancedSettingsLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.advancedSettingsLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.advancedSettingsLabel);
   }
 
   String get settingsLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.settingsLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.settingsLabel);
   }
 
   String get nextLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.nextLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.nextLabel);
   }
 
   String get onboardingLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.onboardingLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.onboardingLabel);
   }
 
   String get dismissLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.dismissLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.dismissLabel);
   }
 
   String get signUpLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.signUpLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.signUpLabel);
   }
 
   String get privacyPolicyLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.privacyPolicyLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.privacyPolicyLabel);
   }
 
   String get privacyLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.privacyLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.privacyLabel);
   }
 
   String get privateLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.privateLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.privateLabel);
   }
 
   String get offlineLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.offlineLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.offlineLabel);
   }
 
   String get agreeLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.agreeLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.agreeLabel);
   }
 
   String get deleteLabel {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.deleteLabel]!;
+    return localizeValue(LeitmotifLocalizationsKeys.deleteLabel);
   }
 
   String get deleteObjectDescriptionText {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.deleteDescriptionBodyText]!;
+    return localizeValue(LeitmotifLocalizationsKeys.deleteDescriptionBodyText);
   }
 
   String get deleteObjectTitle {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.deleteObjectTitle]!;
+    return localizeValue(LeitmotifLocalizationsKeys.deleteObjectTitle);
   }
 
   String get confirmDeleteTitle {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.confirmDeleteTitle]!;
+    return localizeValue(LeitmotifLocalizationsKeys.confirmDeleteTitle);
   }
 
   String get deleteObjectPrompt {
-    return _localizedValues[locale.languageCode]![
-        LeitmotifLocalizationsKeys.deleteObjectPrompt]!;
+    return localizeValue(LeitmotifLocalizationsKeys.deleteObjectPrompt);
   }
 }
