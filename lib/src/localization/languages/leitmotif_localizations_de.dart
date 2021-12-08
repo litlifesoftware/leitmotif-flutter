@@ -2,7 +2,7 @@ import 'package:leitmotif/leitmotif.dart';
 
 /// The `de` language implementation of the [LeitmotifLocalizations].
 class LeitmotifLocalizationsDe {
-  /// The language code of German locales.
+  /// The language code of German-speaking locales.
   static const languageCode = 'de';
 
   /// The localized values.
@@ -14,7 +14,7 @@ class LeitmotifLocalizationsDe {
     LeitmotifLocalizationsKeys.selectLabel: 'Auswählen',
     LeitmotifLocalizationsKeys.resetLabel: 'Zurücksetzen',
     LeitmotifLocalizationsKeys.dateInputLabel: 'Datum eingeben',
-    LeitmotifLocalizationsKeys.colorInputLabel: 'Enter Color',
+    LeitmotifLocalizationsKeys.colorInputLabel: 'Farbe auswählen',
     LeitmotifLocalizationsKeys.ageInputLabel: 'Gib dein Alter ein',
     LeitmotifLocalizationsKeys.ageRequiredLabel:
         'Diese App benötigt dein Alter',
@@ -53,9 +53,7 @@ class LeitmotifLocalizationsDe {
     LeitmotifLocalizationsKeys.verifyAgeScreenDescriptionBody:
         "Dein Alter hilft uns Funktionen dieser App zu gewährleisten." +
             " " +
-            "Diese App wird keine Daten weitergeben." +
-            " " +
-            "Dein Alter wird geteilt.",
+            "Diese App wird keine Daten weitergeben.",
     LeitmotifLocalizationsKeys.creditsLabel: 'Mitwirkende',
     LeitmotifLocalizationsKeys.fullyTransparentLabel:
         'Diese Farbe ist vollständig transparent',

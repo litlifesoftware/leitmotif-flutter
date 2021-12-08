@@ -2,7 +2,7 @@ import 'package:leitmotif/localization.dart';
 
 /// The `en` language implementation of the [LeitmotifLocalizations].
 class LeitmotifLocalizationsEn {
-  /// The language code of English locales.
+  /// The language code of English-speaking locales.
   static const languageCode = 'en';
 
   /// The localized values.
