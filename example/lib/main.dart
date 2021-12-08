@@ -29,14 +29,14 @@ class _LeitmotifExampleState extends State<LeitmotifExample> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(textTheme: LitSansSerifStyles.theme),
       localizationsDelegates: const [
-        LeitmotifLocalizationsDelegate(),
+        LeitmotifLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('en', ''),
-        Locale('de', ''),
+        Locale(LeitmotifLocalizationsEn.languageCode, ''),
+        Locale(LeitmotifLocalizationsDe.languageCode, ''),
       ],
       home: ExampleHomeScreen(),
     );

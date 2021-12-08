@@ -41,15 +41,15 @@ Some widgets also require the `GlobalMaterialLocalizations.delegate`, `GlobalWid
 ```dart
     return MaterialApp(
       title: 'Leitmotif',
-      localizationsDelegates: const [
-        LeitmotifLocalizationsDelegate(),
+        localizationsDelegates: const [
+        LeitmotifLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('en', ''),
-        Locale('de', ''),
+        Locale(LeitmotifLocalizationsEn.languageCode, ''),
+        Locale(LeitmotifLocalizationsDe.languageCode, ''),
       ],
       home: ExampleHomeScreen(),
     );
