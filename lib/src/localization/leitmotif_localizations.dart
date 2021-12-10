@@ -36,8 +36,20 @@ class LeitmotifLocalizations {
     LeitmotifLocalizationsDe.languageCode: LeitmotifLocalizationsDe.values,
   };
 
-  /// Returns the currently implemented languages as their two-letter codes.
-  static List<String> languages() => _localizedValues.keys.toList();
+  /// Returns the currently implemented languages inside the localization map
+  /// as their key.
+  static List<String> get languages => _localizedValues.keys.toList();
+
+  /// Returns a list of all supported locales.
+  ///
+  /// This list can be provided to the root [MaterialApp] as `supportedLocales`
+  /// member value.
+  static const supportedLocales = const [
+    // English locale (no contry code)
+    Locale(LeitmotifLocalizationsEn.languageCode),
+    // German (no contry code)
+    Locale(LeitmotifLocalizationsDe.languageCode),
+  ];
 
   /// Returns the localized value based on the provided [localizationKey].
   String localizeValue(String localizationKey) {

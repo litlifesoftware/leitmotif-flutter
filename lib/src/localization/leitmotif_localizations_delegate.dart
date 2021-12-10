@@ -10,7 +10,7 @@ class LeitmotifLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      LeitmotifLocalizations.languages().contains(locale.languageCode);
+      LeitmotifLocalizations.languages.contains(locale.languageCode);
 
   @override
   Future<LeitmotifLocalizations> load(Locale locale) {

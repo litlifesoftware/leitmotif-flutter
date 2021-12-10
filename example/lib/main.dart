@@ -34,10 +34,7 @@ class _LeitmotifExampleState extends State<LeitmotifExample> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale(LeitmotifLocalizationsEn.languageCode, ''),
-        Locale(LeitmotifLocalizationsDe.languageCode, ''),
-      ],
+      supportedLocales: LeitmotifLocalizations.supportedLocales,
       home: ExampleHomeScreen(),
     );
   }
