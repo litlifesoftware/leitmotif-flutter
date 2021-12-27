@@ -31,9 +31,9 @@ class LeitmotifLocalizations {
   /// * `German`
   static const _localizedValues = <String, Map<String, String>>{
     // 'English' localization
-    LeitmotifLocalizationsEn.languageCode: LeitmotifLocalizationsEn.values,
+    LeitmotifLocalizationsEN.languageCode: LeitmotifLocalizationsEN.values,
     // 'German' localization
-    LeitmotifLocalizationsDe.languageCode: LeitmotifLocalizationsDe.values,
+    LeitmotifLocalizationsDE.languageCode: LeitmotifLocalizationsDE.values,
   };
 
   /// Returns the currently implemented languages inside the localization map
@@ -46,9 +46,9 @@ class LeitmotifLocalizations {
   /// member value.
   static const supportedLocales = const [
     // English locale (no contry code)
-    Locale(LeitmotifLocalizationsEn.languageCode),
+    Locale(LeitmotifLocalizationsEN.languageCode),
     // German (no contry code)
-    Locale(LeitmotifLocalizationsDe.languageCode),
+    Locale(LeitmotifLocalizationsDE.languageCode),
   ];
 
   /// Returns the localized value based on the provided [localizationKey].
@@ -289,5 +289,121 @@ class LeitmotifLocalizations {
 
   String get deleteObjectPrompt {
     return localizeValue(LeitmotifLocalizationsKeys.deleteObjectPrompt);
+  }
+
+  String get composeLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.composeLabel);
+  }
+
+  String get createLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.createLabel);
+  }
+
+  String get aboutAppLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.aboutAppLabel);
+  }
+
+  String get userExpericenceDesignLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.userExpericenceDesignLabel);
+  }
+
+  String get developmentLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.developmentLabel);
+  }
+
+  String get photographyLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.photographyLabel);
+  }
+
+  String get manageBackupLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.manageBackupLabel);
+  }
+
+  String get startTourLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.startTourLabel);
+  }
+
+  String get creatorLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.creatorLabel);
+  }
+
+  String get allLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.allLabel);
+  }
+
+  String get latestLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.latestLabel);
+  }
+
+  String get unsavedLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.unsavedLabel);
+  }
+
+  String get restoreLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.restoreLabel);
+  }
+
+  String get savedLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.savedLabel);
+  }
+
+  String get locationLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.locationLabel);
+  }
+
+  String get publishedLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.publishedLabel);
+  }
+
+  String get statisticsLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.statisticsLabel);
+  }
+
+  String get selectBackupTitle {
+    return localizeValue(LeitmotifLocalizationsKeys.selectBackupTitle);
+  }
+
+  String get restoreFromBackupTitle {
+    return localizeValue(LeitmotifLocalizationsKeys.restoreFromBackupTitle);
+  }
+
+  String get unsupportedFileTitle {
+    return localizeValue(LeitmotifLocalizationsKeys.unsupportedFileTitle);
+  }
+
+  String get unsupportedFileDescr {
+    return localizeValue(LeitmotifLocalizationsKeys.unsupportedFileDescr);
+  }
+
+  String get createdOnLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.createdOnLabel);
+  }
+
+  String get lessLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.lessLabel);
+  }
+
+  String get moreLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.moreLabel);
+  }
+
+  String get todayLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.todayLabel);
+  }
+
+  String get anotherDayLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.anotherDayLabel);
+  }
+
+  String get pickFileLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.pickFileLabel);
+  }
+
+  String get selectedLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.selectedLabel);
+  }
+
+  String get upToDateLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.upToDateLabel);
   }
 }

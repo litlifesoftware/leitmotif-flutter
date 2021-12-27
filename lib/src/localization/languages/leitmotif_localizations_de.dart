@@ -1,7 +1,7 @@
 import 'package:leitmotif/leitmotif.dart';
 
 /// The `de` language implementation of the [LeitmotifLocalizations].
-class LeitmotifLocalizationsDe {
+class LeitmotifLocalizationsDE {
   /// The language code of German-speaking locales.
   static const languageCode = 'de';
 
@@ -81,5 +81,37 @@ class LeitmotifLocalizationsDe {
     LeitmotifLocalizationsKeys.confirmDeleteTitle: 'Löschen bestätigen',
     LeitmotifLocalizationsKeys.deleteObjectPrompt:
         'Möchtest du dieses Objekt löschen?',
+    LeitmotifLocalizationsKeys.composeLabel: 'Verfassen',
+    LeitmotifLocalizationsKeys.createLabel: 'Erstellen',
+    LeitmotifLocalizationsKeys.aboutAppLabel: 'Über diese App',
+    LeitmotifLocalizationsKeys.userExpericenceDesignLabel:
+        'User Experience Design',
+    LeitmotifLocalizationsKeys.developmentLabel: 'Entwicklung',
+    LeitmotifLocalizationsKeys.photographyLabel: 'Fotos',
+    LeitmotifLocalizationsKeys.manageBackupLabel: 'Sicherung verwalten',
+    LeitmotifLocalizationsKeys.startTourLabel: 'Rundgang starten',
+    LeitmotifLocalizationsKeys.creatorLabel: 'Ersteller',
+    LeitmotifLocalizationsKeys.allLabel: 'alle',
+    LeitmotifLocalizationsKeys.latestLabel: 'aktuell',
+    LeitmotifLocalizationsKeys.unsavedLabel: 'ungespeichert',
+    LeitmotifLocalizationsKeys.restoreLabel: 'Wiederherstellen',
+    LeitmotifLocalizationsKeys.savedLabel: 'Gespeichert',
+    LeitmotifLocalizationsKeys.locationLabel: 'Ort',
+    LeitmotifLocalizationsKeys.publishedLabel: 'Veröffentlicht',
+    LeitmotifLocalizationsKeys.statisticsLabel: 'Statistiken',
+    LeitmotifLocalizationsKeys.selectBackupTitle: 'Backup auswählen',
+    LeitmotifLocalizationsKeys.restoreFromBackupTitle:
+        'Sicherung wiederherstellen',
+    LeitmotifLocalizationsKeys.unsupportedFileTitle: 'Nicht unterstützt',
+    LeitmotifLocalizationsKeys.unsupportedFileDescr:
+        'Diese Datei wird nicht unterstützt.',
+    LeitmotifLocalizationsKeys.createdOnLabel: 'Erstellt am',
+    LeitmotifLocalizationsKeys.lessLabel: 'Weniger',
+    LeitmotifLocalizationsKeys.moreLabel: 'Mehr',
+    LeitmotifLocalizationsKeys.todayLabel: 'heute',
+    LeitmotifLocalizationsKeys.anotherDayLabel: 'anderer Tag',
+    LeitmotifLocalizationsKeys.pickFileLabel: 'Auswählen',
+    LeitmotifLocalizationsKeys.selectedLabel: 'ausgewählt',
+    LeitmotifLocalizationsKeys.upToDateLabel: 'Aktuell',
   };
 }

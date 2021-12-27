@@ -1,7 +1,7 @@
 import 'package:leitmotif/localization.dart';
 
 /// The `en` language implementation of the [LeitmotifLocalizations].
-class LeitmotifLocalizationsEn {
+class LeitmotifLocalizationsEN {
   /// The language code of English-speaking locales.
   static const languageCode = 'en';
 
@@ -80,5 +80,36 @@ class LeitmotifLocalizationsEn {
     LeitmotifLocalizationsKeys.confirmDeleteTitle: 'Confirm Delete',
     LeitmotifLocalizationsKeys.deleteObjectPrompt:
         'Do you want to delete this object?',
+    LeitmotifLocalizationsKeys.composeLabel: 'compose',
+    LeitmotifLocalizationsKeys.createLabel: 'create',
+    LeitmotifLocalizationsKeys.aboutAppLabel: 'About this app',
+    LeitmotifLocalizationsKeys.userExpericenceDesignLabel:
+        'User Experience Design',
+    LeitmotifLocalizationsKeys.developmentLabel: 'Development',
+    LeitmotifLocalizationsKeys.photographyLabel: 'Photography',
+    LeitmotifLocalizationsKeys.manageBackupLabel: 'Manage Backup',
+    LeitmotifLocalizationsKeys.startTourLabel: 'Start tour',
+    LeitmotifLocalizationsKeys.creatorLabel: 'Creator',
+    LeitmotifLocalizationsKeys.allLabel: 'all',
+    LeitmotifLocalizationsKeys.latestLabel: 'latest',
+    LeitmotifLocalizationsKeys.unsavedLabel: 'unsaved',
+    LeitmotifLocalizationsKeys.restoreLabel: 'Restore',
+    LeitmotifLocalizationsKeys.savedLabel: 'Saved',
+    LeitmotifLocalizationsKeys.locationLabel: 'Location',
+    LeitmotifLocalizationsKeys.publishedLabel: 'published',
+    LeitmotifLocalizationsKeys.statisticsLabel: 'Statistics',
+    LeitmotifLocalizationsKeys.selectBackupTitle: 'Select Backup',
+    LeitmotifLocalizationsKeys.restoreFromBackupTitle: 'Restore from Backup',
+    LeitmotifLocalizationsKeys.unsupportedFileTitle: 'Not supported',
+    LeitmotifLocalizationsKeys.unsupportedFileDescr:
+        'This file is not supported.',
+    LeitmotifLocalizationsKeys.createdOnLabel: 'Created on',
+    LeitmotifLocalizationsKeys.lessLabel: 'less',
+    LeitmotifLocalizationsKeys.moreLabel: 'more',
+    LeitmotifLocalizationsKeys.todayLabel: 'today',
+    LeitmotifLocalizationsKeys.anotherDayLabel: 'another day',
+    LeitmotifLocalizationsKeys.pickFileLabel: 'Select file',
+    LeitmotifLocalizationsKeys.selectedLabel: 'selected',
+    LeitmotifLocalizationsKeys.upToDateLabel: 'Up to date',
   };
 }
