@@ -111,5 +111,11 @@ class LeitmotifLocalizationsEN {
     LeitmotifLocalizationsKeys.pickFileLabel: 'Select file',
     LeitmotifLocalizationsKeys.selectedLabel: 'selected',
     LeitmotifLocalizationsKeys.upToDateLabel: 'Up to date',
+    LeitmotifLocalizationsKeys.unsavedChangesLabel: 'Unsaved Changes',
+    LeitmotifLocalizationsKeys.discardLabel: 'Discard',
+    LeitmotifLocalizationsKeys.discardDesc:
+        'There have been unsaved changes detected.',
+    LeitmotifLocalizationsKeys.confirmDiscardActionDescr:
+        'Do you want to discard your changes?',
   };
 }

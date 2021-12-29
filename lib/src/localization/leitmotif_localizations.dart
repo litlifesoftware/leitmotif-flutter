@@ -406,4 +406,20 @@ class LeitmotifLocalizations {
   String get upToDateLabel {
     return localizeValue(LeitmotifLocalizationsKeys.upToDateLabel);
   }
+
+  String get unsavedChangesLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.unsavedChangesLabel);
+  }
+
+  String get discardLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.discardLabel);
+  }
+
+  String get discardDesc {
+    return localizeValue(LeitmotifLocalizationsKeys.discardDesc);
+  }
+
+  String get confirmDiscardActionDescr {
+    return localizeValue(LeitmotifLocalizationsKeys.confirmDiscardActionDescr);
+  }
 }

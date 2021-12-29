@@ -43,18 +43,8 @@ class DiscardDraftDialogLocalization {
 ///
 /// [onDiscard] is called once the user confirms to discard the draft.
 class DiscardDraftDialog extends StatefulWidget {
-  /// The dialog's default localization.
-  static const DiscardDraftDialogLocalization _defaultLocalization =
-      DiscardDraftDialogLocalization(
-    title: "Unsaved Changes",
-    discardButtonLabel: "Discard",
-    cancelButtonLabel: "Cancel",
-    descriptionBody: "There have been unsaved changes detected.",
-    confirmDiscardBody: "Do you want to discard your changes?",
-  );
-
   /// The dialog's localization.
-  final DiscardDraftDialogLocalization localizationData;
+  final DiscardDraftDialogLocalization? localization;
 
   final EdgeInsets margin;
 
@@ -67,7 +57,7 @@ class DiscardDraftDialog extends StatefulWidget {
   /// Creates a [DiscardDraftDialog].
   const DiscardDraftDialog({
     Key? key,
-    this.localizationData = _defaultLocalization,
+    this.localization,
     this.margin = const EdgeInsets.symmetric(
       horizontal: 16.0,
       vertical: 8.0,
@@ -99,6 +89,11 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
     return minOpacity + (_animationValue * (1.0 - minOpacity));
   }
 
+  /// Returns whether custom localizations are available.
+  bool get _l10nAvail {
+    return widget.localization != null;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -118,7 +113,9 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
   @override
   Widget build(BuildContext context) {
     return LitTitledDialog(
-      titleText: widget.localizationData.title,
+      titleText: _l10nAvail
+          ? widget.localization!.title
+          : LeitmotifLocalizations.of(context).unsavedChangesLabel,
       margin: widget.margin,
       child: AnimatedBuilder(
         animation: _animationController,
@@ -133,11 +130,16 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
               children: [
                 _Spacing(),
                 LitDescriptionTextBox(
-                  text: widget.localizationData.descriptionBody,
+                  text: _l10nAvail
+                      ? widget.localization!.descriptionBody
+                      : LeitmotifLocalizations.of(context).discardDesc,
                   maxLines: 3,
                 ),
                 ClippedText(
-                  widget.localizationData.confirmDiscardBody,
+                  _l10nAvail
+                      ? widget.localization!.confirmDiscardBody
+                      : LeitmotifLocalizations.of(context)
+                          .confirmDiscardActionDescr,
                   textAlign: TextAlign.left,
                   style: LitSansSerifStyles.body2,
                   maxLines: 2,
@@ -151,15 +153,19 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
       actionButtons: [
         DialogActionButton(
           data: ActionButtonData(
-            title: widget.localizationData.cancelButtonLabel,
+            title: _l10nAvail
+                ? widget.localization!.cancelButtonLabel
+                : LeitmotifLocalizations.of(context).cancelLabel,
             onPressed: _onCancel,
-            accentColor: LitColors.lightGrey,
-            backgroundColor: LitColors.lightGrey,
           ),
         ),
         DialogActionButton(
           data: ActionButtonData(
-            title: widget.localizationData.discardButtonLabel,
+            title: _l10nAvail
+                ? widget.localization!.discardButtonLabel
+                : LeitmotifLocalizations.of(context).discardLabel,
+            accentColor: LitColors.red200,
+            backgroundColor: LitColors.red200,
             onPressed: widget.onDiscard,
           ),
         ),

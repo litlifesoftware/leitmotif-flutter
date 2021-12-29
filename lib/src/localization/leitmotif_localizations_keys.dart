@@ -95,4 +95,8 @@ class LeitmotifLocalizationsKeys {
   static const String pickFileLabel = 'pickFileLabel';
   static const String selectedLabel = 'selectedLabel';
   static const String upToDateLabel = 'upToDateLabel';
+  static const String unsavedChangesLabel = 'unsavedChangesLabel';
+  static const String discardLabel = 'discardLabel';
+  static const String discardDesc = 'discardDesc';
+  static const String confirmDiscardActionDescr = 'confirmDiscardActionDescr';
 }

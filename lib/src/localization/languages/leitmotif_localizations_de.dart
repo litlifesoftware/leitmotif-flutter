@@ -113,5 +113,11 @@ class LeitmotifLocalizationsDE {
     LeitmotifLocalizationsKeys.pickFileLabel: 'Auswählen',
     LeitmotifLocalizationsKeys.selectedLabel: 'ausgewählt',
     LeitmotifLocalizationsKeys.upToDateLabel: 'Aktuell',
+    LeitmotifLocalizationsKeys.unsavedChangesLabel: 'Ungespeicherte Änderungen',
+    LeitmotifLocalizationsKeys.discardLabel: 'Verwerfen',
+    LeitmotifLocalizationsKeys.discardDesc:
+        'Es wurden ungespeicherte Änderungen festgestellt.',
+    LeitmotifLocalizationsKeys.confirmDiscardActionDescr:
+        'Möchstest du deine Änderungen verwerfen?',
   };
 }
