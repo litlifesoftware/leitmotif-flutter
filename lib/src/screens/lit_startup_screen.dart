@@ -25,22 +25,26 @@ class LitStartupScreen extends StatefulWidget {
   /// Creates a [LitStartupScreen].
   const LitStartupScreen({
     Key? key,
-    this.animationDuration = const Duration(
-      milliseconds: 6000,
-    ),
+    this.animationDuration = backgroundAnimationDuration,
     this.art,
     this.title,
     this.subtitle,
     this.backgroundSize = 256.0,
   }) : super(key: key);
+
+  /// The default background animation's duration.
+  static const backgroundAnimationDuration = const Duration(
+    milliseconds: 6000,
+  );
+
   @override
   _LitStartupScreenState createState() => _LitStartupScreenState();
 }
 
 class _LitStartupScreenState extends State<LitStartupScreen>
     with TickerProviderStateMixin {
-  late AnimationController _animationController;
-  late AnimationController _animationControllerCont;
+  late AnimationController _fadeAnimation;
+  late AnimationController _animatedBackground;
 
   static const Duration _fadeDuration = LitAnimationDurations.appearAnimation;
 
@@ -50,16 +54,18 @@ class _LitStartupScreenState extends State<LitStartupScreen>
 
   static const double _spacingY = 30.0;
 
+  static const defaultTitle = "LitLifeSoftware";
+
   @override
   void initState() {
     super.initState();
 
-    _animationControllerCont = AnimationController(
+    _animatedBackground = AnimationController(
       vsync: this,
       duration: widget.animationDuration,
     )..repeat(reverse: false);
 
-    _animationController = AnimationController(
+    _fadeAnimation = AnimationController(
       vsync: this,
       duration: _fadeDuration,
     )..forward();
@@ -67,8 +73,8 @@ class _LitStartupScreenState extends State<LitStartupScreen>
 
   @override
   void dispose() {
-    _animationController.dispose();
-    _animationControllerCont.dispose();
+    _fadeAnimation.dispose();
+    _animatedBackground.dispose();
     super.dispose();
   }
 
@@ -86,35 +92,39 @@ class _LitStartupScreenState extends State<LitStartupScreen>
             alignment: Alignment.center,
             children: [
               _AnimatedBackground(
-                animationController: _animationControllerCont,
+                animationController: _animatedBackground,
                 size: widget.backgroundSize,
               ),
               AnimatedBuilder(
-                animation: _animationController,
+                animation: _fadeAnimation,
                 child: widget.art ?? const LitLifeBlurredBackgroundLogo(),
                 builder: (context, child) {
                   return AnimatedOpacity(
                     duration: _fadeDuration,
-                    opacity: _animationController.value,
+                    opacity: _fadeAnimation.value,
                     child: child,
                   );
                 },
               ),
               AnimatedBuilder(
-                animation: _animationController,
+                animation: _fadeAnimation,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: _spacingY),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: _spacingY,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        widget.title ?? "LitLifeSoftware",
+                        widget.title ?? defaultTitle,
                         style: LitSansSerifStyles.h5.copyWith(
                           color: Colors.white,
                           shadows: LitBoxShadows.textMd,
                         ),
                       ),
-                      SizedBox(height: _spacingY),
+                      SizedBox(
+                        height: _spacingY,
+                      ),
                       Text(
                         widget.subtitle ??
                             '\u00a9' + ' ' + DateTime.now().year.toString(),
@@ -122,14 +132,16 @@ class _LitStartupScreenState extends State<LitStartupScreen>
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(height: _spacingY),
+                      SizedBox(
+                        height: _spacingY,
+                      ),
                     ],
                   ),
                 ),
                 builder: (context, child) {
                   return AnimatedOpacity(
-                    duration: _animationController.duration!,
-                    opacity: _animationController.value,
+                    duration: _fadeAnimation.duration!,
+                    opacity: _fadeAnimation.value,
                     child: child,
                   );
                 },
@@ -154,24 +166,19 @@ class _AnimatedBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        AnimatedBuilder(
-          animation: animationController,
-          builder: (context, _) {
-            return SizedBox(
-              height: size,
-              width: size,
-              child: CustomPaint(
-                painter: BackgroundBubblesPainter(
-                  animationController: animationController,
-                ),
-              ),
-            );
-          },
-        ),
-      ],
+    return SizedBox(
+      height: size,
+      width: size,
+      child: AnimatedBuilder(
+        animation: animationController,
+        builder: (context, _) {
+          return CustomPaint(
+            painter: BackgroundBubblesPainter(
+              animationController: animationController,
+            ),
+          );
+        },
+      ),
     );
   }
 }
