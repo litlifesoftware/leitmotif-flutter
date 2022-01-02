@@ -34,6 +34,9 @@ class LitOnboardingScreen extends StatefulWidget {
   /// The screen's background decoration.
   final BoxDecoration backgroundDecoration;
 
+  /// States whether to show a icon on the `dismiss` action button.
+  final bool showButtonIcon;
+
   /// Handles the `dismiss` action.
   ///
   /// This could either be navigating back or navigating to a new screen.
@@ -45,9 +48,9 @@ class LitOnboardingScreen extends StatefulWidget {
     required this.textItems,
     this.localization,
     this.art = const SizedBox(),
-    this.backgroundDecoration = const BoxDecoration(
-      gradient: LitGradients.pinkWhite,
-    ),
+    this.backgroundDecoration =
+        const BoxDecoration(gradient: LitGradients.pinkWhite),
+    this.showButtonIcon = true,
     required this.onDismiss,
   }) : super(key: key);
 
@@ -56,6 +59,7 @@ class LitOnboardingScreen extends StatefulWidget {
 }
 
 class _LitOnboardingScreenState extends State<LitOnboardingScreen> {
+  /// The main column's scroll controller.
   late ScrollController _scrollController;
 
   /// Evaluates whether localizations are provided.
@@ -72,13 +76,8 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen> {
     );
   }
 
-  static const EdgeInsets _pageViewPadding = const EdgeInsets.symmetric(
-    horizontal: 16.0,
-    vertical: 16.0,
-  );
-
   double get _spacingTop {
-    return _pageViewPadding.vertical * 2;
+    return LitEdgeInsets.card.vertical * 2;
   }
 
   @override
@@ -116,9 +115,10 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen> {
               widget.art,
               LitTextPageView(
                 textItems: widget.textItems,
-                padding: _pageViewPadding,
-                nextButtonLabel:
-                    _l10nAvail ? widget.localization!.nextLabel : null,
+                padding: LitEdgeInsets.card,
+                nextButtonLabel: _l10nAvail
+                    ? widget.localization!.nextLabel
+                    : LeitmotifLocalizations.of(context).nextLabel,
               ),
             ],
           ),
@@ -128,19 +128,22 @@ class _LitOnboardingScreenState extends State<LitOnboardingScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  LitIcons.times,
-                  size: 11.0,
-                  color: LitSansSerifStyles.defaultColor,
-                ),
+                widget.showButtonIcon
+                    ? Icon(
+                        LitIcons.times,
+                        size: 11.0,
+                        color: LitSansSerifStyles.defaultColor,
+                      )
+                    : SizedBox(),
                 SizedBox(
                   width: 4.0,
                 ),
                 Text(
-                  (_l10nAvail
-                          ? widget.localization!.dismissLabel
-                          : LeitmotifLocalizations.of(context).dismissLabel)
-                      .toUpperCase(),
+                  _l10nAvail
+                      ? widget.localization!.dismissLabel.toUpperCase()
+                      : LeitmotifLocalizations.of(context)
+                          .dismissLabel
+                          .toUpperCase(),
                   style: LitSansSerifStyles.button,
                 ),
               ],
