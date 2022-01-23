@@ -1,3 +1,8 @@
+## 2.0.2
+- Add `ConfirmDeleteDialog`, a dialog widget to confirm a delete action.
+- Add additional localizations.
+- Refactor a variety of widgets and classes.
+
 ## 2.0.1
 
 - Add `LitDeleteButton`, a red-themed button to delete content.
