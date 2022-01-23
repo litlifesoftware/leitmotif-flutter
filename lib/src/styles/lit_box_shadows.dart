@@ -26,7 +26,7 @@ class LitBoxShadows {
   static const List<BoxShadow> md = const [
     const BoxShadow(
       offset: Offset(-3.0, 3.0),
-      blurRadius: 4.0,
+      blurRadius: 8.0,
       color: Colors.black38,
       spreadRadius: -1.0,
     )
@@ -36,7 +36,7 @@ class LitBoxShadows {
   static const List<BoxShadow> lg = const [
     const BoxShadow(
       offset: Offset(-4.0, 4.0),
-      blurRadius: 6.0,
+      blurRadius: 12.0,
       color: Colors.black38,
       spreadRadius: -2.0,
     )
