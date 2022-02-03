@@ -44,31 +44,27 @@ class LitUserIcon extends StatefulWidget {
 }
 
 class __UserIconState extends State<LitUserIcon> {
-  /// Returns a stylized user color.
-  Color get _color {
-    return widget.color.desat(0.75);
-  }
+  /// Returns a desaturated main color.
+  Color get _color => widget.color.desat(0.65);
+
+  /// Returns a desaturated accent color.
+  Color get _accentColor => widget.accentColor.desat(0.35);
+
+  List<String> get names =>
+      widget.name.length > 0 ? widget.name.split(" ") : [];
 
   /// Returns the initials of the user derived by the username.
   String get _initials {
-    String initals = "";
-    List<String> names = widget.name.split(" ");
-    bool exceeded = initals.length < 3;
-    // Add the first character of each substring (name elements).
-    for (String nameElement in names) {
-      if (exceeded) {
-        initals = initals +
-            // If there is only one element and the element's length
-            //  does not exceed three characters, adopt the whole element's
-            // content.
-            ((nameElement.length < 3 && names.length == 1)
-                ? nameElement
-                // Else, shorten it.
-                : nameElement.substring(0, 1));
-      }
+    if (names.length == 1) {
+      return names.first.substring(0, 1);
+    }
+    // Ignore middle names by using only the first and the last name's
+    // initials.
+    if (names.length > 1) {
+      return names.first.substring(0, 1) + names.last.substring(0, 1);
     }
 
-    return initals;
+    return "";
   }
 
   /// Returns either a dark or a light themed text color based on the contrast
@@ -129,7 +125,8 @@ class __UserIconState extends State<LitUserIcon> {
               gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
-                colors: [Colors.white, _color],
+                colors: [_accentColor, _color],
+                stops: [0.05, 0.65],
               ),
               borderRadius: _borderRadius,
             ),
