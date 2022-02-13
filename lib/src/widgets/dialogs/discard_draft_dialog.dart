@@ -141,7 +141,7 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
                       : LeitmotifLocalizations.of(context)
                           .confirmDiscardActionDescr,
                   textAlign: TextAlign.left,
-                  style: LitSansSerifStyles.body2,
+                  style: LitSansSerifStyles.caption,
                   maxLines: 2,
                 ),
                 _Spacing(),
@@ -164,8 +164,8 @@ class _DiscardDraftDialogState extends State<DiscardDraftDialog>
             title: _l10nAvail
                 ? widget.localization!.discardButtonLabel
                 : LeitmotifLocalizations.of(context).discardLabel,
-            accentColor: LitColors.red200,
-            backgroundColor: LitColors.red200,
+            accentColor: LitDeleteButton.accentColor,
+            backgroundColor: LitDeleteButton.backgroundColor,
             onPressed: widget.onDiscard,
           ),
         ),
