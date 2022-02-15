@@ -54,8 +54,8 @@ class CollapseOnScrollActionButton extends StatefulWidget
     this.collapseDuration = const Duration(milliseconds: 500),
     this.requiredScrollOffset = 64.0,
     this.padding = const EdgeInsets.symmetric(
-      vertical: 8.0,
-      horizontal: 22.0,
+      vertical: 12.0,
+      horizontal: 24.0,
     ),
     this.blurred = true,
     required this.onPressed,
@@ -75,12 +75,8 @@ class _CollapseOnScrollActionButtonState
 
   /// Create a animated accent color using the [_colorAnimation].
   Color get _accentColor {
-    final int contrastingColorValue =
-        (0xFFFFFFFF - widget.backgroundColor.value);
-    final Color? contrastingColor =
-        Color.lerp(Color(contrastingColorValue), widget.backgroundColor, 0.75);
-    return Color.lerp(
-            widget.backgroundColor, contrastingColor, _colorAnimation.value) ??
+    return Color.lerp(widget.accentColor, widget.backgroundColor,
+            _colorAnimation.value) ??
         widget.accentColor;
   }
 
@@ -95,6 +91,13 @@ class _CollapseOnScrollActionButtonState
   AnimationController get _scrollAnimation {
     return _animationOnScrollController.animationController;
   }
+
+  Color get _textColor => widget.backgroundColor.applyColorByContrast(
+        LitColors.white,
+        Color.lerp(LitColors.grey500, LitColors.grey380,
+                1.0 - _colorAnimation.value) ??
+            LitColors.grey500,
+      );
 
   @override
   void initState() {
@@ -152,9 +155,9 @@ class _CollapseOnScrollActionButtonState
                           ),
                           child: Text(
                             widget.label,
-                            style: LitTextStyles.sansSerif.copyWith(
-                              color: Colors.white,
-                              fontSize: (1.0 - _scrollAnimation.value) * 15.0,
+                            style: LitSansSerifStyles.button.copyWith(
+                              color: _textColor,
+                              fontSize: (1.0 - _scrollAnimation.value) * 16.0,
                               letterSpacing: 0.75,
                             ),
                           ),
@@ -164,8 +167,8 @@ class _CollapseOnScrollActionButtonState
                   ),
                   Icon(
                     widget.icon,
-                    color: Colors.white,
-                    size: 15.0,
+                    color: _textColor,
+                    size: 16.0,
                   ),
                 ],
               ),
