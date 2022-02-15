@@ -103,7 +103,7 @@ class _ConfirmDeleteDialogState extends State<ConfirmDeleteDialog> {
                   ? widget.localization!.confirmBodyText
                   : LeitmotifLocalizations.of(context).deleteObjectPrompt,
               textAlign: TextAlign.left,
-              style: LitSansSerifStyles.subtitle2,
+              style: LitSansSerifStyles.caption,
             ),
           ],
         ),
