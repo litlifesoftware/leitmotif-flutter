@@ -1,3 +1,9 @@
+## 2.0.3
+- Improve gradient background on `LitUserIcon`
+- Improve color contrast on `LitDeleteButton`
+- Improve styling on `CollapseOnScrollActionButton`
+- Change text styles on `DiscardDraftDialog` and `ConfirmDeleteDialog`
+
 ## 2.0.2
 - Add `ConfirmDeleteDialog`, a dialog widget to confirm a delete action.
 - Add additional localizations.
