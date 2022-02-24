@@ -50,18 +50,30 @@ class __UserIconState extends State<LitUserIcon> {
   /// Returns a desaturated accent color.
   Color get _accentColor => widget.accentColor.desat(0.35);
 
-  List<String> get names =>
-      widget.name.length > 0 ? widget.name.split(" ") : [];
-
-  /// Returns the initials of the user derived by the username.
-  String get _initials {
-    if (names.length == 1) {
-      return names.first.substring(0, 1);
+  List<String> get names {
+    if (widget.name.length > 0) {
+      return widget.name.split(" ");
     }
+    return [];
+  }
+
+  /// Returns the initials of the user derived by its username.
+  String get _initials {
+    if (names.isEmpty) {
+      return "";
+    }
+
+    // Only one name provided
+    if (names.length == 1) {
+      return "" + names.first.convertToInitial();
+    }
+
     // Ignore middle names by using only the first and the last name's
     // initials.
     if (names.length > 1) {
-      return names.first.substring(0, 1) + names.last.substring(0, 1);
+      return "" +
+          names.first.convertToInitial() +
+          names.last.convertToInitial();
     }
 
     return "";
@@ -133,7 +145,7 @@ class __UserIconState extends State<LitUserIcon> {
             child: Center(
               child: Padding(
                 padding: _margin,
-                child: ClippedText(
+                child: ScaledDownText(
                   _initials,
                   style: LitSansSerifStyles.h5.copyWith(
                     fontSize: _fontSize,
