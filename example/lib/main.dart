@@ -579,6 +579,13 @@ class __ExampleScreenState extends State<_ExampleScreen> {
                             onChangeSlider: _onChangeSlider,
                           )
                         : SizedBox(),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FilePathPreview(
+                        path:
+                            "Device/Documents/directory/subdirectory/subdirectory/file.extension",
+                      ),
+                    ),
                     _ButtonList(
                       darkMode: _dark,
                       addNotification: _addNotification,

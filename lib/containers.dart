@@ -20,6 +20,7 @@ export 'src/widgets/containers/lit_settings_footer.dart';
 export 'src/widgets/containers/lit_footer.dart';
 export 'src/widgets/containers/lit_titled_action_card.dart';
 export 'src/widgets/containers/scrollable_column.dart';
+export 'src/widgets/containers/file_path_preview.dart';
 //TODO Move to art library ...
 export 'src/widgets/backgrounds/lit_animated_gradient_background.dart';
 export 'src/widgets/containers/lit_divider.dart';
