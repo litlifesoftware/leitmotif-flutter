@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:leitmotif/leitmotif.dart';
+part of widgets;
 
+/// A Leitmotif widget displaying the provided [child] inside a badge.
 class LitBadge extends StatelessWidget {
   final Color backgroundColor;
   final BorderRadius borderRadius;
   final EdgeInsets padding;
   final Widget child;
 
+  /// Creates a [LitBadge].
   const LitBadge({
     Key? key,
     this.backgroundColor = LitColors.mediumGrey,

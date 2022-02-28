@@ -17,14 +17,14 @@
 /// exported to avoid namespace issues.
 library leitmotif;
 
+/// Widgets
+export 'widgets.dart';
+
 /// App bars
 export 'app_bars.dart';
 
 // Art
 export 'art.dart';
-
-/// Badges
-export 'badges.dart';
 
 /// Bottom navigation
 export 'bottom_navigation.dart';
