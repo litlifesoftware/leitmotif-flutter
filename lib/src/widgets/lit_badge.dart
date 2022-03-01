@@ -1,4 +1,5 @@
-part of widgets;
+import 'package:flutter/material.dart';
+import 'package:leitmotif/styles.dart';
 
 /// A Leitmotif widget displaying the provided [child] inside a badge.
 class LitBadge extends StatelessWidget {

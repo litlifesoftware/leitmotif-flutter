@@ -4,7 +4,4 @@
 /// To use, import `package:leitmotif/widgets.dart`.
 library widgets;
 
-import 'package:flutter/material.dart';
-import 'package:leitmotif/styles.dart';
-
-part 'src/widgets/lit_badge.dart';
+export 'src/widgets/lit_badge.dart';
