@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/styles.dart';
 
-/// A Leitmotif `titles` widget allowing to display a title on a screen.
+/// A Leitmotif widget allowing to display a title on a screen.
 class LitScreenTitle extends StatelessWidget {
   /// The screen's title.
   final String title;

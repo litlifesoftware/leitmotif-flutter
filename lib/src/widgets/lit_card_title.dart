@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// A Leitmotif `titles` widget allowing to display a title and subtitle on top
+/// A Leitmotif widget allowing to display a title and subtitle on top
 /// of a card.
 class LitCardTitle extends StatelessWidget {
   /// The card's title.

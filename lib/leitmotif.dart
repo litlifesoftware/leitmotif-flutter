@@ -86,9 +86,5 @@ export 'styles.dart';
 /// Text
 export 'text.dart';
 
-// Title
-
-export 'titles.dart';
-
 /// Utility
 export 'utility.dart';
