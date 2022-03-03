@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:leitmotif/text.dart';
+import 'package:leitmotif/widgets.dart';
 
 /// A Leitmotif `app_bars` widget displaying a title label.
 class LitAppBarTitleLabel extends StatelessWidget {

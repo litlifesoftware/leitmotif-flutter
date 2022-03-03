@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/containers.dart';
 import 'package:leitmotif/styles.dart';
-import 'package:leitmotif/text.dart';
+import 'package:leitmotif/widgets.dart';
 import 'package:leitmotif/utility.dart';
 
 /// A Leitmotif `art` widget displaying a stylized username on a

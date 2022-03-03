@@ -83,8 +83,5 @@ export 'snackbars.dart';
 /// Styles
 export 'styles.dart';
 
-/// Text
-export 'text.dart';
-
 /// Utility
 export 'utility.dart';
