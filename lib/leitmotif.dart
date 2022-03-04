@@ -68,9 +68,6 @@ export 'scaffold.dart';
 /// Screens
 export 'screens.dart';
 
-/// Scrollbars
-export 'scrollbars.dart';
-
 /// Settings panel
 export 'settings_panel.dart';
 
