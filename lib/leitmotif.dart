@@ -50,9 +50,6 @@ export 'dialogs.dart';
 /// Icons
 export 'icons.dart';
 
-/// Loading indicators
-export 'loading_indicators.dart';
-
 /// Localization
 export 'localization.dart';
 

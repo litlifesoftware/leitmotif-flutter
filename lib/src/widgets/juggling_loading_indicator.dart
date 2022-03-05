@@ -2,7 +2,7 @@ import 'dart:math' as Math;
 import 'package:flutter/material.dart';
 import 'package:leitmotif/styles.dart';
 
-/// A Leitmotif `art` widget displaying an animated loading animation.
+/// A Leitmotif widget displaying a loading animation.
 ///
 class JugglingLoadingIndicator extends StatefulWidget {
   /// The circles' color.

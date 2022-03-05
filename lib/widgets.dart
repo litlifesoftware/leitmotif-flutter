@@ -5,6 +5,7 @@
 library widgets;
 
 export 'src/widgets/clipped_text.dart';
+export 'src/widgets/juggling_loading_indicator.dart';
 export 'src/widgets/lit_badge.dart';
 export 'src/widgets/lit_card_title.dart';
 export 'src/widgets/lit_screen_title.dart';
