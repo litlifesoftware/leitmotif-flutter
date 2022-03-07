@@ -4,7 +4,7 @@ import 'package:leitmotif/models.dart';
 import 'package:leitmotif/localization.dart';
 import 'package:leitmotif/styles.dart';
 
-/// A Leitmotif `pageview` widget allowing to display multiple texts inside a
+/// A Leitmotif widget allowing to display multiple text boxes inside a single
 /// navigatable page view.
 class LitTextPageView extends StatefulWidget {
   /// The text pages displayed on the card.
