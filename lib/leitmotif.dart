@@ -32,9 +32,6 @@ export 'bottom_navigation.dart';
 /// Buttons
 export 'buttons.dart';
 
-/// Collapsible card
-export 'collapsible_card.dart';
-
 /// Containers
 export 'containers.dart';
 

@@ -5,6 +5,9 @@
 library widgets;
 
 export 'src/widgets/clipped_text.dart';
+export 'src/widgets/collapsible_card.dart';
+export 'src/widgets/collapsible_card_controller.dart';
+export 'src/widgets/dummy_collapsible_card.dart';
 export 'src/widgets/juggling_loading_indicator.dart';
 export 'src/widgets/lit_animated_gradient_background.dart';
 export 'src/widgets/lit_badge.dart';
@@ -13,3 +16,4 @@ export 'src/widgets/lit_screen_title.dart';
 export 'src/widgets/lit_scrollbar.dart';
 export 'src/widgets/lit_text_page_view.dart';
 export 'src/widgets/scaled_down_text.dart';
+export 'src/widgets/titled_collapsible_card.dart';
