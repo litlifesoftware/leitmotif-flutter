@@ -53,9 +53,6 @@ export 'localization.dart';
 /// Models
 export 'models.dart';
 
-/// Scaffold
-export 'scaffold.dart';
-
 /// Screens
 export 'screens.dart';
 
