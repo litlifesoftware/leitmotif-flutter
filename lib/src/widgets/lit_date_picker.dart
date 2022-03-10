@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
-import 'package:leitmotif/buttons.dart';
 
 /// The views implement on the [LitDatePicker] for selecting a date, a month or
 /// a year.

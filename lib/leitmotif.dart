@@ -38,9 +38,6 @@ export 'containers.dart';
 /// Controllers
 export 'controllers.dart';
 
-/// Input
-export 'input.dart';
-
 /// Dialogs
 export 'dialogs.dart';
 
