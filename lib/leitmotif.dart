@@ -56,9 +56,6 @@ export 'screens.dart';
 /// Settings panel
 export 'settings_panel.dart';
 
-/// Sliders
-export 'slider.dart';
-
 /// Snackbars
 export 'snackbars.dart';
 
