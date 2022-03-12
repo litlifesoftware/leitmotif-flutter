@@ -26,9 +26,6 @@ export 'app_bars.dart';
 // Art
 export 'art.dart';
 
-/// Bottom navigation
-export 'bottom_navigation.dart';
-
 /// Buttons
 export 'buttons.dart';
 

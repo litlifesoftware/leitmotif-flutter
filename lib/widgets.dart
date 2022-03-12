@@ -11,6 +11,8 @@ export 'src/widgets/dummy_collapsible_card.dart';
 export 'src/widgets/juggling_loading_indicator.dart';
 export 'src/widgets/lit_animated_gradient_background.dart';
 export 'src/widgets/lit_badge.dart';
+export 'src/widgets/lit_bottom_navigation.dart';
+export 'src/widgets/lit_bottom_navigation_item.dart';
 export 'src/widgets/lit_card_title.dart';
 export 'src/widgets/lit_date_picker.dart';
 export 'src/widgets/lit_form.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:leitmotif/bottom_navigation.dart';
-import 'package:leitmotif/models.dart';
+import 'package:leitmotif/leitmotif.dart';
 
 /// A Leitmotif `scaffold` widget displaying a bottom navigation view wrapping
 /// the provided [tabs].
