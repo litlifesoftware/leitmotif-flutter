@@ -11,5 +11,6 @@ export 'src/controller/lit_calendar_controller.dart';
 export 'src/controller/lit_focus_controller.dart';
 export 'src/controller/lit_notification_controller.dart';
 export 'src/controller/lit_route_controller.dart';
+export 'src/controller/lit_settings_panel_controller.dart';
 export 'src/controller/lit_tween_controller.dart';
 export 'src/controller/sync_animation_on_scroll_controller.dart';

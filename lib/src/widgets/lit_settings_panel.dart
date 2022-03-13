@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
-import 'package:leitmotif/controllers.dart';
-import 'package:leitmotif/src/widgets/settings_panel/lit_settings_panel_tile.dart';
-import 'package:leitmotif/src/widgets/settings_panel/lit_settings_panel_controller.dart';
 
 /// A [StatelessWidget] to allow the user to enable and disable
 /// various options.

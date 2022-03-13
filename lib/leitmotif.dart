@@ -50,9 +50,6 @@ export 'models.dart';
 /// Screens
 export 'screens.dart';
 
-/// Settings panel
-export 'settings_panel.dart';
-
 /// Snackbars
 export 'snackbars.dart';
 

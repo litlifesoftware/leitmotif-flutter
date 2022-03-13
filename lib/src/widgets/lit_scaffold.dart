@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
-import 'package:leitmotif/src/widgets/settings_panel/lit_settings_panel_background_overlay.dart';
 
 /// [Widget] used to overlay multiple functinal [Widget]s to ensure no
 /// unintended overlapping will occur.
