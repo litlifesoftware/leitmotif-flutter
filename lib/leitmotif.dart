@@ -23,9 +23,6 @@ export 'widgets.dart';
 /// App bars
 export 'app_bars.dart';
 
-// Art
-export 'art.dart';
-
 /// Buttons
 export 'buttons.dart';
 
