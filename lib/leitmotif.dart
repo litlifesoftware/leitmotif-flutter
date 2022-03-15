@@ -47,9 +47,6 @@ export 'models.dart';
 /// Screens
 export 'screens.dart';
 
-/// Snackbars
-export 'snackbars.dart';
-
 /// Styles
 export 'styles.dart';
 

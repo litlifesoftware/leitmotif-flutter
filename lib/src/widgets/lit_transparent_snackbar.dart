@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
-import 'package:leitmotif/snackbars.dart';
 
 /// An animated [LitSnackbar] positioned using the provided [Alignment].
 ///
