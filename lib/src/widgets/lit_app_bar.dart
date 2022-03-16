@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
-import 'package:leitmotif/src/widgets/app_bars/lit_app_bar_title_label.dart';
 
 /// A Leitmotif `app_bars` widget displaying an app bar on top of a screen.
 ///

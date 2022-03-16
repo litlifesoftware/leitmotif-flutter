@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
-import 'package:leitmotif/src/widgets/app_bars/fixed_on_scroll_appbar.dart';
 
 /// A Leitmotif `app_bars` widget allowing to display an app bar, which will
 /// only appear once the corresponding scroll view has been scrolled.

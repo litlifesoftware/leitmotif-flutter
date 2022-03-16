@@ -20,9 +20,6 @@ library leitmotif;
 /// Widgets
 export 'widgets.dart';
 
-/// App bars
-export 'app_bars.dart';
-
 /// Buttons
 export 'buttons.dart';
 
