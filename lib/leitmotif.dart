@@ -29,9 +29,6 @@ export 'containers.dart';
 /// Controllers
 export 'controllers.dart';
 
-/// Dialogs
-export 'dialogs.dart';
-
 /// Icons
 export 'icons.dart';
 
