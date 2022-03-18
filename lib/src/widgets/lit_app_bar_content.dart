@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:leitmotif/buttons.dart';
+import 'package:leitmotif/widgets.dart';
 
 /// A Leitmotif `app_bars` widget allowing to build the content of a titled
 /// app bar.
