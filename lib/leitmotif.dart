@@ -17,29 +17,11 @@
 /// exported to avoid namespace issues.
 library leitmotif;
 
-/// Widgets
-export 'widgets.dart';
-
-/// Containers
-export 'containers.dart';
-
-/// Controllers
 export 'controllers.dart';
-
-/// Icons
 export 'icons.dart';
-
-/// Localization
 export 'localization.dart';
-
-/// Models
 export 'models.dart';
-
-/// Screens
 export 'screens.dart';
-
-/// Styles
 export 'styles.dart';
-
-/// Utility
 export 'utility.dart';
+export 'widgets.dart';

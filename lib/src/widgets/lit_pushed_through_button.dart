@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:leitmotif/containers.dart';
 import 'package:leitmotif/styles.dart';
+import 'package:leitmotif/widgets.dart';
 
 /// A Leitmotif `buttons` widget displaying an interactive button, which will
 /// be animated while being pressed.

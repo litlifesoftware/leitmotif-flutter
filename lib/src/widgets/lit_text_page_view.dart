@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:leitmotif/containers.dart';
-import 'package:leitmotif/models.dart';
 import 'package:leitmotif/localization.dart';
+import 'package:leitmotif/models.dart';
 import 'package:leitmotif/styles.dart';
+import 'package:leitmotif/widgets.dart';
 
 /// A Leitmotif widget allowing to display multiple text boxes inside a single
 /// navigatable page view.

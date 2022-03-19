@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:leitmotif/containers.dart';
 import 'package:leitmotif/localization.dart';
+import 'package:leitmotif/widgets.dart';
 
 /// A Leitmotif `snackbars` widget providing the content on a snackbar.
 class LitIconSnackbarContent extends StatelessWidget {

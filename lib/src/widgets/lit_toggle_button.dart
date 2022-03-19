@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:leitmotif/containers.dart';
 import 'package:leitmotif/styles.dart';
+import 'package:leitmotif/widgets.dart';
 
 /// A Leitmotif `buttons` widget displaying a toggle button which can have two
 /// states (`enabled` and `disabled`).

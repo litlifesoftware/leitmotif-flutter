@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:leitmotif/containers.dart';
 import 'package:leitmotif/localization.dart';
 import 'package:leitmotif/widgets.dart';
 
