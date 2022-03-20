@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-//TODO: Move to `art`
-/// A Flutter `art` widget displaying a colored divider to seperate
+/// A Leitmotif `widget` displaying a colored divider to seperate
 ///  similar-looking widgets.
 class LitDivider extends StatelessWidget {
   /// The divider's thickness.

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
-import 'package:leitmotif/src/controller/lit_notification_controller.dart';
 
 /// A widget to show multiple notifications on top of the provided [child].
 ///
