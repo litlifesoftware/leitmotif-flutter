@@ -47,11 +47,11 @@ class LitBackButton extends StatefulWidget {
   static const double defaultHeight = 32.0;
   static const double defaultWidth = 54.0;
   static const double defaultIconSize = 16.0;
-  static const Color defaultBackgroundColor = LitColors.grey400;
-  static const Color defaultIconColor = Colors.white;
+  static const Color defaultBackgroundColor = LitColors.white;
+  static const Color defaultIconColor = LitColors.grey350;
   static const IconData icon = LitIcons.arrow_left_solid;
   static const bool defaultShouldNavigateBack = true;
-  static const List<BoxShadow> boxShadow = LitBoxShadows.sm;
+  static const List<BoxShadow> boxShadow = LitBoxShadows.md;
 
   @override
   _LitBackButtonState createState() => _LitBackButtonState();
