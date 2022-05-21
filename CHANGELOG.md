@@ -1,3 +1,10 @@
+## 2.1.0
+- Add `FilePathPreview`
+- Adjust styling on `LitBackButton`
+- Apply mini library concept on `widgets` library
+- Remove part directive
+- See https://dart.dev/guides/libraries/create-library-packages
+
 ## 2.0.3
 - Improve gradient background on `LitUserIcon`
 - Improve color contrast on `LitDeleteButton`
