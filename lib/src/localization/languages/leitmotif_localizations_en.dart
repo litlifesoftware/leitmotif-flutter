@@ -117,5 +117,7 @@ class LeitmotifLocalizationsEN {
         'There have been unsaved changes detected.',
     LeitmotifLocalizationsKeys.confirmDiscardActionDescr:
         'Do you want to discard your changes?',
+    LeitmotifLocalizationsKeys.previousLabel: 'previous',
+    LeitmotifLocalizationsKeys.previousLabelShort: 'prev',
   };
 }

@@ -99,4 +99,6 @@ class LeitmotifLocalizationsKeys {
   static const String discardLabel = 'discardLabel';
   static const String discardDesc = 'discardDesc';
   static const String confirmDiscardActionDescr = 'confirmDiscardActionDescr';
+  static const String previousLabel = 'previousLabel';
+  static const String previousLabelShort = 'previousLabelShort';
 }

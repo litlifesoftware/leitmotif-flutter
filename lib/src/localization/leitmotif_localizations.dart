@@ -422,4 +422,12 @@ class LeitmotifLocalizations {
   String get confirmDiscardActionDescr {
     return localizeValue(LeitmotifLocalizationsKeys.confirmDiscardActionDescr);
   }
+
+  String get previousLabel {
+    return localizeValue(LeitmotifLocalizationsKeys.previousLabel);
+  }
+
+  String get previousLabelShort {
+    return localizeValue(LeitmotifLocalizationsKeys.previousLabelShort);
+  }
 }

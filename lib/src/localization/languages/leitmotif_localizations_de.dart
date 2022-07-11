@@ -119,5 +119,7 @@ class LeitmotifLocalizationsDE {
         'Es wurden ungespeicherte Änderungen festgestellt.',
     LeitmotifLocalizationsKeys.confirmDiscardActionDescr:
         'Möchstest du deine Änderungen verwerfen?',
+    LeitmotifLocalizationsKeys.previousLabel: 'vorherige',
+    LeitmotifLocalizationsKeys.previousLabelShort: 'vorh',
   };
 }
