@@ -1,3 +1,7 @@
+## 2.1.1
+
+- Allow alternative navigation using `tapToNavigate` on `IndexedPageView`
+
 ## 2.1.0
 - Add `FilePathPreview`
 - Adjust styling on `LitBackButton`
