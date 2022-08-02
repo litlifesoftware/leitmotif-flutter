@@ -1,3 +1,7 @@
+## 2.1.2
+
+- Fix missing `AnimationController` dispose call on `LitToggleButton`
+
 ## 2.1.1
 
 - Allow alternative navigation using `tapToNavigate` on `IndexedPageView`
