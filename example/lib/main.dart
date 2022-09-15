@@ -27,7 +27,10 @@ class _LeitmotifExampleState extends State<LeitmotifExample> {
     return MaterialApp(
       title: 'Leitmotif',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(textTheme: LitSansSerifStyles.theme),
+      theme: ThemeData(
+        textTheme: LitSansSerifStyles.theme,
+        useMaterial3: true,
+      ),
       localizationsDelegates: const [
         LeitmotifLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -97,16 +100,16 @@ class _ExampleHomeScreenState extends State<ExampleHomeScreen> {
             icon: Icons.font_download,
             iconAlt: Icons.font_download_off_outlined,
             index: 1,
-            title: "Sans",
+            title: "Font",
           ),
           screen: _ExampleScreenTwo(),
         ),
         LitNavigableTab(
           tabData: LitBottomNavigationItemData(
-            icon: Icons.font_download,
-            iconAlt: Icons.font_download_off_outlined,
+            icon: LitIcons.folder_solid,
+            iconAlt: LitIcons.folder,
             index: 2,
-            title: "Serif",
+            title: "Icons",
           ),
           screen: _ExampleScreenThree(),
         ),
@@ -128,110 +131,291 @@ class _ExampleScreenThree extends StatelessWidget {
             vertical: 32.0,
             horizontal: 16.0,
           ),
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Text(
-                "Serif",
-                style: LitSerifStyles.h4,
-              ),
+            SizedBox(height: 16.0),
+            Text(
+              "Icons",
+              style: Theme.of(context).textTheme.headline4,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                "H1",
-                style: LitSerifStyles.h1,
-              ),
+            SizedBox(height: 16.0),
+            IconLabel(
+              number: 1,
+              icon: LitIcons.animation,
+              label: "animation",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                "H2",
-                style: LitSerifStyles.h2,
-              ),
+            IconLabel(
+              number: 2,
+              icon: LitIcons.arrow_left,
+              label: "arrow_left",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                "H3",
-                style: LitSerifStyles.h3,
-              ),
+            IconLabel(
+              number: 3,
+              icon: LitIcons.arrow_left_solid,
+              label: "arrow_left_solid",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                "H4",
-                style: LitSerifStyles.h4,
-              ),
+            IconLabel(
+              number: 4,
+              icon: LitIcons.arrow_right,
+              label: "arrow_right",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                "H5",
-                style: LitSerifStyles.h5,
-              ),
+            IconLabel(
+              number: 5,
+              icon: LitIcons.arrow_right_solid,
+              label: "arrow_right_solid",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                "H6",
-                style: LitSerifStyles.h6,
-              ),
+            IconLabel(
+              number: 6,
+              icon: LitIcons.bolt,
+              label: "Bolt",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                "Subtitle 2",
-                style: LitSerifStyles.subtitle2,
-              ),
+            IconLabel(
+              number: 7,
+              icon: LitIcons.check,
+              label: "Check",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                "Subtitle 1",
-                style: LitSerifStyles.subtitle1,
-              ),
+            IconLabel(
+              number: 8,
+              icon: LitIcons.chevron_left,
+              label: "chevron_left",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                "Body 1",
-                style: LitSerifStyles.body1,
-              ),
+            IconLabel(
+              number: 9,
+              icon: LitIcons.chevron_left_solid,
+              label: "chevron_left_solid",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                "Body 2",
-                style: LitSerifStyles.body2,
-              ),
+            IconLabel(
+              number: 10,
+              icon: LitIcons.chevron_right,
+              label: "chevron_right",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                "BUTTON",
-                style: LitSerifStyles.button,
-              ),
+            IconLabel(
+              number: 11,
+              icon: LitIcons.chevron_right_solid,
+              label: "chevron_right_solid",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                "Caption",
-                style: LitSerifStyles.caption,
-              ),
+            IconLabel(
+              number: 12,
+              icon: LitIcons.diary,
+              label: "diary",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                "OVERLINE",
-                style: LitSerifStyles.overline,
-              ),
+            IconLabel(
+              number: 13,
+              icon: LitIcons.diary_alt,
+              label: "diary_alt",
             ),
+            IconLabel(
+              number: 14,
+              icon: LitIcons.disk,
+              label: "disk",
+            ),
+            IconLabel(
+              number: 15,
+              icon: LitIcons.disk_alt,
+              label: "disk_alt",
+            ),
+            IconLabel(
+              number: 16,
+              icon: LitIcons.document,
+              label: "document",
+            ),
+            IconLabel(
+              number: 17,
+              icon: LitIcons.folder,
+              label: "folder",
+            ),
+            IconLabel(
+              number: 18,
+              icon: LitIcons.folder_solid,
+              label: "folder_solid",
+            ),
+            IconLabel(
+              number: 19,
+              icon: LitIcons.gear,
+              label: "gear",
+            ),
+            IconLabel(
+              number: 20,
+              icon: LitIcons.gear_alt,
+              label: "gear_alt",
+            ),
+            IconLabel(
+              number: 21,
+              icon: LitIcons.heart,
+              label: "heart",
+            ),
+            IconLabel(
+              number: 22,
+              icon: LitIcons.heart_solid,
+              label: "heart_solid",
+            ),
+            IconLabel(
+              number: 23,
+              icon: LitIcons.home,
+              label: "home",
+            ),
+            IconLabel(
+              number: 24,
+              icon: LitIcons.home_alt,
+              label: "home_alt",
+            ),
+            IconLabel(
+              number: 25,
+              icon: LitIcons.llsw_smiley,
+              label: "llsw_smiley",
+            ),
+            IconLabel(
+              number: 26,
+              icon: LitIcons.info,
+              label: "info",
+            ),
+            IconLabel(
+              number: 27,
+              icon: LitIcons.moon,
+              label: "moon",
+            ),
+            IconLabel(
+              number: 28,
+              icon: LitIcons.document_alt,
+              label: "document_alt",
+            ),
+            IconLabel(
+              number: 29,
+              icon: LitIcons.map_marker,
+              label: "map_marker",
+            ),
+            IconLabel(
+              number: 30,
+              icon: LitIcons.moon_solid,
+              label: "moon_solid",
+            ),
+            IconLabel(
+              number: 31,
+              icon: LitIcons.moon_with_stars,
+              label: "moon_with_stars",
+            ),
+            IconLabel(
+              number: 32,
+              icon: LitIcons.moon_with_stars_solid,
+              label: "moon_with_stars_solid",
+            ),
+            IconLabel(
+              number: 33,
+              icon: LitIcons.pencil,
+              label: "pencil",
+            ),
+            IconLabel(
+              number: 34,
+              icon: LitIcons.pencil_alt,
+              label: "pencil_alt",
+            ),
+            IconLabel(
+              number: 35,
+              icon: LitIcons.person,
+              label: "person",
+            ),
+            IconLabel(
+              number: 36,
+              icon: LitIcons.person_solid,
+              label: "person_solid",
+            ),
+            IconLabel(
+              number: 37,
+              icon: LitIcons.photo,
+              label: "photo",
+            ),
+            IconLabel(
+              number: 38,
+              icon: LitIcons.photos,
+              label: "photos",
+            ),
+            IconLabel(
+              number: 39,
+              icon: LitIcons.plus,
+              label: "plus",
+            ),
+            IconLabel(
+              number: 40,
+              icon: LitIcons.quote_left,
+              label: "quote_left",
+            ),
+            IconLabel(
+              number: 41,
+              icon: LitIcons.quote_right,
+              label: "quote_right",
+            ),
+            IconLabel(
+              number: 42,
+              icon: LitIcons.rgb,
+              label: "rgb",
+            ),
+            IconLabel(
+              number: 43,
+              icon: LitIcons.rgb_solid,
+              label: "rgb_solid",
+            ),
+            IconLabel(
+              number: 44,
+              icon: LitIcons.times,
+              label: "times",
+            ),
+            IconLabel(
+              number: 45,
+              icon: LitIcons.trash_bin,
+              label: "trash_bin",
+            ),
+            SizedBox(height: 92.0),
           ],
         ),
       ),
+    );
+  }
+}
+
+class IconLabel extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final int number;
+  const IconLabel({
+    Key? key,
+    required this.icon,
+    required this.label,
+    required this.number,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        LayoutBuilder(
+          builder: ((context, constraints) {
+            return SizedBox(
+              width: constraints.maxWidth,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(icon),
+                      SizedBox(width: 8.0),
+                      Text(
+                        label,
+                        style: LitSansSerifStyles.body2,
+                      ),
+                    ],
+                  ),
+                  Text(
+                    number.toString(),
+                    style: LitSansSerifStyles.h6,
+                  ),
+                ],
+              ),
+            );
+          }),
+        ),
+        SizedBox(height: 8.0),
+      ],
     );
   }
 }
@@ -349,6 +533,107 @@ class _ExampleScreenTwo extends StatelessWidget {
                 "OVERLINE",
                 style: Theme.of(context).textTheme.overline,
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Text(
+                "Serif",
+                style: LitSerifStyles.h4,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H1",
+                style: LitSerifStyles.h1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H2",
+                style: LitSerifStyles.h2,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H3",
+                style: LitSerifStyles.h3,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H4",
+                style: LitSerifStyles.h4,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H5",
+                style: LitSerifStyles.h5,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "H6",
+                style: LitSerifStyles.h6,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Subtitle 2",
+                style: LitSerifStyles.subtitle2,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Subtitle 1",
+                style: LitSerifStyles.subtitle1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Body 1",
+                style: LitSerifStyles.body1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Body 2",
+                style: LitSerifStyles.body2,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "BUTTON",
+                style: LitSerifStyles.button,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Caption",
+                style: LitSerifStyles.caption,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "OVERLINE",
+                style: LitSerifStyles.overline,
+              ),
+            ),
+            SizedBox(
+              height: 64.0,
             ),
           ],
         ),
