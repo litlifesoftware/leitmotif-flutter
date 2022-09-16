@@ -40,6 +40,9 @@ class LitScaffold extends StatefulWidget {
   final CollapsibleCard? collapsibleCard;
   final LitSettingsPanel? settingsPanel;
   final bool wrapInSafeArea;
+  final PreferredSizeWidget? materialAppBar;
+  final Widget? materialDrawer;
+  final Widget? materialBottomSheet;
 
   /// Creates a [LitScaffold] [Widget].
 
@@ -53,6 +56,9 @@ class LitScaffold extends StatefulWidget {
     this.collapsibleCard,
     this.settingsPanel,
     this.wrapInSafeArea = true,
+    this.materialAppBar,
+    this.materialDrawer,
+    this.materialBottomSheet,
   }) : super(key: key);
 
   @override
@@ -130,6 +136,9 @@ class _LitScaffoldState extends State<LitScaffold>
     return Scaffold(
       backgroundColor: widget.backgroundColor,
       body: widget.wrapInSafeArea ? SafeArea(child: _stack) : _stack,
+      appBar: widget.materialAppBar,
+      drawer: widget.materialDrawer,
+      bottomSheet: widget.materialBottomSheet,
     );
   }
 }

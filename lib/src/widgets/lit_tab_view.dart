@@ -23,6 +23,9 @@ class LitTabView extends StatefulWidget {
     this.initialTabIndex = 0,
     this.transitionListener,
     this.dark = false,
+    this.materialAppBar,
+    this.materialDrawer,
+    this.materialBottomSheet,
   }) : super(key: key);
 
   /// The tabs the tab view should display.
@@ -48,6 +51,10 @@ class LitTabView extends StatefulWidget {
 
   /// Called whenever the tab has been transitioned.
   final void Function(int index)? transitionListener;
+
+  final PreferredSizeWidget? materialAppBar;
+  final Widget? materialDrawer;
+  final Widget? materialBottomSheet;
 
   @override
   _LitTabViewState createState() => _LitTabViewState();
@@ -94,6 +101,9 @@ class _LitTabViewState extends State<LitTabView> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
+      appBar: widget.materialAppBar,
+      drawer: widget.materialDrawer,
+      bottomSheet: widget.materialBottomSheet,
       body: Builder(
         builder: (context) {
           return Stack(
