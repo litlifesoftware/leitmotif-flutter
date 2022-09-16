@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 
-/// An [CustomActionButton] whose label will be collapsed and expanded depending on the specified
-/// scroll controller's offset.
+/// An action button whose label will be collapsed once the provided
+/// [requiredScrollOffset] has been reached.
 ///
 /// The icon will be displayed regardless of the current scroll offset.
 class CollapseOnScrollActionButton extends StatefulWidget
@@ -34,6 +34,9 @@ class CollapseOnScrollActionButton extends StatefulWidget
   /// States whether to blur the button's background.
   final bool blurred;
 
+  /// The button's box shadow.
+  final List<BoxShadow> boxShadow;
+
   /// The button's callback method.
   final void Function() onPressed;
 
@@ -58,6 +61,7 @@ class CollapseOnScrollActionButton extends StatefulWidget
       horizontal: 24.0,
     ),
     this.blurred = true,
+    this.boxShadow = LitBoxShadows.md,
     required this.onPressed,
   }) : super(key: key);
 
@@ -74,14 +78,14 @@ class _CollapseOnScrollActionButtonState
   late AnimationOnScrollController _animationOnScrollController;
 
   /// Create a animated accent color using the [_colorAnimation].
-  Color get _accentColor {
+  Color get _animatedAccentColor {
     return Color.lerp(widget.accentColor, widget.backgroundColor,
             _colorAnimation.value) ??
         widget.accentColor;
   }
 
   /// Create a background accent color using the [_colorAnimation].
-  Color get _backgroundColor {
+  Color get _animatedBackgroundColor {
     return Color.lerp(widget.backgroundColor, widget.accentColor,
             _colorAnimation.value) ??
         widget.backgroundColor;
@@ -117,6 +121,33 @@ class _CollapseOnScrollActionButtonState
     super.initState();
   }
 
+  /// Returns the animated padding.
+  EdgeInsets get _animatedPadding => _scrollAnimation.value != 1.0
+      ? widget.padding
+      : EdgeInsets.only(
+          bottom: (_scrollAnimation.value) * widget.padding.bottom * 1.25,
+          left: (_scrollAnimation.value) * widget.padding.left * 1.25,
+          right: (_scrollAnimation.value) * widget.padding.right * 1.25,
+          top: (_scrollAnimation.value) * widget.padding.top * 1.25,
+        );
+
+  double get _animatedIconSize =>
+      _scrollAnimation.value != 1.0 ? 14.0 : (_scrollAnimation.value) * 18.0;
+
+  double get _animatedSpacerWidth => _scrollAnimation.value != 1.0 ? 8.0 : 0.0;
+
+  /// Returns the animated [Text] widget.
+  Widget get _animatedText => _scrollAnimation.value != 1.0
+      ? Text(
+          widget.label,
+          style: LitSansSerifStyles.button.copyWith(
+            color: _textColor,
+            fontSize: (1.0 - _scrollAnimation.value) * 16.0,
+            letterSpacing: 0.75,
+          ),
+        )
+      : SizedBox();
+
   @override
   void dispose() {
     _colorAnimation.dispose();
@@ -126,57 +157,47 @@ class _CollapseOnScrollActionButtonState
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _colorAnimation,
-      builder: (context, _) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: LitBottomNavigation.defaultHeight + 8.0,
-            horizontal: 24.0,
-          ),
-          child: Align(
-            alignment: Alignment.bottomRight,
-            child: LitGradientButton(
-              padding: widget.padding,
-              accentColor: _backgroundColor,
-              color: _accentColor,
-              blurred: true,
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          bottom: LitBottomNavigation.defaultHeight + 24.0,
+          right: 24.0,
+        ),
+        child: AnimatedBuilder(
+          animation: _colorAnimation,
+          builder: (context, _) {
+            return LitGradientButton(
+              padding: _animatedPadding,
+              accentColor: _animatedBackgroundColor,
+              color: _animatedAccentColor,
+              boxShadow: widget.boxShadow,
+              blurred: widget.blurred,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Icon(
+                    widget.icon,
+                    color: _textColor,
+                    size: _animatedIconSize,
+                  ),
+                  SizedBox(width: _animatedSpacerWidth),
                   AnimatedBuilder(
                     animation: _scrollAnimation,
                     builder: (context, _) {
                       return Opacity(
                         opacity: (1.0 - _scrollAnimation.value),
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            right: (1.0 - _scrollAnimation.value) * 6.0,
-                          ),
-                          child: Text(
-                            widget.label,
-                            style: LitSansSerifStyles.button.copyWith(
-                              color: _textColor,
-                              fontSize: (1.0 - _scrollAnimation.value) * 16.0,
-                              letterSpacing: 0.75,
-                            ),
-                          ),
-                        ),
+                        child: _animatedText,
                       );
                     },
-                  ),
-                  Icon(
-                    widget.icon,
-                    color: _textColor,
-                    size: 16.0,
                   ),
                 ],
               ),
               onPressed: widget.onPressed,
-            ),
-          ),
-        );
-      },
+            );
+          },
+        ),
+      ),
     );
   }
 }
