@@ -9,7 +9,7 @@ extension LocalizedDateTime on DateTime {
   /// The formatted string will output the the day, the month and the
   /// year included in the [DateTime].
   ///
-  /// For example the english localization of the corresponding [DateTime] will
+  /// For example the EN localization of the corresponding [DateTime] will
   /// return `April 10, 2021`.
   String formatAsLocalizedDate(BuildContext context) {
     final DateFormat formatter =
@@ -22,7 +22,7 @@ extension LocalizedDateTime on DateTime {
   /// The formatted string will output the the day, the month and the
   /// year included in the [DateTime].
   ///
-  /// For example the english localization of the corresponding [DateTime] will
+  /// For example the EN localization of the corresponding [DateTime] will
   /// return `April 10, 2021`.
   String formatAsLocalizedDateTime(BuildContext context) {
     final String formattedDate =
@@ -38,11 +38,23 @@ extension LocalizedDateTime on DateTime {
   /// The formatted string will output the weekday, the day, the month and the
   /// year included in the [DateTime].
   ///
-  /// For example the english localization of the corresponding [DateTime] will
+  /// For example the EN localization of the corresponding [DateTime] will
   /// return `Saturday, April 10, 2021`.
   String formatAsLocalizedDateWithWeekday(BuildContext context) {
     final DateFormat formatter =
         DateFormat.yMMMMEEEEd(Localizations.localeOf(context).languageCode);
+    return formatter.format(this);
+  }
+
+  /// Formats the [DateTime] to a localized and human-readible string.
+  ///
+  /// The formatted string will only output the year included in the [DateTime].
+  ///
+  /// For example the EN localization of the corresponding [DateTime] will
+  /// return `2021`.
+  String formatAsLocalizedYear(BuildContext context) {
+    final DateFormat formatter =
+        DateFormat.y(Localizations.localeOf(context).languageCode);
     return formatter.format(this);
   }
 }
