@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-/// Extension on DateTime class to shorten the process of localizing formatted
-/// [DateTime]s.
-extension LocalizedDateTime on DateTime {
-  /// Formats the [DateTime] to a localized and human-readible string.
-  ///
+/// Extension on [DateTime] class.
+///
+/// Includes methods to:
+/// - Format the [DateTime] into a localized and human-readible string.
+///
+extension DateTimeExtension on DateTime {
   /// The formatted string will output the the day, the month and the
   /// year included in the [DateTime].
   ///
@@ -17,8 +18,6 @@ extension LocalizedDateTime on DateTime {
     return formatter.format(this);
   }
 
-  /// Formats the [DateTime] to a localized and human-readible string.
-  ///
   /// The formatted string will output the the day, the month and the
   /// year included in the [DateTime].
   ///
@@ -33,8 +32,6 @@ extension LocalizedDateTime on DateTime {
     return "$formattedDate $formattedTime";
   }
 
-  /// Formats the [DateTime] to a localized and human-readible string.
-  ///
   /// The formatted string will output the weekday, the day, the month and the
   /// year included in the [DateTime].
   ///
@@ -46,8 +43,6 @@ extension LocalizedDateTime on DateTime {
     return formatter.format(this);
   }
 
-  /// Formats the [DateTime] to a localized and human-readible string.
-  ///
   /// The formatted string will only output the year included in the [DateTime].
   ///
   /// For example the EN localization of the corresponding [DateTime] will

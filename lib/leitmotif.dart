@@ -18,6 +18,7 @@
 library leitmotif;
 
 export 'controllers.dart';
+export 'extensions.dart';
 export 'icons.dart';
 export 'localization.dart';
 export 'models.dart';
