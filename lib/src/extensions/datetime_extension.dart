@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 ///
 extension DateTimeExtension on DateTime {
   /// The formatted string will output the the day, the month and the
-  /// year included in the [DateTime].
+  /// year.
   ///
   /// For example the EN localization of the corresponding [DateTime] will
   /// return `April 10, 2021`.
@@ -19,7 +19,7 @@ extension DateTimeExtension on DateTime {
   }
 
   /// The formatted string will output the the day, the month and the
-  /// year included in the [DateTime].
+  /// year.
   ///
   /// For example the EN localization of the corresponding [DateTime] will
   /// return `April 10, 2021`.
@@ -33,7 +33,7 @@ extension DateTimeExtension on DateTime {
   }
 
   /// The formatted string will output the weekday, the day, the month and the
-  /// year included in the [DateTime].
+  /// year.
   ///
   /// For example the EN localization of the corresponding [DateTime] will
   /// return `Saturday, April 10, 2021`.
@@ -43,13 +43,23 @@ extension DateTimeExtension on DateTime {
     return formatter.format(this);
   }
 
-  /// The formatted string will only output the year included in the [DateTime].
+  /// The formatted string will only output the year.
   ///
   /// For example the EN localization of the corresponding [DateTime] will
   /// return `2021`.
   String formatAsLocalizedYear(BuildContext context) {
     final DateFormat formatter =
         DateFormat.y(Localizations.localeOf(context).languageCode);
+    return formatter.format(this);
+  }
+
+  /// The formatted string will only output the month.
+  ///
+  /// For example the EN localization of the corresponding [DateTime] will
+  /// return `September`.
+  String formatAsLocalizedMonth(BuildContext context) {
+    final DateFormat formatter =
+        DateFormat.MMMM(Localizations.localeOf(context).languageCode);
     return formatter.format(this);
   }
 }
