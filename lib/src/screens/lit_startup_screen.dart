@@ -82,72 +82,76 @@ class _LitStartupScreenState extends State<LitStartupScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
-        child: Container(
-          height: _deviceSize.height,
-          width: _deviceSize.width,
-          decoration: BoxDecoration(
-            gradient: LitGradients.pinkBeige,
-          ),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              _AnimatedBackground(
-                animationController: _animatedBackground,
-                size: widget.backgroundSize,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              height: _deviceSize.height,
+              width: _deviceSize.width,
+              decoration: BoxDecoration(
+                gradient: LitGradients.pinkBeige,
               ),
-              AnimatedBuilder(
-                animation: _fadeAnimation,
-                child: widget.art ?? const LitLifeBlurredBackgroundLogo(),
-                builder: (context, child) {
-                  return AnimatedOpacity(
-                    duration: _fadeDuration,
-                    opacity: _fadeAnimation.value,
-                    child: child,
-                  );
-                },
-              ),
-              AnimatedBuilder(
-                animation: _fadeAnimation,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: _spacingY,
+            ),
+            _AnimatedBackground(
+              animationController: _animatedBackground,
+              size: widget.backgroundSize,
+            ),
+            AnimatedBuilder(
+              animation: _fadeAnimation,
+              child: widget.art ??
+                  const LitLifeBlurredBackgroundLogo(
+                    backgroundColor: Colors.white24,
+                    color: LitColors.red700,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        widget.title ?? defaultTitle,
-                        style: LitSansSerifStyles.h5.copyWith(
-                          color: Colors.white,
-                          shadows: LitBoxShadows.textMd,
-                        ),
-                      ),
-                      SizedBox(
-                        height: _spacingY,
-                      ),
-                      Text(
-                        widget.subtitle ??
-                            '\u00a9' + ' ' + DateTime.now().year.toString(),
-                        style: LitSansSerifStyles.subtitle1.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(
-                        height: _spacingY,
-                      ),
-                    ],
-                  ),
+              builder: (context, child) {
+                return AnimatedOpacity(
+                  duration: _fadeDuration,
+                  opacity: _fadeAnimation.value,
+                  child: child,
+                );
+              },
+            ),
+            AnimatedBuilder(
+              animation: _fadeAnimation,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: _spacingY,
                 ),
-                builder: (context, child) {
-                  return AnimatedOpacity(
-                    duration: _fadeAnimation.duration!,
-                    opacity: _fadeAnimation.value,
-                    child: child,
-                  );
-                },
-              )
-            ],
-          ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      widget.title ?? defaultTitle,
+                      style: LitSansSerifStyles.h5.copyWith(
+                        color: Colors.white,
+                        shadows: LitBoxShadows.textMd,
+                      ),
+                    ),
+                    SizedBox(
+                      height: _spacingY,
+                    ),
+                    Text(
+                      widget.subtitle ??
+                          '\u00a9' + ' ' + DateTime.now().year.toString(),
+                      style: LitSansSerifStyles.subtitle1.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(
+                      height: _spacingY,
+                    ),
+                  ],
+                ),
+              ),
+              builder: (context, child) {
+                return AnimatedOpacity(
+                  duration: _fadeAnimation.duration!,
+                  opacity: _fadeAnimation.value,
+                  child: child,
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
