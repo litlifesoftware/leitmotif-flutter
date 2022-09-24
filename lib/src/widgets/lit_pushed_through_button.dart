@@ -43,6 +43,9 @@ class LitPushedThroughButton extends StatefulWidget {
   /// Handles the button's `onPressed` action.
   final void Function() onPressed;
 
+  /// Handles the button's `onPressed` action.
+  final void Function()? onLongPressed;
+
   /// Create a [LitPushedThroughButton].
   const LitPushedThroughButton({
     Key? key,
@@ -57,6 +60,7 @@ class LitPushedThroughButton extends StatefulWidget {
     this.disabled = false,
     this.margin = LitEdgeInsets.button,
     this.padding = LitEdgeInsets.none,
+    this.onLongPressed,
   }) : super(key: key);
 
   @override
@@ -151,6 +155,7 @@ class _LitPushedThroughButtonState extends State<LitPushedThroughButton>
               animation: _animationController,
               child: CleanInkWell(
                 onTap: _onPressed,
+                onLongPress: widget.onLongPressed,
                 child: Container(
                   padding: widget.margin,
                   decoration: BoxDecoration(

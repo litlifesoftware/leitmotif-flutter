@@ -5,6 +5,7 @@ class CleanInkWell extends StatelessWidget {
   final BorderRadius borderRadius;
   final Widget child;
   final void Function() onTap;
+  final void Function()? onLongPress;
 
   /// Creates a [CleanInkWell].
   ///
@@ -15,6 +16,7 @@ class CleanInkWell extends StatelessWidget {
     required this.child,
     this.borderRadius = const BorderRadius.all(Radius.circular(0.0)),
     required this.onTap,
+    this.onLongPress,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class CleanInkWell extends StatelessWidget {
       hoverColor: Colors.transparent,
       borderRadius: borderRadius,
       onTap: onTap,
+      onLongPress: onLongPress,
       child: child,
     );
   }

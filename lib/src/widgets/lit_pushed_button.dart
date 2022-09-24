@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 // TODO: Replace with `LitPushedThroughButton`.
 class LitPushedButton extends StatefulWidget {
   final void Function() onPressed;
+
+  /// Handles the button's `onPressed` action.
+  final void Function()? onLongPressed;
   final Widget child;
   final bool animateOnStart;
   final Duration animationDuration;
@@ -18,6 +21,7 @@ class LitPushedButton extends StatefulWidget {
     this.animationDuration = const Duration(milliseconds: 35),
     this.minScale = 0.8,
     this.disabled = false,
+    this.onLongPressed,
   }) : super(key: key);
   @override
   _LitPushedButtonState createState() => _LitPushedButtonState();
@@ -72,6 +76,7 @@ class _LitPushedButtonState extends State<LitPushedButton>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _onPressed,
+      onLongPress: widget.onLongPressed,
       child: AnimatedBuilder(
         animation: _pushAnimation,
         builder: (context, _) {
