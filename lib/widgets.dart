@@ -10,6 +10,7 @@ export 'src/widgets/blured_background_container.dart';
 export 'src/widgets/circular_close_button.dart';
 export 'src/widgets/clean_ink_well.dart';
 export 'src/widgets/clipped_text.dart';
+export 'src/widgets/scrollable_text.dart';
 export 'src/widgets/collapse_on_scroll_action_button.dart';
 export 'src/widgets/collapsible_card.dart';
 export 'src/widgets/collapsible_card_controller.dart';
