@@ -1093,6 +1093,8 @@ class _ButtonList extends StatelessWidget {
                       appName: "Leitmotif Example",
                       art: _Art(),
                       infoDescription: LEITMOTIF_DESCR,
+                      copyrightNotice:
+                          "\u{00A9} 2022 LitLifeSoftware. All rights reserved.",
                     );
                   },
                 )

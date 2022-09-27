@@ -2,17 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:leitmotif/leitmotif.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+/// A about app dialog widget.
+///
+/// Displays the app's title, art, description, version and copyright notice.
+/// Also shows the current device's platform appropriate trademark notices.
 class LitAboutDialog extends StatefulWidget {
   final String title;
   final String appName;
   final String? infoDescription;
+  final String? copyrightNotice;
   final EdgeInsets padding;
   final Widget art;
+
+  /// Creates a [LitAboutDialog].
   const LitAboutDialog({
     Key? key,
     this.title = "About",
     required this.appName,
     this.infoDescription,
+    this.copyrightNotice,
     this.padding = const EdgeInsets.only(top: 16.0, bottom: 16.0),
     this.art = const SizedBox(),
   }) : super(key: key);
@@ -30,9 +38,11 @@ class _LitAboutDialogState extends State<LitAboutDialog> {
     });
   }
 
-  // void _onPop() {
-  //   return Navigator.of(context).pop();
-  // }
+  String get _version {
+    if (_packageInfo == null) return "";
+
+    return _packageInfo!.version;
+  }
 
   @override
   void initState() {
@@ -46,14 +56,13 @@ class _LitAboutDialogState extends State<LitAboutDialog> {
     return LitTitledDialog(
       titleText: widget.title,
       child: Container(
-        child: _packageInfo != null
-            ? _AboutDialogContent(
-                appName: widget.appName,
-                art: widget.art,
-                infoDescription: widget.infoDescription,
-                version: _packageInfo!.version,
-              )
-            : SizedBox(),
+        child: _AboutDialogContent(
+          appName: widget.appName,
+          art: widget.art,
+          infoDescription: widget.infoDescription,
+          version: _version,
+          copyrightNotice: widget.copyrightNotice,
+        ),
       ),
     );
   }
@@ -64,12 +73,14 @@ class _AboutDialogContent extends StatelessWidget {
   final String appName;
   final String version;
   final String? infoDescription;
+  final String? copyrightNotice;
   const _AboutDialogContent({
     Key? key,
     required this.art,
     required this.appName,
     required this.version,
     required this.infoDescription,
+    required this.copyrightNotice,
   }) : super(key: key);
 
   @override
@@ -105,6 +116,9 @@ class _AboutDialogContent extends StatelessWidget {
             ],
           ),
           SizedBox(height: 8.0),
+          _CopyrightNoticeText(
+            copyrightNotice: copyrightNotice,
+          ),
           Text(
             PlatformInfo.legalNotice,
             style: LitSansSerifStyles.overline,
@@ -113,6 +127,30 @@ class _AboutDialogContent extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _CopyrightNoticeText extends StatelessWidget {
+  final String? copyrightNotice;
+  const _CopyrightNoticeText({
+    Key? key,
+    required this.copyrightNotice,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return copyrightNotice != null
+        ? Column(
+            children: [
+              Text(
+                copyrightNotice!,
+                style: LitSansSerifStyles.overline,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 4.0),
+            ],
+          )
+        : SizedBox();
   }
 }
 
