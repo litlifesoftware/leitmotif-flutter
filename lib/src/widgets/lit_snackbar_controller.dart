@@ -65,6 +65,8 @@ class LitSnackbarController {
   /// [StatefulWidget] by overriding its dispose method.
   void dispose() {
     _listeners = [];
+    animationController.stop();
+    animationController.reset();
     try {
       animationController.dispose();
     } catch (e) {
