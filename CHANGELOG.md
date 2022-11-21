@@ -1,3 +1,12 @@
+## 2.2.0
+
+- New and updated `LitIcons`
+- Options to use default Material widgets on `LitScaffold` and `LitTabView`
+- Add `longPressed` gesture on various widgets
+- Update LLSW branding on `LitStartupScreen`
+- Add `ScrollableText` widget
+- Improve error handling on `LitSnackbarController`
+
 ## 2.1.2
 
 - Fix missing `AnimationController` dispose call on `LitToggleButton`
