@@ -31,7 +31,10 @@ class CollapseOnScrollActionButton extends StatefulWidget
   /// The button's padding.
   final EdgeInsets padding;
 
-  /// States whether to blur the button's background.
+  /// States whether to blur the button's background. If so, any box shadow
+  /// will be ignored.
+  ///
+  /// Defaults to `true`.
   final bool blurred;
 
   /// The button's box shadow.
@@ -47,6 +50,9 @@ class CollapseOnScrollActionButton extends StatefulWidget
   /// [backgroundColor] is the button's background color.
   ///
   /// [accentColor] is the button's animated accent color.
+  ///
+  /// Disable the [blurred] flag in order to enforce the box shadow to be
+  /// applied.
   const CollapseOnScrollActionButton({
     Key? key,
     required this.scrollController,
